@@ -1,0 +1,65 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+//@import '~bootstrap/scss/bootstrap';
+@import '../../node_modules/bootstrap/scss/bootstrap';
+
+@import "parts/header/header";
+@import "parts/footer/footer";
+@import "pages-parts/home-page/stock/stock";
+@import "pages-parts/home-page/advantage/advantage";
+@import "pages-parts/home-page/reviews/reviews";
+@import "pages-parts/home-page/mobile-hands/mobile-hands";
+
+@import "modals/login/login-modal";
+
+.btn {
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+}
+
+.btn-outline-info {
+    border-color: $nsBlue;
+
+    &:hover, &.active, &:active, &:focus {
+        background-color: $nsBlue;
+        color: white;
+    }
+}
+.btn-outline-info:not(:disabled):not(.disabled).active{
+    background-color: $nsBlue;
+    border-color: $nsBlue;
+}
+
+
+.btn-info {
+    border-color: $nsBlue;
+    background-color: $nsBlue;
+    color: white;
+}
+
+.form-group-blue{
+    label {
+        color: $nsBlue;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 21px;
+    }
+
+    .form-control {
+        background-color: #fff;
+        border-color: $nsBlue;
+    }
+}
+
+.invalid-feedback{
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 20px;
+}

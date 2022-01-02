@@ -1,0 +1,94 @@
+@import "../../../variables";
+
+.mobile-hands-section {
+    position: relative;
+    background-color: $bg-grey;
+    overflow-y: hidden;
+    margin-top: -18px;
+
+    .mobile-bg {
+        position: absolute;
+        left: 0;
+        width: 50vw;
+        max-width: 870px;
+        height: auto;
+        top: 0;
+        bottom: 0;
+
+        @media screen and (max-width: 1240px){
+            height: 100%;
+            width: auto;
+        }
+
+        @media screen and (max-width: 620px){
+            width: 100%;
+        }
+    }
+
+    .card {
+        background: none;
+        border: none;
+    }
+
+    .left-side-mobile {
+        background-color: $bg-grey;
+        padding: 80px 10px;
+        display: flex;
+        justify-content: center;
+        max-width: 560px;
+
+        .content-wrapper {
+            width: 100%;
+            max-width: 514px;
+
+            h1 {
+                color: $textMainColor;
+                font-style: normal;
+                font-weight: bold;
+                font-size: 60px;
+                line-height: 73px;
+                margin-bottom: 30px;
+            }
+
+            p {
+                color: $textMainColor;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 18px;
+                line-height: 20px;
+            }
+        }
+
+        .market-links {
+            margin-top: 48px;
+            display: flex;
+            width: 100%;
+            max-width: 395px;
+            justify-content: space-between;
+
+            @media screen and (max-width: 400px){
+                flex-direction: column;
+                height: 130px;
+                align-items: center;
+            }
+
+            img {
+                width: 165px;
+                height: 51px;
+                -webkit-transition: all .3s;
+                -moz-transition: all .3s;
+                -ms-transition: all .3s;
+                -o-transition: all .3s;
+                transition: all .3s;
+
+                &:hover {
+                    -webkit-transform: scale(1.1, 1.1);
+                    -moz-transform: scale(1.1, 1.1);
+                    -ms-transform: scale(1.1, 1.1);
+                    -o-transform: scale(1.1, 1.1);
+                    transform: scale(1.1, 1.1);
+                }
+            }
+        }
+    }
+}

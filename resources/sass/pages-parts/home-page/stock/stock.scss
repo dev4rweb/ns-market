@@ -1,0 +1,77 @@
+@import "../../../variables";
+
+.home-stock-section{
+    background-color: #FF5794;
+
+    .stock-wrapper{
+        padding-top: 76px;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+
+        @media screen and (max-width: 768px){
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .left-product{
+            width: 100%;
+            max-width: 324px;
+            @media screen and (max-width: 768px){
+                display: none;
+            }
+        }
+
+        .stock-content{
+            width: 100%;
+            max-width: 555px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding-bottom: 105px;
+
+            .stock-title{
+                font-style: normal;
+                font-weight: bold;
+                font-size: 100px;
+                line-height: 122px;
+                color: white;
+            }
+
+            .stock-description{
+                font-style: normal;
+                font-weight: normal;
+                font-size: 30px;
+                line-height: 120%;
+                width: 100%;
+                text-align: center;
+                color: white;
+                margin-bottom: 50px;
+            }
+
+            .btn-outline-light{
+                width: 100%;
+                max-width: 219px;
+
+                &:hover{
+                    color: #FF5794;
+                }
+            }
+        }
+
+        .right-product{
+            width: 100%;
+            max-width: 302px;
+
+            @media screen and (max-width: 998px){
+                display: none;
+            }
+
+            @media screen and (max-width: 768px){
+                display: block;
+            }
+        }
+    }
+}

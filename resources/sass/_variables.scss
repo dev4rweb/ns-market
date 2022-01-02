@@ -1,0 +1,178 @@
+@font-face {
+    font-family: 'Proxima Nova Regular';
+    src: url('../assets/fonts/proxima/ProximaNova-Regular.eot');
+    src: url('../assets/fonts/proxima/ProximaNova-Regular.eot?#iefix') format('embedded-opentype'),
+    url('../assets/fonts/proxima/ProximaNova-Regular.woff') format('woff'),
+    url('../assets/fonts/proxima/ProximaNova-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Arial Regular';
+    src: url('../assets/fonts/arial/ArialMT.eot');
+    src: url('../assets/fonts/arial/ArialMT.eot?#iefix') format('embedded-opentype'),
+    url('../assets/fonts/arial/ArialMT.woff') format('woff'),
+    url('../assets/fonts/arial/ArialMT.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+// Body
+$body-bg: #e5e5e5;
+
+// Typography
+$font-family-sans-serif: 'Nunito', sans-serif;
+$font-proxima:'Proxima Nova Regular', sans-serif;
+$font-arial: 'Arial Regular', sans-serif;
+$font-size-base: 0.9rem;
+$line-height-base: 1.6;
+
+$text-color-main: #C4C4C4;
+
+$bg-grey: #EEF2F5;
+$dark-grey: #AAABB6;
+$borderColor: #D6D8EA; // обводка
+$blueTwo: #5AB1E3;
+$textMainColor: #333333;
+$textSubColor: #999999;
+
+$catBg: #EDF1F4;
+$nsBlue: #038ED7;
+$nsDarkGrey: #383A3F;
+$nsGrey: #77818B;
+$nsLightGrey: #DEE5EB;
+
+$boxShadow: 4px 4px 14px rgba(0, 0, 0, 0.15);
+
+* {
+    font-family: $font-proxima;
+}
+
+body {
+    background-color: $body-bg;
+}
+
+main{
+    position: relative;
+}
+
+h1 {
+    font-family: $font-proxima;
+    font-size: 60px;
+    line-height: 70px;
+    color: $text-color-main;
+    @media screen and (max-width: 480px){
+        font-size: 40px;
+        line-height: 50px;
+    }
+}
+
+h2 {
+    font-family: $font-proxima;
+    font-size: 40px;
+    line-height: 47px;
+    color: $text-color-main;
+}
+
+h3 {
+    font-family: $font-proxima;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 24px;
+    color: $text-color-main;
+}
+
+h4{
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 120%;
+    color: $textMainColor;
+}
+
+
+footer {
+    h3 {
+        font-family: $font-proxima;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 26px;
+        line-height: 120%;
+        color: $text-color-main;
+    }
+}
+
+.textMain {
+    font-family: $font-proxima;
+    font-size: 18px;
+    line-height: 20px;
+    color: $text-color-main;
+}
+
+.textMainBold {
+    font-family: $font-proxima;
+    font-size: 18px;
+    line-height: 120%;
+    text-transform: uppercase;
+    color: $text-color-main;
+}
+
+.signCompany {
+    font-family: $font-proxima;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 10px;
+    font-feature-settings: 'pnum' on, 'lnum' on;
+    color: $text-color-main;
+}
+
+.personalCabinet {
+
+    .placeholderText {
+        font-family: $font-proxima;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 22px;
+        color: #000000;
+    }
+
+    .inputText {
+        font-family: $font-proxima;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 20px;
+        line-height: 24px;
+        color: #000000;
+    }
+
+    .headerText{
+        font-family: $font-proxima;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 22px;
+        color: #000000;
+    }
+}
+
+.popupText {
+    font-family: $font-proxima;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 20px;
+    color: #000000;
+}
+
+.popupPlaceholderText{
+    font-family: $font-proxima;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
+    color: #000000;
+}

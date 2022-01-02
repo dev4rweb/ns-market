@@ -1,0 +1,110 @@
+@import "../../../variables";
+
+.home-reviews-section{
+    background: url("../../../../assets/img/reviews-bg.jpg") no-repeat center center;
+    -webkit-background-size: cover;
+    background-size: cover;
+
+    h1{
+        padding-top: 65px;
+        padding-bottom: 29px;
+        text-align: center;
+        color: $textMainColor;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 60px;
+        line-height: 73px;
+    }
+
+    /*.carousel-item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }*/
+
+    .card {
+        margin: 0 auto;
+        width: 100%;
+        max-width: 750px;
+        min-height: 310px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        border-radius: 8px;
+        padding: 1rem;
+
+        .card-wrapper{
+            width: 100%;
+            max-width: 565px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            @media screen and (max-width: 768px){
+                flex-direction: column;
+            }
+
+            .card-avatar{
+                width: 66px;
+                -webkit-border-radius: 50%;
+                -moz-border-radius: 50%;
+                border-radius: 50%;
+                @media screen and (max-width: 768px){
+                    margin-bottom: 1rem;
+                }
+            }
+
+            .card-content{
+                width: 100%;
+                max-width: 458px;
+                min-height: 156px;
+                display: flex;
+                justify-content: space-between;
+                flex-direction: column;
+
+                .header-card{
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    width: 100%;
+
+                    h4{
+                        text-transform: uppercase;
+                        margin-bottom: 0;
+                    }
+
+                    span{
+                        font-style: italic;
+                        font-weight: normal;
+                        font-size: 18px;
+                        line-height: 120%;
+                        color: $textSubColor;
+                    }
+                }
+
+                p{
+                    width: 100%;
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 18px;
+                    line-height: 20px;
+                }
+            }
+        }
+    }
+
+    .reviews-footer{
+        text-align: center;
+        font-style: italic;
+        font-weight: normal;
+        font-size: 18px;
+        line-height: 120%;
+        padding-top: 28px;
+        padding-bottom: 68px;
+        width: 100%;
+        max-width: 750px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}

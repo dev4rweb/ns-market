@@ -1,0 +1,40 @@
+@import "../../../variables";
+
+.home-advantage-section{
+    background-color: $bg-grey;
+
+    h1{
+        text-align: center;
+        padding-bottom: 65px;
+        padding-top: 65px;
+        color: $textMainColor;
+        font-weight: bold;
+    }
+
+    .advantage-cards-wrapper{
+        display: grid;
+        grid-template-columns: auto auto auto auto;
+        padding-bottom: 65px;
+        @media screen and (max-width: 1200px){
+            grid-template-columns: auto auto;
+            grid-row-gap: 30px;
+            grid-column-gap: 15px;
+            justify-content: space-around;
+        }
+
+        @media screen and (max-width: 560px){
+            grid-template-columns: auto;
+        }
+
+        h3{
+            color: $textMainColor;
+        }
+
+        p{
+            font-style: normal;
+            font-weight: normal;
+            font-size: 17px;
+            line-height: 21px;
+        }
+    }
+}

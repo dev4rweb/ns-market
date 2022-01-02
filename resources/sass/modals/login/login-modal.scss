@@ -1,0 +1,63 @@
+@import "../../variables";
+
+.modal-login {
+    max-width: 425px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+
+    .modal-content {
+
+        .modal-body {
+            padding: 32px;
+
+            p {
+                font-style: normal;
+                font-weight: normal;
+                font-size: 18px;
+                line-height: 21px;
+            }
+
+            .modal-wrapper {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                padding: 30px;
+            }
+
+            h4 {
+                margin-top: 24px;
+                margin-bottom: 24px;
+            }
+
+            .description {
+                max-width: 299px;
+                margin-bottom: 24px;
+            }
+        }
+
+        .market-wrapper {
+            display: flex;
+            justify-content: space-around;
+
+            img {
+                max-width: 138px;
+                height: auto;
+                -webkit-transition: all .3s;
+                -moz-transition: all .3s;
+                -ms-transition: all .3s;
+                -o-transition: all .3s;
+                transition: all .3s;
+
+                &:hover {
+                    -webkit-transform: scale(1.2, 1.2);
+                    -moz-transform: scale(1.2, 1.2);
+                    -ms-transform: scale(1.2, 1.2);
+                    -o-transform: scale(1.2, 1.2);
+                    transform: scale(1.2, 1.2);
+                }
+            }
+        }
+    }
+}
