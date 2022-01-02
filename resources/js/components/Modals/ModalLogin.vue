@@ -132,7 +132,12 @@ export default {
                 fd.set('email', user.email);
                 fd.set('password', this.password);
                 fd.set('remember', false);
-                axios.post('/login', fd)
+                const userLogin = {
+                    email: user.email,
+                    password: this.password,
+                    remember: false
+                }
+                axios.post('/login', userLogin)
                     .then(res => {
                         console.log('localLogin', res)
                         if (res.status === 204)
@@ -142,7 +147,7 @@ export default {
                         console.log('localLogin err', err.response.data)
                         if (err.response.data.errors.email[0].includes('These credentials do not match our records.'))
                             this.localRegistration(user)
-                        else alert(err.response.data.toString())
+                        else alert('Что-то пошло не так, попробуйте позже')
                     })
                     .finally(() => {
                         this.loading = false
@@ -157,8 +162,8 @@ export default {
             const fd = new FormData()
             fd.set('name', user.full_name)
             fd.set('email', user.email)
-            fd.set('password', 'password')
-            fd.set('password_confirmation', 'password')
+            fd.set('password', this.password)
+            fd.set('password_confirmation', this.password)
             axios.post('/register', fd)
                 .then(res => {
                     console.log('localRegistration', res)
@@ -166,8 +171,8 @@ export default {
                         window.location.href = '/home'
                 })
                 .catch(err => {
-                    console.log('localRegistration err', err)
-                    alert(err.response.data.toString())
+                    console.log('localRegistration err', err.response.data)
+                    alert('Что-то пошло не так, попробуйте позже')
                 })
                 .finally(() => {
                     this.loading = false
