@@ -30,11 +30,11 @@
                     </button>
                 @else
                     <a
-                        href="/home"
+                        href="{{route('user-page')}}"
                         class="header-btn"
                     >
                         <img class="profile-icon" src="{{asset('/images/ic-profile.png')}}" alt="profile">
-                        <span class="profile-title">Кабинет</span>
+                        <span class="profile-title">{{Auth::user()->name}}</span>
                     </a>
                 @endguest
                 <a class="header-btn" href="/">

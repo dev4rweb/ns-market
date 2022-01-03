@@ -14,8 +14,15 @@
 @import "pages-parts/home-page/advantage/advantage";
 @import "pages-parts/home-page/reviews/reviews";
 @import "pages-parts/home-page/mobile-hands/mobile-hands";
+@import "pages-parts/user-page/user-panel";
 
 @import "modals/login/login-modal";
+
+#app {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh;
+}
 
 .btn {
     -webkit-border-radius: 8px;
@@ -31,7 +38,8 @@
         color: white;
     }
 }
-.btn-outline-info:not(:disabled):not(.disabled).active{
+
+.btn-outline-info:not(:disabled):not(.disabled).active {
     background-color: $nsBlue;
     border-color: $nsBlue;
 }
@@ -43,7 +51,11 @@
     color: white;
 }
 
-.form-group-blue{
+.btn-secondary {
+    background-color: #60829F;
+}
+
+.form-group-blue {
     label {
         color: $nsBlue;
         font-style: normal;
@@ -58,8 +70,84 @@
     }
 }
 
-.invalid-feedback{
+.invalid-feedback {
     font-weight: 400;
     font-size: 18px;
     line-height: 20px;
+}
+
+.user-sidebar {
+    list-style: none;
+    padding-left: 0;
+
+    li {
+        margin-bottom: 8px;
+
+        a {
+            text-decoration: none;
+            font-style: normal;
+            font-weight: 600;
+            font-size: 24px;
+            line-height: 29px;
+            color: $textSubColor;
+            -webkit-transition: all .3s;
+            -moz-transition: all .3s;
+            -ms-transition: all .3s;
+            -o-transition: all .3s;
+            transition: all .3s;
+
+            &:hover {
+                color: $nsBlue;
+            }
+        }
+    }
+}
+
+.news-card {
+    box-shadow: 4px 4px 14px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-direction: row;
+    margin-bottom: 25px;
+    padding: 24px;
+    @media screen and (max-width: 768px){
+        flex-wrap: wrap;
+    }
+
+    .img-preview {
+        width: 100%;
+        max-width: 185px;
+        height: auto;
+    }
+
+    .news-content {
+        width: 100%;
+        max-width: 600px;
+
+        p{
+            font-style: normal;
+            font-weight: normal;
+            font-size: 18px;
+            line-height: 22px;
+        }
+    }
+
+    .btn-wrapper {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 23px;
+
+        .btn-outline-info {
+            color: $nsBlue;
+            width: 100%;
+            max-width: 185px;
+
+            &:hover, &.active, &:active, &:focus {
+                background-color: $nsBlue;
+                color: white;
+            }
+        }
+    }
 }

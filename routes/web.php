@@ -5,6 +5,7 @@ use App\Http\Controllers\CatalogPageController;
 use App\Http\Controllers\ContactsPageController;
 use App\Http\Controllers\HomePageController;
 use App\Http\Controllers\StockPageController;
+use App\Http\Controllers\UserPageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,6 +27,7 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/admin-panel', [AdminPageController::class, 'index'])->name('admin-page');
+Route::get('/user-panel', [UserPageController::class, 'index'])->name('user-page');
 Route::get('/', [HomePageController::class, 'index'])->name('home-page');
 Route::get('/catalog', [CatalogPageController::class, 'index'])->name('catalog-page');
 Route::get('/stock', [StockPageController::class, 'index'])->name('stock-page');

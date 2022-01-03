@@ -1,0 +1,80 @@
+@import "../../variables";
+
+.user-panel {
+    //background-color: #b9b9b9;
+    height: 100%;
+
+    .container {
+        display: grid;
+        grid-template-columns: 220px 850px;
+        justify-content: space-between;
+        padding-top: 25px;
+        @media screen and (max-width: 1200px){
+            grid-template-columns: 220px auto;
+        }
+        @media screen and (max-width: 768px){
+            grid-template-columns: auto;
+        }
+
+        aside {
+            width: 100%;
+            max-width: 220px;
+
+            .profile-block {
+
+                .avatar-block {
+                    position: relative;
+                    max-width: 165px;
+
+                    .add-photo {
+                        position: absolute;
+                        right: 7px;
+                        bottom: 7px;
+                        -webkit-transition: all .3s;
+                        -moz-transition: all .3s;
+                        -ms-transition: all .3s;
+                        -o-transition: all .3s;
+                        transition: all .3s;
+
+                        &:hover {
+                            cursor: pointer;
+                            -webkit-transform: scale(1.2, 1.2);
+                            -moz-transform: scale(1.2, 1.2);
+                            -ms-transform: scale(1.2, 1.2);
+                            -o-transform: scale(1.2, 1.2);
+                            transform: scale(1.2, 1.2);
+                        }
+                    }
+                }
+
+                h2 {
+                    color: $textMainColor;
+                    font-style: normal;
+                    font-weight: 600;
+                    font-size: 32px;
+                    line-height: 39px;
+                }
+
+                p {
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 20px;
+                    line-height: 24px;
+                }
+            }
+        }
+
+        .user-content {
+            width: 100%;
+            max-width: 850px;
+
+            h3{
+                color: $textMainColor;
+                font-style: normal;
+                font-weight: 600;
+                font-size: 24px;
+                line-height: 29px;
+            }
+        }
+    }
+}

@@ -141,7 +141,7 @@ export default {
                     .then(res => {
                         console.log('localLogin', res)
                         if (res.status === 204)
-                            window.location.href = '/home'
+                            window.location.href = '/user-panel'
                     })
                     .catch(err => {
                         console.log('localLogin err', err.response.data)
@@ -160,15 +160,21 @@ export default {
             this.loading = true
             console.log('localRegistration', user)
             const fd = new FormData()
-            fd.set('name', user.full_name)
+            fd.set('user_id', user.id)
+            fd.set('name', user.name)
             fd.set('email', user.email)
+            fd.set('first_name', user.first_name)
+            fd.set('last_name', user.last_name)
+            fd.set('middle_name', user.middle_name)
+            fd.set('mobile_phone', user.mobile_phone)
             fd.set('password', this.password)
             fd.set('password_confirmation', this.password)
+            fd.set('type', user.type)
             axios.post('/register', fd)
                 .then(res => {
                     console.log('localRegistration', res)
                     if (res.status === 201)
-                        window.location.href = '/home'
+                        window.location.href = '/user-panel'
                 })
                 .catch(err => {
                     console.log('localRegistration err', err.response.data)
