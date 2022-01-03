@@ -5,6 +5,11 @@
         novalidate
     >
         <Loader v-if="loading"/>
+        <p
+            class="description"
+        >
+            {{description}}
+        </p>
         <div class="form-group form-group-blue">
             <label>
                 Ваш номер телефона или ID
@@ -75,7 +80,8 @@ export default {
             isPasswordInValid: false,
             loading: false,
             isPasswordShow: false,
-            user: null
+            user: null,
+            description: 'Войдите или зарегистрируйтесь, чтобы использовать все возможности New Star Market.'
         }
     },
     methods: {
@@ -109,8 +115,17 @@ export default {
                         console.log('login', res)
                         if (res.data.success) {
                             if (res.data.model) {
-                                this.user = res.data.model;
-                                this.isPasswordShow = true;
+                                if (res.data.model.length === 1) {
+                                    this.user = res.data.model[0];
+                                    this.isPasswordShow = true;
+                                    const firstName = this.user.first_name ?? this.user.name
+                                    const middleName = this.user.middle_name ?? ''
+                                    this.description = `Здравствуйте, ${firstName} ${middleName}`
+                                } else {
+                                    this.phone = '+7'
+                                    this.description = 'Авторизуйтесь с помощью ID'
+                                    return
+                                }
                             }
                         } else {
                             this.isPhoneInValid = true

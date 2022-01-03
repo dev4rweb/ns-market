@@ -6,8 +6,9 @@
 
     .container {
         display: grid;
-        grid-template-columns: 220px 850px;
+        grid-template-columns: 220px 1fr;
         justify-content: space-between;
+        grid-column-gap: 30px;
         padding-top: 25px;
         @media screen and (max-width: 1200px){
             grid-template-columns: 220px auto;

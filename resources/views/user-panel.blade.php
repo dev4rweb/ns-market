@@ -36,6 +36,7 @@
                         </a>
                     </li>
                 </ul>
+                <physical-person></physical-person>
             </aside>
             <div class="user-content">
                 <div class="row">

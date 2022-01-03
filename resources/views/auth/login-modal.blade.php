@@ -17,7 +17,6 @@
                 <div class="modal-wrapper">
                     <img src={{asset('images/logo-market.svg')}} alt="">
                     <h4>Вход и регистрация</h4>
-                    <p class="description">Войдите или зарегистрируйтесь, чтобы использовать все возможности New Star Market.</p>
                     <modal-login></modal-login>
                 </div>
                 <p style="text-align: center;">

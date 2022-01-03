@@ -25,6 +25,7 @@ Vue.component('reviews-carousel', require('./components/ReviewsCarousel').defaul
 Vue.component('modal-login', require('./components/Modals/ModalLogin.vue').default);
 Vue.component('loader', require('./components/UI/Loader').default);
 Vue.component('users', require('./components/Users/Users').default);
+Vue.component('physicalPerson', require('./components/Users/PhysicalPerson').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
