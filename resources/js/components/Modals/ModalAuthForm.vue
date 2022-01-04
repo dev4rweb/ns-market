@@ -16,6 +16,7 @@
         />
         <MentorPhoneForm
             v-if="isShowMentorPhoneForm"
+            @getMentor="getMentor"
         />
         <LoginByIdForm
             v-if="isShowLoginByIdForm"
@@ -35,8 +36,8 @@ export default {
         return {
             isShowLoginWithPhone: false,
             isShowRegisterLoginForm: false,
-            isShowRegisterForm: true,
-            isShowMentorPhoneForm: false,
+            isShowRegisterForm: false,
+            isShowMentorPhoneForm: true,
             isShowLoginByIdForm: false,
             user: null,
             phoneInput: '+380682168881'
@@ -70,6 +71,9 @@ export default {
         },
         registerUser(newUser) {
             console.log('registerUser', newUser)
+        },
+        getMentor(userMentor) {
+            console.log('getMentor', userMentor)
         }
     },
     components: {
