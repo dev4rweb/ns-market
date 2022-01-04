@@ -17,7 +17,8 @@
                 <div class="modal-wrapper">
                     <img src={{asset('images/logo-market.svg')}} alt="">
                     <h4>Вход и регистрация</h4>
-                    <modal-login></modal-login>
+                    <modal-auth-form></modal-auth-form>
+{{--                    <modal-login></modal-login>--}}
                 </div>
                 <p style="text-align: center;">
                     Установите приложение New Star Market для быстрого доступа к каталогу на вашем мобильном устройстве.

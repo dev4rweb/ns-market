@@ -1,121 +1,125 @@
 <template>
-    <form
-        @submit.prevent="login"
-        class="needs-validation login-form "
-        novalidate
-    >
+    <div>
         <Loader v-if="loading"/>
-        <p
-            class="description"
+        <LoginWithPhone />
+<!--        <form
+            @submit.prevent="login"
+            class="needs-validation login-form "
+            novalidate
         >
-            {{ description }}
-        </p>
-        <div class="form-group form-group-blue">
-            <label>
-                Ваш номер телефона или ID
-            </label>
-            <input
-                type="tel"
-                class="form-control form-control-lg"
-                :class="{borderRed: isPhoneInValid || isPasswordInValid}"
-                v-model="phone"
-                @input="isPhoneInValid = false"
-                required
+            <p
+                class="description"
             >
-            <div
-                class="invalid-feedback"
-                :class="{show: isPhoneInValid}"
-            >
-                Мы не нашли человека с таким номером телефона в нашей базе. Проверьте правильность введённых данных и
-                повторите попытку.
+                {{ description }}
+            </p>
+            <div class="form-group form-group-blue">
+                <label>
+                    Ваш номер телефона или ID
+                </label>
+                <input
+                    type="tel"
+                    class="form-control form-control-lg"
+                    :class="{borderRed: isPhoneInValid || isPasswordInValid}"
+                    v-model="phone"
+                    @input="isPhoneInValid = false"
+                    required
+                >
+                <div
+                    class="invalid-feedback"
+                    :class="{show: isPhoneInValid}"
+                >
+                    Мы не нашли человека с таким номером телефона в нашей базе. Проверьте правильность введённых данных и
+                    повторите попытку.
+                </div>
             </div>
-        </div>
-        <div
-            class="form-group form-group-blue"
-            v-if="isPasswordShow"
-        >
-            <label>
-                Ваш пароль
-            </label>
-            <input
-                type="password"
-                class="form-control form-control-lg"
-                :class="{borderRed: isPasswordInValid}"
-                @input="isPasswordInValid = false"
-                v-model="password"
-            >
             <div
-                class="invalid-feedback"
-                :class="{show: isPasswordInValid}"
+                class="form-group form-group-blue"
+                v-if="isPasswordShow"
             >
-                Ошибка в номере телефона или пароле. Проверьте правильность данных и повторите попытку.
+                <label>
+                    Ваш пароль
+                </label>
+                <input
+                    type="password"
+                    class="form-control form-control-lg"
+                    :class="{borderRed: isPasswordInValid}"
+                    @input="isPasswordInValid = false"
+                    v-model="password"
+                >
+                <div
+                    class="invalid-feedback"
+                    :class="{show: isPasswordInValid}"
+                >
+                    Ошибка в номере телефона или пароле. Проверьте правильность данных и повторите попытку.
+                </div>
             </div>
-        </div>
-        <div
-            class="form-group form-group-blue"
-            v-if="isSmsShow"
-        >
-            <label>
-                Введите пароль из SMS
-            </label>
-            <input
-                type="text"
-                class="form-control form-control-lg text-center"
-                :class="{borderRed: isSmsInValid}"
-                @input="isSmsInValid = false"
-                v-model="sms"
-            >
             <div
-                class="invalid-feedback"
-                :class="{show: isSmsInValid}"
+                class="form-group form-group-blue"
+                v-if="isSmsShow"
             >
-                Неверный sms
+                <label>
+                    Введите пароль из SMS
+                </label>
+                <input
+                    type="text"
+                    class="form-control form-control-lg text-center"
+                    :class="{borderRed: isSmsInValid}"
+                    @input="isSmsInValid = false"
+                    v-model="sms"
+                >
+                <div
+                    class="invalid-feedback"
+                    :class="{show: isSmsInValid}"
+                >
+                    Неверный sms
+                </div>
             </div>
-        </div>
-        <button
-            v-if="isPhoneConfirm"
-            type="button"
-            class="btn btn-lg btn-primary"
-            @click="checkPhoneChanged"
-        >
-            Подтвердить
-        </button>
-        <button
-            v-if="!isPhoneConfirm && !isSmsShow"
-            type="submit"
-            class="btn btn-lg btn-primary"
-        >
-            Продолжить
-        </button>
-        <button
-            v-if="!isPhoneConfirm && !isSmsShow"
-            type="button"
-            class="btn btn-lg btn-link"
-            data-dismiss="modal"
-        >
-            Позже
-        </button>
-        <button
-            v-if="isSmsShow"
-            type="button"
-            class="btn btn-lg btn-primary"
-            @click="loginWithSms"
-        >
-            Продолжить
-        </button>
-        <button
-            v-if="isSmsShow"
-            type="button"
-            @click="resendSms"
-            class="btn btn-lg btn-link"
-        >
-            Отправить СМС повторно
-        </button>
-    </form>
+            <button
+                v-if="isPhoneConfirm"
+                type="button"
+                class="btn btn-lg btn-primary"
+                @click="checkPhoneChanged"
+            >
+                Подтвердить
+            </button>
+            <button
+                v-if="!isPhoneConfirm && !isSmsShow"
+                type="submit"
+                class="btn btn-lg btn-primary"
+            >
+                Продолжить
+            </button>
+            <button
+                v-if="!isPhoneConfirm && !isSmsShow"
+                type="button"
+                class="btn btn-lg btn-link"
+                data-dismiss="modal"
+            >
+                Позже
+            </button>
+            <button
+                v-if="isSmsShow"
+                type="button"
+                class="btn btn-lg btn-primary"
+                @click="loginWithSms"
+            >
+                Продолжить
+            </button>
+            <button
+                v-if="isSmsShow"
+                type="button"
+                @click="resendSms"
+                class="btn btn-lg btn-link"
+            >
+                Отправить СМС повторно
+            </button>
+        </form>-->
+    </div>
 </template>
 
 <script>
 import Loader from "../UI/Loader";
+import LoginWithPhone from "./LoginWithPhone";
 
 export default {
     name: "ModalLogin",
@@ -166,7 +170,7 @@ export default {
                 if (this.phone.length > 8)
                     fd.set('phone', this.phone.slice(1, this.phone.length))
                 else fd.set('user_id', this.phone)
-                axios.post(`${stagingHost}market/get-user-phone`, fd)
+                axios.post(`${localHost}market/get-user-phone`, fd)
                     .then(res => {
                         console.log('login', res)
                         if (res.data.success) {
@@ -228,8 +232,18 @@ export default {
             }
         },
         loginWithSms() {
+            const localHost = 'http://127.0.0.1:8001/api/'
+            const productionHost = 'https://admin.newstarmlm.biz/api/'
+            const stagingHost = 'http://staging-admin.newstarmlm.biz/api/'
             console.log('loginWithSms')
-            alert('Программист в поте своего немолодого лица трудиться над этой функцией :-)')
+            // alert('Программист в поте своего немолодого лица трудиться над этой функцией :-)')
+            axios.post(`${localHost}market/send-user-sms`, {
+                user_id: this.user.id
+            }).then(res => {
+                console.log('loginWithSms res', res)
+            }).catch(err => {
+                console.log('loginWithSms err', err)
+            });
         },
         resendSms() {
             console.log('resendSms')
@@ -300,7 +314,8 @@ export default {
         console.log('Modal Login')
     },
     components: {
-        Loader
+        Loader,
+        LoginWithPhone
     }
 }
 </script>

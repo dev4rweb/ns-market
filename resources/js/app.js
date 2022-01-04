@@ -23,6 +23,12 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 Vue.component('advantage-cards', require('./components/AdvantageCard').default);
 Vue.component('reviews-carousel', require('./components/ReviewsCarousel').default);
 Vue.component('modal-login', require('./components/Modals/ModalLogin.vue').default);
+Vue.component('modal-auth-form', require('./components/Modals/ModalAuthForm').default);
+Vue.component('login-with-phone', require('./components/Modals/LoginWithPhone').default);
+Vue.component('register-login-form', require('./components/Modals/RegisterLoginForm').default);
+Vue.component('register-login-form', require('./components/Modals/RegisterForm').default);
+Vue.component('mentor-phone-form', require('./components/Modals/MentorPhoneForm').default);
+Vue.component('login-by-id-form', require('./components/Modals/LoginByIdForm').default);
 Vue.component('loader', require('./components/UI/Loader').default);
 Vue.component('users', require('./components/Users/Users').default);
 Vue.component('physicalPerson', require('./components/Users/PhysicalPerson').default);
