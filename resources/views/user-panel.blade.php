@@ -16,7 +16,8 @@
                     <h2>
                         {{Auth::user()->first_name}} {{Auth::user()->last_name}}
                     </h2>
-                    <p>ID: {{Auth::user()->user_id}} <br>Статус: {{Auth::user()->type}}</p>
+{{--                    <p>ID: {{Auth::user()->user_id}} <br>Статус: {{Auth::user()->type}}</p>--}}
+                    <physical-person></physical-person>
                     <button
                         class="btn btn-secondary"
                     >
@@ -32,11 +33,10 @@
                     <li><a href="{{ route('logout') }}"
                            onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();">
-                            {{ __('Logout') }}
+                            Выйти
                         </a>
                     </li>
                 </ul>
-                <physical-person></physical-person>
             </aside>
             <div class="user-content">
                 <div class="row">

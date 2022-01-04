@@ -8,7 +8,7 @@
         <p
             class="description"
         >
-            {{description}}
+            {{ description }}
         </p>
         <div class="form-group form-group-blue">
             <label>
@@ -51,18 +51,65 @@
                 Ошибка в номере телефона или пароле. Проверьте правильность данных и повторите попытку.
             </div>
         </div>
+        <div
+            class="form-group form-group-blue"
+            v-if="isSmsShow"
+        >
+            <label>
+                Введите пароль из SMS
+            </label>
+            <input
+                type="text"
+                class="form-control form-control-lg text-center"
+                :class="{borderRed: isSmsInValid}"
+                @input="isSmsInValid = false"
+                v-model="sms"
+            >
+            <div
+                class="invalid-feedback"
+                :class="{show: isSmsInValid}"
+            >
+                Неверный sms
+            </div>
+        </div>
         <button
+            v-if="isPhoneConfirm"
+            type="button"
+            class="btn btn-lg btn-primary"
+            @click="checkPhoneChanged"
+        >
+            Подтвердить
+        </button>
+        <button
+            v-if="!isPhoneConfirm && !isSmsShow"
             type="submit"
             class="btn btn-lg btn-primary"
         >
             Продолжить
         </button>
         <button
+            v-if="!isPhoneConfirm && !isSmsShow"
             type="button"
             class="btn btn-lg btn-link"
             data-dismiss="modal"
         >
             Позже
+        </button>
+        <button
+            v-if="isSmsShow"
+            type="button"
+            class="btn btn-lg btn-primary"
+            @click="loginWithSms"
+        >
+            Продолжить
+        </button>
+        <button
+            v-if="isSmsShow"
+            type="button"
+            @click="resendSms"
+            class="btn btn-lg btn-link"
+        >
+            Отправить СМС повторно
         </button>
     </form>
 </template>
@@ -75,19 +122,28 @@ export default {
     data() {
         return {
             phone: '+7',
+            isPhoneConfirm: false,
             isPhoneInValid: false,
             password: '',
             isPasswordInValid: false,
+            isSmsInValid: false,
+            sms: '_ _ _ _',
             loading: false,
             isPasswordShow: false,
+            loginType: null,
             user: null,
+            isSmsShow: false,
             description: 'Войдите или зарегистрируйтесь, чтобы использовать все возможности New Star Market.'
         }
     },
     methods: {
         login() {
             if (this.user) {
-                this.localLogin(this.user);
+                if (this.loginType === 1) {
+                    this.confirmPhone()
+                } else {
+                    this.localLogin(this.user);
+                }
             } else {
                 this.getUser()
             }
@@ -115,16 +171,25 @@ export default {
                         console.log('login', res)
                         if (res.data.success) {
                             if (res.data.model) {
-                                if (res.data.model.length === 1) {
-                                    this.user = res.data.model[0];
+                                this.loginType = res.data.loginType
+                                if (res.data.loginType === 1) {
+                                    this.user = res.data.model;
                                     this.isPasswordShow = true;
                                     const firstName = this.user.first_name ?? this.user.name
                                     const middleName = this.user.middle_name ?? ''
                                     this.description = `Здравствуйте, ${firstName} ${middleName}`
                                 } else {
-                                    this.phone = '+7'
-                                    this.description = 'Авторизуйтесь с помощью ID'
-                                    return
+                                    if (res.data.model.length === 1) {
+                                        this.user = res.data.model[0];
+                                        this.isPasswordShow = true;
+                                        const firstName = this.user.first_name ?? this.user.name
+                                        const middleName = this.user.middle_name ?? ''
+                                        this.description = `Здравствуйте, ${firstName} ${middleName}`
+                                    } else {
+                                        this.phone = ''
+                                        this.description = 'Введённый номер телефона не зарегистрирован в базе пользователей. Авторизуйтесь с помощью Вашего ID.'
+                                        return
+                                    }
                                 }
                             }
                         } else {
@@ -138,6 +203,37 @@ export default {
                         this.loading = false
                     });
             }
+        },
+        confirmPhone() {
+            console.log('confirmPhone')
+            if (this.user) {
+                this.phone = `+${this.user.mobile_phone}`
+                this.description = 'Проверьте, а в случае необходимости измените Ваш номер телефона'
+                this.isPhoneConfirm = true
+            }
+        },
+        checkPhoneChanged() {
+            console.log('checkPhoneChanged')
+            if (!this.phone.trim() || this.phone.length < 8) {
+                this.description = 'Некорректный номер телефона'
+                return
+            }
+            if (this.phone === `+${this.user.mobile_phone}`)
+                this.localLogin(this.user);
+            else {
+                this.description = 'На указанный номер отправлено SMS-сообщение с временным паролем. Его можно изменить позже в Личном кабинете.'
+                this.isPasswordShow = false
+                this.isPhoneConfirm = false
+                this.isSmsShow = true
+            }
+        },
+        loginWithSms() {
+            console.log('loginWithSms')
+            alert('Программист в поте своего немолодого лица трудиться над этой функцией :-)')
+        },
+        resendSms() {
+            console.log('resendSms')
+            alert('Программист и над этой функцией тоже старается :-)')
         },
         localLogin(user) {
             if (this.password.length > 3) {

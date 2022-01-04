@@ -1,22 +1,28 @@
 <template>
     <div>
         <Loader v-if="loading"/>
-        <span class="d-none">Physical Person Component</span>
+        <p v-if="physicalPerson">
+            ID: {{physicalPerson.user_id}}
+            <br>Статус: {{physicalPerson.user_type}}
+        </p>
     </div>
 </template>
 
 <script>
 import Loader from "../UI/Loader";
+
 export default {
     name: "PhysicalPerson",
-    data(){
+    data() {
         return {
             currentUser: null,
+            physicalPerson: null,
             loading: false
         }
     },
     methods: {
         getPhysicalPerson() {
+            this.loading = true
             const localHost = 'http://127.0.0.1:8001/api/'
             const productionHost = 'https://admin.newstarmlm.biz/api/'
             const stagingHost = 'http://staging-admin.newstarmlm.biz/api/'
@@ -25,8 +31,12 @@ export default {
                     user_id: this.currentUser.user_id
                 }).then(res => {
                     console.log('getPhysicalPerson', res)
+                    if (res.data.model)
+                        this.physicalPerson = res.data.model
                 }).catch(err => {
                     console.log('getPhysicalPerson err', err)
+                }).finally(() => {
+                    this.loading = false
                 });
             } else {
                 console.log('current user - ', this.currentUser)
