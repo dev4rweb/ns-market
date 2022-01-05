@@ -32,6 +32,7 @@
 
 .btn-outline-info {
     border-color: $nsBlue;
+    color: $nsBlue;
 
     &:hover, &.active, &:active, &:focus {
         background-color: $nsBlue;

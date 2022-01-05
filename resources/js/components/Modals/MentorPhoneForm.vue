@@ -20,34 +20,35 @@
             <input
                 type="tel"
                 class="form-control form-control-lg"
-                :class="{borderRed: isPhoneInValid}"
-                v-model="phone"
-                @input="isPhoneInValid = false"
+                :class="{borderRed: isMentorPhoneInValid}"
+                v-model="phoneMentor"
+                @input="isMentorPhoneInValid = false"
                 required
             >
             <div
                 class="invalid-feedback"
-                :class="{show: isPhoneInValid}"
+                :class="{show: isMentorPhoneInValid}"
             >
                 Некорректный номер телефона
             </div>
         </div>
         <button
             type="submit"
-            class="btn btn-lg btn-primary mb-3"
+            class="btn btn-lg btn-info mb-3"
         >
             Продолжить
         </button>
         <button
             type="button"
             class="btn btn-lg btn-outline-info mb-3"
+            @click="authUser"
         >
             Пропустить
         </button>
         <button
             type="button"
             class="btn btn-lg btn-link"
-            data-dismiss="modal"
+            @click="authUser"
         >
             Я не получал приглашения
         </button>
@@ -56,56 +57,56 @@
 
 <script>
 import Loader from "../UI/Loader";
+import {WORK_HOST} from "../api/admin/user";
+
 export default {
     name: "MentorPhoneForm",
     data() {
         return {
             loading: false,
-            isPhoneInValid: false,
-            phone: '+7',
+            isMentorPhoneInValid: false,
+            phoneMentor: '+7',
         }
     },
     methods: {
         findMentorByPhone() {
-
-            if (this.phone.length < 12 && this.phone.length > 13) {
-                this.isPhoneInValid = true;
+            if (this.phoneMentor.length < 12 || this.phoneMentor.length > 13) {
+                this.isMentorPhoneInValid = true;
                 return
             }
-            console.log('findMentorByPhone', this.phone.length)
-            const testHost = 'http://solvik.dev4rweb.com/api/users'
-            const localHost = 'http://127.0.0.1:8001/api/'
-            const productionHost = 'https://admin.newstarmlm.biz/api/'
-            const stagingHost = 'http://staging-admin.newstarmlm.biz/api/'
-            const testProducts = 'http://staging-admin.newstarmlm.biz/api/customer-order/products'
-            const testComments = 'http://staging-admin.newstarmlm.biz/api/customer-order/collector'
-
-            if (!this.isPhoneInValid) {
+            console.log('findMentorByPhone', this.phoneMentor.length)
+            if (!this.isMentorPhoneInValid) {
                 console.log('findMentorByPhone request')
-                this.loading = true
-                const fd = new FormData();
-                // if (this.phone.length > 8)
-                    fd.set('phone', this.phone.slice(1, this.phone.length))
-                axios.post(`${localHost}market/get-user-phone`, fd)
-                    .then(res => {
-                        console.log('login', res)
-                        if (res.data.success) {
-                            this.$emit('getMentor', res.data.model)
-                        }
-                    })
-                    .catch(err => {
-                        console.log('login err', err.response.data)
-                        alert('Что-то пошло не так')
-                    })
-                    .finally(() => {
-                        this.loading = false
-                    });
+                 this.loading = true
+                 const fd = new FormData();
+                 // if (this.phone.length > 8)
+                     fd.set('phone', this.phoneMentor.slice(1, this.phoneMentor.length))
+
+                 axios.post(`${WORK_HOST}market/get-user-phone`, fd)
+                     .then(res => {
+                         console.log('login', res)
+                         if (res.data.success) {
+                             this.$emit('getMentor', res.data.model)
+                             this.authUser()
+                         }
+                     })
+                     .catch(err => {
+                         console.log('login err', err.response.data)
+                         alert('Что-то пошло не так')
+                     })
+                     .finally(() => {
+                         this.loading = false
+                     });
             }
+        },
+        authUser() {
+            console.log('authUser')
+            this.$emit('authUser')
         }
     },
     components: {
         Loader
-    }
+    },
 }
 </script>
 

@@ -42,6 +42,7 @@
 
 <script>
 import Loader from "../UI/Loader";
+import {WORK_HOST} from "../api/admin/user";
 export default {
     name: "LoginWithPhone",
     data() {
@@ -53,14 +54,8 @@ export default {
     },
     methods: {
         getUser() {
-            const testHost = 'http://solvik.dev4rweb.com/api/users'
-            const localHost = 'http://127.0.0.1:8001/api/'
-            const productionHost = 'https://admin.newstarmlm.biz/api/'
-            const stagingHost = 'http://staging-admin.newstarmlm.biz/api/'
-            const testProducts = 'http://staging-admin.newstarmlm.biz/api/customer-order/products'
-            const testComments = 'http://staging-admin.newstarmlm.biz/api/customer-order/collector'
 
-            if (this.phone.length < 12 && this.phone.length > 13) {
+            if (this.phone.length < 12 || this.phone.length > 13) {
                 this.isPhoneInValid = true;
                 return
             }
@@ -69,7 +64,7 @@ export default {
                 const fd = new FormData();
                 if (this.phone.length > 8)
                     fd.set('phone', this.phone.slice(1, this.phone.length))
-                axios.post(`${localHost}market/get-user-phone`, fd)
+                axios.post(`${WORK_HOST}market/get-user-phone`, fd)
                     .then(res => {
                         console.log('login', res)
                         if (res.data.success) {

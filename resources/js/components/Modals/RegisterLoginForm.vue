@@ -21,7 +21,7 @@
             @click="wantLoginById"
             class="btn btn-lg btn-link"
         >
-            У меня уже есть акаунт
+            У меня уже есть аккаунт
         </button>
     </div>
 </template>

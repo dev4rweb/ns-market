@@ -10365,7 +10365,8 @@ footer h3, footer .h3 {
   border-radius: 8px; }
 
 .btn-outline-info {
-  border-color: #038ED7; }
+  border-color: #038ED7;
+  color: #038ED7; }
   .btn-outline-info:hover, .btn-outline-info.active, .btn-outline-info:active, .btn-outline-info:focus {
     background-color: #038ED7;
     color: white; }

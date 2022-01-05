@@ -23,7 +23,7 @@
         </p>
         <div class="form-group form-group-blue">
             <label>
-                Ваш номер телефона или ID
+                Ваш номер телефона
             </label>
             <input
                 type="text"

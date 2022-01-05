@@ -60,7 +60,19 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+//            $user = User::findOrFail($id);
+            $user = User::where('user_id', $id)->first();
+            $user->update($request->all());
+            $response['success'] = true;
+            $response['message'] = 'User updated';
+            $response['model'] = $user;
+        } catch (\Exception $exception) {
+            $response['success'] = false;
+            $response['message'] = $exception->getMessage();
+        }
+
+        return response()->json($response);
     }
 
     /**
