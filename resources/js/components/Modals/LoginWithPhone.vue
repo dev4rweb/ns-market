@@ -15,6 +15,7 @@
                 class="form-control form-control-lg"
                 :class="{borderRed: isPhoneInValid}"
                 v-model="phone"
+                id="loginFormInput"
                 @input="isPhoneInValid = false"
                 required
             >
@@ -86,7 +87,7 @@ export default {
     },
     components: {
         Loader
-    }
+    },
 }
 </script>
 

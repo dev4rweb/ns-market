@@ -24,6 +24,7 @@
                         class="header-btn"
                         data-toggle="modal"
                         data-target="#loginModal"
+                        onclick="setTimeout(()=>{document.getElementById('loginFormInput').focus()}, 1000);"
                     >
                         <img class="profile-icon" src="{{asset('/images/ic-profile.png')}}" alt="profile">
                         <span class="profile-title">Войти</span>

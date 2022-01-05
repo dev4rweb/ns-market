@@ -30,6 +30,7 @@
                 class="form-control form-control-lg text-center"
                 :class="{borderRed: isSmsInValid}"
                 placeholder="_ _ _ _"
+                ref="focusMe"
                 v-model="pinCode"
                 @input="isSmsInValid = false"
                 required
@@ -113,6 +114,9 @@ export default {
     },
     mounted() {
         this.sendSms()
+        setTimeout(() => {
+            this.$refs.focusMe.focus();
+        }, 500);
     }
 }
 </script>

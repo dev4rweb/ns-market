@@ -28,6 +28,7 @@
             </label>
             <input
                 type="password"
+                ref="focusMe"
                 class="form-control form-control-lg"
                 :class="{borderRed: isPasswordInValid}"
                 v-model="password"
@@ -62,7 +63,7 @@
 import Loader from "../UI/Loader";
 export default {
     name: "WelcomePasswordForm",
-    props: ['user'],
+    props: ['user', 'isNeedToConfirmForm'],
     data() {
         return {
             loading: false,
@@ -73,33 +74,37 @@ export default {
     },
     methods: {
         welcomeLogin() {
-            console.log('welcomeLogin')
-            if (this.password.length > 3) {
-                this.loading = true;
-                console.log('localLogin', this.user);
-                const userLogin = {
-                    email: this.user.email,
-                    password: this.password,
-                    remember: false
+            if (!this.isNeedToConfirmForm) {
+                if (this.password.length > 3) {
+                    this.loading = true;
+                    console.log('localLogin', this.user);
+                    const userLogin = {
+                        email: this.user.email,
+                        password: this.password,
+                        remember: false
+                    }
+                    axios.post('/login', userLogin)
+                        .then(res => {
+                            console.log('localLogin', res)
+                            if (res.status === 204)
+                                window.location.href = '/user-panel'
+                        })
+                        .catch(err => {
+                            console.log('localLogin err', err.response.data)
+                            if (err.response.data.errors.email[0].includes('These credentials do not match our records.'))
+                                this.localRegistration(this.user)
+                            else alert('Что-то пошло не так, попробуйте позже')
+                        })
+                        .finally(() => {
+                            this.loading = false
+                        });
+                } else {
+                    this.isPasswordInValid = true
                 }
-                axios.post('/login', userLogin)
-                    .then(res => {
-                        console.log('localLogin', res)
-                        if (res.status === 204)
-                            window.location.href = '/user-panel'
-                    })
-                    .catch(err => {
-                        console.log('localLogin err', err.response.data)
-                        if (err.response.data.errors.email[0].includes('These credentials do not match our records.'))
-                            this.localRegistration(this.user)
-                        else alert('Что-то пошло не так, попробуйте позже')
-                    })
-                    .finally(() => {
-                        this.loading = false
-                    });
             } else {
-                this.isPasswordInValid = true
+                this.$emit('needConfirmPhone')
             }
+            console.log('welcomeLogin');
         },
         localRegistration(user) {
             this.loading = true
@@ -143,6 +148,9 @@ export default {
     },
     mounted() {
         this.phone = `+${this.user.mobile_phone}`
+        setTimeout(() => {
+            this.$refs.focusMe.focus();
+        }, 500);
     },
     components: {
         Loader

@@ -7,7 +7,9 @@
         <WelcomePasswordForm
             v-if="isShowWelcomePasswordForm"
             :user="user"
+            :is-need-to-confirm-form="isNeedToConfirmPhone"
             @showLoginWithPhone="showLoginWithPhone"
+            @needConfirmPhone="needConfirmPhone"
         />
         <RegisterLoginForm
             v-if="isShowRegisterLoginForm"
@@ -127,9 +129,15 @@ export default {
         },
         notUniquePhone(user) {
             console.log('notUniquePhone user', user)
+            this.isNeedToConfirmPhone = true
             this.user = user
             this.isShowNotUniquePhoneForm = false
+            this.isShowWelcomePasswordForm= true
+        },
+        needConfirmPhone() {
+            this.isShowWelcomePasswordForm= false
             this.isShowConfirmPhoneForm = true
+            this.isNeedToConfirmPhone = false
         }
     },
     components: {

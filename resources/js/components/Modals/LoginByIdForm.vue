@@ -14,6 +14,7 @@
                 class="form-control form-control-lg"
                 :class="{borderRed: isUserIdInValid}"
                 v-model="userId"
+                ref="focusMe"
                 @input="isUserIdInValid = false"
                 required
             >
@@ -82,6 +83,11 @@ export default {
     components: {
         Loader
     },
+    mounted() {
+        setTimeout(() => {
+            this.$refs.focusMe.focus();
+        }, 500);
+    }
 }
 </script>
 

@@ -22,6 +22,7 @@
                 class="form-control form-control-lg"
                 :class="{borderRed: isMentorPhoneInValid}"
                 v-model="phoneMentor"
+                ref="focusMe"
                 @input="isMentorPhoneInValid = false"
                 required
             >
@@ -107,6 +108,11 @@ export default {
     components: {
         Loader
     },
+    mounted() {
+        setTimeout(() => {
+            this.$refs.focusMe.focus();
+        }, 500);
+    }
 }
 </script>
 
