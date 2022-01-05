@@ -5,6 +5,7 @@
         novalidate
     >
         <Loader v-if="loading"/>
+        <h4 class="text-center">Вход и регистрация</h4>
         <div class="form-group form-group-blue">
             <label>
                 Ваш номер ID
@@ -22,7 +23,7 @@
                 class="invalid-feedback"
                 :class="{show: isUserIdInValid}"
             >
-                Некорректный номер ID
+                {{ error }}}
             </div>
         </div>
         <button
@@ -44,13 +45,15 @@
 <script>
 import Loader from "../UI/Loader";
 import {WORK_HOST} from "../api/admin/user";
+
 export default {
     name: "LoginByIdForm",
-    data(){
+    data() {
         return {
             loading: false,
             isUserIdInValid: false,
-            userId: ''
+            userId: '',
+            error: 'Некорректный номер ID',
         }
     },
     methods: {
@@ -69,7 +72,10 @@ export default {
                     if (res.data.success) {
                         this.$emit('loginById',
                             res.data.model
-                        )
+                        );
+                    } else {
+                        this.error = 'В базе не найден пользовать'
+                        this.isUserIdInValid = true
                     }
                 })
                 .catch(err => {

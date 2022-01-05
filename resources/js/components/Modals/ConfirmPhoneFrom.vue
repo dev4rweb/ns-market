@@ -5,10 +5,18 @@
         novalidate
     >
         <Loader v-if="loading"/>
+        <h4 class="text-center">Подтверждение номера телефона</h4>
         <p
+            v-if="!isSmsShow"
             class="description"
         >
             Проверьте, а в случае необходимости измените <br> Ваш номер телефона
+        </p>
+        <p
+            v-else
+            class="description"
+        >
+            На указанный номер телефона отправлено СМС с кодом
         </p>
         <div class="form-group form-group-blue">
             <label>
@@ -80,16 +88,18 @@
 
 <script>
 import Loader from "../UI/Loader";
+import {WORK_HOST} from "../api/admin/user";
+
 export default {
     name: "ConfirmPhoneFrom",
-    props: ['user'],
+    props: ['user', 'users'],
     data() {
         return {
             loading: false,
             phone: '+7',
             isPhoneInValid: false,
             isSmsShow: false,
-            sms:'',
+            sms: '',
             isSmsInValid: false
         }
     },
@@ -100,40 +110,79 @@ export default {
                     this.isSmsInValid = true
                     return
                 }
+                this.loading = true
                 console.log('update User', this.user);
-                axios.post(`/api/users/${this.user.id}`, {
+                console.log('update Users phone', this.users[0].mobile_phone);
+                axios.post(`${WORK_HOST}market/change-duplicate-phone`, {
+                    mobile_phone: this.users[0].mobile_phone,
+                    user_id: this.user.id,
+                    active_phone: this.phone
+                }).then(res => {
+                    console.log(res)
+                    if (res.data.success) {
+                        this.changeLocalPhone();
+                    } else {
+                        alert('Что-то пошло не по плану...')
+                    }
+                }).catch(err => {
+                    console.log(err)
+                }).finally(() => {
+                    this.loading = false
+                });
+
+            } else {
+                this.sendSms(this.phone)
+            }
+        },
+        changeLocalPhone() {
+            axios.post(`/api/users/${this.user.id}`, {
                     _method: 'PUT',
-                    mobile_phone: this.user.mobile_phone,
+                    mobile_phone: this.phone,
                 }).then(res => {
                     console.log('updateUser res', res)
-                    if (res.data.success) {
-                        const updatedUser = res.data.model
-                        this.$emit('phoneConfirmed', updatedUser)
-                    }
+                if (res.data.success) {
+                    const updatedUser = res.data.model;
+                    this.$emit('phoneConfirmed', updatedUser);
+                } else {
+                    this.user.mobile_phone = this.phone
+                    this.$emit('phoneConfirmed', this.user);
+                }
                 }).catch(err => {
                     console.log('updateUser err', err)
                 });
-            } else {
-                this.sendSms()
-            }
         },
         sendSms(phoneNumber) {
             this.loading = true
             console.log('sendSms', phoneNumber)
-            setTimeout(() => {
+            /*setTimeout(() => {
                 setTimeout(() => {
                     this.$refs.focusMeToo.focus();
                 }, 500);
                 this.isSmsShow = true
-                this.loading =false
-            }, 2000);
+                this.loading = false
+            }, 2000);*/
+            axios.post(`${WORK_HOST}market/send-user-sms`, {
+                user_id: this.user.id
+            }).then(res => {
+                console.log('loginWithSms res', res)
+                setTimeout(() => {
+                    this.$refs.focusMeToo.focus();
+                }, 500);
+                this.isSmsShow = true
+                this.loading = false
+            }).catch(err => {
+                console.log('loginWithSms err', err)
+            }).finally(() => {
+                this.loading = false
+            });
+
         }
     },
     components: {
         Loader
     },
     mounted() {
-        this.phone = this.user.mobile_phone
+        this.phone = `+${this.user.mobile_phone}`
         setTimeout(() => {
             this.$refs.focusMe.focus();
         }, 500);

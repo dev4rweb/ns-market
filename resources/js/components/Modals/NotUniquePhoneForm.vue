@@ -5,6 +5,7 @@
         novalidate
     >
         <Loader v-if="loading"/>
+        <h4 class="text-center">Вход и регистрация</h4>
         <p
             class="description"
         >
@@ -50,10 +51,11 @@
 <script>
 import Loader from "../UI/Loader";
 import {WORK_HOST} from "../api/admin/user";
+
 export default {
     name: "NotUniquePhoneForm",
-    data(){
-        return{
+    data() {
+        return {
             loading: false,
             isUserIdInValid: false,
             userId: ''
@@ -71,7 +73,8 @@ export default {
                         this.$emit('notUniquePhone',
                             res.data.model
                         )
-                    }
+                    } else
+                        this.isUserIdInValid = true
                 })
                 .catch(err => {
                     console.log('login err', err.response.data)

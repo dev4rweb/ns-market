@@ -63,7 +63,9 @@ class UserController extends Controller
         try {
 //            $user = User::findOrFail($id);
             $user = User::where('user_id', $id)->first();
-            $user->update($request->all());
+            if ($user) {
+                $user->update($request->all());
+            }
             $response['success'] = true;
             $response['message'] = 'User updated';
             $response['model'] = $user;

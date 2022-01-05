@@ -16,7 +16,7 @@
             <div class="modal-body">
                 <div class="modal-wrapper">
                     <img src={{asset('images/logo-market.svg')}} alt="">
-                    <h4>Вход и регистрация</h4>
+{{--                    <h4>Вход и регистрация</h4>--}}
                     <modal-auth-form></modal-auth-form>
 {{--                    <modal-login></modal-login>--}}
                 </div>

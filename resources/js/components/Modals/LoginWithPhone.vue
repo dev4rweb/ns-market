@@ -5,6 +5,7 @@
         novalidate
     >
         <Loader v-if="loading"/>
+        <h4 class="text-center">Вход и регистрация</h4>
         <p class="description">Войдите или зарегистрируйтесь, чтобы использовать все возможности New Star Market.</p>
         <div class="form-group form-group-blue">
             <label>

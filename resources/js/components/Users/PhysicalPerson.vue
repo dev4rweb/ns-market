@@ -10,6 +10,7 @@
 
 <script>
 import Loader from "../UI/Loader";
+import {WORK_HOST} from "../api/admin/user";
 
 export default {
     name: "PhysicalPerson",
@@ -23,11 +24,8 @@ export default {
     methods: {
         getPhysicalPerson() {
             this.loading = true
-            const localHost = 'http://127.0.0.1:8001/api/'
-            const productionHost = 'https://admin.newstarmlm.biz/api/'
-            const stagingHost = 'http://staging-admin.newstarmlm.biz/api/'
             if (this.currentUser) {
-                axios.post(`${stagingHost}market/get-physical-user`, {
+                axios.post(`${WORK_HOST}market/get-physical-user`, {
                     user_id: this.currentUser.user_id
                 }).then(res => {
                     console.log('getPhysicalPerson', res)

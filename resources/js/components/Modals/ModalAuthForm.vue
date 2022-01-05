@@ -33,6 +33,7 @@
         <ConfirmPhoneFrom
             v-if="isShowConfirmPhoneForm"
             :user="user"
+            :users="users"
             @phoneConfirmed="phoneConfirmed"
         />
         <NotUniquePhoneForm
@@ -129,6 +130,7 @@ export default {
         },
         notUniquePhone(user) {
             console.log('notUniquePhone user', user)
+            console.log('notUniquePhone users', this.users)
             this.isNeedToConfirmPhone = true
             this.user = user
             this.isShowNotUniquePhoneForm = false

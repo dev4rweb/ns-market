@@ -5,6 +5,7 @@
         novalidate
     >
         <Loader v-if="loading"/>
+        <h4 class="text-center">Вход и регистрация</h4>
         <div class="form-group form-group-blue">
             <label>
                 Ваш номер телефона или ID
