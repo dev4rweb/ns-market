@@ -58,7 +58,7 @@ export default {
                 this.isUserIdInValid = true
                 return
             }
-            console.log('loginById');
+            console.log('loginByIdForm');
 
             const fd = new FormData()
             fd.set('user_id', this.userId)

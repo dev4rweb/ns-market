@@ -49,6 +49,7 @@ import MentorPhoneForm from "./MentorPhoneForm";
 import WelcomePasswordForm from "./WelcomePasswordForm";
 import ConfirmPhoneFrom from "./ConfirmPhoneFrom";
 import NotUniquePhoneForm from "./NotUniquePhoneForm";
+
 export default {
     name: "ModalAuthForm",
     data() {
@@ -61,6 +62,7 @@ export default {
             isShowWelcomePasswordForm: false,
             isShowConfirmPhoneForm: false,
             isShowNotUniquePhoneForm: false,
+            isNeedToConfirmPhone: false,
             users: [],
             user: null,
             phoneInput: '+380682168881'
@@ -90,15 +92,19 @@ export default {
             if (users.length > 1) {
                 console.log('login by Id')
                 this.isShowNotUniquePhoneForm = true
+                this.isNeedToConfirmPhone = true
             }
             // console.log('getUser', user);
             // console.log('getUser', phone)
         },
         switchAuth(isRegister) {
+            this.isShowRegisterLoginForm = false
             if (isRegister) {
                 console.log('Show Register Form');
+                this.isShowRegisterForm = true
             } else {
                 console.log('show login by Id Form')
+                this.isShowLoginByIdForm = true
             }
         },
         registerUser(newUser) {
@@ -115,14 +121,15 @@ export default {
             this.isShowLoginWithPhone = true
         },
         loginById(user) {
-            console.log('loginById user',user)
+            console.log('loginById user', user)
             this.user = user
-            this.isShowLoginByIdForm = false
-            this.isShowConfirmPhoneForm = true
+            this.isShowLoginByIdForm = false;
         },
-        notUniquePhone() {
+        notUniquePhone(user) {
+            console.log('notUniquePhone user', user)
+            this.user = user
             this.isShowNotUniquePhoneForm = false
-            this.isShowLoginByIdForm = true
+            this.isShowConfirmPhoneForm = true
         }
     },
     components: {

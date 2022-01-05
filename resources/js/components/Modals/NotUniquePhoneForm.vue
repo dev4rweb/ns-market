@@ -4,12 +4,32 @@
         class="needs-validation login-form "
         novalidate
     >
+        <Loader v-if="loading"/>
         <p
             class="description"
         >
             Введён не уникальный номер телефона
             Авторизуйтесь с помощью Вашего ID.
         </p>
+        <div class="form-group form-group-blue">
+            <label>
+                Ваш номер ID
+            </label>
+            <input
+                type="text"
+                class="form-control form-control-lg"
+                :class="{borderRed: isUserIdInValid}"
+                v-model="userId"
+                @input="isUserIdInValid = false"
+                required
+            >
+            <div
+                class="invalid-feedback"
+                :class="{show: isUserIdInValid}"
+            >
+                Некорректный номер ID
+            </div>
+        </div>
         <button
             type="submit"
             class="btn btn-lg btn-primary"
@@ -27,13 +47,41 @@
 </template>
 
 <script>
+import Loader from "../UI/Loader";
+import {WORK_HOST} from "../api/admin/user";
 export default {
     name: "NotUniquePhoneForm",
+    data(){
+        return{
+            loading: false,
+            isUserIdInValid: false,
+            userId: ''
+        }
+    },
     methods: {
         showLoginById() {
             console.log('showLoginById')
-            this.$emit('notUniquePhone')
+            const fd = new FormData()
+            fd.set('user_id', this.userId)
+            axios.post(`${WORK_HOST}market/get-user-phone`, fd)
+                .then(res => {
+                    console.log('login', res)
+                    if (res.data.success) {
+                        this.$emit('notUniquePhone',
+                            res.data.model
+                        )
+                    }
+                })
+                .catch(err => {
+                    console.log('login err', err.response.data)
+                })
+                .finally(() => {
+                    this.loading = false
+                });
         }
+    },
+    components: {
+        Loader,
     }
 }
 </script>

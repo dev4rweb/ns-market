@@ -5,6 +5,7 @@
         novalidate
     >
         <Loader v-if="loading"/>
+        <p class="description">Войдите или зарегистрируйтесь, чтобы использовать все возможности New Star Market.</p>
         <div class="form-group form-group-blue">
             <label>
                 Ваш номер телефона
@@ -43,6 +44,7 @@
 <script>
 import Loader from "../UI/Loader";
 import {WORK_HOST} from "../api/admin/user";
+
 export default {
     name: "LoginWithPhone",
     data() {
