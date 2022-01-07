@@ -4,7 +4,6 @@
         class="needs-validation login-form "
         novalidate
     >
-        <Loader v-if="loading"/>
         <h4 class="text-center">Вход и регистрация</h4>
         <p
             class="description"
@@ -49,43 +48,32 @@
 </template>
 
 <script>
-import Loader from "../UI/Loader";
-import {WORK_HOST} from "../api/admin/user";
+import {mapActions} from 'vuex'
 
 export default {
     name: "NotUniquePhoneForm",
     data() {
         return {
-            loading: false,
             isUserIdInValid: false,
             userId: ''
         }
     },
     methods: {
+        ...mapActions(['getUserByPhoneOrUserId']),
         showLoginById() {
             console.log('showLoginById')
-            const fd = new FormData()
-            fd.set('user_id', this.userId)
-            axios.post(`${WORK_HOST}market/get-user-phone`, fd)
-                .then(res => {
-                    console.log('login', res)
-                    if (res.data.success) {
-                        this.$emit('notUniquePhone',
-                            res.data.model
-                        )
-                    } else
-                        this.isUserIdInValid = true
-                })
-                .catch(err => {
-                    console.log('login err', err.response.data)
-                })
-                .finally(() => {
-                    this.loading = false
-                });
+            if (
+                !this.userId.trim()
+                ||
+                this.userId.length < 3
+                ||
+                this.userId.length > 8
+            ) {
+                this.isUserIdInValid = true
+                return
+            }
+            this.getUserByPhoneOrUserId(this.userId)
         }
-    },
-    components: {
-        Loader,
     },
     mounted() {
         setTimeout(() => {

@@ -8,6 +8,8 @@ require('./bootstrap');
 
 window.Vue = require('vue').default;
 
+import store from './store/index'
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -43,4 +45,5 @@ Vue.component('physicalPerson', require('./components/Users/PhysicalPerson').def
 
 const app = new Vue({
     el: '#app',
+    store
 });

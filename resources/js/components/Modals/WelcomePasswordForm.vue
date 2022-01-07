@@ -4,7 +4,6 @@
         class="needs-validation login-form "
         novalidate
     >
-        <Loader v-if="loading"/>
         <h4 class="text-center">Вход и регистрация</h4>
         <p
             class="description"
@@ -61,101 +60,58 @@
 </template>
 
 <script>
-import Loader from "../UI/Loader";
+import {mapActions, mapGetters, mapMutations} from 'vuex'
 export default {
     name: "WelcomePasswordForm",
-    props: ['user', 'isNeedToConfirmForm'],
     data() {
         return {
-            loading: false,
             password: '',
             phone: '+7',
             isPasswordInValid: false
         }
     },
     methods: {
+        ...mapActions(['localLogin']),
+        ...mapMutations([
+            'setIsNeedToConfirmPhone', 'setShowLoginWithPhone',
+            'setShowWelcomePasswordForm', 'setIsConfirmPhoneFrom'
+        ]),
         welcomeLogin() {
-            if (!this.isNeedToConfirmForm) {
+            console.log('welcomeLogin');
+            if (!this.getIsNeedToConfirmPhone) {
                 if (this.password.length > 3) {
-                    this.loading = true;
-                    console.log('localLogin', this.user);
-                    const userLogin = {
-                        email: this.user.email,
-                        password: this.password,
-                        remember: false
-                    }
-                    axios.post('/login', userLogin)
-                        .then(res => {
-                            console.log('localLogin', res)
-                            if (res.status === 204)
-                                window.location.href = '/user-panel'
-                        })
-                        .catch(err => {
-                            console.log('localLogin err', err.response.data)
-                            if (err.response.data.errors.email[0].includes('These credentials do not match our records.'))
-                                this.localRegistration(this.user)
-                            else alert('Что-то пошло не так, попробуйте позже')
-                        })
-                        .finally(() => {
-                            this.loading = false
-                        });
+                    // console.log('localLogin', this.getCurrentUser);
+
+                    this.localLogin(this.password)
                 } else {
                     this.isPasswordInValid = true
                 }
             } else {
-                this.$emit('needConfirmPhone')
+                this.setIsConfirmPhoneFrom(true)
+                this.setShowWelcomePasswordForm(false)
             }
-            console.log('welcomeLogin');
         },
-        localRegistration(user) {
-            this.loading = true
-            console.log('localRegistration', user)
-            const fd = new FormData()
-            fd.set('user_id', user.id)
-            fd.set('name', user.name)
-            fd.set('email', user.email)
-            fd.set('first_name', user.first_name)
-            fd.set('last_name', user.last_name)
-            fd.set('middle_name', user.middle_name)
-            fd.set('mobile_phone', user.mobile_phone)
-            fd.set('password', this.password)
-            fd.set('password_confirmation', this.password)
-            fd.set('type', user.type)
-            axios.post('/register', fd)
-                .then(res => {
-                    console.log('localRegistration', res)
-                    if (res.status === 201)
-                        window.location.href = '/user-panel'
-                })
-                .catch(err => {
-                    console.log('localRegistration err', err.response.data)
-                    alert('Что-то пошло не так, попробуйте позже')
-                })
-                .finally(() => {
-                    this.loading = false
-                });
-        },
+
         backToPrevForm() {
             console.log('backToPrevForm')
-            this.$emit('showLoginWithPhone')
+            this.setShowLoginWithPhone(true)
+            this.setShowWelcomePasswordForm(false)
         }
     },
     computed: {
+        ...mapGetters(['getCurrentUser', 'getIsNeedToConfirmPhone']),
         welcomeSentence() {
-            const firstName = this.user.first_name ?? this.user.name
-            const middleName = this.user.middle_name ?? ''
+            const firstName = this.getCurrentUser.first_name ?? this.getCurrentUser.name
+            const middleName = this.getCurrentUser.middle_name ?? ''
             return `${firstName} ${middleName}`
         }
     },
     mounted() {
-        this.phone = `+${this.user.mobile_phone}`
+        this.phone = `+${this.getCurrentUser.mobile_phone}`
         setTimeout(() => {
             this.$refs.focusMe.focus();
         }, 500);
     },
-    components: {
-        Loader
-    }
 }
 </script>
 

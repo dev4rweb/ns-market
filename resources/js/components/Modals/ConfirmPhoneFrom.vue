@@ -4,7 +4,6 @@
         class="needs-validation login-form "
         novalidate
     >
-        <Loader v-if="loading"/>
         <h4 class="text-center">Подтверждение номера телефона</h4>
         <p
             v-if="!isSmsShow"
@@ -87,81 +86,44 @@
 </template>
 
 <script>
-import Loader from "../UI/Loader";
-import {WORK_HOST} from "../api/admin/user";
-
+import {mapGetters, mapActions, mapMutations} from 'vuex'
 export default {
     name: "ConfirmPhoneFrom",
-    props: ['user', 'users'],
     data() {
         return {
-            loading: false,
             phone: '+7',
             isPhoneInValid: false,
             isSmsShow: false,
             sms: '',
-            isSmsInValid: false
+            isSmsInValid: false,
         }
     },
     methods: {
+        ...mapActions(['changeDuplicatePhones']),
+        ...mapMutations(['setLoading', 'setIsNeedToConfirmPhone']),
         confirmSms() {
             if (this.isSmsShow) {
                 if (this.sms.length !== 4 || this.sms !== '1111') {
                     this.isSmsInValid = true
                     return
                 }
-                this.loading = true
-                console.log('update User', this.user);
-                console.log('update Users phone', this.users[0].mobile_phone);
-                axios.post(`${WORK_HOST}market/change-duplicate-phone`, {
-                    mobile_phone: this.users[0].mobile_phone,
-                    user_id: this.user.id,
-                    active_phone: this.phone
-                }).then(res => {
-                    console.log(res)
-                    if (res.data.success) {
-                        this.changeLocalPhone();
-                    } else {
-                        alert('Что-то пошло не по плану...')
-                    }
-                }).catch(err => {
-                    console.log(err)
-                }).finally(() => {
-                    this.loading = false
-                });
-
+                this.setIsNeedToConfirmPhone(false)
+                this.changeDuplicatePhones(this.phone)
             } else {
                 this.sendSms(this.phone)
             }
         },
-        changeLocalPhone() {
-            axios.post(`/api/users/${this.user.id}`, {
-                    _method: 'PUT',
-                    mobile_phone: this.phone,
-                }).then(res => {
-                    console.log('updateUser res', res)
-                if (res.data.success) {
-                    const updatedUser = res.data.model;
-                    this.$emit('phoneConfirmed', updatedUser);
-                } else {
-                    this.user.mobile_phone = this.phone
-                    this.$emit('phoneConfirmed', this.user);
-                }
-                }).catch(err => {
-                    console.log('updateUser err', err)
-                });
-        },
         sendSms(phoneNumber) {
-            this.loading = true
+            this.setLoading(true)
             console.log('sendSms', phoneNumber)
-            /*setTimeout(() => {
+            setTimeout(() => {
                 setTimeout(() => {
                     this.$refs.focusMeToo.focus();
                 }, 500);
                 this.isSmsShow = true
-                this.loading = false
-            }, 2000);*/
-            axios.post(`${WORK_HOST}market/send-user-sms`, {
+                this.setLoading(false)
+            }, 2000);
+            /*axios.post(`${WORK_HOST}market/send-user-sms`, {
                 user_id: this.user.id
             }).then(res => {
                 console.log('loginWithSms res', res)
@@ -174,15 +136,15 @@ export default {
                 console.log('loginWithSms err', err)
             }).finally(() => {
                 this.loading = false
-            });
+            });*/
 
         }
     },
-    components: {
-        Loader
+    computed: {
+        ...mapGetters(['getCurrentUser', 'getUsers'])
     },
     mounted() {
-        this.phone = `+${this.user.mobile_phone}`
+        this.phone = `+${this.getCurrentUser.mobile_phone}`
         setTimeout(() => {
             this.$refs.focusMe.focus();
         }, 500);

@@ -4,7 +4,6 @@
         class="needs-validation login-form "
         novalidate
     >
-        <Loader v-if="loading"/>
         <h4 class="text-center">Вход и регистрация</h4>
         <p class="description">Войдите или зарегистрируйтесь, чтобы использовать все возможности New Star Market.</p>
         <div class="form-group form-group-blue">
@@ -44,50 +43,27 @@
 </template>
 
 <script>
-import Loader from "../UI/Loader";
-import {WORK_HOST} from "../api/admin/user";
+import {mapActions} from 'vuex'
 
 export default {
     name: "LoginWithPhone",
     data() {
         return {
-            loading: false,
             phone: '+7',
             isPhoneInValid: false,
         }
     },
     methods: {
+        ...mapActions(['getUserByPhoneOrUserId']),
         getUser() {
-
             if (this.phone.length < 12 || this.phone.length > 13) {
                 this.isPhoneInValid = true;
                 return
             }
             if (!this.isPhoneInValid) {
-                this.loading = true
-                const fd = new FormData();
-                if (this.phone.length > 8)
-                    fd.set('phone', this.phone.slice(1, this.phone.length))
-                axios.post(`${WORK_HOST}market/get-user-phone`, fd)
-                    .then(res => {
-                        console.log('login', res)
-                        if (res.data.success) {
-                            this.$emit('getUser', [
-                                res.data.model, this.phone
-                            ])
-                        }
-                    })
-                    .catch(err => {
-                        console.log('login err', err.response.data)
-                    })
-                    .finally(() => {
-                        this.loading = false
-                    });
+                this.getUserByPhoneOrUserId(this.phone)
             }
         }
-    },
-    components: {
-        Loader
     },
 }
 </script>

@@ -7,7 +7,7 @@
             class="description"
         >
             Введённый номер  телефона
-            <b>{{phone}}</b>
+            <b>{{getCurrentPhone}}</b>
             не зарегистрирован в new Star market
         </p>
         <button
@@ -28,18 +28,24 @@
 </template>
 
 <script>
+import {mapGetters, mapMutations} from 'vuex'
 export default {
     name: "RegisterLoginForm",
-    props: ['phone'],
     methods: {
+        ...mapMutations(['setIsShowRegisterForm', 'setShowRegisterLoginForm', 'setIsShowLoginByIdForm']),
         wantRegister() {
             console.log('wantRegister')
-            this.$emit('switchAuth', 1)
+            this.setIsShowRegisterForm(true)
+            this.setShowRegisterLoginForm(false)
         },
         wantLoginById() {
             console.log('wantLoginById')
-            this.$emit('switchAuth', 0)
+            this.setIsShowLoginByIdForm(true)
+            this.setShowRegisterLoginForm(false)
         }
+    },
+    computed: {
+        ...mapGetters(['getCurrentPhone'])
     }
 }
 </script>

@@ -4,7 +4,6 @@
         class="needs-validation login-form "
         novalidate
     >
-        <Loader v-if="loading"/>
         <h4 class="text-center">Вход и регистрация</h4>
         <div class="form-group form-group-blue">
             <label>
@@ -13,7 +12,7 @@
             <input
                 type="tel"
                 class="form-control form-control-lg"
-                v-model="phoneNumber"
+                v-model="phone"
                 disabled
             >
         </div>
@@ -60,20 +59,22 @@
 </template>
 
 <script>
-import Loader from "../UI/Loader";
-
+import {mapGetters, mapMutations} from 'vuex'
 export default {
     name: "RegisterForm",
-    props: ['phoneNumber'],
     data() {
         return {
             loading: false,
             isSmsInValid: false,
+            phone: '+7',
             pinCode: '',
             rightPinCode: '1111'
         }
     },
     methods: {
+        ...mapMutations([
+            'setCurrentUser', 'setIsShowRegisterForm', 'setShowWelcomePasswordForm'
+        ]),
         registerUser() {
             if (
                 this.pinCode.length !== 4
@@ -83,37 +84,19 @@ export default {
                 this.isSmsInValid = true
                 return
             }
-            this.loading = true
-            const uniqueId = Date.now()
-            const newUser = {
-                user_id: uniqueId,
-                name: 'Новый Пользователь',
-                email: `${uniqueId}@unknown.com`,
-                mobile_phone: this.phoneNumber,
-                password: 'password',
-                type: 'client'
-            }
-            console.log('register User', newUser)
-            axios.post('/register', newUser)
-                .then(res => {
-                console.log('localRegistration res', res)
-                if (res.status === 201)
-                    this.$emit('registeredUser', newUser)
-            }).catch(err => {
-                console.log('localRegistration err', err.response.data)
-                alert('Что-то пошло не так, попробуйте позже')
-            }).finally(() => {
-                this.loading = false
-            });
+
+            alert('Ура! Вы зарегистрированы в системе!')
+
         },
         sendSms() {
             console.log('send Sms')
         }
     },
-    components: {
-        Loader
+    computed:{
+        ...mapGetters(["getCurrentPhone"])
     },
     mounted() {
+        this.phone = `+${this.getCurrentPhone}`
         this.sendSms()
         setTimeout(() => {
             this.$refs.focusMe.focus();
