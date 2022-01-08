@@ -59,7 +59,7 @@
 
 <script>
 import Loader from "../UI/Loader";
-import {WORK_HOST} from "../api/admin/user";
+import {WORK_HOST} from "../../store/routeConsts";
 
 export default {
     name: "MentorPhoneForm",

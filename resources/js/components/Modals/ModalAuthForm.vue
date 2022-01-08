@@ -75,17 +75,6 @@ export default {
             logo,
             appStore,
             googlePlay,
-            isShowRegisterLoginForm: false,
-            isShowRegisterForm: false,
-            isShowMentorPhoneForm: false,
-            isShowLoginByIdForm: false,
-            isShowWelcomePasswordForm: false,
-            isShowConfirmPhoneForm: false,
-            isShowNotUniquePhoneForm: false,
-            isNeedToConfirmPhone: false,
-            users: [],
-            user: null,
-            phoneInput: '+380682168881'
         }
     },
     computed: {

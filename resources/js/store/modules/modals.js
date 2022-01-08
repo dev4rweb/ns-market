@@ -11,7 +11,7 @@ export default {
         }
     },
     getters: {
-        getIsShowMentorForm() {
+        getIsShowMentorForm(state) {
             return state.isShowMentorPhoneForm
         }
     }

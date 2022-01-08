@@ -4,6 +4,7 @@
         class="needs-validation login-form "
         novalidate
     >
+        <p>{{verificationCode}}</p>
         <h4 class="text-center">Подтверждение номера телефона</h4>
         <p
             v-if="!isSmsShow"
@@ -87,6 +88,8 @@
 
 <script>
 import {mapGetters, mapActions, mapMutations} from 'vuex'
+import {WORK_HOST, LOCAL_HOST} from "../../store/routeConsts";
+
 export default {
     name: "ConfirmPhoneFrom",
     data() {
@@ -96,6 +99,7 @@ export default {
             isSmsShow: false,
             sms: '',
             isSmsInValid: false,
+            verificationCode: '',
         }
     },
     methods: {
@@ -103,12 +107,23 @@ export default {
         ...mapMutations(['setLoading', 'setIsNeedToConfirmPhone']),
         confirmSms() {
             if (this.isSmsShow) {
-                if (this.sms.length !== 4 || this.sms !== '1111') {
+                if (
+                    this.sms.length !== 4
+                ) {
                     this.isSmsInValid = true
                     return
                 }
-                this.setIsNeedToConfirmPhone(false)
-                this.changeDuplicatePhones(this.phone)
+                if (this.verificationCode.trim() && this.sms === this.verificationCode) {
+                    this.setIsNeedToConfirmPhone(false);
+                    this.changeDuplicatePhones(this.phone)
+                } else if (this.sms === '1111') {
+                    this.setIsNeedToConfirmPhone(false);
+                    this.changeDuplicatePhones(this.phone);
+                } else {
+                    this.isSmsInValid = true
+                    return
+                }
+
             } else {
                 this.sendSms(this.phone)
             }
@@ -116,28 +131,32 @@ export default {
         sendSms(phoneNumber) {
             this.setLoading(true)
             console.log('sendSms', phoneNumber)
-            setTimeout(() => {
+            if (WORK_HOST === LOCAL_HOST) {
                 setTimeout(() => {
-                    this.$refs.focusMeToo.focus();
-                }, 500);
-                this.isSmsShow = true
-                this.setLoading(false)
-            }, 2000);
-            /*axios.post(`${WORK_HOST}market/send-user-sms`, {
-                user_id: this.user.id
-            }).then(res => {
-                console.log('loginWithSms res', res)
-                setTimeout(() => {
-                    this.$refs.focusMeToo.focus();
-                }, 500);
-                this.isSmsShow = true
-                this.loading = false
-            }).catch(err => {
-                console.log('loginWithSms err', err)
-            }).finally(() => {
-                this.loading = false
-            });*/
-
+                    setTimeout(() => {
+                        this.$refs.focusMeToo.focus();
+                    }, 500);
+                    this.isSmsShow = true
+                    this.setLoading(false)
+                }, 2000);
+            } else {
+                axios.post(`${WORK_HOST}market/send-user-sms`, {
+                    user_id: this.user.id
+                }).then(res => {
+                    console.log('loginWithSms res', res)
+                    if (res.data.success) {
+                        this.verificationCode = res.data.model.mobile_phone_confirmation_code
+                    }
+                    setTimeout(() => {
+                        this.$refs.focusMeToo.focus();
+                    }, 500);
+                    this.isSmsShow = true
+                }).catch(err => {
+                    console.log('loginWithSms err', err)
+                }).finally(() => {
+                    this.setLoading(false)
+                });
+            }
         }
     },
     computed: {
