@@ -32,6 +32,7 @@
     </main>
 
     @include('parts.footer')
+    <toast></toast>
 </div>
 {{--    @include('auth.login-modal')--}}
 {{--    <modal-login></modal-login>--}}

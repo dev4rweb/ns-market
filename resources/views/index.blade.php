@@ -9,5 +9,6 @@
 {{--    @include('auth.login-modal')--}}
     <!--        <example-component></example-component>
         <test-component></test-component>-->
+
     </div>
 @endsection

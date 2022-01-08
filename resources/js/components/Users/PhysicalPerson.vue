@@ -2,8 +2,8 @@
     <div>
         <Loader v-if="loading"/>
         <p v-if="physicalPerson">
-            ID: {{physicalPerson.user_id}}
-            <br>Статус: {{physicalPerson.user_type}}
+            ID: {{ physicalPerson.user_id }}
+            <br>Статус: {{ tradeStatus }}
         </p>
     </div>
 </template>
@@ -45,6 +45,20 @@ export default {
         this.currentUser = window.User
         this.getPhysicalPerson()
         console.log('Physical Person Component', this.currentUser)
+    },
+    computed: {
+        tradeStatus() {
+            const status = this.physicalPerson.trade_status
+            switch (status) {
+                case 'K':
+                case 'D':
+                    return 'Партнер'
+                case 'N':
+                case 'B':
+                case 'T':
+                    return 'Клиент'
+            }
+        }
     },
     components: {
         Loader
