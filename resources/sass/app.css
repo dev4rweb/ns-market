@@ -10482,4 +10482,8 @@ footer h3, footer .h3 {
   background-color: #fff;
   border-color: #038ED7; }
 
+.form-date {
+  max-width: 125px;
+  text-align: center; }
+
 /*# sourceMappingURL=app.css.map */

@@ -55,13 +55,50 @@
                         <div class="form-group form-group-data">
                             <label>Пол</label>
                             <div class="d-flex justify-content-between align-items-center">
-                                <RadioBox label="Мужской" value="М" v-model="getPhysicalPerson.gender" />
-                                <RadioBox label="женский" value="Ж" v-model="getPhysicalPerson.gender" />
+                                <RadioBox label="Мужской" value="М" v-model="getPhysicalPerson.gender"/>
+                                <RadioBox label="женский" value="Ж" v-model="getPhysicalPerson.gender"/>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group form-group-data">
+                            <label>Дата рождения</label>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <input
+                                    type="text"
+                                    class="form-control form-control-lg form-date"
+                                    placeholder="ДД"
+                                    :value="getDay"
+                                >
+                                <input
+                                    type="text"
+                                    class="form-control form-control-lg form-date"
+                                    placeholder="ММ"
+                                    :value="getMonth"
+                                >
+                                <input
+                                    type="text"
+                                    class="form-control form-control-lg form-date"
+                                    placeholder="ГГГГ"
+                                    :value="getYear"
+                                >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group form-group-data">
+                            <label>Мобильный телефон <b style="color: red">*</b> </label>
+                            <input
+                                type="text"
+                                class="form-control form-control-lg"
+                                :value="phoneMask"
+                            >
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -71,6 +108,7 @@
 <script>
 import RadioBox from "../UI/RadioBox";
 import {mapGetters, mapMutations} from 'vuex'
+
 export default {
     name: "UserDataPanel",
     data() {
@@ -88,7 +126,35 @@ export default {
     },
     computed: {
         ...mapGetters(['getCurrentUser', 'getPhysicalPerson']),
-
+        getDay() {
+            let day = ''
+            if (this.getPhysicalPerson.birthday) {
+                day = new Date(this.getPhysicalPerson.birthday).getDay()
+                day = day < 10 ? '0' + day : day
+            }
+            return day
+        },
+        getMonth() {
+            let month = ''
+            if (this.getPhysicalPerson.birthday) {
+                month = new Date(this.getPhysicalPerson.birthday).getMonth()
+                month = month < 10 ? '0' + month : month
+            }
+            return month
+        },
+        getYear() {
+            let year = ''
+            if (this.getPhysicalPerson.birthday) {
+                year = new Date(this.getPhysicalPerson.birthday).getFullYear()
+            }
+            return year
+        },
+        phoneMask() {
+            let phone = this.getCurrentUser.mobile_phone
+            let x = phone.replace(/\D/g, '').match(/(\d{0,1})(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,3})/);
+            phone = '+' +x[1] + '(' +x[2] + ') '+ x[3] + '-' + x[4] + '-' + x[5]
+            return phone
+        }
     },
     components: {
         RadioBox
