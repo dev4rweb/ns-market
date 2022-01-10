@@ -22,6 +22,11 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
+@if(auth()->check())
+    <script>
+        window.User = {!! auth()->user()  !!}
+    </script>
+@endif
 <div id="app">
 
     @include('parts.header')
@@ -36,11 +41,7 @@
 </div>
 {{--    @include('auth.login-modal')--}}
 {{--    <modal-login></modal-login>--}}
-@if(auth()->check())
-    <script>
-        window.User = {!! auth()->user()  !!}
-    </script>
-@endif
+
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>

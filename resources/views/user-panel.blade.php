@@ -3,41 +3,7 @@
 @section('content')
     <div class="user-panel">
         <div class="container">
-            <aside>
-                <div class="profile-block">
-                    <div class="avatar-block">
-                        <img src="{{asset('images/avatar-profile.png')}}" alt="ava">
-                        <img
-                            class="add-photo"
-                            src="{{asset('images/ic-camera.svg')}}"
-                            alt="icon"
-                        >
-                    </div>
-                    <h2>
-                        {{Auth::user()->first_name}} {{Auth::user()->last_name}}
-                    </h2>
-{{--                    <p>ID: {{Auth::user()->user_id}} <br>Статус: {{Auth::user()->type}}</p>--}}
-                    <physical-person></physical-person>
-                    <button
-                        class="btn btn-secondary"
-                    >
-                        Пригласить в New Star
-                    </button>
-                    <hr>
-                </div>
-                <ul class="user-sidebar">
-                    <li><a href="#">Мои данные</a></li>
-                    <li><a href="#">Мои адреса</a></li>
-                    <li><a href="#">Мой наставник</a></li>
-                    <li><a href="#">Техподдержка</a></li>
-                    <li><a href="{{ route('logout') }}"
-                           onclick="event.preventDefault();
-                            document.getElementById('logout-form').submit();">
-                            Выйти
-                        </a>
-                    </li>
-                </ul>
-            </aside>
+            @include('parts.user-sidebar')
             <div class="user-content">
                 <div class="row">
                     <div class="card news-card">

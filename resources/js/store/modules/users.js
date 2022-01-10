@@ -97,7 +97,14 @@ export default {
                 .then(res => {
                     console.log('comparePassword', res)
                     if (res.data.success && res.data.message) {
-                        dispatch('localLogin', password);
+                        const isNeedToConfirm = getters['getIsNeedToConfirmPhone']
+                        if (!isNeedToConfirm)
+                            dispatch('localLogin', password);
+                        else {
+                            commit('setShowWelcomePasswordForm', false)
+                            commit('setIsConfirmPhoneFrom', true)
+                            commit('setPassword', password)
+                        }
                     } else {
                         commit('setToastError', 'Неправильный пароль')
                     }
@@ -165,10 +172,10 @@ export default {
             });
         },
 
-        changeLocalPhoneNumber({commit, getters}, phoneNumber) {
+        changeLocalPhoneNumber({commit, getters, dispatch}, phoneNumber) {
             commit('setLoading', true)
             const currentUser = getters['getCurrentUser']
-            console.log('changeLocalPhoneNumber',currentUser, phoneNumber)
+            console.log('changeLocalPhoneNumber', currentUser, phoneNumber)
             axios.post(`/api/users/${currentUser.id}`, {
                 _method: 'PUT',
                 mobile_phone: phoneNumber,
@@ -180,11 +187,11 @@ export default {
                         commit('setCurrentUser', updatedUser);
                     }
                     commit('setIsConfirmPhoneFrom', false)
-                    commit('setShowWelcomePasswordForm', true)
-                } /*else {
-                    this.user.mobile_phone = this.phone
-                    this.$emit('phoneConfirmed', this.user);
-                }*/
+                    const password = getters['getPassword']
+                    if (password) {
+                        dispatch('localLogin', password)
+                    }
+                }
             }).catch(err => {
                 console.log('updateUser err', err)
             }).finally(() => {
@@ -228,12 +235,16 @@ export default {
         },
         setIsConfirmPhoneFrom(state, isShow) {
             state.isShowConfirmPhoneFrom = isShow
+        },
+        setPassword(state, password) {
+            state.password = password
         }
     },
     state: {
         loading: false,
         currentUser: null,
         currentPhone: '+7',
+        password: null,
         users: [],
         isNeedToConfirmPhone: false,
         isShowLoginWithPhone: true,
@@ -280,6 +291,9 @@ export default {
         },
         confirmPhoneFromVisible(state) {
             return state.isShowConfirmPhoneFrom
+        },
+        getPassword(state) {
+            return state.password
         }
     }
 }

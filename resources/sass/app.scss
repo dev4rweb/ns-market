@@ -97,8 +97,8 @@
             -o-transition: all .3s;
             transition: all .3s;
 
-            &:hover {
-                color: $nsBlue;
+            &:hover, &.active {
+                color: $textMainColor;
             }
         }
     }
@@ -121,6 +121,7 @@
         width: 100%;
         max-width: 185px;
         height: auto;
+
     }
 
     .news-content {
@@ -150,5 +151,27 @@
                 color: white;
             }
         }
+    }
+}
+
+.data-card {
+    box-shadow: 4px 4px 14px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    padding: 24px;
+
+}
+
+.form-group-data {
+    label {
+        color: $textMainColor;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 21px;
+    }
+
+    .form-control {
+        background-color: #fff;
+        border-color: $nsBlue;
     }
 }

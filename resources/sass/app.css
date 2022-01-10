@@ -10189,6 +10189,19 @@ footer h3, footer .h3 {
         font-size: 24px;
         line-height: 29px; }
 
+.data-panel .container {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  justify-content: space-between;
+  grid-column-gap: 30px;
+  padding-top: 25px; }
+  @media screen and (max-width: 1200px) {
+    .data-panel .container {
+      grid-template-columns: 220px 1fr; } }
+  @media screen and (max-width: 768px) {
+    .data-panel .container {
+      grid-template-columns: auto; } }
+
 @font-face {
   font-family: 'Proxima Nova Regular';
   src: url("../assets/fonts/proxima/ProximaNova-Regular.eot");
@@ -10415,8 +10428,8 @@ footer h3, footer .h3 {
       -ms-transition: all .3s;
       -o-transition: all .3s;
       transition: all .3s; }
-      .user-sidebar li a:hover {
-        color: #038ED7; }
+      .user-sidebar li a:hover, .user-sidebar li a.active {
+        color: #333333; }
 
 .news-card {
   box-shadow: 4px 4px 14px rgba(0, 0, 0, 0.15);
@@ -10453,5 +10466,20 @@ footer h3, footer .h3 {
       .news-card .btn-wrapper .btn-outline-info:hover, .news-card .btn-wrapper .btn-outline-info.active, .news-card .btn-wrapper .btn-outline-info:active, .news-card .btn-wrapper .btn-outline-info:focus {
         background-color: #038ED7;
         color: white; }
+
+.data-card {
+  box-shadow: 4px 4px 14px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  padding: 24px; }
+
+.form-group-data label {
+  color: #333333;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 21px; }
+.form-group-data .form-control {
+  background-color: #fff;
+  border-color: #038ED7; }
 
 /*# sourceMappingURL=app.css.map */

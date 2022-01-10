@@ -79,17 +79,12 @@ export default {
         ]),
         welcomeLogin() {
             console.log('welcomeLogin');
-            if (!this.getIsNeedToConfirmPhone) {
-                if (this.password.length > 3) {
-                    // console.log('localLogin', this.getCurrentUser);
-                    this.comparePassword(this.password)
-                    // this.localLogin(this.password)
-                } else {
-                    this.isPasswordInValid = true
-                }
+            if (this.password.length > 3) {
+                // console.log('localLogin', this.getCurrentUser);
+                this.comparePassword(this.password)
+                // this.localLogin(this.password)
             } else {
-                this.setIsConfirmPhoneFrom(true)
-                this.setShowWelcomePasswordForm(false)
+                this.isPasswordInValid = true
             }
         },
 
