@@ -8,6 +8,9 @@ export default {
     mutations: {
         setToastError(state, msg) {
             state.error = msg
+            setTimeout(() => {
+                state.error = null
+            }, 2000);
         }
     },
     getters: {

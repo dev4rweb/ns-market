@@ -9,7 +9,7 @@
             class="description"
         >
             Здравствуйте, <br>
-            {{welcomeSentence}}
+            {{ welcomeSentence }}
         </p>
         <div class="form-group form-group-blue">
             <label>
@@ -61,6 +61,7 @@
 
 <script>
 import {mapActions, mapGetters, mapMutations} from 'vuex'
+
 export default {
     name: "WelcomePasswordForm",
     data() {
@@ -71,7 +72,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['localLogin']),
+        ...mapActions(['localLogin', 'comparePassword']),
         ...mapMutations([
             'setIsNeedToConfirmPhone', 'setShowLoginWithPhone',
             'setShowWelcomePasswordForm', 'setIsConfirmPhoneFrom'
@@ -81,8 +82,8 @@ export default {
             if (!this.getIsNeedToConfirmPhone) {
                 if (this.password.length > 3) {
                     // console.log('localLogin', this.getCurrentUser);
-
-                    this.localLogin(this.password)
+                    this.comparePassword(this.password)
+                    // this.localLogin(this.password)
                 } else {
                     this.isPasswordInValid = true
                 }

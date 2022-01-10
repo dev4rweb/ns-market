@@ -66,8 +66,7 @@ export default {
                     password: password,
                     remember: false
                 };
-                dispatch('comparePassword', password)
-                /*axios.post('/login', userLogin)
+                axios.post('/login', userLogin)
                     .then(res => {
                         console.log('localLogin', res)
                         if (res.status === 204)
@@ -79,14 +78,15 @@ export default {
                     else alert('Что-то пошло не так, попробуйте позже')
                 }).finally(() => {
                     commit('setLoading', false)
-                });*/
+                });
             } else {
                 alert('Something wrong')
             }
 
         },
 
-        comparePassword({getters, commit}, password) {
+        comparePassword({getters, commit, dispatch}, password) {
+            commit('setLoading', true)
             const user = getters['getCurrentUser']
             console.log('current User compare', user)
             const data = {
@@ -96,6 +96,11 @@ export default {
             axios.post(`${WORK_HOST}market/compare-password`, data)
                 .then(res => {
                     console.log('comparePassword', res)
+                    if (res.data.success && res.data.message) {
+                        dispatch('localLogin', password);
+                    } else {
+                        commit('setToastError', 'Неправильный пароль')
+                    }
                 })
                 .catch(err => {
                     console.log('comparePassword err', err)

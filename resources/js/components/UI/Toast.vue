@@ -2,9 +2,8 @@
     <div
         class="toast position-fixed p-3"
         role="alert"
-        aria-live="assertive"
-        aria-atomic="true"
         ref="toast"
+        aria-live="assertive" aria-atomic="true"
         :class="{'show': getToastError, 'hide': getToastError === null}"
     >
         <div class="toast-header">
@@ -24,14 +23,15 @@
             </button>
         </div>
         <div class="toast-body">
-            Hello, world! This is a toast message.
+            {{ getToastError }}
         </div>
     </div>
 </template>
 
 <script>
 import logoImg from '../../../assets/img/logo-market.svg'
-import {mapGetters} from 'vuex'
+import {mapGetters, mapMutations} from 'vuex'
+
 export default {
     name: "Toast",
     data() {
@@ -41,27 +41,33 @@ export default {
         }
     },
     methods: {
+        ...mapMutations(['setToastError']),
         closeToast() {
-            this.toast.toast('hide')
-        }
+            // this.toast.toast('hide')
+            this.setToastError(null)
+        },
     },
     computed: {
-        ...mapGetters(['getToastError'])
+        ...mapGetters(['getToastError']),
+
     },
     mounted() {
         setTimeout(() => {
             this.toast = $(this.$refs.toast)
-            // this.toast.toast('show')
+            if (this.getToastError)
+                this.toast.toast('show')
         }, 500);
     }
 }
 </script>
 
 <style scoped>
-.toast{
+.toast {
     right: 20px;
-    bottom: 20px;
+    top: 20px;
+    z-index: 10000;
 }
+
 .logo {
     height: 30px;
     width: auto;
