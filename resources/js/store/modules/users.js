@@ -6,7 +6,7 @@ export default {
             commit('setLoading', true)
             let isByUserId = false
             const fd = new FormData()
-            if (phoneOrUserId.length > 8) {
+            if (phoneOrUserId.length > 11) {
                 phoneOrUserId = phoneOrUserId.slice(1, phoneOrUserId.length)
                 fd.set('phone', phoneOrUserId)
                 commit('setCurrentPhone', phoneOrUserId)
@@ -58,14 +58,17 @@ export default {
         },
 
         localLogin({commit, getters, dispatch}, password) {
+            axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             commit('setLoading', true)
             const user = getters['getCurrentUser']
             if (user) {
                 const userLogin = {
+                    // _token: window.csrf,
                     email: user.email,
                     password: password,
                     remember: false
                 };
+                console.log('userLogin', userLogin)
                 axios.post('/login', userLogin)
                     .then(res => {
                         console.log('localLogin', res)
@@ -197,6 +200,75 @@ export default {
             }).finally(() => {
                 commit('setLoading', false)
             });
+        },
+
+        changePassword({commit, getters, dispatch}, passwords) {
+            const currentUser = getters['getCurrentUser']
+            if (currentUser) {
+                commit('setLoading', true);
+                const data = {
+                    user_id: currentUser.id,
+                    password: passwords.old_password
+                }
+                axios.post(`${WORK_HOST}market/compare-password`, data)
+                    .then(res => {
+                        console.log('comparePassword', res)
+                        if (res.data.success && res.data.message) {
+                            dispatch('updatePassword', passwords.new_password);
+                        } else {
+                            commit('setToastError', 'Неверно введен предыдущий пароль')
+                        }
+                    })
+                    .catch(err => {
+                        console.log('comparePassword err', err)
+                        commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже')
+                    })
+                    .finally(() => {
+                        commit('setLoading', false)
+                    });
+            } else {
+                commit('setToastError', 'Что-то пошло не по плану')
+            }
+        },
+        updatePassword({commit, getters, dispatch}, password) {
+            commit('setLoading', true)
+            const currentUser = getters['getCurrentUser']
+            console.log('updatePassword', password)
+            axios.post(`${WORK_HOST}market/update-password`, {
+                user_id: currentUser.id,
+                password: password
+            }).then(res => {
+                if (res.data.success) {
+                    dispatch('updatePasswordLocal', password);
+                } else {
+                    commit('setToastError', res.data.message)
+                }
+            }).catch(err => {
+                console.log(err.response.data)
+            }).finally(() => {
+                commit('setLoading', false)
+            });
+        },
+        updatePasswordLocal({commit, getters}, password) {
+            console.log('updatePasswordLocal', password)
+            const currentUser = getters['getCurrentUser']
+            axios.post('/api/update-password', {
+                user_id: currentUser.id,
+                password: password
+            }).then(res => {
+                console.log('updatePasswordLocal', res)
+                if (res.data.success) {
+                    commit('setToastError', 'Пароль успешно изменен');
+                } else {
+                    commit('setToastError', res.data.message)
+                }
+            }).catch(err => {
+                console.log('updatePasswordLocal err',err.response.data)
+                commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже')
+            }).finally(() => {
+                commit('setLoading', false)
+            });
+
         }
     },
     mutations: {

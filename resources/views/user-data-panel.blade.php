@@ -4,7 +4,8 @@
     <div class="user-panel data-panel">
         <div class="container">
             @include('parts.user-sidebar')
-            <user-data-panel></user-data-panel>
+
+            <user-data-tabs></user-data-tabs>
         </div>
     </div>
 @endsection

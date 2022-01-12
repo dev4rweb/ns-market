@@ -1,6 +1,11 @@
 <template>
+
     <div class="user-content " v-if="getCurrentUser && getPhysicalPerson">
-        <div class="row">
+
+        <div
+            class="row"
+            v-if="isEditFields"
+        >
             <div class="card data-card">
                 <h3>Личная информация</h3>
                 <div class="row">
@@ -99,14 +104,58 @@
                             >
                         </div>
                     </div>
+<!--                    <div class="col-md-6">
+                        <div class="form-group form-group-data form-gray">
+                            <label>Код из СМС</label>
+                            <input
+                                type="text"
+                                class="form-control form-control-lg"
+                                placeholder="_ _ _ _"
+                            >
+                        </div>
+                        <p>
+                            Для добавления или изменения номера телефона Вам будет отправлено СМС-сообщение с
+                            проверочным
+                            кодом. Введите его в поле выше, чтобы подтвердить операцию.
+                        </p>
+                    </div>-->
                 </div>
+
+
             </div>
+            <div class="row mt-3 mb-5 d-flex justify-content-center align-items-center">
+
+                <button
+                    class="btn btn-info btn-save"
+                    @click="isEditFields = !isEditFields"
+                >
+                    Сохранить изменения
+                </button>
+            </div>
+
+            <ChangePasswordForm />
+        </div>
+
+        <UserDataReadPanel
+            v-else
+        />
+
+        <div class="row mt-3 mb-5 d-flex justify-content-center align-items-center">
+            <button
+                class="btn btn-info btn-save"
+                v-if="!isEditFields"
+                @click="isEditFields = !isEditFields"
+            >
+                Изменить данные
+            </button>
         </div>
     </div>
 </template>
 
 <script>
 import RadioBox from "../UI/RadioBox";
+import UserDataReadPanel from "./UserDataReadPanel";
+import ChangePasswordForm from "../ChangePasswordForm";
 import {mapGetters, mapMutations} from 'vuex'
 
 export default {
@@ -114,6 +163,7 @@ export default {
     data() {
         return {
             gender: "М",
+            isEditFields: false
         }
     },
     methods: {
@@ -152,12 +202,14 @@ export default {
         phoneMask() {
             let phone = this.getCurrentUser.mobile_phone
             let x = phone.replace(/\D/g, '').match(/(\d{0,1})(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,3})/);
-            phone = '+' +x[1] + '(' +x[2] + ') '+ x[3] + '-' + x[4] + '-' + x[5]
+            phone = '+' + x[1] + '(' + x[2] + ') ' + x[3] + '-' + x[4] + '-' + x[5]
             return phone
         }
     },
     components: {
-        RadioBox
+        RadioBox,
+        UserDataReadPanel,
+        ChangePasswordForm
     },
     mounted() {
         this.getWindowUser()
@@ -166,5 +218,17 @@ export default {
 </script>
 
 <style scoped>
+.form-gray input {
+    border-color: #999999;
+    max-width: 184px;
+    text-align: center;
+}
 
+.form-gray label {
+    color: #999999;
+}
+
+.btn-save{
+    max-width: 198px;
+}
 </style>

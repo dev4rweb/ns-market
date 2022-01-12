@@ -67,7 +67,7 @@ export default {
                 ||
                 this.userId.length < 3
                 ||
-                this.userId.length > 8
+                this.userId.length > 11
             ) {
                 this.isUserIdInValid = true
                 return

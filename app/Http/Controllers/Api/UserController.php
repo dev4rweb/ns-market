@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -91,6 +92,28 @@ class UserController extends Controller
             $response['success'] = true;
             $response['message'] = 'User destroyed';
             $response['id'] = $id;
+        } catch (\Exception $exception) {
+            $response['success'] = false;
+            $response['message'] = $exception->getMessage();
+        }
+
+        return response()->json($response);
+    }
+
+    public function updatePassword(Request $request)
+    {
+        try {
+            $user = User::where('user_id', $request['user_id'])->first();
+            if ($user) {
+                $user->password = Hash::make($request['password']);
+                $user->save();
+                $response['message'] = 'User found and updated local';
+                $response['success'] = true;
+            } else {
+                $response['success'] = false;
+                $response['message'] = 'User not Found local';
+            }
+            $response['model'] = $user;
         } catch (\Exception $exception) {
             $response['success'] = false;
             $response['message'] = $exception->getMessage();

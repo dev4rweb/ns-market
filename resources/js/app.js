@@ -40,7 +40,11 @@ Vue.component('physicalPerson', require('./components/Users/PhysicalPerson').def
 Vue.component('toast', require('./components/UI/Toast.vue').default);
 Vue.component('custom-radio', require('./components/UI/CustomRadio').default);
 Vue.component('radio-box', require('./components/UI/RadioBox').default);
+Vue.component('user-data-tabs', require('./components/views/UserDataTabs').default);
 Vue.component('user-data-panel', require('./components/views/UserDataPanel').default);
+Vue.component('user-data-read-panel', require('./components/views/UserDataReadPanel').default);
+Vue.component('user-status-panel', require('./components/views/UserStatusPanel').default);
+Vue.component('change-password-form', require('./components/ChangePasswordForm').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

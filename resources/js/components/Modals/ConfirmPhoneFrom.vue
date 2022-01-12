@@ -78,7 +78,7 @@
         <button
             type="button"
             v-if="isSmsShow"
-            @click="sendSms"
+            @click="sendSms(this.phone)"
             class="btn btn-lg btn-link"
         >
             Отправить СМС повторно
@@ -113,7 +113,7 @@ export default {
                     this.isSmsInValid = true
                     return
                 }
-                if (this.verificationCode.trim() && this.sms === this.verificationCode) {
+                if (this.sms == this.verificationCode) {
                     this.setIsNeedToConfirmPhone(false);
                     this.changeDuplicatePhones(this.phone)
                 } else if (this.sms === '1111') {
@@ -129,8 +129,13 @@ export default {
             }
         },
         sendSms(phoneNumber) {
-            this.setLoading(true)
-            console.log('sendSms', phoneNumber)
+            if (phoneNumber.length < 11 || phoneNumber.length > 14) {
+                this.isPhoneInValid = true
+                return
+            }
+            phoneNumber = phoneNumber.slice(1, phoneNumber.length)
+            this.setLoading(true);
+            console.log('sendSms', phoneNumber, this.getCurrentUser)
             if (WORK_HOST === LOCAL_HOST) {
                 setTimeout(() => {
                     setTimeout(() => {
@@ -141,7 +146,8 @@ export default {
                 }, 2000);
             } else {
                 axios.post(`${WORK_HOST}market/send-user-sms`, {
-                    user_id: this.user.id
+                    user_id: this.getCurrentUser.id,
+                    mobile_phone: phoneNumber
                 }).then(res => {
                     console.log('loginWithSms res', res)
                     if (res.data.success) {

@@ -55,7 +55,7 @@ export default {
     methods: {
         ...mapActions(['getUserByPhoneOrUserId']),
         loginById() {
-            if (this.userId.length < 3 || this.userId.length > 8) {
+            if (this.userId.length < 3 || this.userId.length > 11) {
                 this.isUserIdInValid = true
                 return
             }
