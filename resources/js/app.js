@@ -45,6 +45,7 @@ Vue.component('user-data-panel', require('./components/views/UserDataPanel').def
 Vue.component('user-data-read-panel', require('./components/views/UserDataReadPanel').default);
 Vue.component('user-status-panel', require('./components/views/UserStatusPanel').default);
 Vue.component('change-password-form', require('./components/ChangePasswordForm').default);
+Vue.component('update-with-phone', require('./components/Modals/UpdateWithPhone').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

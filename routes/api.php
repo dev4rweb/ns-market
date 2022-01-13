@@ -23,3 +23,4 @@ Route::apiResources([
     'users' => UserController::class
 ]);
 Route::post('/update-password', [UserController::class, 'updatePassword']);
+Route::post('/update-user-data', [UserController::class, 'updateUserData']);

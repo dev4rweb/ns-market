@@ -30,7 +30,7 @@
                     <input
                         type="text"
                         class="form-control form-control-lg"
-                        value="Женщина"
+                        v-model="getGender"
                         disabled
                     >
                 </div>
@@ -124,7 +124,18 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['getCurrentUser', 'getPhysicalPerson'])
+        ...mapGetters(['getCurrentUser', 'getPhysicalPerson']),
+        getGender() {
+            let gender = this.getPhysicalPerson.gender
+            switch (gender) {
+                case 'М':
+                    return 'Мужчина'
+                case 'Ж':
+                    return 'Женщина'
+                default:
+                    return '?'
+            }
+        }
     },
     mounted() {
         this.getFullName()

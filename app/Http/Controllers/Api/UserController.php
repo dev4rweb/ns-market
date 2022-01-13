@@ -121,4 +121,30 @@ class UserController extends Controller
 
         return response()->json($response);
     }
+
+    public function updateUserData(Request $request)
+    {
+        try {
+            $user = User::where('user_id', $request['id'])->first();
+            if ($user) {
+                $user['first_name'] = $request['first_name'];
+                $user['middle_name'] = $request['middle_name'];
+                $user['last_name'] = $request['last_name'];
+                $user['email'] = $request['email'];
+                $user['mobile_phone'] = $request['mobile_phone'];
+                $user->save();
+                $response['success'] = true;
+                $response['message'] = 'User updated';
+                $response['model'] = $user;
+            } else {
+                $response['success'] = false;
+                $response['message'] = 'User not found';
+            }
+        } catch (\Exception $exception) {
+            $response['success'] = false;
+            $response['message'] = $exception->getMessage();
+        }
+
+        return response()->json($response);
+    }
 }

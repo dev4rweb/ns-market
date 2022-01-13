@@ -263,12 +263,65 @@ export default {
                     commit('setToastError', res.data.message)
                 }
             }).catch(err => {
-                console.log('updatePasswordLocal err',err.response.data)
+                console.log('updatePasswordLocal err', err.response.data)
                 commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже')
             }).finally(() => {
                 commit('setLoading', false)
             });
 
+        },
+
+        updateUserData({commit, getters, dispatch}) {
+            const currentUser = getters['getCurrentUser']
+            console.log('updateUserData currentUser', currentUser)
+            if (currentUser) {
+                commit('setLoading', true)
+                axios.post(`${WORK_HOST}market/update-user`, currentUser)
+                    .then(res => {
+                        console.log('updateUserData res', res)
+                        if (res.data.success) {
+                            commit('setCurrentUser', res.data.model)
+                            dispatch('updatePhysicalPersonData')
+                        } else
+                            commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже');
+                    })
+                    .catch(err => {
+                        console.log('updateUserData err', err)
+                        commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже')
+                    })
+                    .finally(() => {
+                        commit('setLoading', false)
+                    });
+            } else {
+                commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже')
+            }
+        },
+        updateUserDataLocal({commit, getters}) {
+            const currentUser = getters['getCurrentUser']
+            console.log('updateUserDataLocal currentUser', currentUser)
+            if (currentUser) {
+                commit('setLoading', true)
+                axios.post(`/api/update-user-data`, currentUser)
+                    .then(res => {
+                        console.log('updateUserDataLocal res', res)
+                        if (res.data.success) {
+                            commit('setToastError', 'Данные успешно обновлены')
+                            setTimeout(() => {
+                                window.location.reload()
+                            }, 2000);
+                        } else
+                            commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже');
+                    })
+                    .catch(err => {
+                        console.log('updateUserDataLocal err', err)
+                        commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже')
+                    })
+                    .finally(() => {
+                        commit('setLoading', false)
+                    });
+            } else {
+                commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже')
+            }
         }
     },
     mutations: {

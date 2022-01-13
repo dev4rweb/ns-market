@@ -26,6 +26,31 @@ export default {
                     commit('setLoading', false)
                 });
             }
+        },
+        updatePhysicalPersonData({commit, getters, dispatch}) {
+            const currentUser = getters['getPhysicalPerson']
+            console.log('updatePhysicalPersonData currentUser', currentUser)
+            if (currentUser) {
+                commit('setLoading', true)
+                axios.post(`${WORK_HOST}market/update-physical-person`, currentUser)
+                    .then(res => {
+                        console.log('updatePhysicalPersonData res', res)
+                        if (res.data.success) {
+                            commit('setPhysicalPerson', res.data.model)
+                            dispatch('updateUserDataLocal')
+                        } else
+                            commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже');
+                    })
+                    .catch(err => {
+                        console.log('updatePhysicalPersonData err', err)
+                        commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже')
+                    })
+                    .finally(() => {
+                        commit('setLoading', false)
+                    });
+            } else {
+                commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже')
+            }
         }
     },
     mutations: {
