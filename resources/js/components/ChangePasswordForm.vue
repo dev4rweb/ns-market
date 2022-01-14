@@ -4,68 +4,77 @@
         @submit.prevent="changingPassword"
         novalidate
     >
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group form-group-data">
-                    <label>Старый пароль <b style="color: red">*</b> </label>
-                    <input
-                        type="password"
-                        class="form-control form-control-lg"
-                        :class="{borderRed: isOldPasswordInValid}"
-                        v-model="oldPassword"
-                        @input="isOldPasswordInValid = false"
-                        required
-                    >
-                    <div
-                        class="invalid-feedback"
-                        :class="{show: isOldPasswordInValid}"
-                    >
-                        {{ oldPasswordError }}
+        <h3>Изменение пароля</h3>
+        <div class="row position-relative">
+            <div class="row">
+                <div class=" col-md-6">
+                    <div class="form-group form-group-data">
+                        <label>Старый пароль <b style="color: red">*</b> </label>
+                        <input
+                            type="password"
+                            class="form-control form-control-lg"
+                            :class="{borderRed: isOldPasswordInValid}"
+                            v-model="oldPassword"
+                            @input="isOldPasswordInValid = false"
+                            required
+                        >
+                        <div
+                            class="invalid-feedback"
+                            :class="{show: isOldPasswordInValid}"
+                        >
+                            {{ oldPasswordError }}
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="form-group form-group-data">
-                    <label>Новый пароль<b style="color: red">*</b> </label>
-                    <input
-                        type="password"
-                        class="form-control form-control-lg"
-                        :class="{borderRed: isNewPasswordInValid}"
-                        v-model="newPassword"
-                        @input="isNewPasswordInValid = false"
-                        required
-                    >
-                    <div
-                        class="invalid-feedback"
-                        :class="{show: isNewPasswordInValid}"
-                    >
-                        {{ newPasswordError }}
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group form-group-data">
+                        <label>Новый пароль<b style="color: red">*</b> </label>
+                        <input
+                            type="password"
+                            class="form-control form-control-lg"
+                            :class="{borderRed: isNewPasswordInValid}"
+                            v-model="newPassword"
+                            @input="isNewPasswordInValid = false"
+                            required
+                        >
+                        <div
+                            class="invalid-feedback"
+                            :class="{show: isNewPasswordInValid}"
+                        >
+                            {{ newPasswordError }}
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group form-group-data">
-                    <label>Новый пароль ещё раз<b style="color: red">*</b> </label>
-                    <input
-                        type="password"
-                        class="form-control form-control-lg"
-                        :class="{borderRed: isNewPasswordConfirmationInValid}"
-                        v-model="newPasswordConfirmation"
-                        @input="isNewPasswordConfirmationInValid = false"
-                        required
-                    >
-                    <div
-                        class="invalid-feedback"
-                        :class="{show: isNewPasswordConfirmationInValid}"
-                    >
-                        {{ newPasswordConfirmationError }}
+                <div class="col-md-6">
+                    <div class="form-group form-group-data">
+                        <label>Новый пароль ещё раз<b style="color: red">*</b> </label>
+                        <input
+                            type="password"
+                            class="form-control form-control-lg"
+                            :class="{borderRed: isNewPasswordConfirmationInValid}"
+                            v-model="newPasswordConfirmation"
+                            @input="isNewPasswordConfirmationInValid = false"
+                            required
+                        >
+                        <div
+                            class="invalid-feedback"
+                            :class="{show: isNewPasswordConfirmationInValid}"
+                        >
+                            {{ newPasswordConfirmationError }}
+                        </div>
                     </div>
                 </div>
+
             </div>
 
-            <div class="col-md-6 d-flex justify-content-end align-items-end">
+            <div
+                class="col-md-12 d-flex justify-content-center align-items-end"
+                style="margin-bottom: -50px;"
+            >
                 <button
-                    class="btn btn-lg mb-3 btn-info btn-save"
+                    class="btn btn-lg btn-info btn-save"
                     type="submit"
                 >
                     Изменить пароль

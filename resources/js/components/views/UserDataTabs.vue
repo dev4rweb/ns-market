@@ -137,7 +137,7 @@
                 role="tabpanel"
                 aria-labelledby="pills-mentor-tab"
             >
-                Наставник
+                <UserMentorPanel/>
             </div>
 
         </div>
@@ -145,8 +145,12 @@
 </template>
 
 <script>
+import UserMentorPanel from "./UserMentorPanel";
 export default {
-    name: "UserDataTabs"
+    name: "UserDataTabs",
+    components: {
+        UserMentorPanel
+    }
 }
 </script>
 

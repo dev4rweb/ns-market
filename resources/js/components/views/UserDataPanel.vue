@@ -1,6 +1,6 @@
 <template>
 
-    <div class="user-content " v-if="getCurrentUser && getPhysicalPerson">
+    <div class="user-content mb-5" v-if="getCurrentUser && getPhysicalPerson">
         <UpdateWithPhone/>
         <div
             class="row"
@@ -214,18 +214,20 @@
             <ChangePasswordForm/>
         </div>
 
-        <UserDataReadPanel
-            v-else
-        />
+        <div class="position-relative" v-else>
+            <UserDataReadPanel/>
 
-        <div class="row mt-3 mb-5 d-flex justify-content-center align-items-center">
-            <button
-                class="btn btn-info btn-save"
-                v-if="!isEditFields"
-                @click="isEditFields = !isEditFields"
+            <div
+                class="row mt-3 mb-5 d-flex justify-content-center align-items-center"
             >
-                Изменить данные
-            </button>
+                <button
+                    class="btn btn-info btn-save"
+                    style="margin-top: -35px; z-index: 1"
+                    @click="isEditFields = !isEditFields"
+                >
+                    Изменить данные
+                </button>
+            </div>
         </div>
     </div>
 </template>

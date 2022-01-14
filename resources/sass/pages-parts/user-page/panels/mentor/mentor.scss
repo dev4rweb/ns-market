@@ -1,0 +1,36 @@
+@import "../../../../variables";
+
+.mentor-panel {
+
+    .mentor-avatar-block{
+
+        .mentor-avatar{
+            max-width: 117px;
+            height: auto;
+            margin-right: 20px;
+        }
+
+        .mentor-full-name{
+            font-style: normal;
+            font-weight: 600;
+            font-size: 26px;
+            line-height: 32px;
+            color: $textMainColor;
+        }
+
+    }
+
+    p {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 20px;
+        line-height: 24px;
+    }
+
+    span {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 17px;
+    }
+}

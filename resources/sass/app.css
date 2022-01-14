@@ -10325,6 +10325,150 @@ footer h3, footer .h3 {
   line-height: 22px;
   color: #000000; }
 
+.mentor-panel .mentor-avatar-block .mentor-avatar {
+  max-width: 117px;
+  height: auto;
+  margin-right: 20px; }
+.mentor-panel .mentor-avatar-block .mentor-full-name {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 26px;
+  line-height: 32px;
+  color: #333333; }
+.mentor-panel p {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 20px;
+  line-height: 24px; }
+.mentor-panel span {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px; }
+
+@font-face {
+  font-family: 'Proxima Nova Regular';
+  src: url("../assets/fonts/proxima/ProximaNova-Regular.eot");
+  src: url("../assets/fonts/proxima/ProximaNova-Regular.eot?#iefix") format("embedded-opentype"), url("../assets/fonts/proxima/ProximaNova-Regular.woff") format("woff"), url("../assets/fonts/proxima/ProximaNova-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal; }
+@font-face {
+  font-family: 'Arial Regular';
+  src: url("../assets/fonts/arial/ArialMT.eot");
+  src: url("../assets/fonts/arial/ArialMT.eot?#iefix") format("embedded-opentype"), url("../assets/fonts/arial/ArialMT.woff") format("woff"), url("../assets/fonts/arial/ArialMT.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal; }
+* {
+  font-family: "Proxima Nova Regular", sans-serif; }
+
+body {
+  background-color: #e5e5e5; }
+
+main {
+  position: relative; }
+
+h1, .h1 {
+  font-family: "Proxima Nova Regular", sans-serif;
+  font-size: 60px;
+  line-height: 70px;
+  color: #C4C4C4; }
+  @media screen and (max-width: 480px) {
+    h1, .h1 {
+      font-size: 40px;
+      line-height: 50px; } }
+
+h2, .h2 {
+  font-family: "Proxima Nova Regular", sans-serif;
+  font-size: 40px;
+  line-height: 47px;
+  color: #C4C4C4; }
+
+h3, .h3 {
+  font-family: "Proxima Nova Regular", sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 24px;
+  color: #C4C4C4; }
+
+h4, .h4 {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 120%;
+  color: #333333; }
+
+hr {
+  background-color: #60829F; }
+
+footer h3, footer .h3 {
+  font-family: "Proxima Nova Regular", sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 26px;
+  line-height: 120%;
+  color: #C4C4C4; }
+
+.textMain {
+  font-family: "Proxima Nova Regular", sans-serif;
+  font-size: 18px;
+  line-height: 20px;
+  color: #C4C4C4; }
+
+.textMainBold {
+  font-family: "Proxima Nova Regular", sans-serif;
+  font-size: 18px;
+  line-height: 120%;
+  text-transform: uppercase;
+  color: #C4C4C4; }
+
+.signCompany {
+  font-family: "Proxima Nova Regular", sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 10px;
+  font-feature-settings: 'pnum' on, 'lnum' on;
+  color: #C4C4C4; }
+
+.personalCabinet .placeholderText {
+  font-family: "Proxima Nova Regular", sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  color: #000000; }
+.personalCabinet .inputText {
+  font-family: "Proxima Nova Regular", sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 20px;
+  line-height: 24px;
+  color: #000000; }
+.personalCabinet .headerText {
+  font-family: "Proxima Nova Regular", sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  color: #000000; }
+
+.popupText {
+  font-family: "Proxima Nova Regular", sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 20px;
+  color: #000000; }
+
+.popupPlaceholderText {
+  font-family: "Proxima Nova Regular", sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  color: #000000; }
+
 .modal-login {
   max-width: 425px;
   -webkit-border-radius: 10px;

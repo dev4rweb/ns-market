@@ -19,6 +19,9 @@ export default {
                     console.log('fetchPhysicalPerson', res)
                     if (res.data.model) {
                         commit('setPhysicalPerson', res.data.model)
+                        if (res.data.model.mentor_user_id) {
+                            dispatch('fetchMentorUserById', res.data.model.mentor_user_id)
+                        }
                     }
                 }).catch(err => {
                     console.log('fetchPhysicalPerson err', err)

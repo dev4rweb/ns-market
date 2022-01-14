@@ -44,6 +44,7 @@ Vue.component('user-data-tabs', require('./components/views/UserDataTabs').defau
 Vue.component('user-data-panel', require('./components/views/UserDataPanel').default);
 Vue.component('user-data-read-panel', require('./components/views/UserDataReadPanel').default);
 Vue.component('user-status-panel', require('./components/views/UserStatusPanel').default);
+Vue.component('user-mentor-panel', require('./components/views/UserMentorPanel').default);
 Vue.component('change-password-form', require('./components/ChangePasswordForm').default);
 Vue.component('update-with-phone', require('./components/Modals/UpdateWithPhone').default);
 /**

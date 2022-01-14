@@ -114,11 +114,12 @@ export default {
             let month = ''
             let year = ''
             if (this.getPhysicalPerson.birthday) {
-                day = new Date(this.getPhysicalPerson.birthday).getDay()
+                const date = new Date(this.getPhysicalPerson.birthday)
+                day = date.getDate()
                 day = day < 10 ? '0' + day : day
-                month = new Date(this.getPhysicalPerson.birthday).getMonth()
+                month = date.getMonth()
                 month = this.monthNames[month]
-                year = new Date(this.getPhysicalPerson.birthday).getFullYear()
+                year = date.getFullYear()
             }
             this.birthday = `${day} ${month} ${year}`
         }
