@@ -375,7 +375,7 @@ export default {
                 return phone
             },
             set: function (value) {
-                this.getCurrentUser.mobile_phone = value.replace(/\s/g, '').slice(1, value.length)
+                this.getCurrentUser.mobile_phone = value.replace(/[^0-9]/g, '')
             }
         }
     },
@@ -415,5 +415,8 @@ export default {
 
 .borderRed {
     border-color: red;
+}
+h3 {
+    text-transform: uppercase;
 }
 </style>

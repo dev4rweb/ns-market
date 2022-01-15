@@ -121,11 +121,11 @@ export default {
             window.location.reload();
         },
         confirmSms() {
-            if (this.sms.replace(/\s/g, '').length !== 4) {
+            if (this.sms.replace(/[^0-9]/g, '').length !== 4) {
                 this.isSmsInValid = true
                 return
             }
-            if (this.getSecret && this.getSecret == this.sms) {
+            if (this.getSecret && this.getSecret == this.sms.replace(/[^0-9]/g, '')) {
                 console.log('confirmSms');
                 this.updateUserData()
             } else {

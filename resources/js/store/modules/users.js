@@ -5,9 +5,9 @@ export default {
         getUserByPhoneOrUserId({commit}, phoneOrUserId) {
             commit('setLoading', true)
             let isByUserId = false
+            phoneOrUserId = phoneOrUserId.replace(/[^0-9]/g, '')
             const fd = new FormData()
             if (phoneOrUserId.length > 11) {
-                phoneOrUserId = phoneOrUserId.slice(1, phoneOrUserId.length)
                 fd.set('phone', phoneOrUserId)
                 commit('setCurrentPhone', phoneOrUserId)
             } else {
@@ -78,7 +78,7 @@ export default {
                     console.log('localLogin err', err.response.data)
                     if (err.response.data.errors.email[0].includes('These credentials do not match our records.'))
                         dispatch('localRegister', password)
-                    else alert('Что-то пошло не так, попробуйте позже')
+                    else commit('setToastError','Что-то пошло не так, попробуйте позже')
                 }).finally(() => {
                     commit('setLoading', false)
                 });
@@ -151,7 +151,7 @@ export default {
         },
 
         changeDuplicatePhones({commit, getters, dispatch}, phoneNumber) {
-            phoneNumber = phoneNumber.slice(1, phoneNumber.length)
+            phoneNumber = phoneNumber.replace(/[^0-9]/g, '')
             const currentUser = getters['getCurrentUser']
             console.log('changeDuplicatePhones', currentUser, phoneNumber)
             axios.post(`${WORK_HOST}market/change-duplicate-phone`, {

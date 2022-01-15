@@ -4,6 +4,10 @@ export default {
     state: {
         mentorUser: null,
         mentorPhysicalPerson: null,
+        isMentorChangePhoneForm: true,
+        isMentorPhoneFounded: false,
+        isMentorPhoneConfirmation: false,
+        temporaryMentor: null
     },
     actions: {
         fetchMentorUserById({commit, dispatch}, mentorUserId) {
@@ -42,8 +46,85 @@ export default {
             }).finally(() => {
                 commit('setLoading', false)
             });
-        }
+        },
+        findChangingMentorByPhone({commit}, phoneNumber) {
+            commit('setLoading', true)
+            axios.post(`${WORK_HOST}market/get-user-phone`, {
+                phone: phoneNumber
+            }).then(res => {
+                console.log('findChangingMentorByPhone', res);
+                if (res.data.success) {
+                    if (res.data.model.length > 1) {
+                        commit('setToastError', 'За этим номером зарегистрировано несколько пользователей. Обратитесь к администрации!')
 
+                    } else if (res.data.model.length === 0) {
+                        commit('setToastError', 'Мы не нашли человека с таким номером телефона в нашей базе. Проверьте правильность введённых данных и повторите попытку.');
+                    } else if (res.data.model.length === 1) {
+                        commit('setTemporaryMentor', res.data.model[0])
+                        commit('setIsMentorChangePhoneForm', false)
+                        commit('setIsMentorPhoneFounded', true)
+                    } else {
+                        commit('setToastError', 'Непредвиденная ошибка')
+                    }
+                } else commit('setToastError', 'Что-то пошло не так, попробуйте позже')
+            }).catch(err => {
+                console.log('findChangingMentorByPhone err', err)
+                commit('setToastError', 'Что-то пошло не так, попробуйте позже')
+            }).finally(() => {
+                commit('setLoading', false)
+            });
+        },
+        toggleStatus({commit, getters}) {
+            const user = getters['getCurrentUser']
+            if (user) {
+                commit('setLoading', true);
+                axios.post(`${WORK_HOST}market/toggle-status`, {
+                    user_id: user.id
+                }).then(res => {
+                    console.log('toggleStatus', res)
+                    if (res.data.success) {
+                        commit('setToastError', 'Статус успешно изменен')
+                        setTimeout(() => {
+                            window.location.reload()
+                        }, 2000);
+                    } else commit('setToastError', 'Что-то пошло не так, попробуйте позже')
+                }).catch(err => {
+                    console.log('toggleStatus err', err)
+                    commit('setToastError', 'Что-то пошло не так, попробуйте позже')
+                }).finally(() => {
+                    commit('setLoading', false)
+                });
+            } else {
+                commit('setToastError', 'Что-то пошло не так, попробуйте позже')
+            }
+        },
+        changeMentor({commit, getters}) {
+            const user = getters['getCurrentUser']
+            const tempMentor = getters['getTemporaryMentor']
+            console.log('changeMentor user', user)
+            console.log('changeMentor tempMentor', tempMentor)
+            if (user && tempMentor) {
+                commit('setLoading', true);
+                axios.post(`${WORK_HOST}market/change-mentor`, {
+                    user_id: user.id,
+                    mentor_user_id: tempMentor.id
+                }).then(res => {
+                    console.log('changeMentor', res)
+                    if (res.data.success) {
+                        commit('setToastError', 'Наставник успешно изменен')
+                        commit('setIsMentorPhoneFounded', false)
+                        commit('setIsMentorPhoneConfirmation', true)
+                    } else commit('setToastError', 'Что-то пошло не так, попробуйте позже')
+                }).catch(err => {
+                    console.log('changeMentor err', err)
+                    commit('setToastError', 'Что-то пошло не так, попробуйте позже')
+                }).finally(() => {
+                    commit('setLoading', false)
+                });
+            } else {
+                commit('setToastError', 'Что-то пошло не так, попробуйте позже')
+            }
+        }
     },
     mutations: {
         setMentorUser(state, mentorUser) {
@@ -51,6 +132,18 @@ export default {
         },
         setMentorPhysicalPerson(state, mentorPhysicalPerson) {
             state.mentorPhysicalPerson = mentorPhysicalPerson
+        },
+        setIsMentorChangePhoneForm(state, isShow) {
+            state.isMentorChangePhoneForm = isShow
+        },
+        setIsMentorPhoneFounded(state, isShow) {
+            state.isMentorPhoneFounded = isShow
+        },
+        setIsMentorPhoneConfirmation(state, isShow) {
+            state.isMentorPhoneConfirmation = isShow
+        },
+        setTemporaryMentor(state, tempMentor) {
+            state.temporaryMentor = tempMentor
         }
     },
     getters: {
@@ -59,6 +152,18 @@ export default {
         },
         getMentorPhysicalPerson(state) {
             return state.mentorPhysicalPerson
+        },
+        getIsMentorChangePhoneForm(state) {
+            return state.isMentorChangePhoneForm
+        },
+        getIsMentorPhoneFounded(state) {
+            return state.isMentorPhoneFounded
+        },
+        getIsMentorPhoneConfirmation(state) {
+            return state.isMentorPhoneConfirmation
+        },
+        getTemporaryMentor(state) {
+            return state.temporaryMentor
         }
     }
 }

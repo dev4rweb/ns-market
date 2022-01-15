@@ -82,7 +82,7 @@ export default {
                  this.loading = true
                  const fd = new FormData();
                  // if (this.phone.length > 8)
-                     fd.set('phone', this.phoneMentor.slice(1, this.phoneMentor.length))
+                     fd.set('phone', this.phoneMentor.replace(/[^0-9]/g, ''))
 
                  axios.post(`${WORK_HOST}market/get-user-phone`, fd)
                      .then(res => {

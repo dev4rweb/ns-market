@@ -133,7 +133,7 @@ export default {
                 this.isPhoneInValid = true
                 return
             }
-            phoneNumber = phoneNumber.slice(1, phoneNumber.length)
+            phoneNumber = phoneNumber.replace(/[^0-9]/g, '')
             this.setLoading(true);
             console.log('sendSms', phoneNumber, this.getCurrentUser)
             if (WORK_HOST === LOCAL_HOST) {

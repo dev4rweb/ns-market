@@ -1,6 +1,7 @@
 <template>
     <div class="row">
         <div class="card data-card">
+            <h3>Личная информация</h3>
             <div class="col-md-12">
                 <div class="form-group form-group-data">
                     <label>ФИО</label>
@@ -146,5 +147,7 @@ export default {
 </script>
 
 <style scoped>
-
+h3 {
+    text-transform: uppercase;
+}
 </style>

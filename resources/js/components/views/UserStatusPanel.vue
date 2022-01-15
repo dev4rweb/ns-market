@@ -12,7 +12,13 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <button class="btn btn-outline-info">Загрузить паспорт</button>
+                    <button
+                        class="btn btn-outline-info"
+                        @click="toggleStatus"
+                    >
+<!--                        Загрузить паспорт-->
+                        Сменить статус
+                    </button>
                     <button class="btn btn-outline-info">Загрузить сертификат</button>
                 </div>
             </div>
@@ -21,13 +27,22 @@
 </template>
 
 <script>
+import {mapActions} from 'vuex'
 export default {
-    name: "UserStatusPanel"
+    name: "UserStatusPanel",
+    methods: {
+        ...mapActions(['toggleStatus'])
+    }
 }
 </script>
 
 <style scoped>
 h3{
+    text-transform: uppercase;
     color: #333333;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 29px;
 }
 </style>

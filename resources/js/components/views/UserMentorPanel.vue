@@ -21,13 +21,13 @@
                     <img class="me-1" :src="icPhone" alt="icon">
                     <div class="content">
                         <span>Мобильный</span>
-                        <p class="mb-0">+{{getMentorUser.mobile_phone}}</p>
+                        <p class="mb-0">+{{ getMentorUser.mobile_phone }}</p>
                     </div>
                 </div>
                 <h4 class="mt-3">Электронная почта</h4>
                 <div class="d-flex align-items-center">
                     <img class="me-1" :src="icEmail" alt="icon">
-                    <p class="mb-0">{{getMentorUser.email}}</p>
+                    <p class="mb-0">{{ getMentorUser.email }}</p>
                 </div>
                 <div class="mt-3" v-if="getMentorPhysicalPerson">
                     <span>День рождения</span>
@@ -40,6 +40,23 @@
                 </div>
             </div>
             <h4 v-else>У Вас нет наставника</h4>
+            <div
+                v-if="isClient"
+                class="d-flex justify-content-center position-relative"
+            >
+                <a
+                    href="/user-mentor-change"
+                    class="btn btn-lg btn-info d-flex align-items-center"
+                    style="margin-bottom: -50px;"
+                >
+                    <img
+                        :src="icLoad"
+                        alt="icon"
+                        class="me-1"
+                    >
+                    Сменить наставника
+                </a>
+            </div>
         </div>
         <h2 v-else>Ошибка связи с сервером</h2>
     </div>
@@ -50,6 +67,7 @@ import {mapGetters} from 'vuex'
 import mentorAvatar from '../../../assets/img/mentor-avatar.png'
 import icPhone from '../../../assets/img/ic-phone.svg'
 import icEmail from '../../../assets/img/ic-email.svg'
+import icLoad from '../../../assets/img/ic-load.svg'
 
 export default {
     name: "UserMentorPanel",
@@ -58,6 +76,7 @@ export default {
             mentorAvatar,
             icPhone,
             icEmail,
+            icLoad,
             monthNames: ["января", "февраля", "марта", "апреля", "мая", "июня",
                 "июля", "августа", "сентября", "октября", "ноября", "декабря"],
         }
@@ -77,6 +96,15 @@ export default {
                 year = date.getFullYear()
             }
             return `${day} ${month} ${year}`
+        },
+        isClient() {
+            switch (this.getPhysicalPerson.trade_status) {
+                case 'K':
+                case 'D':
+                    return false
+                default:
+                    return true
+            }
         }
     },
 }

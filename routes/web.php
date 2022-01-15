@@ -7,6 +7,7 @@ use App\Http\Controllers\HomePageController;
 use App\Http\Controllers\StockPageController;
 use App\Http\Controllers\UserAddressPageController;
 use App\Http\Controllers\UserDataPageController;
+use App\Http\Controllers\UserMentorChangePageController;
 use App\Http\Controllers\UserMentorPageController;
 use App\Http\Controllers\UserPageController;
 use App\Http\Controllers\UserPassportPageController;
@@ -38,6 +39,7 @@ Route::get('/user-panel', [UserPageController::class, 'index'])->name('user-page
 Route::get('/user-data-panel', [UserDataPageController::class, 'index'])->name('user-data-page');
 Route::get('/user-address-panel', [UserAddressPageController::class, 'index'])->name('user-address-page');
 Route::get('/user-mentor-panel', [UserMentorPageController::class, 'index'])->name('user-mentor-page');
+Route::get('/user-mentor-change', [UserMentorChangePageController::class, 'index'])->name('user-mentor-change-page');
 Route::get('/user-support-panel', [UserSupportPageController::class, 'index'])->name('user-support-page');
 Route::get('/user-passport-panel', [UserPassportPageController::class, 'index'])->name('user-passport-page');
 Route::get('/user-status-panel', [UserStatusPageController::class, 'index'])->name('user-status-page');

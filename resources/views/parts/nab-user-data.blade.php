@@ -1,4 +1,4 @@
-<ul class="nav nav-pills nav-fill mb-3">
+<ul class="nav nav-pills mb-3">
     <li class="nav-item">
         <a
             class="btn btn-outline-info @if(Request::url() == url('/user-data-panel')) active @endif"
