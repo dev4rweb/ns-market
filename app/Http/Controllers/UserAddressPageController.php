@@ -23,6 +23,6 @@ class UserAddressPageController extends Controller
      */
     public function index()
     {
-        return view('user-address-panel');
+        return view('user-pages.user-address-panel');
     }
 }

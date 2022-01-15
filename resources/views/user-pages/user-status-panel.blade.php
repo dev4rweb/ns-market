@@ -5,7 +5,10 @@
         <div class="container">
             @include('parts.user-sidebar')
 
-            <user-data-tabs></user-data-tabs>
+            <div>
+                @include('parts.nab-user-data')
+                <user-status-panel></user-status-panel>
+            </div>
         </div>
     </div>
 @endsection

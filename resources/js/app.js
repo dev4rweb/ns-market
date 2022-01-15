@@ -40,6 +40,7 @@ Vue.component('physicalPerson', require('./components/Users/PhysicalPerson').def
 Vue.component('toast', require('./components/UI/Toast.vue').default);
 Vue.component('custom-radio', require('./components/UI/CustomRadio').default);
 Vue.component('radio-box', require('./components/UI/RadioBox').default);
+Vue.component('nav-user-data', require('./components/UI/NavUserData').default);
 Vue.component('user-data-tabs', require('./components/views/UserDataTabs').default);
 Vue.component('user-data-panel', require('./components/views/UserDataPanel').default);
 Vue.component('user-data-read-panel', require('./components/views/UserDataReadPanel').default);

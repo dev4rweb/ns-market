@@ -31,22 +31,6 @@
         </li>
         <li>
             <a
-                href="{{route('user-address-page')}}"
-                class="@if(Request::url() == url('/user-address-panel')) active @endif"
-            >
-                Мои адреса
-            </a>
-        </li>
-        <li>
-            <a
-                href="{{route('user-mentor-page')}}"
-                class="@if(Request::url() == url('/user-mentor-panel')) active @endif"
-            >
-                Мой наставник
-            </a>
-        </li>
-        <li>
-            <a
                 href="{{route('user-support-page')}}"
                 class="@if(Request::url() == url('/user-support-panel')) active @endif"
             >

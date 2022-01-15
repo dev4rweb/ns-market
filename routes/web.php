@@ -9,6 +9,9 @@ use App\Http\Controllers\UserAddressPageController;
 use App\Http\Controllers\UserDataPageController;
 use App\Http\Controllers\UserMentorPageController;
 use App\Http\Controllers\UserPageController;
+use App\Http\Controllers\UserPassportPageController;
+use App\Http\Controllers\UserPaymentInfoPageController;
+use App\Http\Controllers\UserStatusPageController;
 use App\Http\Controllers\UserSupportPageController;
 use Illuminate\Support\Facades\Route;
 
@@ -36,6 +39,9 @@ Route::get('/user-data-panel', [UserDataPageController::class, 'index'])->name('
 Route::get('/user-address-panel', [UserAddressPageController::class, 'index'])->name('user-address-page');
 Route::get('/user-mentor-panel', [UserMentorPageController::class, 'index'])->name('user-mentor-page');
 Route::get('/user-support-panel', [UserSupportPageController::class, 'index'])->name('user-support-page');
+Route::get('/user-passport-panel', [UserPassportPageController::class, 'index'])->name('user-passport-page');
+Route::get('/user-status-panel', [UserStatusPageController::class, 'index'])->name('user-status-page');
+Route::get('/user-payment-info-panel', [UserPaymentInfoPageController::class, 'index'])->name('user-payment-info-page');
 Route::get('/', [HomePageController::class, 'index'])->name('home-page');
 Route::get('/catalog', [CatalogPageController::class, 'index'])->name('catalog-page');
 Route::get('/stock', [StockPageController::class, 'index'])->name('stock-page');

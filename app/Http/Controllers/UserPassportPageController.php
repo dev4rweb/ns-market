@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class UserMentorPageController extends Controller
+class UserPassportPageController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -23,6 +23,6 @@ class UserMentorPageController extends Controller
      */
     public function index()
     {
-        return view('user-pages.user-mentor-panel');
+        return view('user-pages.user-passport-panel');
     }
 }

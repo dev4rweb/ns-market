@@ -23,6 +23,6 @@ class UserSupportPageController extends Controller
      */
     public function index()
     {
-        return view('user-support-panel');
+        return view('user-pages.user-support-panel');
     }
 }

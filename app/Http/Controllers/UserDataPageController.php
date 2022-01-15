@@ -23,6 +23,6 @@ class UserDataPageController extends Controller
      */
     public function index()
     {
-        return view('user-data-panel');
+        return view('user-pages.user-data-panel');
     }
 }
