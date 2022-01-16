@@ -7,7 +7,7 @@ export default {
             let isByUserId = false
             phoneOrUserId = phoneOrUserId.replace(/[^0-9]/g, '')
             const fd = new FormData()
-            if (phoneOrUserId.length > 11) {
+            if (phoneOrUserId.length > 10) {
                 fd.set('phone', phoneOrUserId)
                 commit('setCurrentPhone', phoneOrUserId)
             } else {

@@ -37,6 +37,7 @@ Vue.component('not-unique-phone-form', require('./components/Modals/NotUniquePho
 Vue.component('loader', require('./components/UI/Loader').default);
 Vue.component('users', require('./components/Users/Users').default);
 Vue.component('physicalPerson', require('./components/Users/PhysicalPerson').default);
+Vue.component('uploadAvatar', require('./components/Users/physical-person/UploadAvatar').default);
 Vue.component('toast', require('./components/UI/Toast.vue').default);
 Vue.component('custom-radio', require('./components/UI/CustomRadio').default);
 Vue.component('radio-box', require('./components/UI/RadioBox').default);

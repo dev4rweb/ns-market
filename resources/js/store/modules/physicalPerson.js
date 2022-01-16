@@ -40,6 +40,7 @@ export default {
                         console.log('updatePhysicalPersonData res', res)
                         if (res.data.success) {
                             commit('setPhysicalPerson', res.data.model)
+
                             dispatch('updateUserDataLocal')
                         } else
                             commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже');
@@ -64,6 +65,26 @@ export default {
     getters: {
         getPhysicalPerson(state) {
             return state.physicalPerson
+        },
+        getAvatar(state) {
+            // let HOST = WORK_HOST.replace('/api', '')
+            let HOST = 'http://staging-admin.newstarmlm.biz/'
+            let person = state.physicalPerson
+            if (person) {
+                if (person.avatar_image) {
+                    console.log('avatar')
+                    return `${HOST}${person.avatar_image}`;
+                } else if (person.gender == 'М') {
+                    console.log('male')
+                    return `${HOST}uploads/users/physical_persons/avatars/placeholder_512x512_male.jpg`
+                } else {
+                    console.log('female', person )
+                    return `${HOST}uploads/users/physical_persons/avatars/placeholder_512x512_female.jpg`
+                }
+            } else {
+                console.log('else')
+                return `${HOST}uploads/users/physical_persons/avatars/placeholder_512x512_male.jpg`
+            }
         }
     }
 }

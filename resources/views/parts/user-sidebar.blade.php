@@ -1,13 +1,6 @@
 <aside>
     <div class="profile-block">
-        <div class="avatar-block">
-            <img src="{{asset('images/avatar-profile.png')}}" alt="ava">
-            <img
-                class="add-photo"
-                src="{{asset('images/ic-camera.svg')}}"
-                alt="icon"
-            >
-        </div>
+        <upload-avatar></upload-avatar>
         <h2>
             {{Auth::user()->first_name}} {{Auth::user()->last_name}}
         </h2>
