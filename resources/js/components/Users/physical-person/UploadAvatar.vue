@@ -112,6 +112,7 @@ export default {
 .ava-icon {
     height: 32px;
     position: absolute;
+    right: 0;
     background-color: #fff;
     -webkit-border-radius: 8px;
     -moz-border-radius: 8px;

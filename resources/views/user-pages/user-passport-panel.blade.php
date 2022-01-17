@@ -8,7 +8,7 @@
             <div>
                 @include('parts.nab-user-data')
                 <div>
-                    Passport
+                    <user-passport-panel></user-passport-panel>
                 </div>
             </div>
         </div>

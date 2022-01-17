@@ -5,7 +5,7 @@
             <p>Выберите подходящий вариант из списка и загрузите диплом, сертификат или другой документ,
                 подтверждающий вашу специализацию.</p>
             <div class="form-check mb-3">
-                <input class="form-check-input" type="radio" name="flexRadioDefault" >
+                <input class="form-check-input" type="checkbox" name="flexRadioDefault" >
                 <label class="form-check-label">
                     Косметолог
                 </label>

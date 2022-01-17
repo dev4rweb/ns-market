@@ -34,6 +34,12 @@
         >
             Продолжить
         </button>
+        <a
+            href="/user-mentor-panel"
+            class="btn btn-lg btn-secondary mb-3 w-100"
+        >
+            Отмена
+        </a>
     </form>
 </template>
 
@@ -64,15 +70,16 @@ export default {
             }
             this.findChangingMentorByPhone(phone)
             console.log('findMentorByPhone', phone);
-        },
-        mounted() {
-            setTimeout(() => {
-                this.$refs.focusMe.focus();
-            }, 500);
         }
     },
     computed: {
         ...mapGetters(['getCurrentUser'])
+    },
+    mounted() {
+        setTimeout(() => {
+            // console.log('mounted Mentor Change Phone')
+            this.$refs.focusMe.focus();
+        }, 500);
     }
 }
 </script>

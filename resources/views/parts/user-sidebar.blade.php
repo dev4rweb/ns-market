@@ -16,6 +16,14 @@
     <ul class="user-sidebar">
         <li>
             <a
+                href="{{route('user-page')}}"
+                class="@if(Request::url() == url('/user-panel')) active @endif"
+            >
+                Новости
+            </a>
+        </li>
+        <li>
+            <a
                 href="{{route('user-data-page')}}"
                 class="@if(Request::url() == url('/user-data-panel')) active @endif"
             >
