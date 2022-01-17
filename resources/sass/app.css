@@ -10328,7 +10328,10 @@ footer h3, footer .h3 {
 .mentor-panel .mentor-avatar-block .mentor-avatar {
   max-width: 117px;
   height: auto;
-  margin-right: 20px; }
+  margin-right: 20px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%; }
 .mentor-panel .mentor-avatar-block .mentor-full-name {
   font-style: normal;
   font-weight: 600;

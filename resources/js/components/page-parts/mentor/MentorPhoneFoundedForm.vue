@@ -4,7 +4,20 @@
         <hr style="background-color: #038ED7; height: 2px">
         <p class="invite-text">Вас пригласил:</p>
         <div class="d-flex align-items-center mb-5">
-            <img class="me-2" :src="mentorAvatar" alt="avatar">
+            <img
+                v-if="getTempMentorAvatar"
+                class="me-2"
+                style="-webkit-border-radius: 50%;-moz-border-radius: 50%;border-radius: 50%;"
+                :src="getTempMentorAvatar"
+                alt="avatar"
+            >
+            <img
+                v-else
+                class="me-2"
+                style="-webkit-border-radius: 50%;-moz-border-radius: 50%;border-radius: 50%;"
+                :src="getMentorAvatar"
+                alt="avatar"
+            >
             <div
                 class="mentor-content"
                 v-if="getTemporaryMentor"
@@ -58,7 +71,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['getTemporaryMentor'])
+        ...mapGetters(['getTemporaryMentor', 'getTempMentorAvatar'])
     }
 }
 </script>

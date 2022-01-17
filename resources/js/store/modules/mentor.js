@@ -7,7 +7,8 @@ export default {
         isMentorChangePhoneForm: true,
         isMentorPhoneFounded: false,
         isMentorPhoneConfirmation: false,
-        temporaryMentor: null
+        temporaryMentor: null,
+        temporaryPhysicalMentor: null,
     },
     actions: {
         fetchMentorUserById({commit, dispatch}, mentorUserId) {
@@ -47,7 +48,7 @@ export default {
                 commit('setLoading', false)
             });
         },
-        findChangingMentorByPhone({commit}, phoneNumber) {
+        findChangingMentorByPhone({commit, dispatch}, phoneNumber) {
             commit('setLoading', true)
             axios.post(`${WORK_HOST}market/get-user-phone`, {
                 phone: phoneNumber
@@ -61,8 +62,7 @@ export default {
                         commit('setToastError', 'Мы не нашли человека с таким номером телефона в нашей базе. Проверьте правильность введённых данных и повторите попытку.');
                     } else if (res.data.model.length === 1) {
                         commit('setTemporaryMentor', res.data.model[0])
-                        commit('setIsMentorChangePhoneForm', false)
-                        commit('setIsMentorPhoneFounded', true)
+                        dispatch('fetchTemporaryMentorPhysicalPerson', res.data.model[0].id)
                     } else {
                         commit('setToastError', 'Непредвиденная ошибка')
                     }
@@ -70,6 +70,26 @@ export default {
             }).catch(err => {
                 console.log('findChangingMentorByPhone err', err)
                 commit('setToastError', 'Что-то пошло не так, попробуйте позже')
+            }).finally(() => {
+                commit('setLoading', false)
+            });
+        },
+        fetchTemporaryMentorPhysicalPerson({commit}, mentorUserId) {
+            commit('setLoading', true)
+            axios.post(`${WORK_HOST}market/get-physical-user`, {
+                user_id: mentorUserId
+            }).then(res => {
+                console.log('fetchMentorPhysicalPerson', res)
+                if (res.data.success) {
+                    const user = res.data.model
+                    if (user) {
+                        commit('setTemporaryPhysicalMentor', user)
+                        commit('setIsMentorChangePhoneForm', false)
+                        commit('setIsMentorPhoneFounded', true)
+                    }
+                }
+            }).catch(err => {
+                console.log('fetchMentorPhysicalPerson err', err)
             }).finally(() => {
                 commit('setLoading', false)
             });
@@ -144,6 +164,9 @@ export default {
         },
         setTemporaryMentor(state, tempMentor) {
             state.temporaryMentor = tempMentor
+        },
+        setTemporaryPhysicalMentor(state, tempPhysicalMentor) {
+            state.temporaryPhysicalMentor = tempPhysicalMentor
         }
     },
     getters: {
@@ -164,6 +187,30 @@ export default {
         },
         getTemporaryMentor(state) {
             return state.temporaryMentor
+        },
+        getMentorAvatar(state) {
+            let HOST = WORK_HOST.replace('/api', '')
+            let person = state.mentorPhysicalPerson
+            if (person) {
+                if (person.avatar_image) {
+                    return `${HOST}${person.avatar_image.replaceAll(/\\/g, "")}`;
+                } else {
+                    return `${HOST}uploads/users/physical_persons/avatars/placeholder_512x512_male.jpg`
+                }
+            } else
+                return `${HOST}uploads/users/physical_persons/avatars/placeholder_512x512_male.jpg`
+        },
+        getTempMentorAvatar(state) {
+            let HOST = WORK_HOST.replace('/api', '')
+            let person = state.temporaryPhysicalMentor
+            if (person) {
+                if (person.avatar_image) {
+                    return `${HOST}${person.avatar_image.replaceAll(/\\/g, "")}`;
+                } else {
+                    return `${HOST}uploads/users/physical_persons/avatars/placeholder_512x512_male.jpg`
+                }
+            } else
+                return `${HOST}uploads/users/physical_persons/avatars/placeholder_512x512_male.jpg`
         }
     }
 }

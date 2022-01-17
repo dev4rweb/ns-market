@@ -10,7 +10,7 @@
                 v-if="getPhysicalPerson.mentor_user_id && getMentorUser"
             >
                 <div class="mentor-avatar-block">
-                    <img class="mentor-avatar" :src="mentorAvatar" alt="avatar">
+                    <img class="mentor-avatar" :src="getMentorAvatar" alt="avatar">
                     <span class="mentor-full-name">
                         {{ getMentorUser.first_name }}
                         {{ getMentorUser.last_name }}
@@ -82,7 +82,10 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['getPhysicalPerson', 'getMentorUser', 'getMentorPhysicalPerson']),
+        ...mapGetters([
+            'getPhysicalPerson', 'getMentorUser',
+            'getMentorPhysicalPerson', 'getMentorAvatar'
+        ]),
         getBirthday() {
             let day = ''
             let month = ''
@@ -105,7 +108,7 @@ export default {
                 default:
                     return true
             }
-        }
+        },
     },
 }
 </script>
