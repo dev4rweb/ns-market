@@ -55,6 +55,34 @@ export default {
             } else {
                 commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже')
             }
+        },
+        uploadAvatar({commit, getters}, file) {
+            console.log('uploadAvatar', file)
+            const currentUser = getters['getPhysicalPerson']
+            if (currentUser) {
+                commit('setLoading', true)
+                const fd = new FormData()
+                fd.set('user_id', currentUser.user_id)
+                fd.set('image', file)
+                axios.post(`${WORK_HOST}market/upload-avatar`, fd)
+                    .then(res => {
+                        console.log('updatePhysicalPersonData res', res)
+                        if (res.data.success) {
+                            commit('setPhysicalPerson', res.data.model)
+                            window.location.reload()
+                        } else
+                            commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже');
+                    })
+                    .catch(err => {
+                        console.log('updatePhysicalPersonData err', err)
+                        commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже')
+                    })
+                    .finally(() => {
+                        commit('setLoading', false)
+                    });
+            } else {
+                commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже')
+            }
         }
     },
     mutations: {
@@ -67,13 +95,13 @@ export default {
             return state.physicalPerson
         },
         getAvatar(state) {
-            // let HOST = WORK_HOST.replace('/api', '')
-            let HOST = 'http://staging-admin.newstarmlm.biz/'
+            let HOST = WORK_HOST.replace('/api', '')
+            // let HOST = 'http://staging-admin.newstarmlm.biz/'
             let person = state.physicalPerson
             if (person) {
                 if (person.avatar_image) {
                     console.log('avatar')
-                    return `${HOST}${person.avatar_image}`;
+                    return `${HOST}${person.avatar_image.replaceAll(/\\/g, "")}`; // remove backslash in path from server
                 } else if (person.gender == 'М') {
                     console.log('male')
                     return `${HOST}uploads/users/physical_persons/avatars/placeholder_512x512_male.jpg`
