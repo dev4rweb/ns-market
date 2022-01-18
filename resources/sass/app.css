@@ -10633,4 +10633,11 @@ footer h3, footer .h3 {
   max-width: 125px;
   text-align: center; }
 
+.img-preview-doc {
+  height: 80px;
+  width: auto;
+  -webkit-border-radius: 13px;
+  -moz-border-radius: 13px;
+  border-radius: 13px; }
+
 /*# sourceMappingURL=app.css.map */

@@ -113,6 +113,31 @@ export default {
                 console.log('else')
                 return `${HOST}uploads/users/physical_persons/avatars/placeholder_512x512_male.jpg`
             }
+        },
+        getFullPathToPassport(state) {
+            let HOST = WORK_HOST.replace('/api', '')
+            if (state.physicalPerson.passport_photos[0]) {
+                return `${HOST}storage/${state.physicalPerson.passport_photos[0].path}`
+            }
+        },
+        getFullPathToPassportAddress(state) {
+            let HOST = WORK_HOST.replace('/api', '')
+            if (state.physicalPerson.passport_photos[1]) {
+                return `${HOST}storage/${state.physicalPerson.passport_photos[1].path}`
+            }
+        },
+        getFullPathToInterPassport(state) {
+            let HOST = WORK_HOST.replace('/api', '')
+            if (state.physicalPerson.passport_photos[2]) {
+                return `${HOST}storage/${state.physicalPerson.passport_photos[2].path}`
+            }
+        },
+
+        getFullPathCertificate(state) {
+            let HOST = WORK_HOST.replace('/api', '')
+            if (state.physicalPerson.photos[0]) {
+                return `${HOST}storage/${state.physicalPerson.photos[0].path}`
+            }
         }
     }
 }
