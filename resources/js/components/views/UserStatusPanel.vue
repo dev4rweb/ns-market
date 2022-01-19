@@ -1,5 +1,5 @@
 <template>
-    <div class="row">
+    <div class="row mb-5">
         <div class="card data-card">
             <h3
                 class="d-flex justify-content-between align-items-center"
@@ -7,6 +7,8 @@
                 Профессиональная деятельность
                 <sup
                     class="me-1"
+                    data-toggle="modal"
+                    data-target="#userStatusModal"
                 >
                     ?
                 </sup>
@@ -27,14 +29,15 @@
                 </div>
 
                 <div class="col-xl-3 col-lg-4 col-md-5 d-flex align-items-center">
-                    <a
+                    <button
                         v-if="getPhysicalPerson && getPhysicalPerson.photos[0]"
-                        :href="getFullPathCertificate"
-                        target="_blank"
+                        data-toggle="modal"
+                        data-target="#userModalGallery"
                         class="btn btn-lg btn-outline-info"
+                        @click="openGallery(getFullPathCertificate)"
                     >
                         Смотреть
-                    </a>
+                    </button>
                     <button
                         v-else
                         class="btn btn-lg btn-outline-info"
@@ -66,19 +69,44 @@
                     </button>
                 </div>
             </div>
+
+            <div class="row position-relative d-flex justify-content-center">
+                <button
+                    class="btn btn-lg btn-info w-50"
+                    style="margin-bottom: -50px"
+                >
+                    Сохранить
+                </button>
+            </div>
         </div>
+        <UserStatusModal />
+        <UserModalGallery :img-path="imgPath" />
     </div>
 </template>
 
 <script>
 import {mapActions, mapGetters} from 'vuex'
+import UserStatusModal from "../Modals/UserStatusModal";
+import UserModalGallery from "../Modals/UserModalGallery";
 export default {
     name: "UserStatusPanel",
+    data() {
+        return {
+            imgPath: ''
+        }
+    },
     methods: {
-        ...mapActions(['toggleStatus'])
+        ...mapActions(['toggleStatus']),
+        openGallery(imgPath) {
+            console.log('openGallery', imgPath)
+            this.imgPath = imgPath
+        }
     },
     computed: {
         ...mapGetters(['getPhysicalPerson', 'getFullPathCertificate'])
+    },
+    components: {
+        UserStatusModal, UserModalGallery
     }
 }
 </script>

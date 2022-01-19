@@ -7,7 +7,8 @@
                 Паспортные данные
                 <sup
                     class="me-1"
-                    @click="handleQuestion"
+                    data-toggle="modal"
+                    data-target="#userPassportModal"
                 >
                     ?
                 </sup>
@@ -65,14 +66,15 @@
                     <p class="mb-0">Главная страница <b style="color: red">*</b></p>
                 </div>
                 <div class="col-xl-3 col-lg-4 col-md-5 d-flex align-items-center">
-                    <a
+                    <button
                         v-if="getPhysicalPerson && getPhysicalPerson.passport_photos[0]"
-                        :href="getFullPathToPassport"
-                        target="_blank"
+                        data-toggle="modal"
+                        data-target="#userModalGallery"
                         class="btn btn-lg btn-outline-info"
+                        @click="openGallery(getFullPathToPassport)"
                     >
                         Смотреть
-                    </a>
+                    </button>
                     <button
                         v-else
                         class="btn btn-lg btn-outline-info"
@@ -99,17 +101,18 @@
                     <p class="mb-0">Страница с пропиской</p>
                 </div>
                 <div class="col-xl-3 col-lg-4  col-md-5">
-                    <a
+                    <button
                         v-if="getPhysicalPerson && getPhysicalPerson.passport_photos[1]"
-                        :href="getFullPathToPassportAddress"
-                        target="_blank"
-                        class="btn btn-lg btn-outline-info w-100"
+                        data-toggle="modal"
+                        data-target="#userModalGallery"
+                        class="btn btn-lg btn-outline-info"
+                        @click="openGallery(getFullPathToPassportAddress)"
                     >
                         Смотреть
-                    </a>
+                    </button>
                     <button
                         v-else
-                        class="btn btn-lg btn-outline-info w-100"
+                        class="btn btn-lg btn-outline-info"
                         @click="handleChange"
                     >
                         Выбрать файл
@@ -133,17 +136,18 @@
                     <p class="mb-0">Заграничный паспорт</p>
                 </div>
                 <div class="col-xl-3 col-lg-4 col-md-5">
-                    <a
+                    <button
                         v-if="getPhysicalPerson && getPhysicalPerson.passport_photos[2]"
-                        :href="getFullPathToInterPassport"
-                        target="_blank"
-                        class="btn btn-lg btn-outline-info w-100"
+                        data-toggle="modal"
+                        data-target="#userModalGallery"
+                        class="btn btn-lg btn-outline-info"
+                        @click="openGallery(getFullPathToInterPassport)"
                     >
                         Смотреть
-                    </a>
+                    </button>
                     <button
                         v-else
-                        class="btn btn-lg btn-outline-info w-100"
+                        class="btn btn-lg btn-outline-info"
                         @click="handleChange"
                     >
                         Выбрать файл
@@ -172,11 +176,15 @@
                 </button>
             </div>
         </div>
+        <UserPassportModal/>
+        <UserModalGallery :img-path="imgPath"/>
     </div>
 </template>
 
 <script>
 import {mapGetters} from 'vuex'
+import UserPassportModal from "../Modals/UserPassportModal";
+import UserModalGallery from "../Modals/UserModalGallery";
 
 export default {
     name: "UserPassportPanel",
@@ -185,7 +193,8 @@ export default {
             isSeriesError: false,
             seriesError: '',
             isNumberError: false,
-            numberError: ''
+            numberError: '',
+            imgPath: ''
         }
     },
     methods: {
@@ -194,6 +203,10 @@ export default {
         },
         handleQuestion() {
             console.log('handleQuestion')
+        },
+        openGallery(imgPath) {
+            console.log('openGallery', imgPath)
+            this.imgPath = imgPath
         }
     },
     computed: {
@@ -201,6 +214,10 @@ export default {
             'getPhysicalPerson', 'getCurrentUser', 'getFullPathToPassport',
             'getFullPathToPassportAddress', 'getFullPathToInterPassport'
         ])
+    },
+    components: {
+        UserPassportModal,
+        UserModalGallery
     }
 }
 </script>
