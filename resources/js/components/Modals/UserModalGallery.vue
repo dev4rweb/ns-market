@@ -28,18 +28,25 @@ export default {
 </script>
 
 <style scoped>
-    img{
-        width: 100%;
-        overflow-y: auto;
-    }
-    .modal-content{
-        height: fit-content;
-    }
-    span{
-        font-size: 70px;
-        position: absolute;
-        color: black;
-        top: 0;
-        right: 15px;
-    }
+.modal.show .modal-dialog {
+    width: auto;
+    height: auto;
+}
+
+img {
+    width: 100%;
+    overflow-y: auto;
+}
+
+.modal-content {
+    height: fit-content;
+}
+
+span {
+    font-size: 70px;
+    position: absolute;
+    color: black;
+    top: 0;
+    right: 15px;
+}
 </style>

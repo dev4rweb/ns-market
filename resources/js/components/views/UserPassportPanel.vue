@@ -67,7 +67,7 @@
                 </div>
                 <div class="col-xl-3 col-lg-4 col-md-5 d-flex align-items-center">
                     <button
-                        v-if="getPhysicalPerson && getPhysicalPerson.passport_photos[0]"
+                        v-if="getPhysicalPerson  && getPhysicalPerson.passport_photos[0]"
                         data-toggle="modal"
                         data-target="#userModalGallery"
                         class="btn btn-lg btn-outline-info"
@@ -78,15 +78,34 @@
                     <button
                         v-else
                         class="btn btn-lg btn-outline-info"
-                        @click="handleChange"
+                        @click="$refs.uploadPassport.click()"
                     >
                         Выбрать файл
                     </button>
+                    <input
+                        type="file"
+                        style="display: none"
+                        ref="uploadPassport"
+                        @change="uploadPassport"
+                    >
                 </div>
                 <div
                     class="col-md-4"
                     v-if="getPhysicalPerson"
                 >
+                    <img
+                        v-if="filePassport"
+                        :src="filePassportPreview"
+                        class="img-preview-doc"
+                        alt="preview"
+                    >
+                    <img
+                        v-if="filePassport"
+                        :src="icRemove"
+                        alt="icon"
+                        class="ava-icon"
+                        @click="filePassport = null"
+                    >
                     <img
                         class="img-preview-doc"
                         v-if="getPhysicalPerson.passport_photos[0]"
@@ -113,15 +132,34 @@
                     <button
                         v-else
                         class="btn btn-lg btn-outline-info"
-                        @click="handleChange"
+                        @click="$refs.uploadPassportAddress.click()"
                     >
                         Выбрать файл
                     </button>
+                    <input
+                        type="file"
+                        style="display: none"
+                        ref="uploadPassportAddress"
+                        @change="uploadPassportAddress"
+                    >
                 </div>
                 <div
                     class="col-md-4"
                     v-if="getPhysicalPerson"
                 >
+                    <img
+                        v-if="filePassportAddress"
+                        :src="filePassportAddressPreview"
+                        class="img-preview-doc"
+                        alt="preview"
+                    >
+                    <img
+                        v-if="filePassportAddress"
+                        :src="icRemove"
+                        alt="icon"
+                        class="ava-icon"
+                        @click="filePassportAddress = null"
+                    >
                     <img
                         class="img-preview-doc"
                         v-if="getPhysicalPerson.passport_photos[1]"
@@ -148,15 +186,34 @@
                     <button
                         v-else
                         class="btn btn-lg btn-outline-info"
-                        @click="handleChange"
+                        @click="$refs.uploadInterPassport.click()"
                     >
                         Выбрать файл
                     </button>
+                    <input
+                        type="file"
+                        style="display: none"
+                        ref="uploadInterPassport"
+                        @change="uploadInterPassport"
+                    >
                 </div>
                 <div
-                    class="col-md-4"
+                    class="col-md-4 position-relative"
                     v-if="getPhysicalPerson"
                 >
+                    <img
+                        v-if="fileInterPassport"
+                        :src="interPassportPreview"
+                        class="img-preview-doc"
+                        alt="preview"
+                    >
+                    <img
+                        v-if="fileInterPassport"
+                        :src="icRemove"
+                        alt="icon"
+                        class="ava-icon"
+                        @click="fileInterPassport = null"
+                    >
                     <img
                         class="img-preview-doc"
                         v-if="getPhysicalPerson.passport_photos[2]"
@@ -170,7 +227,7 @@
                 <button
                     class="btn btn-lg btn-info w-50"
                     style="margin-bottom: -50px"
-                    @click="handleChange"
+                    @click="submitHandler"
                 >
                     Сохранить
                 </button>
@@ -182,9 +239,11 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import {mapGetters, mapMutations} from 'vuex'
 import UserPassportModal from "../Modals/UserPassportModal";
 import UserModalGallery from "../Modals/UserModalGallery";
+import icAccept from '../../../assets/img/ic-accept.svg'
+import icRemove from '../../../assets/img/ic-remove.svg'
 
 export default {
     name: "UserPassportPanel",
@@ -194,19 +253,74 @@ export default {
             seriesError: '',
             isNumberError: false,
             numberError: '',
-            imgPath: ''
+            imgPath: '',
+
+            icAccept,
+            icRemove,
+
+            filePassport: null,
+            filePassportPreview: null,
+
+            filePassportAddress: null,
+            filePassportAddressPreview: null,
+
+            interPassportPreview: null,
+            fileInterPassport: null,
         }
     },
     methods: {
-        handleChange() {
-            console.log(this.getPhysicalPerson)
+        ...mapMutations(['setToastError']),
+        uploadPassport() {
+            console.log('uploadPassport', this.$refs.uploadPassport.files[0])
+            this.filePassport = this.$refs.uploadPassport.files[0]
+            if (this.filePassport && this.filePassport.type.includes('image')) {
+                if (this.filePassport.size < 2 * 1024 * 1024) {
+                    this.filePassportPreview = URL.createObjectURL(this.filePassport);
+                } else {
+                    this.filePassportPreview = null
+                    this.setToastError('Размер файла не должен превышать 2Mb')
+                }
+            } else {
+                this.filePassport = null
+                this.setToastError('Некорректный формат файла')
+            }
         },
-        handleQuestion() {
-            console.log('handleQuestion')
+        uploadPassportAddress() {
+            console.log('uploadPassport', this.$refs.uploadPassportAddress.files[0])
+            this.filePassportAddress = this.$refs.uploadPassportAddress.files[0]
+            if (this.filePassportAddress && this.filePassportAddress.type.includes('image')) {
+                if (this.filePassportAddress.size < 2 * 1024 * 1024) {
+                    this.filePassportAddressPreview = URL.createObjectURL(this.filePassportAddress);
+                } else {
+                    this.filePassportAddressPreview = null
+                    this.setToastError('Размер файла не должен превышать 2Mb')
+                }
+            } else {
+                this.filePassportAddress = null
+                this.setToastError('Некорректный формат файла')
+            }
+        },
+        uploadInterPassport() {
+            console.log('uploadInterPassport', this.$refs.uploadInterPassport.files[0])
+            this.fileInterPassport = this.$refs.uploadInterPassport.files[0]
+            if (this.fileInterPassport && this.fileInterPassport.type.includes('image')) {
+                if (this.fileInterPassport.size < 2 * 1024 * 1024) {
+                    this.interPassportPreview = URL.createObjectURL(this.fileInterPassport);
+                } else {
+                    this.interPassportPreview = null
+                    this.setToastError('Размер файла не должен превышать 2Mb')
+                }
+            } else {
+                this.fileInterPassport = null
+                this.setToastError('Некорректный формат файла')
+            }
         },
         openGallery(imgPath) {
             console.log('openGallery', imgPath)
             this.imgPath = imgPath
+        },
+        submitHandler() {
+            console.log('submitHandler', this.getPhysicalPerson)
         }
     },
     computed: {
@@ -277,5 +391,25 @@ p {
     font-weight: normal;
     font-size: 20px;
     line-height: 24px;
+}
+.ava-icon {
+    position: absolute;
+    top: 0;
+    left: -10px;
+    width: 20px;
+    cursor: pointer;
+    -webkit-transition: all .2s;
+    -moz-transition: all .2s;
+    -ms-transition: all .2s;
+    -o-transition: all .2s;
+    transition: all .2s;
+
+    &:hover {
+        -webkit-transform: scale(1.2, 1.2);
+        -moz-transform: scale(1.2, 1.2);
+        -ms-transform: scale(1.2, 1.2);
+        -o-transform: scale(1.2, 1.2);
+        transform: scale(1.2, 1.2);
+    }
 }
 </style>

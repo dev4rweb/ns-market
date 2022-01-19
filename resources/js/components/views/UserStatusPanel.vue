@@ -16,7 +16,7 @@
             <p>Если у Вас есть соответствующее профессиональное образование,
                 то Вам могут быть доступны специальные товары и услуги.</p>
             <div class="form-check mb-3">
-                <input class="form-check-input" type="checkbox" name="flexRadioDefault" >
+                <input class="form-check-input" type="checkbox" name="flexRadioDefault">
                 <label class="form-check-label">
                     Косметолог / дерматолог
                 </label>
@@ -41,15 +41,35 @@
                     <button
                         v-else
                         class="btn btn-lg btn-outline-info"
+                        @click="$refs.uploadCertificate.click()"
                     >
                         Выбрать файл
                     </button>
+                    <input
+                        type="file"
+                        style="display: none"
+                        ref="uploadCertificate"
+                        @change="uploadCertificate"
+                    >
                 </div>
 
                 <div
                     class="col-md-4"
                     v-if="getPhysicalPerson"
                 >
+                    <img
+                        v-if="fileCertificate"
+                        :src="fileCertificatePreview"
+                        class="img-preview-doc"
+                        alt="preview"
+                    >
+                    <img
+                        v-if="fileCertificate"
+                        :src="icRemove"
+                        alt="icon"
+                        class="ava-icon"
+                        @click="fileCertificate = null"
+                    >
                     <img
                         class="img-preview-doc"
                         v-if="getPhysicalPerson.photos[0]"
@@ -64,7 +84,7 @@
                         class="btn btn-outline-info"
                         @click="toggleStatus"
                     >
-<!--                        Загрузить паспорт-->
+                        <!--                        Загрузить паспорт-->
                         Сменить статус
                     </button>
                 </div>
@@ -74,32 +94,59 @@
                 <button
                     class="btn btn-lg btn-info w-50"
                     style="margin-bottom: -50px"
+                    @click="submitHandler"
                 >
                     Сохранить
                 </button>
             </div>
         </div>
-        <UserStatusModal />
-        <UserModalGallery :img-path="imgPath" />
+        <UserStatusModal/>
+        <UserModalGallery :img-path="imgPath"/>
     </div>
 </template>
 
 <script>
-import {mapActions, mapGetters} from 'vuex'
+import {mapActions, mapGetters, mapMutations} from 'vuex'
 import UserStatusModal from "../Modals/UserStatusModal";
 import UserModalGallery from "../Modals/UserModalGallery";
+import icAccept from '../../../assets/img/ic-accept.svg'
+import icRemove from '../../../assets/img/ic-remove.svg'
+
 export default {
     name: "UserStatusPanel",
     data() {
         return {
-            imgPath: ''
+            imgPath: '',
+            icAccept,
+            icRemove,
+            fileCertificate: null,
+            fileCertificatePreview: null
         }
     },
     methods: {
         ...mapActions(['toggleStatus']),
+        ...mapMutations(['setToastError']),
+        uploadCertificate() {
+            console.log('uploadCertificate', this.$refs.uploadCertificate.files[0])
+            this.fileCertificate = this.$refs.uploadCertificate.files[0]
+            if (this.fileCertificate && this.fileCertificate.type.includes('image')) {
+                if (this.fileCertificate.size < 2 * 1024 * 1024) {
+                    this.fileCertificatePreview = URL.createObjectURL(this.fileCertificate);
+                } else {
+                    this.fileCertificatePreview = null
+                    this.setToastError('Размер файла не должен превышать 2Mb')
+                }
+            } else {
+                this.fileCertificate = null
+                this.setToastError('Некорректный формат файла')
+            }
+        },
         openGallery(imgPath) {
             console.log('openGallery', imgPath)
             this.imgPath = imgPath
+        },
+        submitHandler() {
+            console.log('submitHandler', this.getPhysicalPerson)
         }
     },
     computed: {
@@ -112,13 +159,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-h3{
+h3 {
     text-transform: uppercase;
     color: #333333;
     font-style: normal;
     font-weight: 600;
     font-size: 24px;
     line-height: 29px;
+
     sup {
         color: white;
         background-color: #038ED7;
@@ -156,5 +204,26 @@ p {
     font-weight: normal;
     font-size: 20px;
     line-height: 24px;
+}
+
+.ava-icon {
+    position: absolute;
+    top: 0;
+    left: -10px;
+    width: 20px;
+    cursor: pointer;
+    -webkit-transition: all .2s;
+    -moz-transition: all .2s;
+    -ms-transition: all .2s;
+    -o-transition: all .2s;
+    transition: all .2s;
+
+    &:hover {
+        -webkit-transform: scale(1.2, 1.2);
+        -moz-transform: scale(1.2, 1.2);
+        -ms-transform: scale(1.2, 1.2);
+        -o-transform: scale(1.2, 1.2);
+        transform: scale(1.2, 1.2);
+    }
 }
 </style>
