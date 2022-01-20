@@ -124,7 +124,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['toggleStatus']),
+        ...mapActions(['toggleStatus', 'updateStatusData']),
         ...mapMutations(['setToastError']),
         uploadCertificate() {
             console.log('uploadCertificate', this.$refs.uploadCertificate.files[0])
@@ -147,6 +147,8 @@ export default {
         },
         submitHandler() {
             console.log('submitHandler', this.getPhysicalPerson)
+            if (this.fileCertificate)
+                this.updateStatusData(this.fileCertificate)
         }
     },
     computed: {

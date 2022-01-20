@@ -83,6 +83,33 @@ export default {
             } else {
                 commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже')
             }
+        },
+        updateStatusData({commit, getters}, file) {
+            console.log('uploadAvatar', file)
+            const currentUser = getters['getPhysicalPerson']
+            if (currentUser) {
+                commit('setLoading', true)
+                const fd = new FormData()
+                fd.set('user_id', currentUser.user_id);
+                fd.set('certificate_photo', file)
+
+                axios.post(`${WORK_HOST}market/update-certificate`, fd)
+                    .then(res => {
+                        console.log('updateStatusData', res)
+                        if (res.data.success) {
+                            window.location.reload()
+                        } else {
+                            commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже')
+                        }
+                    })
+                    .catch(err => {
+                        console.log('updateStatusData err', err)
+                        commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже')
+                    })
+                    .finally(() => {
+                        commit('setLoading', false)
+                    });
+            }
         }
     },
     mutations: {
