@@ -239,7 +239,7 @@
 </template>
 
 <script>
-import {mapGetters, mapMutations} from 'vuex'
+import {mapGetters, mapMutations, mapActions} from 'vuex'
 import UserPassportModal from "../Modals/UserPassportModal";
 import UserModalGallery from "../Modals/UserModalGallery";
 import icAccept from '../../../assets/img/ic-accept.svg'
@@ -270,6 +270,7 @@ export default {
     },
     methods: {
         ...mapMutations(['setToastError']),
+        ...mapActions(['updatePassportData']),
         uploadPassport() {
             console.log('uploadPassport', this.$refs.uploadPassport.files[0])
             this.filePassport = this.$refs.uploadPassport.files[0]
@@ -320,7 +321,12 @@ export default {
             this.imgPath = imgPath
         },
         submitHandler() {
-            console.log('submitHandler', this.getPhysicalPerson)
+            // console.log('submitHandler', this.getPhysicalPerson)
+            let files = []
+            if (this.filePassport) files.push({name: 'passport_photo', file: this.filePassport})
+            if (this.filePassportAddress) files.push({name: 'address_photo', file: this.filePassportAddress})
+            if (this.fileInterPassport) files.push({name: 'interPassport_photo', file: this.fileInterPassport})
+            this.updatePassportData(files)
         }
     },
     computed: {
@@ -392,6 +398,7 @@ p {
     font-size: 20px;
     line-height: 24px;
 }
+
 .ava-icon {
     position: absolute;
     top: 0;

@@ -18,6 +18,8 @@ export default {
                 }).then(res => {
                     console.log('fetchPhysicalPerson', res)
                     if (res.data.model) {
+                        if (!res.data.model.passport_photos) res.data.model.passport_photos = []
+                        if (!res.data.model.photos) res.data.model.photos = []
                         commit('setPhysicalPerson', res.data.model)
                         if (res.data.model.mentor_user_id) {
                             dispatch('fetchMentorUserById', res.data.model.mentor_user_id)
@@ -88,10 +90,10 @@ export default {
             console.log('uploadAvatar', file)
             const currentUser = getters['getPhysicalPerson']
             if (currentUser) {
-                commit('setLoading', true)
-                const fd = new FormData()
+                commit('setLoading', true);
+                const fd = new FormData();
                 fd.set('user_id', currentUser.user_id);
-                fd.set('certificate_photo', file)
+                fd.set('certificate_photo', file);
 
                 axios.post(`${WORK_HOST}market/update-certificate`, fd)
                     .then(res => {
@@ -109,7 +111,76 @@ export default {
                     .finally(() => {
                         commit('setLoading', false)
                     });
+            } else {
+                commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже')
             }
+        },
+        updatePassportData({commit, getters}, files = []) {
+            const currentUser = getters['getPhysicalPerson']
+            const user = getters['getCurrentUser']
+            if (currentUser) {
+                const fd = new FormData()
+                fd.set('user_id', currentUser.user_id);
+                fd.set('passport_series', currentUser.passport_series)
+                fd.set('passport_number', currentUser.passport_number)
+                let passport_photos = currentUser.passport_photos ?? [];
+                // console.log('updatePassportData files', files)
+                if (files.length) {
+                    files.forEach(item => fd.set(item.name, item.file))
+                    if (passport_photos.length) {
+                        console.log('updatePassportData current passport_photos', currentUser.passport_photos);
+                        files.forEach(file => {
+                            const foundUpdated = passport_photos.find(i => i.name = file.name)
+                            if (foundUpdated) {
+                                foundUpdated.path = "users/physical_persons/passport_photos/" + file.file.name;
+                            } else {
+                                const obj = {
+                                    path: "users/physical_persons/passport_photos/" + file.file.name,
+                                    originalName: file.file.name,
+                                    date: Date.now(),
+                                    name: file.name,
+                                    note: 'passport_notice',
+                                    author_user_full_name: `${user.last_name} ${user.first_name} ${user.middle_name}`
+                                }
+                                passport_photos.push(obj)
+                            }
+                        });
+                    } else {
+                        files.forEach(file => {
+                            const obj = {
+                                path: "users/physical_persons/passport_photos/" + file.file.name,
+                                originalName: file.file.name,
+                                date: Date.now(),
+                                name: file.name,
+                                note: 'passport_notice',
+                                author_user_full_name: `${user.last_name} ${user.first_name} ${user.middle_name}`
+                            }
+                            passport_photos.push(obj)
+                        });
+                        console.log('updatePassportData passport_photos', passport_photos);
+                    }
+                    fd.set('passport_photos', JSON.stringify(passport_photos))
+                }
+                axios.post(`${WORK_HOST}market/update-passports`, fd)
+                    .then(res => {
+                        console.log('updatePassportData', res)
+                        if (res.data.success) {
+                            window.location.reload();
+                        } else {
+                            commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже')
+                        }
+                    })
+                    .catch(err => {
+                        console.log('updatePassportData err', err)
+                        commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже')
+                    })
+                    .finally(() => {
+                        commit('setLoading', false)
+                    });
+            } else {
+                commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже')
+            }
+
         }
     },
     mutations: {
@@ -133,7 +204,7 @@ export default {
                     console.log('male')
                     return `${HOST}uploads/users/physical_persons/avatars/placeholder_512x512_male.jpg`
                 } else {
-                    console.log('female', person )
+                    console.log('female', person)
                     return `${HOST}uploads/users/physical_persons/avatars/placeholder_512x512_female.jpg`
                 }
             } else {
