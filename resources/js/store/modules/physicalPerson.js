@@ -118,22 +118,28 @@ export default {
         updatePassportData({commit, getters}, files = []) {
             const currentUser = getters['getPhysicalPerson']
             const user = getters['getCurrentUser']
+            console.log('updatePassportData MAIN', currentUser.passport_photos)
+            console.log('updatePassportData MAIN', files)
             if (currentUser) {
                 const fd = new FormData()
                 fd.set('user_id', currentUser.user_id);
                 fd.set('passport_series', currentUser.passport_series)
                 fd.set('passport_number', currentUser.passport_number)
                 let passport_photos = currentUser.passport_photos ?? [];
-                // console.log('updatePassportData files', files)
+                console.log('updatePassportData files', files, passport_photos)
                 if (files.length) {
                     files.forEach(item => fd.set(item.name, item.file))
+                    console.log('foreach files', files, passport_photos)
                     if (passport_photos.length) {
                         console.log('updatePassportData current passport_photos', currentUser.passport_photos);
                         files.forEach(file => {
-                            const foundUpdated = passport_photos.find(i => i.name = file.name)
+                            const foundUpdated = passport_photos.find(i => i.name === file.name)
+                            console.log('founded', passport_photos)
                             if (foundUpdated) {
+                                console.log('founded', foundUpdated)
                                 foundUpdated.path = "users/physical_persons/passport_photos/" + file.file.name;
                             } else {
+                                console.log('not found')
                                 const obj = {
                                     path: "users/physical_persons/passport_photos/" + file.file.name,
                                     originalName: file.file.name,
@@ -146,6 +152,7 @@ export default {
                             }
                         });
                     } else {
+                        console.log('global else', passport_photos)
                         files.forEach(file => {
                             const obj = {
                                 path: "users/physical_persons/passport_photos/" + file.file.name,
@@ -214,20 +221,44 @@ export default {
         },
         getFullPathToPassport(state) {
             let HOST = WORK_HOST.replace('/api', '')
-            if (state.physicalPerson.passport_photos[0]) {
-                return `${HOST}storage/${state.physicalPerson.passport_photos[0].path}`
+            if (state.physicalPerson.passport_photos.length) {
+                const photoObj = state.physicalPerson.passport_photos.find(i => i.name === 'passport_photo');
+                if (photoObj) {
+                    return `${HOST}storage/${photoObj.path}`;
+                } else {
+                    return null
+                }
+
+            } else {
+                return null
             }
         },
         getFullPathToPassportAddress(state) {
             let HOST = WORK_HOST.replace('/api', '')
-            if (state.physicalPerson.passport_photos[1]) {
-                return `${HOST}storage/${state.physicalPerson.passport_photos[1].path}`
+            if (state.physicalPerson.passport_photos.length) {
+                const photoObj = state.physicalPerson.passport_photos.find(i => i.name === 'address_photo');
+                if (photoObj) {
+                    return `${HOST}storage/${photoObj.path}`;
+                } else {
+                    return null
+                }
+
+            } else {
+                return null
             }
         },
         getFullPathToInterPassport(state) {
             let HOST = WORK_HOST.replace('/api', '')
-            if (state.physicalPerson.passport_photos[2]) {
-                return `${HOST}storage/${state.physicalPerson.passport_photos[2].path}`
+            if (state.physicalPerson.passport_photos.length) {
+                const photoObj = state.physicalPerson.passport_photos.find(i => i.name === 'interPassport_photo');
+                if (photoObj) {
+                    return `${HOST}storage/${photoObj.path}`;
+                } else {
+                    return null
+                }
+
+            } else {
+                return null
             }
         },
 

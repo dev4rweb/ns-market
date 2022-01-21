@@ -65,18 +65,12 @@
                 <div class="col-xl-3 col-md-4 d-flex align-items-center">
                     <p class="mb-0">Главная страница <b style="color: red">*</b></p>
                 </div>
-                <div class="col-xl-3 col-lg-4 col-md-5 d-flex align-items-center">
+                <div
+                    class="col-xl-3 col-lg-4 col-md-5 d-flex align-items-center"
+                    v-if="getPhysicalPerson && !getFullPathToPassport"
+                >
                     <button
-                        v-if="getPhysicalPerson  && getPhysicalPerson.passport_photos[0]"
-                        data-toggle="modal"
-                        data-target="#userModalGallery"
-                        class="btn btn-lg btn-outline-info"
-                        @click="openGallery(getFullPathToPassport)"
-                    >
-                        Смотреть
-                    </button>
-                    <button
-                        v-else
+                        v-if="!filePassport && !getFullPathToPassport"
                         class="btn btn-lg btn-outline-info"
                         @click="$refs.uploadPassport.click()"
                     >
@@ -108,7 +102,10 @@
                     >
                     <img
                         class="img-preview-doc"
-                        v-if="getPhysicalPerson.passport_photos[0]"
+                        data-toggle="modal"
+                        data-target="#userModalGallery"
+                        @click="openGallery(getFullPathToPassport)"
+                        v-if="getFullPathToPassport"
                         :src="getFullPathToPassport"
                         alt="preview"
                     >
@@ -119,18 +116,13 @@
                 <div class="col-xl-3 col-md-4 d-flex align-items-center">
                     <p class="mb-0">Страница с пропиской</p>
                 </div>
-                <div class="col-xl-3 col-lg-4  col-md-5">
+                <div
+                    class="col-xl-3 col-lg-4  col-md-5"
+                    v-if="getPhysicalPerson && !getFullPathToPassportAddress"
+                >
+
                     <button
-                        v-if="getPhysicalPerson && getPhysicalPerson.passport_photos[1]"
-                        data-toggle="modal"
-                        data-target="#userModalGallery"
-                        class="btn btn-lg btn-outline-info"
-                        @click="openGallery(getFullPathToPassportAddress)"
-                    >
-                        Смотреть
-                    </button>
-                    <button
-                        v-else
+                        v-if="!filePassportAddress && !getFullPathToPassportAddress"
                         class="btn btn-lg btn-outline-info"
                         @click="$refs.uploadPassportAddress.click()"
                     >
@@ -162,8 +154,11 @@
                     >
                     <img
                         class="img-preview-doc"
-                        v-if="getPhysicalPerson.passport_photos[1]"
+                        v-if="getFullPathToPassportAddress"
                         :src="getFullPathToPassportAddress"
+                        data-toggle="modal"
+                        data-target="#userModalGallery"
+                        @click="openGallery(getFullPathToPassportAddress)"
                         alt="preview"
                     >
                 </div>
@@ -173,18 +168,12 @@
                 <div class="col-xl-3 col-md-4 d-flex align-items-center">
                     <p class="mb-0">Заграничный паспорт</p>
                 </div>
-                <div class="col-xl-3 col-lg-4 col-md-5">
+                <div
+                    class="col-xl-3 col-lg-4 col-md-5"
+                    v-if="getPhysicalPerson && !getFullPathToInterPassport"
+                >
                     <button
-                        v-if="getPhysicalPerson && getPhysicalPerson.passport_photos[2]"
-                        data-toggle="modal"
-                        data-target="#userModalGallery"
-                        class="btn btn-lg btn-outline-info"
-                        @click="openGallery(getFullPathToInterPassport)"
-                    >
-                        Смотреть
-                    </button>
-                    <button
-                        v-else
+                        v-if="!fileInterPassport && !getFullPathToInterPassport"
                         class="btn btn-lg btn-outline-info"
                         @click="$refs.uploadInterPassport.click()"
                     >
@@ -216,8 +205,11 @@
                     >
                     <img
                         class="img-preview-doc"
-                        v-if="getPhysicalPerson.passport_photos[2]"
+                        v-if="getFullPathToInterPassport"
                         :src="getFullPathToInterPassport"
+                        data-toggle="modal"
+                        data-target="#userModalGallery"
+                        @click="openGallery(getFullPathToInterPassport)"
                         alt="preview"
                     >
                 </div>
@@ -321,11 +313,11 @@ export default {
             this.imgPath = imgPath
         },
         submitHandler() {
-            // console.log('submitHandler', this.getPhysicalPerson)
             let files = []
             if (this.filePassport) files.push({name: 'passport_photo', file: this.filePassport})
             if (this.filePassportAddress) files.push({name: 'address_photo', file: this.filePassportAddress})
             if (this.fileInterPassport) files.push({name: 'interPassport_photo', file: this.fileInterPassport})
+            console.log('submitHandler', this.getPhysicalPerson, files)
             this.updatePassportData(files)
         }
     },

@@ -10638,6 +10638,18 @@ footer h3, footer .h3 {
   width: auto;
   -webkit-border-radius: 13px;
   -moz-border-radius: 13px;
-  border-radius: 13px; }
+  border-radius: 13px;
+  -webkit-transition: all .3s;
+  -moz-transition: all .3s;
+  -ms-transition: all .3s;
+  -o-transition: all .3s;
+  transition: all .3s; }
+  .img-preview-doc:hover {
+    cursor: pointer;
+    -webkit-transform: scale(1.1, 1.1);
+    -moz-transform: scale(1.1, 1.1);
+    -ms-transform: scale(1.1, 1.1);
+    -o-transform: scale(1.1, 1.1);
+    transform: scale(1.1, 1.1); }
 
 /*# sourceMappingURL=app.css.map */
