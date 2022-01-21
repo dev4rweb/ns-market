@@ -6,11 +6,12 @@ import errors from './modules/errors'
 import physicalPerson from "./modules/physicalPerson";
 import phoneApi from "./modules/phoneApi";
 import mentor from "./modules/mentor";
+import addresses from "./modules/addresses";
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
     modules: {
-        users, modals, errors, physicalPerson, phoneApi, mentor
+        users, modals, errors, physicalPerson, phoneApi, mentor, addresses
     }
 })

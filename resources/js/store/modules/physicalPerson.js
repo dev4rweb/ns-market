@@ -21,6 +21,7 @@ export default {
                         if (!res.data.model.passport_photos) res.data.model.passport_photos = []
                         if (!res.data.model.photos) res.data.model.photos = []
                         commit('setPhysicalPerson', res.data.model)
+                        dispatch('fetchAllAddresses')
                         if (res.data.model.mentor_user_id) {
                             dispatch('fetchMentorUserById', res.data.model.mentor_user_id)
                         }
@@ -131,15 +132,15 @@ export default {
                     files.forEach(item => fd.set(item.name, item.file))
                     console.log('foreach files', files, passport_photos)
                     if (passport_photos.length) {
-                        console.log('updatePassportData current passport_photos', currentUser.passport_photos);
+                        // console.log('updatePassportData current passport_photos', currentUser.passport_photos);
                         files.forEach(file => {
                             const foundUpdated = passport_photos.find(i => i.name === file.name)
-                            console.log('founded', passport_photos)
+                            // console.log('founded', passport_photos)
                             if (foundUpdated) {
-                                console.log('founded', foundUpdated)
+                                // console.log('founded', foundUpdated)
                                 foundUpdated.path = "users/physical_persons/passport_photos/" + file.file.name;
                             } else {
-                                console.log('not found')
+                                // console.log('not found')
                                 const obj = {
                                     path: "users/physical_persons/passport_photos/" + file.file.name,
                                     originalName: file.file.name,
@@ -152,7 +153,7 @@ export default {
                             }
                         });
                     } else {
-                        console.log('global else', passport_photos)
+                        // console.log('global else', passport_photos)
                         files.forEach(file => {
                             const obj = {
                                 path: "users/physical_persons/passport_photos/" + file.file.name,
@@ -164,7 +165,7 @@ export default {
                             }
                             passport_photos.push(obj)
                         });
-                        console.log('updatePassportData passport_photos', passport_photos);
+                        // console.log('updatePassportData passport_photos', passport_photos);
                     }
                     fd.set('passport_photos', JSON.stringify(passport_photos))
                 }
@@ -265,7 +266,9 @@ export default {
         getFullPathCertificate(state) {
             let HOST = WORK_HOST.replace('/api', '')
             if (state.physicalPerson.photos[0]) {
-                return `${HOST}storage/${state.physicalPerson.photos[0].path}`
+                return `${HOST}storage/${state.physicalPerson.photos[0].path}`;
+            } else {
+                return null
             }
         }
     }

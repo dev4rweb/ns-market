@@ -51,12 +51,15 @@ Vue.component('user-passport-panel', require('./components/views/UserPassportPan
 Vue.component('user-passport-modal', require('./components/Modals/UserPassportModal').default);
 Vue.component('user-modal-gallery', require('./components/Modals/UserModalGallery').default);
 Vue.component('user-mentor-panel', require('./components/views/UserMentorPanel').default);
+Vue.component('user-address-panel', require('./components/views/UserAddressPanel').default);
 Vue.component('user-mentor-change-page', require('./components/views/UserMentorChangePage').default);
 Vue.component('mentor-change-phone-form', require('./components/page-parts/mentor/MentorChangePhoneForm').default);
 Vue.component('mentor-phone-founded-form', require('./components/page-parts/mentor/MentorPhoneFoundedForm').default);
 Vue.component('mentor-phone-form-confirmation', require('./components/page-parts/mentor/MentorPhoneFormConfirmation').default);
 Vue.component('change-password-form', require('./components/ChangePasswordForm').default);
 Vue.component('update-with-phone', require('./components/Modals/UpdateWithPhone').default);
+Vue.component('user-address-accordion', require('./components/page-parts/user-address/UserAddressAccordion').default);
+Vue.component('user-address-accordion-item', require('./components/page-parts/user-address/UserAddressAccordionItem').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

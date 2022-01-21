@@ -3764,7 +3764,7 @@ textarea.form-control-lg {
   font-size: 0.9rem;
   color: #212529;
   text-align: left;
-  background-color: #e5e5e5;
+  background-color: white;
   border: 0;
   border-radius: 0;
   overflow-anchor: none;
@@ -3804,25 +3804,25 @@ textarea.form-control-lg {
   margin-bottom: 0; }
 
 .accordion-item {
-  background-color: #e5e5e5;
+  background-color: white;
   border: 1px solid rgba(0, 0, 0, 0.125); }
   .accordion-item:first-of-type {
-    border-top-left-radius: 0.25rem;
-    border-top-right-radius: 0.25rem; }
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px; }
     .accordion-item:first-of-type .accordion-button {
-      border-top-left-radius: calc(0.25rem - 1px);
-      border-top-right-radius: calc(0.25rem - 1px); }
+      border-top-left-radius: 7px;
+      border-top-right-radius: 7px; }
   .accordion-item:not(:first-of-type) {
     border-top: 0; }
   .accordion-item:last-of-type {
-    border-bottom-right-radius: 0.25rem;
-    border-bottom-left-radius: 0.25rem; }
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px; }
     .accordion-item:last-of-type .accordion-button.collapsed {
-      border-bottom-right-radius: calc(0.25rem - 1px);
-      border-bottom-left-radius: calc(0.25rem - 1px); }
+      border-bottom-right-radius: 7px;
+      border-bottom-left-radius: 7px; }
     .accordion-item:last-of-type .accordion-collapse {
-      border-bottom-right-radius: 0.25rem;
-      border-bottom-left-radius: 0.25rem; }
+      border-bottom-right-radius: 8px;
+      border-bottom-left-radius: 8px; }
 
 .accordion-body {
   padding: 1rem 1.25rem; }

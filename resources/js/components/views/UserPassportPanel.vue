@@ -28,10 +28,12 @@
                             type="text"
                             class="form-control form-control-lg"
                             v-model="getPhysicalPerson.passport_series"
+                            @input="isSeriesError = false"
                             required
                         >
                         <div
                             class="invalid-feedback"
+                            :class="{show: isSeriesError}"
                         >
                             {{ seriesError }}
                         </div>
@@ -47,10 +49,12 @@
                             type="text"
                             v-model="getPhysicalPerson.passport_number"
                             class="form-control form-control-lg"
+                            @input="isNumberError = false"
                             required
                         >
                         <div
                             class="invalid-feedback"
+                            :class="{show: isNumberError}"
                         >
                             {{ numberError }}
                         </div>
@@ -242,9 +246,9 @@ export default {
     data() {
         return {
             isSeriesError: false,
-            seriesError: '',
+            seriesError: 'Некорректный формат серии',
             isNumberError: false,
-            numberError: '',
+            numberError: 'Некорректный формат номера',
             imgPath: '',
 
             icAccept,
@@ -313,7 +317,23 @@ export default {
             this.imgPath = imgPath
         },
         submitHandler() {
-            let files = []
+            if (
+                this.getPhysicalPerson.passport_series.length < 1
+                ||
+                this.getPhysicalPerson.passport_series.length > 5
+            ) {
+                this.isSeriesError = true
+                return
+            }
+            if (
+                this.getPhysicalPerson.passport_number.length < 1
+                ||
+                this.getPhysicalPerson.passport_number.length > 10
+            ) {
+                this.isNumberError = true
+                return
+            }
+            let files = [];
             if (this.filePassport) files.push({name: 'passport_photo', file: this.filePassport})
             if (this.filePassportAddress) files.push({name: 'address_photo', file: this.filePassportAddress})
             if (this.fileInterPassport) files.push({name: 'interPassport_photo', file: this.fileInterPassport})

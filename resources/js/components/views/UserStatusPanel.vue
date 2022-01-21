@@ -16,88 +16,102 @@
             <p>Если у Вас есть соответствующее профессиональное образование,
                 то Вам могут быть доступны специальные товары и услуги.</p>
             <div class="form-check mb-3">
-                <input class="form-check-input" type="checkbox" name="flexRadioDefault">
-                <label class="form-check-label">
+                <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="flexRadioDefault"
+                    v-model="isChecked"
+                >
+                <label
+                    class="form-check-label"
+                    @click="isChecked = !isChecked"
+                >
                     Косметолог / дерматолог
                 </label>
             </div>
-            <h4>загрузить скан или фото документа, подтверждающего ваше образование.</h4>
-            <p><sub>Размер файла не должен превышать 2MB</sub></p>
-            <div class="row mb-3">
-                <div class="col-xl-2 col-md-3 d-flex align-items-center">
-                    <p class="mb-0">Документ</p>
+            <div v-if="isChecked">
+                <h4>Загрузить скан или фото документа, подтверждающего ваше образование.</h4>
+                <p><sub>Размер файла не должен превышать 2MB</sub></p>
+                <div class="row mb-3">
+                    <div class="col-xl-2 col-md-3 d-flex align-items-center">
+                        <p class="mb-0">Документ</p>
+                    </div>
+
+                    <div
+                        class="col-xl-3 col-lg-4 col-md-5 d-flex align-items-center"
+                        v-if="getPhysicalPerson && !getFullPathCertificate"
+                    >
+                        <button
+                            v-if="!fileCertificate && !getFullPathCertificate"
+                            class="btn btn-lg btn-outline-info"
+                            @click="$refs.uploadCertificate.click()"
+                        >
+                            Выбрать файл
+                        </button>
+                        <input
+                            type="file"
+                            style="display: none"
+                            ref="uploadCertificate"
+                            @change="uploadCertificate"
+                        >
+                    </div>
+
+                    <div
+                        class="col-md-4"
+                        v-if="getPhysicalPerson"
+                    >
+                        <img
+                            v-if="fileCertificate"
+                            :src="fileCertificatePreview"
+                            class="img-preview-doc"
+                            alt="preview"
+                        >
+                        <img
+                            v-if="fileCertificate"
+                            :src="icRemove"
+                            alt="icon"
+                            class="ava-icon"
+                            @click="fileCertificate = null"
+                        >
+                        <img
+                            class="img-preview-doc"
+                            v-if="getPhysicalPerson.photos[0]"
+                            :src="getFullPathCertificate"
+                            data-toggle="modal"
+                            data-target="#userModalGallery"
+                            @click="openGallery(getFullPathCertificate)"
+                            alt="preview"
+                        >
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <p>
+                        Обратите внимание!
+                        Чтобы проверить Ваш профессиональный статус, Вам необходимо также загрузить данные паспорта. Это
+                        можно сделать, нажав на вкладку <a href="/user-passport-panel">«Паспорт»</a>.
+                    </p>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <button
+                            class="btn btn-outline-info"
+                            @click="toggleStatus"
+                        >
+                            <!--                        Загрузить паспорт-->
+                            Сменить статус
+                        </button>
+                    </div>
                 </div>
 
-                <div class="col-xl-3 col-lg-4 col-md-5 d-flex align-items-center">
+                <div class="row position-relative d-flex justify-content-center">
                     <button
-                        v-if="getPhysicalPerson && getPhysicalPerson.photos[0]"
-                        data-toggle="modal"
-                        data-target="#userModalGallery"
-                        class="btn btn-lg btn-outline-info"
-                        @click="openGallery(getFullPathCertificate)"
+                        class="btn btn-lg btn-info w-50"
+                        style="margin-bottom: -50px"
+                        @click="submitHandler"
                     >
-                        Смотреть
-                    </button>
-                    <button
-                        v-else
-                        class="btn btn-lg btn-outline-info"
-                        @click="$refs.uploadCertificate.click()"
-                    >
-                        Выбрать файл
-                    </button>
-                    <input
-                        type="file"
-                        style="display: none"
-                        ref="uploadCertificate"
-                        @change="uploadCertificate"
-                    >
-                </div>
-
-                <div
-                    class="col-md-4"
-                    v-if="getPhysicalPerson"
-                >
-                    <img
-                        v-if="fileCertificate"
-                        :src="fileCertificatePreview"
-                        class="img-preview-doc"
-                        alt="preview"
-                    >
-                    <img
-                        v-if="fileCertificate"
-                        :src="icRemove"
-                        alt="icon"
-                        class="ava-icon"
-                        @click="fileCertificate = null"
-                    >
-                    <img
-                        class="img-preview-doc"
-                        v-if="getPhysicalPerson.photos[0]"
-                        :src="getFullPathCertificate"
-                        alt="preview"
-                    >
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <button
-                        class="btn btn-outline-info"
-                        @click="toggleStatus"
-                    >
-                        <!--                        Загрузить паспорт-->
-                        Сменить статус
+                        Сохранить
                     </button>
                 </div>
-            </div>
-
-            <div class="row position-relative d-flex justify-content-center">
-                <button
-                    class="btn btn-lg btn-info w-50"
-                    style="margin-bottom: -50px"
-                    @click="submitHandler"
-                >
-                    Сохранить
-                </button>
             </div>
         </div>
         <UserStatusModal/>
@@ -119,6 +133,7 @@ export default {
             imgPath: '',
             icAccept,
             icRemove,
+            isChecked: false,
             fileCertificate: null,
             fileCertificatePreview: null
         }
