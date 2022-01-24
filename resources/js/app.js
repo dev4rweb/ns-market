@@ -60,6 +60,9 @@ Vue.component('change-password-form', require('./components/ChangePasswordForm')
 Vue.component('update-with-phone', require('./components/Modals/UpdateWithPhone').default);
 Vue.component('user-address-accordion', require('./components/page-parts/user-address/UserAddressAccordion').default);
 Vue.component('user-address-accordion-item', require('./components/page-parts/user-address/UserAddressAccordionItem').default);
+Vue.component('user-address-item', require('./components/page-parts/user-address/UserAddressItem').default);
+Vue.component('add-address-form', require('./components/page-parts/user-address/AddAddressForm').default);
+Vue.component('edit-address-form', require('./components/page-parts/user-address/EditAddressForm').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

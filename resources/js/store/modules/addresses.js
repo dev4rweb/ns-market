@@ -2,7 +2,9 @@ import {WORK_HOST} from "../routeConsts";
 
 export default {
     state: {
-        address: []
+        address: [],
+        isShowAddressForm: false,
+        editAddress: null
     },
     actions: {
         fetchAllAddresses({commit, getters}) {
@@ -31,11 +33,23 @@ export default {
     mutations: {
         setAddresses(state, addresses) {
             state.address = addresses
+        },
+        setIsShowAddressForm(state, isShow) {
+            state.isShowAddressForm = isShow
+        },
+        setEditAddress(state, address) {
+            state.editAddress = address
         }
     },
     getters: {
         getAddresses(state) {
             return state.address
+        },
+        getIsShowAddressForm(state) {
+            return state.isShowAddressForm
+        },
+        getEditAddress(state) {
+            return state.editAddress
         }
     }
 }
