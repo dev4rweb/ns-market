@@ -48,13 +48,14 @@ export default {
         }
     },
     computed: {
+        ...mapGetters(['getCurrentUser']),
         mainAddress() {
             const postCode = this.address.postcode ?? ''
-            const country = this.address.country ?? ''
-            const region = this.address.region ?? ''
-            const city = this.address.city ?? ''
+            const country = this.address.country ? `${this.address.country}.` : ''
+            const region = this.address.region ? `${this.address.region},` : ''
+            const city = this.address.city ? `${this.address.city},` :  ''
 
-            return `${postCode} ${country}. ${region}, ${city},`
+            return `${postCode} ${country} ${region} ${city}`
         },
         additionalAddress() {
             const street = this.address.street ? `${this.address.street},` : ''
@@ -75,9 +76,9 @@ export default {
         },
         phoneEmail() {
             const phone = this.address.phone ? `тел. +${this.address.phone}` : ''
-            const email = this.address.email ? `e-mail: ${this.address.email}` : ''
+            const email = this.getCurrentUser.email ? `, e-mail: ${this.getCurrentUser.email}` : ''
 
-            return `${phone} ${email}`
+            return `${phone}${email}`
         }
     }
 }

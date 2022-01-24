@@ -195,11 +195,8 @@
                         {{ errorPostcode }}
                     </div>
                 </div>
-            </div>
 
-            <div class="row">
-
-                <div class="form-group form-group-blue col-md-6">
+                <div class="form-group form-group-blue col-md-8">
                     <label>
                         Страна <span style="color: red">*</span>
                     </label>
@@ -222,7 +219,7 @@
 
             <div class="row">
 
-                <div class="form-group form-group-blue col-md-9">
+                <div class="form-group form-group-blue col-md-6">
                     <label>
                         Край, область <span style="color: red">*</span>
                     </label>
@@ -241,11 +238,8 @@
                         {{ errorRegion }}
                     </div>
                 </div>
-            </div>
 
-            <div class="row">
-
-                <div class="form-group form-group-blue col-md-9">
+                <div class="form-group form-group-blue col-md-6">
                     <label>
                         Район
                     </label>
@@ -266,7 +260,7 @@
                 </div>
             </div>
 
-            <h4>Получатель</h4>
+            <h4 class="mt-3">Получатель</h4>
 
             <div class="row">
 
@@ -312,9 +306,6 @@
                         {{ errorFirstName }}
                     </div>
                 </div>
-            </div>
-
-            <div class="row">
 
                 <div class="form-group form-group-blue col-md-6">
                     <label>
@@ -358,9 +349,6 @@
                         {{ errorPhone }}
                     </div>
                 </div>
-            </div>
-
-            <div class="row">
 
                 <div class="form-group form-group-blue col-md-6">
                     <label>
@@ -492,12 +480,12 @@ export default {
                 this.isHouseInvalid = true
                 return;
             }
-            if (!this.house.length) {
+            if (this.postcode.length < 3) {
                 this.isPostcodeInvalid = true
                 return;
             }
             if (this.country.length < 3) {
-                this.isCountryInvalid = true
+                this.isCountryInvalid = true;
                 return;
             }
             if (this.region.length < 3) {

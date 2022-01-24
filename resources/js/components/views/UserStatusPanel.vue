@@ -26,7 +26,7 @@
                     class="form-check-label"
                     @click="isChecked = !isChecked"
                 >
-                    Косметолог / дерматолог
+                    <b>Косметолог / дерматолог</b>
                 </label>
             </div>
             <div v-if="isChecked">

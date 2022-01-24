@@ -27,10 +27,10 @@
                     <button
                         type="button"
                         class="btn btn-lg btn-info"
-                        style=" max-width: 220px; margin-bottom: -50px;"
+                        style=" max-width: 250px; margin-bottom: -50px;"
                         @click="addAddress"
                     >
-                        Добавить адрес
+                        Добавить новый адрес
                     </button>
                 </div>
             </div>
