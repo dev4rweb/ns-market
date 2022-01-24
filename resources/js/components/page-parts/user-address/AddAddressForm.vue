@@ -9,7 +9,7 @@
             <div class="row">
                 <div class="form-group form-group-blue">
                     <label>
-                        Название <span style="color: red">*</span>
+                        Название метки адреса <span style="color: red">*</span>
                     </label>
                     <input
                         type="text"
@@ -371,7 +371,7 @@
                 </div>
             </div>
 
-            <div class="d-flex justify-content-end">
+            <div class="d-flex justify-content-center position-relative">
                 <button
                     type="submit"
                     class="btn btn-lg btn-info me-3"
@@ -391,7 +391,7 @@
 </template>
 
 <script>
-import {mapMutations} from 'vuex'
+import {mapMutations, mapActions} from 'vuex'
 export default {
     name: "AddAddressForm",
     data() {
@@ -467,6 +467,7 @@ export default {
     },
     methods: {
         ...mapMutations(['setEditAddress', 'setIsShowAddressForm']),
+        ...mapActions(['fetchDaDataAddress']),
         addAddress() {
             if (this.name.length < 3) {
                 this.isNameInvalid = true
@@ -517,12 +518,17 @@ export default {
         setTimeout(() => {
             this.$refs.focusMe.focus();
         }, 500);
+        this.fetchDaDataAddress()
     }
 }
 </script>
 
 <style scoped>
-
+.btn-lg{
+    margin-bottom: -50px;
+    width: 100%;
+    max-width: 200px;
+}
 .show {
     display: block;
 }
