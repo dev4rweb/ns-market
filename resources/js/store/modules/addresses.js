@@ -39,6 +39,9 @@ export default {
         },
         setEditAddress(state, address) {
             state.editAddress = address
+        },
+        addNewAddress(state, address) {
+            state.address.push(address)
         }
     },
     getters: {

@@ -24,6 +24,8 @@ import store from './store/index'
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('advantage-cards', require('./components/AdvantageCard').default);
 Vue.component('reviews-carousel', require('./components/ReviewsCarousel').default);
+Vue.component('search-dropdown', require('./components/SearchDropdown').default);
+Vue.component('dropdown-city-input', require('./components/DropdownCityInput').default);
 Vue.component('modal-login', require('./components/Modals/ModalLogin.vue').default);
 Vue.component('modal-auth-form', require('./components/Modals/ModalAuthForm').default);
 Vue.component('login-with-phone', require('./components/Modals/LoginWithPhone').default);

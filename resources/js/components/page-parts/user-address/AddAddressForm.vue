@@ -4,6 +4,7 @@
         <form
             @submit.prevent="addAddress"
             class="needs-validation"
+            autocomplete="off"
             novalidate
         >
             <div class="row">
@@ -17,6 +18,7 @@
                         :class="{borderRed: isNameInvalid}"
                         v-model="name"
                         ref="focusMe"
+                        autocomplete="chrome-off"
                         @input="isNameInvalid = false"
                         required
                     >
@@ -32,15 +34,34 @@
             <div class="row">
                 <div class="form-group form-group-blue">
                     <label>
+                        Быстрый поиск адреса
+                    </label>
+                    <input
+                        type="text"
+                        class="form-control form-control-lg"
+                        @input="cityOnInput"
+                        v-model="fastSearch"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                        id="dropdownCity"
+                        autocomplete="chrome-off"
+                        required
+                    >
+                    <DropdownCityInput />
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group form-group-blue">
+                    <label>
                         Населённый пункт <span style="color: red">*</span>
                     </label>
                     <input
                         type="text"
                         class="form-control form-control-lg"
                         :class="{borderRed: isCityInvalid}"
-                        v-model="city"
-                        @input="isCityInvalid = false"
-                        required
+                        v-model="getCurrentDaDataAddress.city_with_type"
                     >
                     <div
                         class="invalid-feedback"
@@ -48,6 +69,23 @@
                     >
                         {{ errorCity }}
                     </div>
+                </div>
+            </div>
+
+            <div
+                class="row"
+                v-if="getCurrentDaDataAddress.settlement_with_type"
+            >
+                <div class="form-group form-group-blue">
+                    <label>
+                        Дополнительно
+                    </label>
+                    <input
+                        type="text"
+                        class="form-control form-control-lg"
+                        v-model="getCurrentDaDataAddress.settlement_with_type"
+                        required
+                    >
                 </div>
             </div>
 
@@ -60,7 +98,7 @@
                         type="text"
                         class="form-control form-control-lg"
                         :class="{borderRed: isStreetInvalid}"
-                        v-model="street"
+                        v-model="getCurrentDaDataAddress.street_with_type"
                         @input="isStreetInvalid = false"
                         required
                     >
@@ -82,7 +120,7 @@
                         type="text"
                         class="form-control form-control-lg"
                         :class="{borderRed: isHouseInvalid}"
-                        v-model="house"
+                        v-model="getCurrentDaDataAddress.house"
                         @input="isHouseInvalid = false"
                         required
                     >
@@ -101,7 +139,7 @@
                         type="text"
                         class="form-control form-control-lg"
                         :class="{borderRed: isBuildingInvalid}"
-                        v-model="building"
+                        v-model="getCurrentDaDataAddress.block"
                         @input="isBuildingInvalid = false"
                         required
                     >
@@ -142,7 +180,7 @@
                         type="text"
                         class="form-control form-control-lg"
                         :class="{borderRed: isApartmentInvalid}"
-                        v-model="apartment"
+                        v-model="getCurrentDaDataAddress.flat"
                         @input="isApartmentInvalid = false"
                         required
                     >
@@ -184,7 +222,7 @@
                         type="text"
                         class="form-control form-control-lg"
                         :class="{borderRed: isPostcodeInvalid}"
-                        v-model="postcode"
+                        v-model="getCurrentDaDataAddress.postal_code"
                         @input="isPostcodeInvalid = false"
                         required
                     >
@@ -204,7 +242,7 @@
                         type="text"
                         class="form-control form-control-lg"
                         :class="{borderRed: isCountryInvalid}"
-                        v-model="country"
+                        v-model="getCurrentDaDataAddress.country"
                         @input="isCountryInvalid = false"
                         required
                     >
@@ -227,7 +265,7 @@
                         type="text"
                         class="form-control form-control-lg"
                         :class="{borderRed: isRegionInvalid}"
-                        v-model="region"
+                        v-model="getCurrentDaDataAddress.region"
                         @input="isRegionInvalid = false"
                         required
                     >
@@ -247,7 +285,7 @@
                         type="text"
                         class="form-control form-control-lg"
                         :class="{borderRed: isDistrictInvalid}"
-                        v-model="district"
+                        v-model="getCurrentDaDataAddress.area_with_type"
                         @input="isDistrictInvalid = false"
                         required
                     >
@@ -391,11 +429,13 @@
 </template>
 
 <script>
-import {mapMutations, mapActions} from 'vuex'
+import {mapMutations, mapActions, mapGetters} from 'vuex'
+import DropdownCityInput from "../../DropdownCityInput";
 export default {
     name: "AddAddressForm",
     data() {
         return {
+
             name: '',
             isNameInvalid: false,
             errorName: 'Некорректный формат поля',
@@ -466,30 +506,30 @@ export default {
         }
     },
     methods: {
-        ...mapMutations(['setEditAddress', 'setIsShowAddressForm']),
+        ...mapMutations(['setEditAddress', 'setIsShowAddressForm', 'setFastSearchAddress', 'addNewAddress']),
         ...mapActions(['fetchDaDataAddress']),
         addAddress() {
             if (this.name.length < 3) {
                 this.isNameInvalid = true
                 return;
             }
-            if (this.city.length < 3) {
+            if (this.getCurrentDaDataAddress.city_with_type.length < 3) {
                 this.isCityInvalid = true;
                 return;
             }
-            if (!this.house.length) {
+            if (!this.getCurrentDaDataAddress.house.length) {
                 this.isHouseInvalid = true
                 return;
             }
-            if (this.postcode.length < 3) {
+            if (this.getCurrentDaDataAddress.postal_code.length < 3) {
                 this.isPostcodeInvalid = true
                 return;
             }
-            if (this.country.length < 3) {
+            if (this.getCurrentDaDataAddress.country.length < 3) {
                 this.isCountryInvalid = true;
                 return;
             }
-            if (this.region.length < 3) {
+            if (this.getCurrentDaDataAddress.region.length < 3) {
                 this.isRegionInvalid = true
                 return;
             }
@@ -505,20 +545,41 @@ export default {
                 this.isPhoneInvalid = true
                 return;
             }
-            alert('all Saved')
+            const newAddress = {
+
+            }
             this.setEditAddress(null)
             this.setIsShowAddressForm(false)
         },
         canceled() {
             this.setEditAddress(null)
             this.setIsShowAddressForm(false)
+        },
+        cityOnInput() {
+            this.isCityInvalid = false
+            this.fetchDaDataAddress({
+                query: this.getFastSearchAddress
+            })
         }
+    },
+    computed: {
+        ...mapGetters(['getCurrentDaDataAddress', 'getFastSearchAddress']),
+        fastSearch: {
+            get() {
+                return  this.getFastSearchAddress
+            },
+            set(val) {
+                this.setFastSearchAddress(val)
+            }
+        }
+    },
+    components:{
+        DropdownCityInput
     },
     mounted() {
         setTimeout(() => {
             this.$refs.focusMe.focus();
         }, 500);
-        this.fetchDaDataAddress()
     }
 }
 </script>
