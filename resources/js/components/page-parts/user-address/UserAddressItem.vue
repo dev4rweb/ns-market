@@ -16,6 +16,7 @@
                     type="button"
                     class="btn btn-outline-danger"
                     v-if="!address.is_main_address"
+                    @click="removeAddress(address)"
                 >
                     Удалить
                 </button>
@@ -29,7 +30,7 @@
 </template>
 
 <script>
-import {mapGetters, mapMutations} from 'vuex'
+import {mapGetters, mapMutations, mapActions} from 'vuex'
 
 export default {
     name: "UserAddressItem",
@@ -42,9 +43,16 @@ export default {
     },
     methods: {
         ...mapMutations(['setIsShowAddressForm', 'setEditAddress']),
+        ...mapActions(['destroyAddress']),
         editAddress() {
             this.setIsShowAddressForm(true)
             this.setEditAddress(this.address)
+        },
+        removeAddress(address) {
+            console.log('remove Address', address)
+            if (confirm(`Вы действительно хотите удалить адрес - ${address.name}`)) {
+                this.destroyAddress(address.id)
+            }
         }
     },
     computed: {

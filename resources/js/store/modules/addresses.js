@@ -28,7 +28,66 @@ export default {
             } else {
                 commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже');
             }
-        }
+        },
+        createNewAddress({commit}, addressObj) {
+            commit('setLoading', true)
+            axios.post(`${WORK_HOST}market/add-address`, addressObj)
+                .then(res => {
+                    console.log('createNewAddress', res)
+                    if (res.data.success) {
+                        commit('setToastError', 'Адрес успешно добавлен')
+                        window.location.reload()
+                    } else
+                        commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже');
+                })
+                .catch(err => {
+                    console.log('createNewAddress err', err)
+                    commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже');
+                })
+                .finally(() => {
+                    commit('setLoading', false)
+                });
+        },
+        destroyAddress({commit}, address_id) {
+            commit('setLoading', true)
+            axios.post(`${WORK_HOST}market/remove-address`, {
+                address_id: address_id
+            })
+                .then(res => {
+                    console.log('removeAddress', res)
+                    if (res.data.success) {
+                        commit('setToastError', 'Адрес успешно удален')
+                        window.location.reload()
+                    } else
+                        commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже');
+                })
+                .catch(err => {
+                    console.log('createNewAddress err', err)
+                    commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже');
+                })
+                .finally(() => {
+                    commit('setLoading', false)
+                });
+        },
+        updateAddress({commit}, address) {
+            commit('setLoading', true)
+            axios.post(`${WORK_HOST}market/update-address`, address)
+                .then(res => {
+                    console.log('updateAddress', res)
+                    if (res.data.success) {
+                        commit('setToastError', 'Адрес успешно обновлен')
+                        window.location.reload()
+                    } else
+                        commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже');
+                })
+                .catch(err => {
+                    console.log('updateAddress err', err)
+                    commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже');
+                })
+                .finally(() => {
+                    commit('setLoading', false)
+                });
+        },
     },
     mutations: {
         setAddresses(state, addresses) {

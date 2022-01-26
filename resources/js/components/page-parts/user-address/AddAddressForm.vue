@@ -47,7 +47,7 @@
                         autocomplete="chrome-off"
                         required
                     >
-                    <DropdownCityInput />
+                    <DropdownCityInput/>
 
                 </div>
             </div>
@@ -84,7 +84,6 @@
                         type="text"
                         class="form-control form-control-lg"
                         v-model="getCurrentDaDataAddress.settlement_with_type"
-                        required
                     >
                 </div>
             </div>
@@ -97,17 +96,8 @@
                     <input
                         type="text"
                         class="form-control form-control-lg"
-                        :class="{borderRed: isStreetInvalid}"
                         v-model="getCurrentDaDataAddress.street_with_type"
-                        @input="isStreetInvalid = false"
-                        required
                     >
-                    <div
-                        class="invalid-feedback"
-                        :class="{show: isStreetInvalid}"
-                    >
-                        {{ errorStreet }}
-                    </div>
                 </div>
             </div>
 
@@ -138,36 +128,18 @@
                     <input
                         type="text"
                         class="form-control form-control-lg"
-                        :class="{borderRed: isBuildingInvalid}"
                         v-model="getCurrentDaDataAddress.block"
-                        @input="isBuildingInvalid = false"
-                        required
                     >
-                    <div
-                        class="invalid-feedback"
-                        :class="{show: isBuildingInvalid}"
-                    >
-                        {{ errorBuilding }}
-                    </div>
                 </div>
                 <div class="form-group form-group-blue col-md-4">
                     <label>
-                        корпус
+                        владение
                     </label>
                     <input
                         type="text"
                         class="form-control form-control-lg"
-                        :class="{borderRed: isHousingInvalid}"
-                        v-model="housing"
-                        @input="isHousingInvalid = false"
-                        required
+                        v-model="getCurrentDaDataAddress.house_type_full"
                     >
-                    <div
-                        class="invalid-feedback"
-                        :class="{show: isHousingInvalid}"
-                    >
-                        {{ errorHousing }}
-                    </div>
                 </div>
             </div>
 
@@ -179,17 +151,8 @@
                     <input
                         type="text"
                         class="form-control form-control-lg"
-                        :class="{borderRed: isApartmentInvalid}"
                         v-model="getCurrentDaDataAddress.flat"
-                        @input="isApartmentInvalid = false"
-                        required
                     >
-                    <div
-                        class="invalid-feedback"
-                        :class="{show: isApartmentInvalid}"
-                    >
-                        {{ errorApartment }}
-                    </div>
                 </div>
                 <div class="form-group form-group-blue col-md-4">
                     <label>
@@ -198,17 +161,8 @@
                     <input
                         type="text"
                         class="form-control form-control-lg"
-                        :class="{borderRed: isOfficeInvalid}"
                         v-model="office"
-                        @input="isOfficeInvalid = false"
-                        required
                     >
-                    <div
-                        class="invalid-feedback"
-                        :class="{show: isOfficeInvalid}"
-                    >
-                        {{ errorApartment }}
-                    </div>
                 </div>
             </div>
 
@@ -284,17 +238,8 @@
                     <input
                         type="text"
                         class="form-control form-control-lg"
-                        :class="{borderRed: isDistrictInvalid}"
                         v-model="getCurrentDaDataAddress.area_with_type"
-                        @input="isDistrictInvalid = false"
-                        required
                     >
-                    <div
-                        class="invalid-feedback"
-                        :class="{show: isDistrictInvalid}"
-                    >
-                        {{ errorDistrict }}
-                    </div>
                 </div>
             </div>
 
@@ -352,17 +297,8 @@
                     <input
                         type="text"
                         class="form-control form-control-lg"
-                        :class="{borderRed: isMiddleNameInvalid}"
                         v-model="middle_name"
-                        @input="isMiddleNameInvalid = false"
-                        required
                     >
-                    <div
-                        class="invalid-feedback"
-                        :class="{show: isMiddleNameInvalid}"
-                    >
-                        {{ errorMiddleName }}
-                    </div>
                 </div>
             </div>
 
@@ -395,17 +331,8 @@
                     <input
                         type="text"
                         class="form-control form-control-lg"
-                        :class="{borderRed: isEmailInvalid}"
                         v-model="email"
-                        @input="isEmailInvalid = false"
-                        required
                     >
-                    <div
-                        class="invalid-feedback"
-                        :class="{show: isEmailInvalid}"
-                    >
-                        {{ errorEmail }}
-                    </div>
                 </div>
             </div>
 
@@ -431,6 +358,7 @@
 <script>
 import {mapMutations, mapActions, mapGetters} from 'vuex'
 import DropdownCityInput from "../../DropdownCityInput";
+
 export default {
     name: "AddAddressForm",
     data() {
@@ -440,49 +368,22 @@ export default {
             isNameInvalid: false,
             errorName: 'Некорректный формат поля',
 
-            city: '',
             isCityInvalid: false,
             errorCity: 'Некорректный формат поля',
 
-            street: '',
-            isStreetInvalid: false,
-            errorStreet: 'Некорректный формат поля',
-
-            house: '',
             isHouseInvalid: false,
             errorHouse: 'Некорректный формат поля',
 
-            building: '',
-            isBuildingInvalid: false,
-            errorBuilding: 'Некорректный формат поля',
-
-            housing: '',
-            isHousingInvalid: false,
-            errorHousing: 'Некорректный формат поля',
-
-            apartment: '',
-            isApartmentInvalid: false,
-            errorApartment: 'Некорректный формат поля',
-
             office: '',
-            isOfficeInvalid: false,
-            errorOffice: 'Некорректный формат поля',
 
-            postcode: '',
             isPostcodeInvalid: false,
             errorPostcode: 'Некорректный формат поля',
 
-            country: '',
             isCountryInvalid: false,
             errorCountry: 'Некорректный формат поля',
 
-            region: '',
             isRegionInvalid: false,
             errorRegion: 'Некорректный формат поля',
-
-            district: '',
-            isDistrictInvalid: false,
-            errorDistrict: 'Некорректный формат поля',
 
             last_name: '',
             isLastNameInvalid: false,
@@ -493,21 +394,17 @@ export default {
             errorFirstName: 'Некорректный формат поля',
 
             middle_name: '',
-            isMiddleNameInvalid: false,
-            errorMiddleName: 'Некорректный формат поля',
 
             phone: '',
             isPhoneInvalid: false,
             errorPhone: 'Некорректный формат поля',
 
             email: '',
-            isEmailInvalid: false,
-            errorEmail: 'Некорректный формат поля',
         }
     },
     methods: {
         ...mapMutations(['setEditAddress', 'setIsShowAddressForm', 'setFastSearchAddress', 'addNewAddress']),
-        ...mapActions(['fetchDaDataAddress']),
+        ...mapActions(['fetchDaDataAddress', 'createNewAddress']),
         addAddress() {
             if (this.name.length < 3) {
                 this.isNameInvalid = true
@@ -541,15 +438,36 @@ export default {
                 this.isFirstNameInvalid = true
                 return;
             }
+            this.phone = this.phone.replace(/[^0-9]/g, '')
             if (this.phone.length < 10) {
                 this.isPhoneInvalid = true
                 return;
             }
-            const newAddress = {
 
+            const newAddress = {
+                addressable_id: this.getPhysicalPerson.id,
+                name: this.name,
+                city: this.getCurrentDaDataAddress.city_with_type,
+                street: this.getCurrentDaDataAddress.street_with_type ??
+                    this.getCurrentDaDataAddress.settlement_with_type,
+                house: this.getCurrentDaDataAddress.house,
+                holding: this.getCurrentDaDataAddress.house_type_full ?? '',
+                building: this.getCurrentDaDataAddress.block ?? '',
+                apartment: this.getCurrentDaDataAddress.flat ?? '',
+                office: this.office,
+                postcode: this.getCurrentDaDataAddress.postal_code,
+                country: this.getCurrentDaDataAddress.country,
+                region: this.getCurrentDaDataAddress.region,
+                district: this.getCurrentDaDataAddress.area_with_type,
+                last_name: this.last_name,
+                first_name: this.first_name,
+                middle_name: this.middle_name,
+                phone: this.phone,
+                email: this.email
             }
             this.setEditAddress(null)
             this.setIsShowAddressForm(false)
+            this.createNewAddress(newAddress)
         },
         canceled() {
             this.setEditAddress(null)
@@ -563,17 +481,17 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['getCurrentDaDataAddress', 'getFastSearchAddress']),
+        ...mapGetters(['getCurrentDaDataAddress', 'getFastSearchAddress', 'getPhysicalPerson']),
         fastSearch: {
             get() {
-                return  this.getFastSearchAddress
+                return this.getFastSearchAddress
             },
             set(val) {
                 this.setFastSearchAddress(val)
             }
         }
     },
-    components:{
+    components: {
         DropdownCityInput
     },
     mounted() {
@@ -585,11 +503,12 @@ export default {
 </script>
 
 <style scoped>
-.btn-lg{
+.btn-lg {
     margin-bottom: -50px;
     width: 100%;
     max-width: 200px;
 }
+
 .show {
     display: block;
 }

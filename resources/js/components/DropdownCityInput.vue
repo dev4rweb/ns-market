@@ -25,11 +25,12 @@ import {mapGetters, mapMutations} from 'vuex'
 export default {
     name: "DropdownCityInput",
     methods: {
-        ...mapMutations(['setCurrentDaDataAddress', 'setFastSearchAddress']),
+        ...mapMutations(['setCurrentDaDataAddress', 'setFastSearchAddress', 'setIsSearchingDaDataAddress']),
         selectedItem(address) {
             console.log('selected Item', address)
             this.setCurrentDaDataAddress(address.data)
             this.setFastSearchAddress(address.value)
+            this.setIsSearchingDaDataAddress(true)
         }
     },
     computed: {

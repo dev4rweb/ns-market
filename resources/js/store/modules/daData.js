@@ -1,5 +1,6 @@
 export default {
     state: {
+        isSearchingAddress: false,
         fastSearch: '',
         daDataAddress: [],
         currentDaDataAddress: {
@@ -8,6 +9,7 @@ export default {
             street_with_type: '',
             area_with_type: '',
             house: '',
+            house_type_full: '',
             country: '',
             block: '',
             region: '',
@@ -27,7 +29,11 @@ export default {
                     {country: 'Беларусь'},
                     {country: 'Казахстан'},
                     {country: 'Россия'},
-                    {country: 'Украина'},
+                    {country: 'Абхазия'},
+                    {country: 'Армения'},
+                    {country: 'Кыргызстан'},
+                    {country: 'Узбекистан'},
+                    {country: 'Болгария'},
                 ]
                 /*from_bound: {value: queryObj.value},
                 to_bound: {value: queryObj.value},*/
@@ -39,7 +45,7 @@ export default {
                     'Authorization': `Token ${token}`,
                 },
             }).then(res => {
-                console.log('fetchDaDataAddress', res)
+                // console.log('fetchDaDataAddress', res)
                 if (res.status === 200) {
                     commit('setDaDataAddress', res.data.suggestions);
                 }
@@ -58,6 +64,9 @@ export default {
         },
         setFastSearchAddress(state, value) {
             state.fastSearch = value
+        },
+        setIsSearchingDaDataAddress(state, isSearching) {
+            state.isSearchingAddress = isSearching
         }
     },
     getters: {
@@ -69,6 +78,9 @@ export default {
         },
         getFastSearchAddress(state) {
             return state.fastSearch
+        },
+        getIsSearchingDaDataAddress(state) {
+            return state.isSearchingAddress
         }
     }
 }

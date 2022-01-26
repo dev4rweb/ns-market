@@ -19,6 +19,7 @@
                         v-model="getEditAddress.name"
                         ref="focusMe"
                         @input="isNameInvalid = false"
+                        :disabled="getEditAddress.is_main_address"
                         required
                     >
                     <div
@@ -33,13 +34,34 @@
             <div class="row">
                 <div class="form-group form-group-blue">
                     <label>
+                        Быстрый поиск адреса
+                    </label>
+                    <input
+                        type="text"
+                        class="form-control form-control-lg"
+                        @input="cityOnInput"
+                        v-model="fastSearch"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                        id="dropdownCity"
+                        autocomplete="chrome-off"
+                        required
+                    >
+                    <DropdownCityInput/>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group form-group-blue">
+                    <label>
                         Населённый пункт <span style="color: red">*</span>
                     </label>
                     <input
                         type="text"
                         class="form-control form-control-lg"
                         :class="{borderRed: isCityInvalid}"
-                        v-model="getEditAddress.city"
+                        v-model="city"
                         @input="isCityInvalid = false"
                         required
                     >
@@ -52,6 +74,22 @@
                 </div>
             </div>
 
+            <div
+                class="row"
+                v-if="getCurrentDaDataAddress.settlement_with_type"
+            >
+                <div class="form-group form-group-blue">
+                    <label>
+                        Дополнительно
+                    </label>
+                    <input
+                        type="text"
+                        class="form-control form-control-lg"
+                        v-model="getCurrentDaDataAddress.settlement_with_type"
+                    >
+                </div>
+            </div>
+
             <div class="row">
                 <div class="form-group form-group-blue">
                     <label>
@@ -60,17 +98,8 @@
                     <input
                         type="text"
                         class="form-control form-control-lg"
-                        :class="{borderRed: isStreetInvalid}"
-                        v-model="getEditAddress.street"
-                        @input="isStreetInvalid = false"
-                        required
+                        v-model="street"
                     >
-                    <div
-                        class="invalid-feedback"
-                        :class="{show: isStreetInvalid}"
-                    >
-                        {{ errorStreet }}
-                    </div>
                 </div>
             </div>
 
@@ -83,7 +112,7 @@
                         type="text"
                         class="form-control form-control-lg"
                         :class="{borderRed: isHouseInvalid}"
-                        v-model="getEditAddress.house"
+                        v-model="house"
                         @input="isHouseInvalid = false"
                         required
                     >
@@ -101,36 +130,18 @@
                     <input
                         type="text"
                         class="form-control form-control-lg"
-                        :class="{borderRed: isBuildingInvalid}"
-                        v-model="getEditAddress.building"
-                        @input="isBuildingInvalid = false"
-                        required
+                        v-model="building"
                     >
-                    <div
-                        class="invalid-feedback"
-                        :class="{show: isBuildingInvalid}"
-                    >
-                        {{ errorBuilding }}
-                    </div>
                 </div>
                 <div class="form-group form-group-blue col-md-4">
                     <label>
-                        корпус
+                        владение
                     </label>
                     <input
                         type="text"
                         class="form-control form-control-lg"
-                        :class="{borderRed: isHousingInvalid}"
-                        v-model="getEditAddress.housing"
-                        @input="isHousingInvalid = false"
-                        required
+                        v-model="holding"
                     >
-                    <div
-                        class="invalid-feedback"
-                        :class="{show: isHousingInvalid}"
-                    >
-                        {{ errorHousing }}
-                    </div>
                 </div>
             </div>
 
@@ -142,17 +153,8 @@
                     <input
                         type="text"
                         class="form-control form-control-lg"
-                        :class="{borderRed: isApartmentInvalid}"
-                        v-model="getEditAddress.apartment"
-                        @input="isApartmentInvalid = false"
-                        required
+                        v-model="apartment"
                     >
-                    <div
-                        class="invalid-feedback"
-                        :class="{show: isApartmentInvalid}"
-                    >
-                        {{ errorApartment }}
-                    </div>
                 </div>
                 <div class="form-group form-group-blue col-md-4">
                     <label>
@@ -161,17 +163,8 @@
                     <input
                         type="text"
                         class="form-control form-control-lg"
-                        :class="{borderRed: isOfficeInvalid}"
                         v-model="getEditAddress.office"
-                        @input="isOfficeInvalid = false"
-                        required
                     >
-                    <div
-                        class="invalid-feedback"
-                        :class="{show: isOfficeInvalid}"
-                    >
-                        {{ errorApartment }}
-                    </div>
                 </div>
             </div>
 
@@ -185,7 +178,7 @@
                         type="text"
                         class="form-control form-control-lg"
                         :class="{borderRed: isPostcodeInvalid}"
-                        v-model="getEditAddress.postcode"
+                        v-model="postcode"
                         @input="isPostcodeInvalid = false"
                         required
                     >
@@ -205,7 +198,7 @@
                         type="text"
                         class="form-control form-control-lg"
                         :class="{borderRed: isCountryInvalid}"
-                        v-model="getEditAddress.country"
+                        v-model="country"
                         @input="isCountryInvalid = false"
                         required
                     >
@@ -228,7 +221,7 @@
                         type="text"
                         class="form-control form-control-lg"
                         :class="{borderRed: isRegionInvalid}"
-                        v-model="getEditAddress.region"
+                        v-model="region"
                         @input="isRegionInvalid = false"
                         required
                     >
@@ -247,17 +240,8 @@
                     <input
                         type="text"
                         class="form-control form-control-lg"
-                        :class="{borderRed: isDistrictInvalid}"
-                        v-model="getEditAddress.district"
-                        @input="isDistrictInvalid = false"
-                        required
+                        v-model="district"
                     >
-                    <div
-                        class="invalid-feedback"
-                        :class="{show: isDistrictInvalid}"
-                    >
-                        {{ errorDistrict }}
-                    </div>
                 </div>
             </div>
 
@@ -275,6 +259,7 @@
                         :class="{borderRed: isLastNameInvalid}"
                         v-model="getEditAddress.last_name"
                         @input="isLastNameInvalid = false"
+                        :disabled="getEditAddress.is_main_address"
                         required
                     >
                     <div
@@ -298,6 +283,7 @@
                         :class="{borderRed: isFirstNameInvalid}"
                         v-model="getEditAddress.first_name"
                         @input="isFirstNameInvalid = false"
+                        :disabled="getEditAddress.is_main_address"
                         required
                     >
                     <div
@@ -315,21 +301,13 @@
                     <input
                         type="text"
                         class="form-control form-control-lg"
-                        :class="{borderRed: isMiddleNameInvalid}"
                         v-model="getEditAddress.middle_name"
-                        @input="isMiddleNameInvalid = false"
-                        required
+                        :disabled="getEditAddress.is_main_address"
                     >
-                    <div
-                        class="invalid-feedback"
-                        :class="{show: isMiddleNameInvalid}"
-                    >
-                        {{ errorMiddleName }}
-                    </div>
                 </div>
             </div>
 
-            <div class="row" v-if="getEditAddress.is_main_address">
+            <div class="row">
 
                 <div class="form-group form-group-blue col-md-6">
                     <label>
@@ -341,7 +319,7 @@
                         :class="{borderRed: isPhoneInvalid}"
                         v-model="getEditAddress.phone"
                         @input="isPhoneInvalid = false"
-                        disabled
+                        :disabled="getEditAddress.is_main_address"
                         required
                     >
                     <div
@@ -357,56 +335,21 @@
                         e-mail
                     </label>
                     <input
+                        v-if="getEditAddress.is_main_address"
                         type="text"
                         class="form-control form-control-lg"
                         :class="{borderRed: isEmailInvalid}"
                         v-model="getCurrentUser.email"
                         @input="isEmailInvalid = false"
-                        required
                         disabled
                     >
-                    <div
-                        class="invalid-feedback"
-                        :class="{show: isEmailInvalid}"
-                    >
-                        {{ errorEmail }}
-                    </div>
-                </div>
-            </div>
-
-            <div class="row" v-else>
-
-                <div class="form-group form-group-blue col-md-6">
-                    <label>
-                        Телефон <span style="color: red">*</span>
-                    </label>
                     <input
-                        type="text"
-                        class="form-control form-control-lg"
-                        :class="{borderRed: isPhoneInvalid}"
-                        v-model="getEditAddress.phone"
-                        @input="isPhoneInvalid = false"
-                        required
-                    >
-                    <div
-                        class="invalid-feedback"
-                        :class="{show: isPhoneInvalid}"
-                    >
-                        {{ errorPhone }}
-                    </div>
-                </div>
-
-                <div class="form-group form-group-blue col-md-6">
-                    <label>
-                        e-mail
-                    </label>
-                    <input
+                        v-else
                         type="text"
                         class="form-control form-control-lg"
                         :class="{borderRed: isEmailInvalid}"
-                        v-model="getEditAddress.email"
+                        v-model="email"
                         @input="isEmailInvalid = false"
-                        required
                     >
                     <div
                         class="invalid-feedback"
@@ -438,34 +381,22 @@
 </template>
 
 <script>
-import {mapMutations, mapGetters} from 'vuex'
+import {mapMutations, mapGetters, mapActions} from 'vuex'
+import DropdownCityInput from "../../DropdownCityInput";
+
 export default {
     name: "EditAddressForm",
     data() {
         return {
+            email: '',
             isNameInvalid: false,
             errorName: 'Некорректный формат поля',
 
             isCityInvalid: false,
             errorCity: 'Некорректный формат поля',
 
-            isStreetInvalid: false,
-            errorStreet: 'Некорректный формат поля',
-
             isHouseInvalid: false,
             errorHouse: 'Некорректный формат поля',
-
-            isBuildingInvalid: false,
-            errorBuilding: 'Некорректный формат поля',
-
-            isHousingInvalid: false,
-            errorHousing: 'Некорректный формат поля',
-
-            isApartmentInvalid: false,
-            errorApartment: 'Некорректный формат поля',
-
-            isOfficeInvalid: false,
-            errorOffice: 'Некорректный формат поля',
 
             isPostcodeInvalid: false,
             errorPostcode: 'Некорректный формат поля',
@@ -476,17 +407,11 @@ export default {
             isRegionInvalid: false,
             errorRegion: 'Некорректный формат поля',
 
-            isDistrictInvalid: false,
-            errorDistrict: 'Некорректный формат поля',
-
             isLastNameInvalid: false,
             errorLastName: 'Некорректный формат поля',
 
             isFirstNameInvalid: false,
             errorFirstName: 'Некорректный формат поля',
-
-            isMiddleNameInvalid: false,
-            errorMiddleName: 'Некорректный формат поля',
 
             isPhoneInvalid: false,
             errorPhone: 'Некорректный формат поля',
@@ -496,29 +421,31 @@ export default {
         }
     },
     methods: {
-        ...mapMutations(['setEditAddress', 'setIsShowAddressForm']),
+        ...mapMutations(['setEditAddress', 'setIsShowAddressForm', 'setFastSearchAddress',
+            'setIsSearchingDaDataAddress']),
+        ...mapActions(['fetchDaDataAddress', 'updateAddress']),
         saveAddress() {
             if (this.getEditAddress.name.length < 3) {
                 this.isNameInvalid = true
                 return;
             }
-            if (this.getEditAddress.city.length < 3) {
+            if (this.city.length < 3) {
                 this.isCityInvalid = true;
                 return;
             }
-            if (!this.getEditAddress.house.length) {
+            if (!this.house.length) {
                 this.isHouseInvalid = true
                 return;
             }
-            if (this.getEditAddress.postcode.length < 3) {
+            if (this.postcode.length < 3) {
                 this.isPostcodeInvalid = true
                 return;
             }
-            if (this.getEditAddress.country.length < 3) {
+            if (this.country.length < 3) {
                 this.isCountryInvalid = true
                 return;
             }
-            if (this.getEditAddress.region.length < 3) {
+            if (this.region.length < 3) {
                 this.isRegionInvalid = true
                 return;
             }
@@ -534,27 +461,195 @@ export default {
                 this.isPhoneInvalid = true
                 return;
             }
-            alert('in progress')
+
+            const email = this.getEditAddress.is_main_address ?
+                this.getCurrentUser.email : this.email
+
+
+            const editedAddress = {
+                id: this.getEditAddress.id,
+                addressable_id: this.getEditAddress.addressable_id,
+                name: this.getEditAddress.name,
+                city: this.city,
+                street: this.street,
+                house: this.house,
+                holding: this.holding,
+                building: this.building,
+                apartment: this.apartment,
+                office: this.getEditAddress.office,
+                postcode: this.postcode,
+                country: this.country,
+                region: this.region,
+                district: this.district,
+                last_name: this.getEditAddress.last_name,
+                first_name: this.getEditAddress.first_name,
+                middle_name: this.getEditAddress.middle_name,
+                phone: this.getEditAddress.phone,
+                email: email,
+            }
+            console.log('saveAddress', editedAddress)
             this.setEditAddress(null)
             this.setIsShowAddressForm(false)
+            this.updateAddress(editedAddress)
         },
         canceled() {
             this.setEditAddress(null)
             this.setIsShowAddressForm(false)
+        },
+        cityOnInput() {
+            this.fetchDaDataAddress({
+                query: this.getFastSearchAddress
+            })
         }
     },
     computed: {
-        ...mapGetters(['getEditAddress', 'getCurrentUser'])
+        ...mapGetters(['getEditAddress', 'getCurrentUser', 'getCurrentDaDataAddress', 'getFastSearchAddress',
+            'getPhysicalPerson', 'getIsSearchingDaDataAddress']),
+        fastSearch: {
+            get() {
+                return this.getFastSearchAddress
+            },
+            set(val) {
+                this.setFastSearchAddress(val)
+            }
+        },
+        city: {
+            get() {
+                if(this.getIsSearchingDaDataAddress)
+                    return this.getCurrentDaDataAddress.city_with_type
+                else return this.getEditAddress.city
+            },
+            set(val) {
+                if(this.getIsSearchingDaDataAddress)
+                    this.getCurrentDaDataAddress.city_with_type = val
+                else this.getEditAddress.city = val
+            }
+        },
+        street: {
+            get() {
+                if(this.getIsSearchingDaDataAddress)
+                    return this.getCurrentDaDataAddress.street_with_type
+                else return this.getEditAddress.street
+            },
+            set(val) {
+                if(this.getIsSearchingDaDataAddress)
+                    this.getCurrentDaDataAddress.street_with_type = val
+                else this.getEditAddress.street = val
+            }
+        },
+        house: {
+            get() {
+                if(this.getIsSearchingDaDataAddress)
+                    return this.getCurrentDaDataAddress.house
+                else return this.getEditAddress.house
+            },
+            set(val) {
+                if(this.getIsSearchingDaDataAddress)
+                    this.getCurrentDaDataAddress.house = val
+                else this.getEditAddress.house = val
+            }
+        },
+        building: {
+            get() {
+                if(this.getIsSearchingDaDataAddress)
+                    return this.getCurrentDaDataAddress.block
+                else return this.getEditAddress.building
+            },
+            set(val) {
+                if(this.getIsSearchingDaDataAddress)
+                    this.getCurrentDaDataAddress.block = val
+                else this.getEditAddress.building = val
+            }
+        },
+        holding: {
+            get() {
+                if(this.getIsSearchingDaDataAddress)
+                    return this.getCurrentDaDataAddress.house_type_full
+                else return this.getEditAddress.building
+            },
+            set(val) {
+                if(this.getIsSearchingDaDataAddress)
+                    this.getCurrentDaDataAddress.house_type_full = val
+                else this.getEditAddress.building = val
+            }
+        },
+        apartment: {
+            get() {
+                if(this.getIsSearchingDaDataAddress)
+                    return this.getCurrentDaDataAddress.flat
+                else return this.getEditAddress.apartment
+            },
+            set(val) {
+                if(this.getIsSearchingDaDataAddress)
+                    this.getCurrentDaDataAddress.flat = val
+                else this.getEditAddress.apartment = val
+            }
+        },
+        postcode: {
+            get() {
+                if(this.getIsSearchingDaDataAddress)
+                    return this.getCurrentDaDataAddress.postal_code
+                else return this.getEditAddress.postcode
+            },
+            set(val) {
+                if(this.getIsSearchingDaDataAddress)
+                    this.getCurrentDaDataAddress.postal_code = val
+                else this.getEditAddress.postcode = val
+            }
+        },
+        country: {
+            get() {
+                if(this.getIsSearchingDaDataAddress)
+                    return this.getCurrentDaDataAddress.country
+                else return this.getEditAddress.country
+            },
+            set(val) {
+                if(this.getIsSearchingDaDataAddress)
+                    this.getCurrentDaDataAddress.country = val
+                else this.getEditAddress.country = val
+            }
+        },
+        region: {
+            get() {
+                if(this.getIsSearchingDaDataAddress)
+                    return this.getCurrentDaDataAddress.region
+                else return this.getEditAddress.region
+            },
+            set(val) {
+                if(this.getIsSearchingDaDataAddress)
+                    this.getCurrentDaDataAddress.region = val
+                else this.getEditAddress.region = val
+            }
+        },
+        district: {
+            get() {
+                if(this.getIsSearchingDaDataAddress)
+                    return this.getCurrentDaDataAddress.area_with_type
+                else return this.getEditAddress.district
+            },
+            set(val) {
+                if(this.getIsSearchingDaDataAddress)
+                    this.getCurrentDaDataAddress.area_with_type = val
+                else this.getEditAddress.district = val
+            }
+        },
+    },
+    components: {
+        DropdownCityInput
+    },
+    mounted() {
+        this.setIsSearchingDaDataAddress(false)
     }
 }
 </script>
 
 <style scoped>
-.btn-lg{
+.btn-lg {
     margin-bottom: -50px;
     width: 100%;
     max-width: 200px;
 }
+
 .show {
     display: block;
 }
