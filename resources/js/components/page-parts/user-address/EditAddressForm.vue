@@ -336,7 +336,7 @@
                     </label>
                     <input
                         v-if="getEditAddress.is_main_address"
-                        type="text"
+                        type="email"
                         class="form-control form-control-lg"
                         :class="{borderRed: isEmailInvalid}"
                         v-model="getCurrentUser.email"
@@ -345,10 +345,10 @@
                     >
                     <input
                         v-else
-                        type="text"
+                        type="email"
                         class="form-control form-control-lg"
                         :class="{borderRed: isEmailInvalid}"
-                        v-model="email"
+                        v-model="getEditAddress.email"
                         @input="isEmailInvalid = false"
                     >
                     <div
@@ -388,7 +388,6 @@ export default {
     name: "EditAddressForm",
     data() {
         return {
-            email: '',
             isNameInvalid: false,
             errorName: 'Некорректный формат поля',
 
@@ -463,7 +462,7 @@ export default {
             }
 
             const email = this.getEditAddress.is_main_address ?
-                this.getCurrentUser.email : this.email
+                this.getCurrentUser.email : this.getEditAddress.email
 
 
             const editedAddress = {

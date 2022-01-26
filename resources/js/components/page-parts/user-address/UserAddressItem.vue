@@ -61,7 +61,7 @@ export default {
             const postCode = this.address.postcode ?? ''
             const country = this.address.country ? `${this.address.country}.` : ''
             const region = this.address.region ? `${this.address.region},` : ''
-            const city = this.address.city ? `${this.address.city},` :  ''
+            const city = this.address.city ? `${this.address.city},` : ''
 
             return `${postCode} ${country} ${region} ${city}`
         },
@@ -84,7 +84,8 @@ export default {
         },
         phoneEmail() {
             const phone = this.address.phone ? `тел. +${this.address.phone}` : ''
-            const email = this.getCurrentUser.email ? `, e-mail: ${this.getCurrentUser.email}` : ''
+            const email = this.address.is_main_address ? `, e-mail: ${this.getCurrentUser.email}`
+                : this.address.email ? `, e-mail: ${this.address.email}` : ''
 
             return `${phone}${email}`
         }
