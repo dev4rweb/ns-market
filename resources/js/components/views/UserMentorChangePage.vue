@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="card data-card d-flex flex-column justify-content-center align-items-center">
+        <div class="card data-card d-flex flex-column justify-content-center align-items-center mb-5">
             <div
                 v-if="data.isBecomePartner"
             >
@@ -15,7 +15,12 @@
                     Вы больше не сможете поменять Вашего наставника.
                 </p>
             </div>
-            <img class="mb-3" :src="logo" alt="logo">
+            <img
+                v-if="!data.isBecomePartner"
+                class="mb-3"
+                :src="logo"
+                alt="logo"
+            >
             <MentorChangePhoneForm
                 v-if="getIsMentorChangePhoneForm"
                 :data="data"
@@ -28,7 +33,9 @@
                 v-if="getIsMentorPhoneConfirmation"
             />
         </div>
-        <div class="market-block d-flex flex-column align-items-center justify-content-center mt-5 mb-5">
+        <div
+            v-if="!data.isBecomePartner"
+            class="market-block d-flex flex-column align-items-center justify-content-center mt-5 mb-5">
             <p style="text-align: center; max-width: 360px;">
                 Установите приложение New Star Market для быстрого доступа к каталогу на вашем мобильном
                 устройстве.

@@ -12,11 +12,17 @@
         <p>
             Стоимость франшизы – 3000 рублей
         </p>
-        <p>
-            Срок действия франшизы – 12 месяцев. Срок действия автоматически
-            продлевается на 12 месяцев после каждой,
-            совершённой Вами покупки.
-        </p>
+        <div class="d-flex" style="min-width: 380px;">
+            <p>
+                Срок действия франшизы –
+            </p>
+            <p>
+                12 месяцев. Срок действия автоматически
+                продлевается на 12 месяцев после каждой,
+                совершённой Вами покупки.
+            </p>
+        </div>
+
         <p>
             Оплата франшизы подтверждает Ваше согласие
             с правилами сотрудничества с New Star market.
@@ -24,13 +30,13 @@
         <div class="mb-3">
             <ChangeStatusBtn
                 :btnName="{name: 'Оплатить пластиковой картой'}"
-                :redirectUrl="{url: '/user-panel'}"
+                :redirectUrl="{url: '/partner-congratulation'}"
             />
         </div>
         <div>
             <ChangeStatusBtn
                 :btnName="{name: 'Оплатить по QR коду'}"
-                :redirectUrl="{url: '/user-panel'}"
+                :redirectUrl="{url: '/partner-congratulation'}"
             />
         </div>
     </div>

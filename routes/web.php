@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminPageController;
 use App\Http\Controllers\CatalogPageController;
 use App\Http\Controllers\ContactsPageController;
 use App\Http\Controllers\HomePageController;
+use App\Http\Controllers\PartnerCongratulationPage;
 use App\Http\Controllers\StockPageController;
 use App\Http\Controllers\UserAddressPageController;
 use App\Http\Controllers\UserBecomePartnerPage;
@@ -49,6 +50,7 @@ Route::get('/user-status-panel', [UserStatusPageController::class, 'index'])->na
 Route::get('/user-become-partner', [UserBecomePartnerPage::class, 'index'])->name('user-become-partner-page');
 Route::get('/user-choose-mentor', [UserChooseMentorPageController::class, 'index'])->name('user-choose-mentor-page');
 Route::get('/user-choose-pay', [UserChoosePayPageController::class, 'index'])->name('user-choose-pay-page');
+Route::get('/partner-congratulation', [PartnerCongratulationPage::class, 'index'])->name('partner-congratulation-page');
 Route::get('/user-payment-info-panel', [UserPaymentInfoPageController::class, 'index'])->name('user-payment-info-page');
 Route::get('/', [HomePageController::class, 'index'])->name('home-page');
 Route::get('/catalog', [CatalogPageController::class, 'index'])->name('catalog-page');
