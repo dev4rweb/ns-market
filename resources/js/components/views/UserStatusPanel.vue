@@ -91,17 +91,17 @@
                         можно сделать, нажав на вкладку <a href="/user-passport-panel">«Паспорт»</a>.
                     </p>
                 </div>
-                <div class="row mb-3">
+<!--                <div class="row mb-3">
                     <div class="col-md-12">
                         <button
                             class="btn btn-outline-info"
                             @click="toggleStatus"
                         >
-                            <!--                        Загрузить паспорт-->
+                            &lt;!&ndash;                        Загрузить паспорт&ndash;&gt;
                             Сменить статус
                         </button>
                     </div>
-                </div>
+                </div>-->
 
                 <div class="row position-relative d-flex justify-content-center">
                     <button

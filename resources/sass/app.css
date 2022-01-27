@@ -10349,6 +10349,26 @@ footer h3, footer .h3 {
   font-size: 14px;
   line-height: 17px; }
 
+.become-partner h3, .become-partner .h3 {
+  text-transform: uppercase;
+  color: #333333;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 29px; }
+.become-partner h4, .become-partner .h4 {
+  text-transform: uppercase;
+  color: #333333;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 22px;
+  line-height: 120%; }
+.become-partner p, .become-partner ul, .become-partner ol {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 20px;
+  line-height: 24px; }
+
 @font-face {
   font-family: 'Proxima Nova Regular';
   src: url("../assets/fonts/proxima/ProximaNova-Regular.eot");
