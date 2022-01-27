@@ -4,9 +4,11 @@
         class="mentor-change-phone-form"
         novalidate
     >
-        <h4 class="text-center mb-3">Смена наставника</h4>
+        <h4 class="text-center mb-3">
+          {{data.title}}
+        </h4>
         <p class="description">
-            Введите номер телефона действующего Партнёра New Star, которого Вы хотите выбрать в качестве наставника.
+            {{data.content}}
         </p>
         <div class="form-group form-group-blue">
             <label>
@@ -47,6 +49,7 @@
 import {mapGetters, mapActions} from 'vuex'
 export default {
     name: "MentorChangePhoneForm",
+    props: ['data'],
     data() {
         return {
             isMentorPhoneInValid: false,

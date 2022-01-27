@@ -1,6 +1,8 @@
 <template>
     <div class="mentor-phone-founded-form">
-        <h4 class="text-center mb-3">Смена наставника</h4>
+        <h4 class="text-center mb-3">
+            {{data.title}}
+        </h4>
         <hr style="background-color: #038ED7; height: 2px">
         <p class="invite-text">Вас пригласил:</p>
         <div class="d-flex align-items-center mb-5">
@@ -32,7 +34,7 @@
         <div class="d-flex justify-content-between mb-4">
             <button
                 class="btn btn-outline-success"
-                @click="changeMentor"
+                @click="changeMentor(data.isBecomePartner)"
             >
                 Да
             </button>
@@ -57,6 +59,7 @@ import mentorAvatar from '../../../../assets/img/mentor-avatar-two.png'
 import {mapMutations, mapActions, mapGetters} from 'vuex'
 export default {
     name: "MentorPhoneFoundedForm",
+    props: ['data'],
     data() {
         return {
             mentorAvatar

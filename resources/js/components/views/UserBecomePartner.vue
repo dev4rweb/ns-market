@@ -2,7 +2,10 @@
     <div class="user-content become-partner">
         <div class="row">
             <div class="card data-card mb-5">
-                <ChangeStatusBtn />
+                <ChangeStatusBtn
+                    :btnName="{name: 'Сменить статус'}"
+                    :redirectUrl="{url: null}"
+                />
                 <h3>Что означает Ваш статус ?</h3>
                 <p>
                     Любой участник New Star market может иметь один из двух статусов:
@@ -16,7 +19,7 @@
                     использовать услуги, предлагаемые на этом сайте, то Вы являетесь Клиентом.
                 </p>
                 <p>
-                    Если же Вв одновременно с приобретением товаров и услуг хотите создать собственное дело,
+                    Если же Вы одновременно с приобретением товаров и услуг хотите создать собственное дело,
                     используя франшизу New Star market, и зарабатывать, создавая рекламу и привлекая новых
                     покупателей товаров и услуг, то Вам необходимо стать Партнёром New Star.
                 </p>
@@ -96,7 +99,7 @@
                 <div class="d-flex justify-content-center position-relative">
                     <a
                         v-if="isShowBtn"
-                        href="/"
+                        href="/user-choose-mentor"
                         class="btn btn-lg btn-info"
                         style="margin-bottom: -50px;"
                     >

@@ -91,17 +91,6 @@
                         можно сделать, нажав на вкладку <a href="/user-passport-panel">«Паспорт»</a>.
                     </p>
                 </div>
-<!--                <div class="row mb-3">
-                    <div class="col-md-12">
-                        <button
-                            class="btn btn-outline-info"
-                            @click="toggleStatus"
-                        >
-                            &lt;!&ndash;                        Загрузить паспорт&ndash;&gt;
-                            Сменить статус
-                        </button>
-                    </div>
-                </div>-->
 
                 <div class="row position-relative d-flex justify-content-center">
                     <button
@@ -139,7 +128,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['toggleStatus', 'updateStatusData']),
+        ...mapActions(['updateStatusData']),
         ...mapMutations(['setToastError']),
         uploadCertificate() {
             console.log('uploadCertificate', this.$refs.uploadCertificate.files[0])

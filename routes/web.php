@@ -7,6 +7,8 @@ use App\Http\Controllers\HomePageController;
 use App\Http\Controllers\StockPageController;
 use App\Http\Controllers\UserAddressPageController;
 use App\Http\Controllers\UserBecomePartnerPage;
+use App\Http\Controllers\UserChooseMentorPageController;
+use App\Http\Controllers\UserChoosePayPageController;
 use App\Http\Controllers\UserDataPageController;
 use App\Http\Controllers\UserMentorChangePageController;
 use App\Http\Controllers\UserMentorPageController;
@@ -45,6 +47,8 @@ Route::get('/user-support-panel', [UserSupportPageController::class, 'index'])->
 Route::get('/user-passport-panel', [UserPassportPageController::class, 'index'])->name('user-passport-page');
 Route::get('/user-status-panel', [UserStatusPageController::class, 'index'])->name('user-status-page');
 Route::get('/user-become-partner', [UserBecomePartnerPage::class, 'index'])->name('user-become-partner-page');
+Route::get('/user-choose-mentor', [UserChooseMentorPageController::class, 'index'])->name('user-choose-mentor-page');
+Route::get('/user-choose-pay', [UserChoosePayPageController::class, 'index'])->name('user-choose-pay-page');
 Route::get('/user-payment-info-panel', [UserPaymentInfoPageController::class, 'index'])->name('user-payment-info-page');
 Route::get('/', [HomePageController::class, 'index'])->name('home-page');
 Route::get('/catalog', [CatalogPageController::class, 'index'])->name('catalog-page');

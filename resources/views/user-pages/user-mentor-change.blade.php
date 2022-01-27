@@ -7,7 +7,10 @@
             <div>
                 @include('parts.nab-user-data')
                 <div>
-                    <user-mentor-change-page></user-mentor-change-page>
+                    <user-mentor-change-page
+                        :data='@json($data)'
+                    >
+                    </user-mentor-change-page>
                 </div>
             </div>
         </div>

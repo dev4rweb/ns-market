@@ -94,7 +94,7 @@ export default {
                 commit('setLoading', false)
             });
         },
-        toggleStatus({commit, getters}) {
+        toggleStatus({commit, getters}, redirectUrl = null) {
             const user = getters['getCurrentUser']
             if (user) {
                 commit('setLoading', true);
@@ -103,10 +103,15 @@ export default {
                 }).then(res => {
                     console.log('toggleStatus', res)
                     if (res.data.success) {
-                        commit('setToastError', 'Статус успешно изменен')
-                        setTimeout(() => {
-                            window.location.reload()
-                        }, 2000);
+                        if (redirectUrl) {
+                            window.location.href = redirectUrl;
+                        } else {
+                            commit('setToastError', 'Статус успешно изменен');
+                            setTimeout(() => {
+                                window.location.reload()
+                            }, 2000);
+                        }
+
                     } else commit('setToastError', 'Что-то пошло не так, попробуйте позже')
                 }).catch(err => {
                     console.log('toggleStatus err', err)
@@ -118,11 +123,12 @@ export default {
                 commit('setToastError', 'Что-то пошло не так, попробуйте позже')
             }
         },
-        changeMentor({commit, getters}) {
+        changeMentor({commit, getters}, isBecomePartner) {
             const user = getters['getCurrentUser']
             const tempMentor = getters['getTemporaryMentor']
             console.log('changeMentor user', user)
             console.log('changeMentor tempMentor', tempMentor)
+            console.log('changeMentor isBecomePartner', isBecomePartner)
             if (user && tempMentor) {
                 commit('setLoading', true);
                 axios.post(`${WORK_HOST}market/change-mentor`, {
@@ -131,9 +137,13 @@ export default {
                 }).then(res => {
                     console.log('changeMentor', res)
                     if (res.data.success) {
-                        commit('setToastError', 'Наставник успешно изменен')
-                        commit('setIsMentorPhoneFounded', false)
-                        commit('setIsMentorPhoneConfirmation', true)
+                        if (isBecomePartner) {
+                            window.location.href = '/user-choose-pay';
+                        } else {
+                            commit('setToastError', 'Наставник успешно изменен');
+                            commit('setIsMentorPhoneFounded', false)
+                            commit('setIsMentorPhoneConfirmation', true)
+                        }
                     } else commit('setToastError', 'Что-то пошло не так, попробуйте позже')
                 }).catch(err => {
                     console.log('changeMentor err', err)

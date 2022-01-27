@@ -1,12 +1,28 @@
 <template>
     <div>
         <div class="card data-card d-flex flex-column justify-content-center align-items-center">
+            <div
+                v-if="data.isBecomePartner"
+            >
+                <h3 class="text-center">Покупка франшизы New Star market</h3>
+                <p>Шаг <b>1</b> из 2</p>
+                <p
+                    class="text-center"
+                    style="color: red"
+                >
+                    Обращаем Ваше внимание на то. Что
+                    после того, как Вы станете Партнёром New Star,
+                    Вы больше не сможете поменять Вашего наставника.
+                </p>
+            </div>
             <img class="mb-3" :src="logo" alt="logo">
             <MentorChangePhoneForm
                 v-if="getIsMentorChangePhoneForm"
+                :data="data"
             />
             <MentorPhoneFoundedForm
                 v-if="getIsMentorPhoneFounded"
+                :data="data"
             />
             <MentorPhoneFormConfirmation
                 v-if="getIsMentorPhoneConfirmation"
@@ -36,6 +52,7 @@ import MentorPhoneFormConfirmation from "../page-parts/mentor/MentorPhoneFormCon
 import {mapGetters} from 'vuex'
 export default {
     name: "UserMentorChangePage",
+    props: ['data'],
     data() {
         return {
             logo,
@@ -53,11 +70,30 @@ export default {
         MentorChangePhoneForm,
         MentorPhoneFoundedForm,
         MentorPhoneFormConfirmation
+    },
+    mounted() {
+        console.log('text', this.data)
     }
 }
 </script>
 
 <style scoped>
+h3{
+    text-transform: uppercase;
+    color: #333333;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 29px;
+}
+
+p {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 24px;
+}
+
 .market-block p {
     font-style: normal;
     font-weight: normal;

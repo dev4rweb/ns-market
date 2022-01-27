@@ -23,6 +23,11 @@ class UserMentorChangePageController extends Controller
      */
     public function index()
     {
-        return view('user-pages.user-mentor-change');
+        $data = [
+            'title' => 'Смена наставника',
+            'content' => 'Введите номер телефона действующего Партнёра New Star, которого Вы хотите выбрать в качестве наставника.',
+            'isBecomePartner' => false
+        ];
+        return view('user-pages.user-mentor-change', compact(['data']));
     }
 }

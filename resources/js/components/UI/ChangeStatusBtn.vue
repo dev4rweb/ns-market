@@ -1,10 +1,10 @@
 <template>
     <button
         class="btn btn-outline-info"
-        @click="toggleStatus"
+        @click="toggleStatus(redirectUrl.url)"
     >
         <!--                        Загрузить паспорт-->
-        Сменить статус
+        {{btnName.name}}
     </button>
 </template>
 
@@ -12,6 +12,7 @@
 import {mapActions} from 'vuex'
 export default {
     name: "ChangeStatusBtn",
+    props: ['btnName', 'redirectUrl'],
     methods: {
         ...mapActions(['toggleStatus'])
     }
