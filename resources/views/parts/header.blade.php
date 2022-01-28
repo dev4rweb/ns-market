@@ -1,7 +1,7 @@
 <header class="shadow-sm bg-white">
     <div class="navbar navbar-light bg-white desktop-header">
         <div class="container d-flex justify-content-between" style="margin-top: 30px;">
-            <a class="navbar-brand" href="{{ url('/') }}">
+            <a class="navbar-brand" href="{{route('home-page')}}">
                 {{--            {{ config('app.name', 'Laravel') }}--}}
                 <img
                     src="{{asset('/images/NS_logo.png')}}"
@@ -38,12 +38,12 @@
                         <span class="profile-title">{{Auth::user()->name}}</span>
                     </a>
                 @endguest
-                <a class="header-btn" href="/">
+                <a class="header-btn" href="{{route('home-page')}}">
                     <img class="profile-icon" src="{{asset('/images/ic-orders.png')}}" alt="profile">
                     <span class="profile-title">Заказы</span>
                 </a>
 
-                <a class="header-btn" href="/">
+                <a class="header-btn" href="{{route('home-page')}}">
                     <img class="profile-icon" src="{{asset('/images/ic-backet.png')}}" alt="profile">
                     <span class="profile-title">Корзина</span>
                 </a>
@@ -65,7 +65,7 @@
     <nav class="navbar navbar-expand-md navbar-light bg-white mobile-header">
 
         <div class="container">
-            <a class="navbar-brand" href="{{ url('/') }}">
+            <a class="navbar-brand" href="{{route('home-page')}}">
                 {{--            {{ config('app.name', 'Laravel') }}--}}
                 <img
                     src="{{asset('/images/NS_logo.png')}}"

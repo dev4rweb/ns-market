@@ -11,6 +11,7 @@ use App\Http\Controllers\UserBecomePartnerPage;
 use App\Http\Controllers\UserChooseMentorPageController;
 use App\Http\Controllers\UserChoosePayPageController;
 use App\Http\Controllers\UserDataPageController;
+use App\Http\Controllers\UserInvitePageController;
 use App\Http\Controllers\UserMentorChangePageController;
 use App\Http\Controllers\UserMentorPageController;
 use App\Http\Controllers\UserPageController;
@@ -50,6 +51,7 @@ Route::get('/user-status-panel', [UserStatusPageController::class, 'index'])->na
 Route::get('/user-become-partner', [UserBecomePartnerPage::class, 'index'])->name('user-become-partner-page');
 Route::get('/user-choose-mentor', [UserChooseMentorPageController::class, 'index'])->name('user-choose-mentor-page');
 Route::get('/user-choose-pay', [UserChoosePayPageController::class, 'index'])->name('user-choose-pay-page');
+Route::get('/user-invite', [UserInvitePageController::class, 'index'])->name('user-invite-page');
 Route::get('/partner-congratulation', [PartnerCongratulationPage::class, 'index'])->name('partner-congratulation-page');
 Route::get('/user-payment-info-panel', [UserPaymentInfoPageController::class, 'index'])->name('user-payment-info-page');
 Route::get('/', [HomePageController::class, 'index'])->name('home-page');

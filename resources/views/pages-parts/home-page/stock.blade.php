@@ -6,7 +6,7 @@
             <p class="stock-description">
                 С 10 по 17 августа снижаем цену на набор из кремов «Нежность прикосновения» и «Тройной уход».
             </p>
-            <a href="/" class="btn btn-outline-light btn-lg">Подробнее</a>
+            <a href="{{route('home-page')}}" class="btn btn-outline-light btn-lg">Подробнее</a>
         </div>
         <img class="right-product" src="{{asset('images/home-stock-right-img.png')}}" alt="product">
     </div>

@@ -13,8 +13,8 @@
                     Приложение доступно на платформах iOS и Android.
                 </p>
                 <div class="market-links">
-                    <a href="/"><img src="{{asset('images/ic-app-store.svg')}}" alt="app-store"></a>
-                    <a href="/"><img src="{{asset('images/ic-google-play.svg')}}" alt="google-play"></a>
+                    <a href="{{route('home-page')}}"><img src="{{asset('images/ic-app-store.svg')}}" alt="app-store"></a>
+                    <a href="{{route('home-page')}}"><img src="{{asset('images/ic-google-play.svg')}}" alt="google-play"></a>
                 </div>
             </div>
         </div>

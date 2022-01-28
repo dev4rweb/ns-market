@@ -45,6 +45,7 @@ Vue.component('custom-radio', require('./components/UI/CustomRadio').default);
 Vue.component('radio-box', require('./components/UI/RadioBox').default);
 Vue.component('nav-user-data', require('./components/UI/NavUserData').default);
 Vue.component('change-status-btn', require('./components/UI/ChangeStatusBtn').default);
+Vue.component('tooltip', require('./components/UI/Tooltip').default);
 Vue.component('user-data-tabs', require('./components/views/UserDataTabs').default);
 Vue.component('user-data-panel', require('./components/views/UserDataPanel').default);
 Vue.component('user-data-read-panel', require('./components/views/UserDataReadPanel').default);
@@ -58,6 +59,7 @@ Vue.component('user-address-panel', require('./components/views/UserAddressPanel
 Vue.component('user-mentor-change-page', require('./components/views/UserMentorChangePage').default);
 Vue.component('user-become-status', require('./components/views/UserBecomePartner').default);
 Vue.component('user-choose-pay-page', require('./components/views/UserChoosePayPage').default);
+Vue.component('user-invite-page', require('./components/views/UserInvitePage').default);
 Vue.component('partner-congratulation-page', require('./components/views/PartnerCongratulationPage').default);
 Vue.component('mentor-change-phone-form', require('./components/page-parts/mentor/MentorChangePhoneForm').default);
 Vue.component('mentor-phone-founded-form', require('./components/page-parts/mentor/MentorPhoneFoundedForm').default);
