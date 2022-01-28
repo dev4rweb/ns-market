@@ -6,10 +6,7 @@
         @include('parts.user-sidebar')
         <div class="user-content">
             <div class="row">
-                <div class="card news-card">
-                    <h3>Здравствуйте, {{Auth::user()->first_name}}!</h3>
-                    <h1>User Support Page</h1>
-                </div>
+                <user-support-panel></user-support-panel>
             </div>
         </div>
     </div>

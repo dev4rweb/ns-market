@@ -56,6 +56,7 @@ Vue.component('user-passport-modal', require('./components/Modals/UserPassportMo
 Vue.component('user-modal-gallery', require('./components/Modals/UserModalGallery').default);
 Vue.component('user-mentor-panel', require('./components/views/UserMentorPanel').default);
 Vue.component('user-address-panel', require('./components/views/UserAddressPanel').default);
+Vue.component('user-support-panel', require('./components/views/UserSupportPanel').default);
 Vue.component('user-mentor-change-page', require('./components/views/UserMentorChangePage').default);
 Vue.component('user-become-status', require('./components/views/UserBecomePartner').default);
 Vue.component('user-choose-pay-page', require('./components/views/UserChoosePayPage').default);

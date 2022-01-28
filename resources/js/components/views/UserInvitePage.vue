@@ -5,7 +5,7 @@
             которого Вы хотите пригласить в New Starmarket</p>
         <form
             class="row"
-            @submit="generateLink"
+            @submit.prevent="generateLink"
             novalidate
         >
             <div class="col-md-6">
@@ -35,7 +35,7 @@
             <div class="col-md-6 align-self-end">
                 <button
                     type="submit"
-                    class="btn btn-lg btn-info mb-3 w-100"
+                    class="btn btn-lg btn-info mb-3"
                 >
                     Продолжить
                 </button>
@@ -52,7 +52,7 @@
         </div>
         <div v-if="isShowBlock">
             <div class="row">
-                <div class="form-group form-group-blue">
+                <div class="col-md-6 form-group form-group-blue">
                     <label>
                     </label>
                     <div
@@ -67,16 +67,15 @@
                 </div>
             </div>
             <div class="row mb-5">
-                <div class="col-md-6">
+                <div class="col-md-6 d-flex justify-content-between">
                     <button
-                        class="btn btn-lg w-100 btn-info"
+                        class="btn btn-lg btn-success"
                     >
-                        Отправить
+                        Отправить СМС
                     </button>
-                </div>
-                <div class="col-md-6">
+
                     <button
-                        class="btn btn-lg w-100 btn-outline-info"
+                        class="btn btn-lg btn-success"
                     >
                         Скопировать ссылку
                     </button>
