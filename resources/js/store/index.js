@@ -8,11 +8,13 @@ import phoneApi from "./modules/phoneApi";
 import mentor from "./modules/mentor";
 import addresses from "./modules/addresses";
 import daData from "./modules/daData";
+import feedback from "./modules/feedback";
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
     modules: {
-        users, modals, errors, physicalPerson, phoneApi, mentor, addresses, daData
+        users, modals, errors, physicalPerson, phoneApi, mentor, addresses, daData,
+        feedback
     }
 })

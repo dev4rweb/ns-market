@@ -8,6 +8,7 @@
         <form
             @submit.prevent="sendEmail"
             novalidate
+            v-if="getCurrentUser"
         >
             <div class="row">
                 <div class="col-md-6">
@@ -18,19 +19,9 @@
                         <input
                             type="text"
                             class="form-control form-control-lg"
-                            :class="{borderRed: isFullNameInValid}"
                             v-model="fullName"
-                            placeholder="напр., Иванов Иван Иванович"
-                            ref="focusMe"
-                            @input="isFullNameInValid = false"
-                            required
+                            disabled
                         >
-                        <div
-                            class="invalid-feedback"
-                            :class="{show: isFullNameInValid}"
-                        >
-                            {{ fullNameError }}
-                        </div>
                     </div>
                 </div>
 
@@ -44,7 +35,8 @@
                             type="text"
                             placeholder="12345"
                             class="form-control form-control-lg"
-                            v-model="userId"
+                            v-model="getCurrentUser.id"
+                            disabled
                         >
                     </div>
                 </div>
@@ -60,6 +52,7 @@
                             type="tel"
                             class="form-control form-control-lg"
                             v-model="phone"
+                            disabled
                         >
                     </div>
                 </div>
@@ -74,8 +67,8 @@
                         <input
                             type="email"
                             class="form-control form-control-lg"
-                            v-model="email"
-                            placeholder="loremipsum@mail.ru"
+                            v-model="getCurrentUser.email"
+                            disabled
                         >
                     </div>
                 </div>
@@ -90,10 +83,20 @@
                         <textarea
                             class="form-control form-control-lg"
                             v-model="message"
+                            :class="{borderRed: isMessageInValid}"
+                            @input="isMessageInValid = false"
+                            ref="focusMe"
                             placeholder="введите сообщение здесь"
+                            required
                         >
 
                         </textarea>
+                        <div
+                            class="invalid-feedback"
+                            :class="{show: isMessageInValid}"
+                        >
+                            {{ messageError }}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -111,17 +114,14 @@
 </template>
 
 <script>
+import {mapGetters, mapActions} from 'vuex'
+
 export default {
     name: "UserSupportPanel",
     data() {
         return {
-            fullName: '',
-            isFullNameInValid: false,
-            fullNameError: 'Поле обязательное к заполнению',
-
-            userId: '',
-            phone: '+7',
-            email: '',
+            isMessageInValid: false,
+            messageError: 'Поле обязательное к заполнению',
             message: ''
         }
     },
@@ -132,8 +132,29 @@ export default {
         }, 500);
     },
     methods: {
+        ...mapActions(['sendFeedbackSupport']),
         sendEmail() {
-            console.log('sendEmail')
+            if (!this.message.trim()) {
+                this.isMessageInValid = true
+                return
+            }
+            console.log('sendEmail');
+            this.sendFeedbackSupport(this.message)
+        }
+    },
+    computed: {
+        ...mapGetters(['getCurrentUser']),
+        fullName() {
+            if (this.getCurrentUser)
+                return `${this.getCurrentUser.last_name} ${this.getCurrentUser.first_name} ${this.getCurrentUser.middle_name}`
+            else return ''
+        },
+        phone() {
+            if (this.getCurrentUser) {
+                return `+${this.getCurrentUser.mobile_phone}`;
+            } else {
+                return '+7'
+            }
         }
     }
 }
