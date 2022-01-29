@@ -36,6 +36,7 @@ Vue.component('register-login-form', require('./components/Modals/RegisterForm')
 Vue.component('mentor-phone-form', require('./components/Modals/MentorPhoneForm').default);
 Vue.component('login-by-id-form', require('./components/Modals/LoginByIdForm').default);
 Vue.component('not-unique-phone-form', require('./components/Modals/NotUniquePhoneForm').default);
+Vue.component('feedback-confirm', require('./components/Modals/FeedbackConfirm').default);
 Vue.component('loader', require('./components/UI/Loader').default);
 Vue.component('users', require('./components/Users/Users').default);
 Vue.component('physicalPerson', require('./components/Users/PhysicalPerson').default);

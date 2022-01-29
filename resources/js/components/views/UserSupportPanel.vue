@@ -75,7 +75,7 @@
             </div>
 
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="form-group form-group-blue">
                         <label>
                             Текст <span style="color: red">*</span>
@@ -110,11 +110,22 @@
                 </button>
             </div>
         </form>
+        <FeedbackConfirm />
+        <button
+            type="button"
+            style="display: none"
+            ref="modalConfirm"
+            data-bs-toggle="modal"
+            data-bs-target="#staticModalFeedback"
+        >
+            Launch static backdrop modal
+        </button>
     </div>
 </template>
 
 <script>
-import {mapGetters, mapActions} from 'vuex'
+import {mapGetters, mapActions, mapMutations} from 'vuex'
+import FeedbackConfirm from "../Modals/FeedbackConfirm";
 
 export default {
     name: "UserSupportPanel",
@@ -129,10 +140,12 @@ export default {
         setTimeout(() => {
             // console.log('mounted Mentor Change Phone')
             this.$refs.focusMe.focus();
+            this.setModalRef()
         }, 500);
     },
     methods: {
         ...mapActions(['sendFeedbackSupport']),
+        ...mapMutations(['setModalFeedbackConfirmRef']),
         sendEmail() {
             if (!this.message.trim()) {
                 this.isMessageInValid = true
@@ -140,6 +153,11 @@ export default {
             }
             console.log('sendEmail');
             this.sendFeedbackSupport(this.message)
+        },
+        setModalRef() {
+            if (this.$refs.modalConfirm) {
+                this.setModalFeedbackConfirmRef(this.$refs.modalConfirm)
+            } else alert('ref is null')
         }
     },
     computed: {
@@ -156,6 +174,9 @@ export default {
                 return '+7'
             }
         }
+    },
+    components: {
+        FeedbackConfirm
     }
 }
 </script>
@@ -172,6 +193,6 @@ export default {
 
 textarea {
     resize: none;
-    min-height: 105px;
+    min-height: 150px;
 }
 </style>

@@ -7,7 +7,8 @@ export default {
     actions: {
         sendFeedbackSupport({commit, getters}, msg) {
             const currentUser = getters['getCurrentUser']
-            if (currentUser) {
+            const modal = getters['getModalFeedbackConfirmRef']
+            if (currentUser && modal) {
                 const feedbackItem = {
                     full_name: `${currentUser.last_name} ${currentUser.first_name} ${currentUser.middle_name}`,
                     phone: currentUser.mobile_phone,
@@ -21,9 +22,11 @@ export default {
                         console.log('sendFeedbackSupport', res)
                         if (res.data.success) {
                             commit('setToastError', 'Сообщение отправлено')
-                            window.location.reload()
+                            // window.location.reload()
                         } else
                             commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже');
+
+                        modal.click()
                     })
                     .catch(err => {
                         console.log('sendFeedbackSupport err', err)
