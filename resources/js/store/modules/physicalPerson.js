@@ -88,7 +88,7 @@ export default {
             }
         },
         updateStatusData({commit, getters}, file) {
-            console.log('uploadAvatar', file)
+            console.log('updateStatusData', file)
             const currentUser = getters['getPhysicalPerson']
             if (currentUser) {
                 commit('setLoading', true);
@@ -107,6 +107,35 @@ export default {
                     })
                     .catch(err => {
                         console.log('updateStatusData err', err)
+                        commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже')
+                    })
+                    .finally(() => {
+                        commit('setLoading', false)
+                    });
+            } else {
+                commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже')
+            }
+        },
+        createProfessionalStatusData({commit, getters}, file) {
+            console.log('updateProfessionalStatusData', file)
+            const currentUser = getters['getPhysicalPerson']
+            if (currentUser) {
+                commit('setLoading', true)
+                const fd = new FormData()
+                fd.set('user_id', currentUser.user_id);
+                fd.set('professional_photo', file)
+
+                axios.post(`${WORK_HOST}market/create-professional`, fd)
+                    .then(res => {
+                        console.log('updateProfessionalStatusData', res)
+                        if (res.data.success) {
+                            window.location.reload()
+                        } else {
+                            commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже')
+                        }
+                    })
+                    .catch(err => {
+                        console.log('updateProfessionalStatusData err', err)
                         commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже')
                     })
                     .finally(() => {
@@ -267,6 +296,26 @@ export default {
             let HOST = WORK_HOST.replace('/api', '')
             if (state.physicalPerson.photos[0]) {
                 return `${HOST}storage/${state.physicalPerson.photos[0].path}`;
+            } else {
+                return null
+            }
+        },
+
+        getFullPathToProfessionalDoc(state) {
+            let HOST = WORK_HOST.replace('/api', '')
+            if (
+                state.physicalPerson.statuses
+                &&
+                state.physicalPerson.statuses.length
+            ) {
+                const status = state.physicalPerson.statuses.find(i => i.name.includes('сметолог') || i.name.includes('рматолог'))
+                if (status) {
+                    const path = JSON.parse(status.pivot.confirmation_documents);
+                    console.log('getFullPathToProfessionalDoc', path);
+                    return `${HOST}uploads/${path[0].path}`;
+                } else {
+                    return null
+                }
             } else {
                 return null
             }

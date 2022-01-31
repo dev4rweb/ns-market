@@ -21,8 +21,16 @@
                     type="checkbox"
                     name="flexRadioDefault"
                     v-model="isChecked"
+                    :disabled="getPhysicalPerson && statusConfirmed"
                 >
                 <label
+                    class="form-check-label"
+                    v-if="getPhysicalPerson && statusConfirmed"
+                >
+                    <b>Косметолог / дерматолог</b>
+                </label>
+                <label
+                    v-else
                     class="form-check-label"
                     @click="isChecked = !isChecked"
                 >
@@ -32,7 +40,7 @@
             <div v-if="isChecked">
                 <h4>Загрузить скан или фото документа, подтверждающего ваше образование.</h4>
                 <p><sub>Размер файла не должен превышать 2MB</sub></p>
-                <div class="row mb-3">
+<!--                <div class="row mb-3">
                     <div class="col-xl-2 col-md-3 d-flex align-items-center">
                         <p class="mb-0">Документ</p>
                     </div>
@@ -83,6 +91,72 @@
                             alt="preview"
                         >
                     </div>
+                </div>-->
+                <div class="row mb-3">
+                    <div class="col-xl-2 col-md-3 d-flex align-items-center">
+                        <p class="mb-0">Документ</p>
+                    </div>
+                    <div
+                        class="col-xl-3 col-lg-4 col-md-5 d-flex align-items-center"
+                        v-if="getPhysicalPerson && !getFullPathToProfessionalDoc"
+                    >
+                        <button
+                            v-if="!fileProfessionalDoc && !getFullPathToProfessionalDoc"
+                            class="btn btn-lg btn-outline-info"
+                            @click="$refs.uploadProfessionalDoc.click()"
+                        >
+                            Выбрать файл
+                        </button>
+                        <input
+                            type="file"
+                            style="display: none"
+                            ref="uploadProfessionalDoc"
+                            @change="uploadProfessionalDoc"
+                        >
+                    </div>
+                    <div
+                        class="col-md-4"
+                        v-if="getPhysicalPerson.statuses"
+                    >
+                        <img
+                            v-if="fileProfessionalDoc"
+                            :src="fileProfessionalDocPreview"
+                            class="img-preview-doc"
+                            alt="preview"
+                        >
+                        <img
+                            v-if="fileProfessionalDoc"
+                            :src="icRemove"
+                            alt="icon"
+                            class="ava-icon"
+                            @click="fileProfessionalDoc = null"
+                        >
+                        <div class="d-flex flex-column justify-content-center align-items-center">
+                            <img
+                                v-if="getFullPathToProfessionalDoc"
+                                :src="getFullPathToProfessionalDoc"
+                                class="img-preview-doc"
+                                data-toggle="modal"
+                                data-target="#userModalGallery"
+                                @click="openGallery(getFullPathToProfessionalDoc)"
+                                alt="docs"
+                            >
+                            <div v-if="getFullPathToProfessionalDoc">
+                                <span
+                                    v-if="statusConfirmed"
+                                    style="color: green"
+                                >
+                                Подтвержден!
+                            </span>
+                                <span
+                                    v-else
+                                    style="color: orange"
+                                >
+                                На проверке!
+                            </span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="row mb-3">
                     <p>
@@ -124,11 +198,13 @@ export default {
             icRemove,
             isChecked: false,
             fileCertificate: null,
-            fileCertificatePreview: null
+            fileCertificatePreview: null,
+            fileProfessionalDoc: null,
+            fileProfessionalDocPreview: null
         }
     },
     methods: {
-        ...mapActions(['updateStatusData']),
+        ...mapActions(['updateStatusData', 'createProfessionalStatusData']),
         ...mapMutations(['setToastError']),
         uploadCertificate() {
             console.log('uploadCertificate', this.$refs.uploadCertificate.files[0])
@@ -145,6 +221,21 @@ export default {
                 this.setToastError('Некорректный формат файла')
             }
         },
+        uploadProfessionalDoc() {
+            console.log('uploadProfessionalDoc', this.$refs.uploadProfessionalDoc.files[0])
+            this.fileProfessionalDoc = this.$refs.uploadProfessionalDoc.files[0]
+            if (this.fileProfessionalDoc && this.fileProfessionalDoc.type.includes('image')) {
+                if (this.fileProfessionalDoc.size < 2 * 1024 * 1024) {
+                    this.fileProfessionalDocPreview = URL.createObjectURL(this.fileProfessionalDoc);
+                } else {
+                    this.fileProfessionalDocPreview = null
+                    this.setToastError('Размер файла не должен превышать 2Mb')
+                }
+            }else {
+                this.fileProfessionalDoc = null
+                this.setToastError('Некорректный формат файла')
+            }
+        },
         openGallery(imgPath) {
             console.log('openGallery', imgPath)
             this.imgPath = imgPath
@@ -153,10 +244,20 @@ export default {
             console.log('submitHandler', this.getPhysicalPerson)
             if (this.fileCertificate)
                 this.updateStatusData(this.fileCertificate)
+            if (this.fileProfessionalDoc) {
+                this.createProfessionalStatusData(this.fileProfessionalDoc)
+            }
         }
     },
     computed: {
-        ...mapGetters(['getPhysicalPerson', 'getFullPathCertificate'])
+        ...mapGetters(['getPhysicalPerson', 'getFullPathCertificate', 'getFullPathToProfessionalDoc']),
+        statusConfirmed() {
+            const status = this.getPhysicalPerson.statuses.find(i => i.name.includes('сметолог') || i.name.includes('рматолог'))
+            if (status && status.pivot.confirmed_at !== null) {
+                this.isChecked = true
+                return true
+            } else return false
+        }
     },
     components: {
         UserStatusModal, UserModalGallery
