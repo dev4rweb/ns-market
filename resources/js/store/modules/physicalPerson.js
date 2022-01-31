@@ -1,4 +1,5 @@
 import {WORK_HOST} from "../routeConsts";
+import axios from "axios";
 
 export default {
     state: {
@@ -116,7 +117,7 @@ export default {
                 commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже')
             }
         },
-        createProfessionalStatusData({commit, getters}, file) {
+        createProfessionalStatusData({commit, getters, dispatch}, file) {
             console.log('updateProfessionalStatusData', file)
             const currentUser = getters['getPhysicalPerson']
             if (currentUser) {
@@ -129,7 +130,8 @@ export default {
                     .then(res => {
                         console.log('updateProfessionalStatusData', res)
                         if (res.data.success) {
-                            window.location.reload()
+                            const message = 'Была подана заявка на изменение статуса'
+                            dispatch('sendFeedbackProfessionalData', message)
                         } else {
                             commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже')
                         }
@@ -144,6 +146,28 @@ export default {
             } else {
                 commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже')
             }
+        },
+        removeProfessionalData({commit, getters, dispatch}, removeObj) {
+            console.log('removeProfessionalData', removeObj)
+            commit('setLoading', true)
+
+            axios.post(`${WORK_HOST}market/remove-professional`, removeObj)
+                .then(res => {
+                    console.log('removeProfessionalData', res)
+                    if (res.data.success) {
+                        const message = 'Заявка на изменение статуса была удалена'
+                        dispatch('sendFeedbackProfessionalData', message)
+                    } else {
+                        commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже')
+                    }
+                })
+                .catch(err => {
+                    console.log('removeProfessionalData err', err)
+                    commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже')
+                })
+                .finally(() => {
+                    commit('setLoading', false)
+                });
         },
         updatePassportData({commit, getters}, files = []) {
             const currentUser = getters['getPhysicalPerson']
@@ -311,7 +335,7 @@ export default {
                 const status = state.physicalPerson.statuses.find(i => i.name.includes('сметолог') || i.name.includes('рматолог'))
                 if (status) {
                     const path = JSON.parse(status.pivot.confirmation_documents);
-                    console.log('getFullPathToProfessionalDoc', path);
+                    console.log('getFullPathToProfessionalDoc', status);
                     return `${HOST}uploads/${path[0].path}`;
                 } else {
                     return null
