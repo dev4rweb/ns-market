@@ -48,6 +48,7 @@ Vue.component('nav-user-data', require('./components/UI/NavUserData').default);
 Vue.component('change-status-btn', require('./components/UI/ChangeStatusBtn').default);
 Vue.component('tooltip', require('./components/UI/Tooltip').default);
 Vue.component('user-data-tabs', require('./components/views/UserDataTabs').default);
+Vue.component('catalog-page', require('./components/views/CatalogPage').default);
 Vue.component('user-data-panel', require('./components/views/UserDataPanel').default);
 Vue.component('user-data-read-panel', require('./components/views/UserDataReadPanel').default);
 Vue.component('user-status-panel', require('./components/views/UserStatusPanel').default);

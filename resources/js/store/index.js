@@ -9,12 +9,13 @@ import mentor from "./modules/mentor";
 import addresses from "./modules/addresses";
 import daData from "./modules/daData";
 import feedback from "./modules/feedback";
+import catalogGroups from "./modules/catalogGroups";
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
     modules: {
         users, modals, errors, physicalPerson, phoneApi, mentor, addresses, daData,
-        feedback
+        feedback, catalogGroups
     }
 })
