@@ -9,8 +9,8 @@
                 <img
                     v-if="category.image"
                     class="catalog-img"
-                    :src="categoryImage"
-                    alt=""
+                    :src="imagePath(category.image)"
+                    alt="category"
                 >
                 <img
                     v-else
@@ -40,22 +40,12 @@
                     >
                         {{category.short_description}}
                     </h5>
-                    <h5
-                        v-else
-                        class="sub-title"
-                    >
-                        продукты здоровья
-                    </h5>
 
                     <p
                         class="content"
                         v-if="category.full_description"
                     >
                         {{category.full_description}}
-                    </p>
-                    <p class="content" v-else>
-                        Многие думают, что Lorem Ipsum - взятый с потолка псевдо-латинский набор слов, но это не совсем
-                        так.
                     </p>
 
                     <div class="btn-wrapper">
@@ -71,6 +61,7 @@
 <script>
 import {mapActions, mapGetters} from 'vuex'
 import categoryImage from '../../../assets/img/category-group.png'
+import {WORK_HOST} from "../../store/routeConsts";
 
 export default {
     name: "CatalogPage",
@@ -80,10 +71,14 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['fetchCatalogGroups'])
+        ...mapActions(['fetchCatalogGroups']),
+        imagePath(path) {
+            const url = WORK_HOST.replace('/api', '')
+            return `${url}${path}`
+        }
     },
     computed: {
-        ...mapGetters(['getCatalogGroups'])
+        ...mapGetters(['getCatalogGroups']),
     },
     mounted() {
         this.fetchCatalogGroups()
@@ -107,6 +102,7 @@ export default {
     transition: all .3s;
 
     &:hover {
+        cursor: pointer;
         -webkit-transform: scale(1.1, 1.1);
         -moz-transform: scale(1.1, 1.1);
         -ms-transform: scale(1.1, 1.1);
