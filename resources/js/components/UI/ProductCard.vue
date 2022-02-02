@@ -3,31 +3,74 @@
         v-if="product"
         class="product-card"
     >
-        <div class="image-wrapper">
-            <!--            <img :src="imagePath" alt="product">-->
-            <img :src="productImg" alt="product">
-        </div>
-        <div class="content">
-            <h3>{{ product.print_name }}</h3>
-            <p>{{ description }}</p>
-        </div>
-        <div class="price-block">
-            <span class="price">
-                {{ product.price_for_partners }} Р
-            </span>
-            <div class="price-info">
-                <div class="price-info-line">
-                    <span class="name">Базовая цена:</span>
-                    <span class="name"><b>{{ product.price_retail }} Р</b></span>
+        <div>
+            <div class="image-wrapper">
+                <!--            <img :src="imagePath" alt="product">-->
+                <img :src="productImg" alt="product">
+            </div>
+            <div class="content">
+                <h3>{{ product.print_name }}</h3>
+                <p>{{ description }}</p>
+            </div>
+            <div v-if="isPartner" class="price-block">
+                <span
+                    v-if="product.price_for_partners"
+                    class="price">
+                    {{ product.price_for_partners }} Р
+                </span>
+                <div class="price-info">
+                    <div class="price-info-line"
+                         v-if="product.price_retail"
+                    >
+                        <span class="name">Базовая цена:</span>
+                        <span
+                            class="name"
+                        >
+                            <b>{{ product.price_retail }} Р</b>
+                        </span>
+                    </div>
+                    <div
+                        v-if="product.points"
+                        class="price-info-line">
+                        <span class="name">Баллы:</span>
+                        <span class="name"><b>{{ product.points }}</b></span>
+                    </div>
                 </div>
-                <div class="price-info-line">
-                    <span class="name">Баллы:</span>
-                    <span class="name"><b>{{ product.points }} PV</b></span>
+            </div>
+            <div v-else class="price-block">
+                <span
+                    v-if="product.price_retail"
+                    class="price">
+                    {{ product.price_retail }} Р
+                </span>
+                <div class="price-info">
+                    <div class="price-info-line"
+                         v-if="product.points">
+                        <span class="name">Баллы:</span>
+                        <span
+                            class="name"
+                        >
+                            <b>{{ product.points }}</b>
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="btn-wrapper mt-3">
-            <button type="button" class="btn btn-lg btn-info">в корзину</button>
+            <input
+                type="number"
+                class="form-control"
+                v-model="amount"
+                min="0"
+            >
+            <button
+                type="button"
+                class="btn btn-lg"
+                :class="[amount > 0 ? 'btn-success': 'btn-info']"
+                @click="amount++"
+            >
+                {{ amount > 0 ? 'добавлено' : 'в корзину' }}
+            </button>
             <button type="button" class="btn btn-lg btn-outline-secondary">Подробнее</button>
         </div>
     </div>
@@ -35,14 +78,15 @@
 
 <script>
 import {WORK_HOST} from "../../store/routeConsts";
-import productImg from '../../../assets/img/product.png'
+import productImg from '../../../assets/img/placeholder_300x228.png'
 
 export default {
     name: "ProductCard",
-    props: ['product'],
+    props: ['product', 'isPartner'],
     data() {
         return {
-            productImg
+            productImg,
+            amount: 0
         }
     },
     computed: {
@@ -55,7 +99,7 @@ export default {
         },
         description() {
             if (this.product.short_description)
-                return `${this.product.short_description.slice(0, 50)}...`
+                return `${this.product.short_description.slice(0, 100)}...`
             else return ``
         }
     }
@@ -69,6 +113,9 @@ export default {
     border-radius: 8px;
     padding: 14px 20px 42px;
     width: 360px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     -webkit-transition: all .3s;
     -moz-transition: all .3s;
     -ms-transition: all .3s;
@@ -90,7 +137,6 @@ export default {
 
         img {
             width: 100%;
-            max-width: 243px;
         }
     }
 
@@ -153,13 +199,18 @@ export default {
         display: flex;
         justify-content: space-between;
 
+        .form-control {
+            height: 40px;
+            width: 60px;
+        }
+
         .btn-lg {
             height: 40px;
-            width: 150px;
+            //width: 150px;
             font-style: normal;
         }
 
-        .btn-info {
+        .btn-info, .btn-success {
             font-weight: bold;
             font-size: 18px;
             line-height: 120%;

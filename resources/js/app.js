@@ -45,6 +45,7 @@ Vue.component('toast', require('./components/UI/Toast.vue').default);
 Vue.component('custom-radio', require('./components/UI/CustomRadio').default);
 Vue.component('radio-box', require('./components/UI/RadioBox').default);
 Vue.component('nav-user-data', require('./components/UI/NavUserData').default);
+Vue.component('nav-catalog', require('./components/UI/NavCatalog').default);
 Vue.component('change-status-btn', require('./components/UI/ChangeStatusBtn').default);
 Vue.component('tooltip', require('./components/UI/Tooltip').default);
 Vue.component('product-card', require('./components/UI/ProductCard').default);

@@ -3,7 +3,7 @@
         <div
             v-if="getCurrentCategory"
             :style="{backgroundImage: 'url(' + imgPath + ')'}"
-            class="category bg-white shadow-lg mb-5">
+            class="category bg-white  shadow-lg mb-3">
             <div class="container info-side">
                 <p>{{ getCurrentCategory.short_description }}</p>
                 <h1>{{ getCurrentCategory.name }}</h1>
@@ -16,15 +16,16 @@
                     </button>
                 </div>
             </div>
-<!--            <img
-                :src="imgPath"
-                alt="bg">-->
+        </div>
+        <div class="mb-3">
+            <NavCatalog :slug="slug" />
         </div>
         <div class="container products-container">
             <ProductCard
                 v-if="getCategoryProducts"
                 v-for="product in getCategoryProducts"
                 :product="product"
+                :isPartner="isPartner"
                 :key="product.id"
             />
         </div>
@@ -34,6 +35,7 @@
 <script>
 import {mapActions, mapGetters} from 'vuex'
 import ProductCard from "../UI/ProductCard";
+import NavCatalog from "../UI/NavCatalog";
 import categoryImg from '../../../assets/img/category-additional.png'
 import {WORK_HOST} from "../../store/routeConsts";
 
@@ -46,23 +48,40 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['getCategoryPage'])
+        ...mapActions(['getCategoryPage', 'fetchPhysicalPerson'])
     },
     computed: {
-        ...mapGetters(['getCurrentCategory', 'getCategoryProducts']),
+        ...mapGetters(['getCurrentCategory', 'getCategoryProducts', 'getPhysicalPerson']),
         imgPath() {
             const url = WORK_HOST.replace('/api/', '')
             if (this.getCurrentCategory.additional_image)
                 return `${url}${this.getCurrentCategory.additional_image}`
             else
                 return categoryImg
+        },
+        isPartner() {
+            if (this.getPhysicalPerson) {
+                switch (this.getPhysicalPerson.trade_status) {
+                    case 'D':
+                    case 'K':
+                        return true
+                    default:
+                        return false
+                }
+            } else {
+                return false
+            }
         }
     },
     components: {
-        ProductCard
+        ProductCard, NavCatalog
     },
     mounted() {
         this.getCategoryPage(this.slug)
+        console.log('auth user', window.User)
+        if (window.User) {
+            this.fetchPhysicalPerson()
+        }
     }
 }
 </script>
