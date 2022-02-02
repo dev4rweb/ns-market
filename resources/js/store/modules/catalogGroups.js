@@ -3,7 +3,9 @@ import {WORK_HOST} from "../routeConsts";
 
 export default {
     state: {
-        catalogGroups: []
+        catalogGroups: [],
+        currentCategory: null,
+        categoryProducts: []
     },
     actions: {
         fetchCatalogGroups({commit}) {
@@ -23,16 +25,46 @@ export default {
                 .finally(() => {
                     commit('setLoading', false)
                 });
+        },
+        getCategoryPage({commit}, slug) {
+            commit('setLoading', true)
+            axios.post(`${WORK_HOST}market/category-products`, {
+                slug: slug
+            }).then(res => {
+                console.log('getCategoryPage', res)
+                if (res.data.success) {
+                    commit('setCurrentCategory', res.data.category)
+                    commit('setCategoryProducts', res.data.models)
+                } else commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже')
+            }).catch(err => {
+                console.log('getCategoryPage err', err)
+                commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже')
+            }).finally(() => {
+                commit('setLoading', false)
+            });
         }
+
     },
     mutations: {
         setCatalogGroups(state, catalogGroups) {
             state.catalogGroups = catalogGroups
+        },
+        setCurrentCategory(state, currentCategory) {
+            state.currentCategory = currentCategory
+        },
+        setCategoryProducts(state, categoryProducts) {
+            state.categoryProducts = categoryProducts
         }
     },
     getters: {
         getCatalogGroups(state) {
             return state.catalogGroups
+        },
+        getCurrentCategory(state) {
+            return state.currentCategory
+        },
+        getCategoryProducts(state) {
+            return state.categoryProducts
         }
     }
 }

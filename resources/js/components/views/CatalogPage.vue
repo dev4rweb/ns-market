@@ -5,6 +5,7 @@
                 class="card data-card category-card"
                 v-if="getCatalogGroups"
                 v-for="category in getCatalogGroups"
+                @click="selectGroup(category)"
             >
                 <img
                     v-if="category.image"
@@ -75,6 +76,10 @@ export default {
         imagePath(path) {
             const url = WORK_HOST.replace('/api', '')
             return `${url}${path}`
+        },
+        selectGroup(category) {
+            console.log('selectGroup', category)
+            window.location.href = `/catalog/${category.slug}`
         }
     },
     computed: {
@@ -149,7 +154,7 @@ export default {
             width: 100%;
             display: flex;
             align-items: center;
-            margin-top: 30px;
+            margin-top: 50px;
 
             .btn {
                 font-style: normal;

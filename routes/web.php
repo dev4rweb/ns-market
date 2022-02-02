@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminPageController;
 use App\Http\Controllers\CatalogPageController;
+use App\Http\Controllers\CategoryPageController;
 use App\Http\Controllers\ContactsPageController;
 use App\Http\Controllers\HomePageController;
 use App\Http\Controllers\PartnerCongratulationPage;
@@ -56,5 +57,6 @@ Route::get('/partner-congratulation', [PartnerCongratulationPage::class, 'index'
 Route::get('/user-payment-info-panel', [UserPaymentInfoPageController::class, 'index'])->name('user-payment-info-page');
 Route::get('/', [HomePageController::class, 'index'])->name('home-page');
 Route::get('/catalog', [CatalogPageController::class, 'index'])->name('catalog-page');
+Route::get('/catalog/{slug}', [CategoryPageController::class, 'index'])->name('category-page');
 Route::get('/stock', [StockPageController::class, 'index'])->name('stock-page');
 Route::get('/contacts', [ContactsPageController::class, 'index'])->name('contacts-page');
