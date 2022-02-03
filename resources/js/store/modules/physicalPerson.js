@@ -343,6 +343,23 @@ export default {
             } else {
                 return null
             }
+        },
+
+        isProfessionalStatus(state) {
+            if (state.physicalPerson) {
+                if (
+                    state.physicalPerson.statuses
+                    &&
+                    state.physicalPerson.statuses.length
+                ) {
+                    const status = state.physicalPerson.statuses.find(
+                        i => i.name.includes('сметолог') || i.name.includes('рматолог')
+                    )
+                    return status.pivot.confirmed_at !== null;
+                } else return false
+            } else {
+                return false
+            }
         }
     }
 }

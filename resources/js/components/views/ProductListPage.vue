@@ -12,7 +12,7 @@
                     type="button"
                     class="btn btn-lg btn-secondary"
                 >
-                    Презентации
+                    Преимущества
                 </button>
             </div>
         </div>
@@ -41,9 +41,23 @@
                 :isPartner="isPartner"
                 :index="i"
                 :key="product.id"
+                :isProfessionalStatus="isProfessionalStatus"
             />
             </tbody>
         </table>
+
+        <div class="d-flex justify-content-center mb-5">
+            <a
+                href="/catalog"
+                class="btn btn-lg btn-success me-3"
+            >Добавить и перейти в каталог
+            </a>
+            <a
+                href="/catalog"
+                class="btn btn-lg btn-success"
+            >Добавить и перейти в корзину
+            </a>
+        </div>
     </div>
 </div>
 </template>
@@ -66,7 +80,8 @@ export default {
         ...mapActions(['getCategoryPage', 'fetchPhysicalPerson'])
     },
     computed: {
-        ...mapGetters(['getCurrentCategory', 'getCategoryProducts', 'getPhysicalPerson']),
+        ...mapGetters(['getCurrentCategory', 'getCategoryProducts',
+            'getPhysicalPerson', 'isProfessionalStatus']),
         imgPath() {
             const url = WORK_HOST.replace('/api/', '')
             if (this.getCurrentCategory.additional_image)

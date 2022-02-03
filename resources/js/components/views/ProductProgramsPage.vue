@@ -21,10 +21,12 @@
         <NavCatalog :slug="slug" />
     </div>
     <div class="container products-container">
-        <ProgramCard
+        <ProductCard
             v-if="getCategoryProducts"
             v-for="product in getCategoryProducts"
             :product="product"
+            :isPartner="isPartner"
+            :isProfessionalStatus="isProfessionalStatus"
             :key="product.id"
         />
     </div>
@@ -33,10 +35,10 @@
 
 <script>
 import {mapActions, mapGetters} from 'vuex'
+import ProductCard from "../UI/ProductCard";
 import NavCatalog from "../UI/NavCatalog";
 import categoryImg from '../../../assets/img/category-additional.png'
 import {WORK_HOST} from "../../store/routeConsts";
-import ProgramCard from "../UI/ProgramCard";
 export default {
     name: "ProductProgramsPage",
     props: ['slug'],
@@ -46,10 +48,11 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['getCategoryPage'])
+        ...mapActions(['getCategoryPage', 'fetchPhysicalPerson'])
     },
     computed: {
-        ...mapGetters(['getCurrentCategory', 'getCategoryProducts']),
+        ...mapGetters(['getCurrentCategory', 'getCategoryProducts',
+            'getPhysicalPerson', 'isProfessionalStatus']),
         imgPath() {
             const url = WORK_HOST.replace('/api/', '')
             if (this.getCurrentCategory.additional_image)
@@ -57,9 +60,22 @@ export default {
             else
                 return categoryImg
         },
+        isPartner() {
+            if (this.getPhysicalPerson) {
+                switch (this.getPhysicalPerson.trade_status) {
+                    case 'D':
+                    case 'K':
+                        return true
+                    default:
+                        return false
+                }
+            } else {
+                return false
+            }
+        }
     },
     components: {
-        NavCatalog, ProgramCard
+        ProductCard, NavCatalog
     },
     mounted() {
         const data = {

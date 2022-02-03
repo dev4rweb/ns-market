@@ -56,14 +56,22 @@
                 </div>
             </div>
         </div>
-        <div class="btn-wrapper mt-3">
+        <div class="btn-wrapper mt-3"
+             v-if="product.is_sell_through_site_status_id && !isProfessionalStatus"
+        >
+            <span class="prof-status">Только для проф косметологов</span>
+            <button type="button" class="btn btn-lg btn-outline-secondary">Подробнее</button>
+        </div>
+        <div v-else class="btn-wrapper mt-3">
             <input
+                v-if="product.price_for_partners || product.price_retail"
                 type="number"
                 class="form-control"
                 v-model="amount"
                 min="0"
             >
             <button
+                v-if="product.price_for_partners || product.price_retail"
                 type="button"
                 class="btn btn-lg"
                 :class="[amount > 0 ? 'btn-success': 'btn-info']"
@@ -82,7 +90,7 @@ import productImg from '../../../assets/img/placeholder_300x228.png'
 
 export default {
     name: "ProductCard",
-    props: ['product', 'isPartner'],
+    props: ['product', 'isPartner', 'isProfessionalStatus'],
     data() {
         return {
             productImg,
@@ -199,6 +207,12 @@ export default {
     .btn-wrapper {
         display: flex;
         justify-content: space-between;
+
+        .prof-status{
+            font-size: 16px;
+            color: red;
+            font-weight: bold;
+        }
 
         .form-control {
             height: 40px;

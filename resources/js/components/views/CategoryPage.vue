@@ -26,6 +26,7 @@
                 v-for="product in getCategoryProducts"
                 :product="product"
                 :isPartner="isPartner"
+                :isProfessionalStatus="isProfessionalStatus"
                 :key="product.id"
             />
         </div>
@@ -51,7 +52,8 @@ export default {
         ...mapActions(['getCategoryPage', 'fetchPhysicalPerson'])
     },
     computed: {
-        ...mapGetters(['getCurrentCategory', 'getCategoryProducts', 'getPhysicalPerson']),
+        ...mapGetters(['getCurrentCategory', 'getCategoryProducts',
+            'getPhysicalPerson', 'isProfessionalStatus']),
         imgPath() {
             const url = WORK_HOST.replace('/api/', '')
             if (this.getCurrentCategory.additional_image)
