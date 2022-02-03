@@ -54,7 +54,7 @@
         <div class="container btn-group header-navigation desktop-header" style="margin-bottom: 50px">
             <a class="btn btn-outline-info btn-lg @if(Request::url() == url('/')) active @endif"
                href="{{route('home-page')}}">Главная</a>
-            <a class="btn btn-outline-info btn-lg @if(Request::url() == url('/catalog')) active @endif"
+            <a class="btn btn-outline-info btn-lg @if(str_contains(Request::url(),url('/catalog')) ) active @endif"
                href="{{route('catalog-page')}}">Каталог</a>
             <a class="btn btn-outline-info btn-lg @if(Request::url() == url('/stock')) active @endif"
                href="{{route('stock-page')}}">Акции</a>

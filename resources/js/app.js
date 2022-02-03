@@ -52,6 +52,8 @@ Vue.component('product-card', require('./components/UI/ProductCard').default);
 Vue.component('user-data-tabs', require('./components/views/UserDataTabs').default);
 Vue.component('catalog-page', require('./components/views/CatalogPage').default);
 Vue.component('category-page', require('./components/views/CategoryPage').default);
+Vue.component('product-programs-page', require('./components/views/ProductProgramsPage').default);
+Vue.component('product-list-page', require('./components/views/ProductListPage').default);
 Vue.component('user-data-panel', require('./components/views/UserDataPanel').default);
 Vue.component('user-data-read-panel', require('./components/views/UserDataReadPanel').default);
 Vue.component('user-status-panel', require('./components/views/UserStatusPanel').default);

@@ -5,8 +5,8 @@
     >
         <div>
             <div class="image-wrapper">
-                <!--            <img :src="imagePath" alt="product">-->
-                <img :src="productImg" alt="product">
+                            <img :src="imagePath" alt="product">
+<!--                <img :src="productImg" alt="product">-->
             </div>
             <div class="content">
                 <h3>{{ product.print_name }}</h3>
@@ -92,6 +92,7 @@ export default {
     computed: {
         imagePath() {
             const url = WORK_HOST.replace('/api/', '')
+            // console.log('imagePath', this.product.image)
             if (this.product.image)
                 return `${url}${this.product.image}`
             else

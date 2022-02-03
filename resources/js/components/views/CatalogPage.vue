@@ -79,7 +79,7 @@ export default {
         },
         selectGroup(category) {
             console.log('selectGroup', category)
-            window.location.href = `/catalog/${category.slug}`
+            window.location.href = `/catalog/products/${category.slug}`
         }
     },
     computed: {
