@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="mb-5">
         <div
             v-if="getCurrentCategory"
             :style="{backgroundImage: 'url(' + imgPath + ')'}"
@@ -77,7 +77,11 @@ export default {
         ProductCard, NavCatalog
     },
     mounted() {
-        this.getCategoryPage(this.slug)
+        const data = {
+            slug: this.slug,
+            page: 'products'
+        }
+        this.getCategoryPage(data)
         console.log('auth user', window.User)
         if (window.User) {
             this.fetchPhysicalPerson()

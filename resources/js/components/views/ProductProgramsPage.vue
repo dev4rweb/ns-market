@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="mb-5">
     <div
         v-if="getCurrentCategory"
         :style="{backgroundImage: 'url(' + imgPath + ')'}"
@@ -20,6 +20,14 @@
     <div class="mb-3">
         <NavCatalog :slug="slug" />
     </div>
+    <div class="container products-container">
+        <ProgramCard
+            v-if="getCategoryProducts"
+            v-for="product in getCategoryProducts"
+            :product="product"
+            :key="product.id"
+        />
+    </div>
 </div>
 </template>
 
@@ -28,7 +36,7 @@ import {mapActions, mapGetters} from 'vuex'
 import NavCatalog from "../UI/NavCatalog";
 import categoryImg from '../../../assets/img/category-additional.png'
 import {WORK_HOST} from "../../store/routeConsts";
-import ProductCard from "../UI/ProductCard";
+import ProgramCard from "../UI/ProgramCard";
 export default {
     name: "ProductProgramsPage",
     props: ['slug'],
@@ -38,10 +46,10 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['getCategoryPage', 'fetchPhysicalPerson'])
+        ...mapActions(['getCategoryPage'])
     },
     computed: {
-        ...mapGetters(['getCurrentCategory', 'getCategoryProducts', 'getPhysicalPerson']),
+        ...mapGetters(['getCurrentCategory', 'getCategoryProducts']),
         imgPath() {
             const url = WORK_HOST.replace('/api/', '')
             if (this.getCurrentCategory.additional_image)
@@ -49,29 +57,16 @@ export default {
             else
                 return categoryImg
         },
-        isPartner() {
-            if (this.getPhysicalPerson) {
-                switch (this.getPhysicalPerson.trade_status) {
-                    case 'D':
-                    case 'K':
-                        return true
-                    default:
-                        return false
-                }
-            } else {
-                return false
-            }
-        }
     },
     components: {
-        ProductCard, NavCatalog
+        NavCatalog, ProgramCard
     },
     mounted() {
-        this.getCategoryPage(this.slug)
-        console.log('auth user', window.User)
-        if (window.User) {
-            this.fetchPhysicalPerson()
+        const data = {
+            slug: this.slug,
+            page: 'programs'
         }
+        this.getCategoryPage(data)
     }
 }
 </script>
@@ -117,6 +112,19 @@ export default {
         width: 100%;
         max-width: 600px;
         height: auto;
+    }
+}
+
+.products-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-gap: 30px;
+    justify-content: center;
+    @media screen and (max-width: 1200px) {
+        grid-template-columns: auto auto;
+    }
+    @media screen and (max-width: 480px) {
+        grid-template-columns: auto;
     }
 }
 </style>

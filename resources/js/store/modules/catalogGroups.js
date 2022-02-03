@@ -26,10 +26,11 @@ export default {
                     commit('setLoading', false)
                 });
         },
-        getCategoryPage({commit}, slug) {
+        getCategoryPage({commit}, data) {
             commit('setLoading', true)
             axios.post(`${WORK_HOST}market/category-products`, {
-                slug: slug
+                slug: data.slug,
+                page: data.page
             }).then(res => {
                 console.log('getCategoryPage', res)
                 if (res.data.success) {
