@@ -7,6 +7,7 @@ use App\Http\Controllers\ContactsPageController;
 use App\Http\Controllers\HomePageController;
 use App\Http\Controllers\ListPageController;
 use App\Http\Controllers\PartnerCongratulationPage;
+use App\Http\Controllers\ProductCardDetailPage;
 use App\Http\Controllers\ProgramsPageController;
 use App\Http\Controllers\StockPageController;
 use App\Http\Controllers\UserAddressPageController;
@@ -62,5 +63,6 @@ Route::get('/catalog', [CatalogPageController::class, 'index'])->name('catalog-p
 Route::get('/catalog/products/{slug}', [CategoryPageController::class, 'index'])->name('category-page');
 Route::get('/catalog/programs/{slug}', [ProgramsPageController::class, 'index'])->name('programs-page');
 Route::get('/catalog/products-list/{slug}', [ListPageController::class, 'index'])->name('products-list-page');
+Route::get('/catalog/{fromWhere}/{lineSlug}/{slug}', [ProductCardDetailPage::class, 'index'])->name('product-detail-page');
 Route::get('/stock', [StockPageController::class, 'index'])->name('stock-page');
 Route::get('/contacts', [ContactsPageController::class, 'index'])->name('contacts-page');

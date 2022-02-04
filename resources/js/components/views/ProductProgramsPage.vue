@@ -3,7 +3,7 @@
     <div
         v-if="getCurrentCategory"
         :style="{backgroundImage: 'url(' + imgPath + ')'}"
-        class="category bg-white  shadow-lg mb-3">
+        class="category bg-white">
         <div class="container info-side">
             <p>{{ getCurrentCategory.short_description }}</p>
             <h1>{{ getCurrentCategory.name }}</h1>
@@ -12,11 +12,12 @@
                     type="button"
                     class="btn btn-lg btn-secondary"
                 >
-                    Презентации
+                    Преимущества
                 </button>
             </div>
         </div>
     </div>
+    <Breadcrumb />
     <div class="mb-3">
         <NavCatalog :slug="slug" />
     </div>
@@ -37,6 +38,7 @@
 import {mapActions, mapGetters} from 'vuex'
 import ProductCard from "../UI/ProductCard";
 import NavCatalog from "../UI/NavCatalog";
+import Breadcrumb from "../UI/Breadcrumb";
 import categoryImg from '../../../assets/img/category-additional.png'
 import {WORK_HOST} from "../../store/routeConsts";
 export default {
@@ -75,7 +77,7 @@ export default {
         }
     },
     components: {
-        ProductCard, NavCatalog
+        ProductCard, NavCatalog, Breadcrumb
     },
     mounted() {
         const data = {

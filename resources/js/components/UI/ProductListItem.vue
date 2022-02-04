@@ -2,6 +2,7 @@
     <tr
         class="product-list-item"
         :class="[amount > 0 ? 'table-success': '']"
+        @click="selectCard"
     >
         <th scope="row">{{ index + 1 }}</th>
         <td>{{ product.vendor_code }}</td>
@@ -37,6 +38,7 @@
 
 <script>
 import icLock from '../../../assets/img/ic-lock.svg'
+import {mapMutations} from 'vuex'
 export default {
     name: "ProductListItem",
     props: ['product', 'isPartner', 'index', 'isProfessionalStatus'],
@@ -46,6 +48,24 @@ export default {
             icLock
         }
     },
+    methods: {
+        selectCard(e) {
+            if (e.target.tagName !== 'INPUT') {
+                console.log('selectCardList', this.product, e.target.tagName);
+                if (this.product.slug) {
+                    if (this.product.slug) {
+                        const partUrls = window.location.pathname.split('/')
+                        console.log(window.location.pathname.split('/'))
+                        window.location.href = `/catalog/${partUrls[2]}/${partUrls[3]}/${this.product.slug}`;
+                    } else {
+                        this.setToastError('Продукт не имеет адреса')
+                    }
+                } else {
+                    this.setToastError('Продукт не имеет адреса')
+                }
+            }
+        }
+    }
 }
 </script>
 

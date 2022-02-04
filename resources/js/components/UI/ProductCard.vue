@@ -2,6 +2,7 @@
     <div
         v-if="product"
         class="product-card"
+        @click="selectCard"
     >
         <div>
             <div class="image-wrapper">
@@ -79,7 +80,12 @@
             >
                 {{ amount > 0 ? 'добавлено' : 'в корзину' }}
             </button>
-            <button type="button" class="btn btn-lg btn-outline-secondary">Подробнее</button>
+            <button
+                type="button"
+                class="btn btn-lg btn-outline-secondary"
+            >
+                Подробнее
+            </button>
         </div>
     </div>
 </template>
@@ -87,6 +93,7 @@
 <script>
 import {WORK_HOST} from "../../store/routeConsts";
 import productImg from '../../../assets/img/placeholder_300x228.png'
+import {mapMutations} from 'vuex'
 
 export default {
     name: "ProductCard",
@@ -95,6 +102,21 @@ export default {
         return {
             productImg,
             amount: 0
+        }
+    },
+    methods: {
+        ...mapMutations(['setToastError']),
+        selectCard(e) {
+            if (e.target.tagName !== 'INPUT' && !e.target.innerText.includes('ДОБАВЛЕНО')) {
+                console.log('selectCard', this.product, e.target.innerText);
+                if (this.product.slug) {
+                    const partUrls = window.location.pathname.split('/')
+                    console.log(window.location.pathname.split('/'))
+                    window.location.href = `/catalog/${partUrls[2]}/${partUrls[3]}/${this.product.slug}`;
+                } else {
+                    this.setToastError('Продукт не имеет адреса')
+                }
+            }
         }
     },
     computed: {
@@ -110,7 +132,7 @@ export default {
             if (this.product.short_description)
                 return `${this.product.short_description.slice(0, 100)}...`
             else return ``
-        }
+        },
     }
 }
 </script>
