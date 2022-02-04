@@ -72,6 +72,7 @@ Vue.component('user-mentor-change-page', require('./components/views/UserMentorC
 Vue.component('user-become-status', require('./components/views/UserBecomePartner').default);
 Vue.component('user-choose-pay-page', require('./components/views/UserChoosePayPage').default);
 Vue.component('user-invite-page', require('./components/views/UserInvitePage').default);
+Vue.component('product-detail-page', require('./components/views/ProductDetailPage').default);
 Vue.component('partner-congratulation-page', require('./components/views/PartnerCongratulationPage').default);
 Vue.component('mentor-change-phone-form', require('./components/page-parts/mentor/MentorChangePhoneForm').default);
 Vue.component('mentor-phone-founded-form', require('./components/page-parts/mentor/MentorPhoneFoundedForm').default);

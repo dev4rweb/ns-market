@@ -5,7 +5,8 @@ export default {
     state: {
         catalogGroups: [],
         currentCategory: null,
-        categoryProducts: []
+        categoryProducts: [],
+        productDetail: null,
     },
     actions: {
         fetchCatalogGroups({commit}) {
@@ -43,10 +44,29 @@ export default {
             }).finally(() => {
                 commit('setLoading', false)
             });
+        },
+        getProductDetailData({commit}, slug) {
+            commit('setLoading', true)
+            axios.post(`${WORK_HOST}market/detail-product`, {
+                slug: slug
+            }).then(res => {
+                console.log('getProductDetailData', res)
+                if (res.data.success) {
+                    commit('setProductDetail', res.data.model)
+                    commit('setCurrentCategory', res.data.model.group)
+                } else commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже')
+            }).catch(err => {
+                console.log('getProductDetailData err', err)
+                commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже')
+            }).finally(() => {
+                commit('setLoading', false)
+            });
         }
-
     },
     mutations: {
+        setProductDetail(state, product) {
+            state.productDetail = product
+        },
         setCatalogGroups(state, catalogGroups) {
             state.catalogGroups = catalogGroups
         },
@@ -58,6 +78,9 @@ export default {
         }
     },
     getters: {
+        getProductDetail(state) {
+            return state.productDetail
+        },
         getCatalogGroups(state) {
             return state.catalogGroups
         },

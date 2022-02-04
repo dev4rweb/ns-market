@@ -1,10 +1,20 @@
 <template>
-    <span class="me-3 back-btn">&larr;</span>
+    <span
+        class="me-3 back-btn"
+        @click="gotoBack"
+    >
+        &larr;
+    </span>
 </template>
 
 <script>
 export default {
-    name: "BackBtn"
+    name: "BackBtn",
+    methods: {
+        gotoBack() {
+            window.history.back()
+        }
+    }
 }
 </script>
 
@@ -13,8 +23,8 @@ export default {
     color: #038ED7;
     font-style: normal;
     font-weight: normal;
-    font-size: 25px;
-    border: 1px solid #038ed7;
+    font-size: 50px;
+    border: 2px solid rgba(3, 142, 215, 0.7);
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     border-radius: 50%;
@@ -31,6 +41,7 @@ export default {
 
     &:hover {
         cursor: pointer;
+        background-color: #fff;
     }
 }
 </style>

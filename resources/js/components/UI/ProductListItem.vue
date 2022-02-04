@@ -11,6 +11,7 @@
             <img
                 v-if="product.is_sell_through_site_status_id && !isProfessionalStatus"
                 :src="icLock"
+                style="width: 30px;"
                 title="Только для проф косметологов"
                 alt="lock"
             >

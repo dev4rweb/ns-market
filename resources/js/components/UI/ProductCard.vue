@@ -60,6 +60,7 @@
         <div class="btn-wrapper mt-3"
              v-if="product.is_sell_through_site_status_id && !isProfessionalStatus"
         >
+            <img :src="icLock" width="30px" class="me-2" alt="lock">
             <span class="prof-status">Только для проф косметологов</span>
             <button type="button" class="btn btn-lg btn-outline-secondary">Подробнее</button>
         </div>
@@ -93,6 +94,7 @@
 <script>
 import {WORK_HOST} from "../../store/routeConsts";
 import productImg from '../../../assets/img/placeholder_300x228.png'
+import icLock from '../../../assets/img/ic-lock.svg'
 import {mapMutations} from 'vuex'
 
 export default {
@@ -101,6 +103,7 @@ export default {
     data() {
         return {
             productImg,
+            icLock,
             amount: 0
         }
     },
