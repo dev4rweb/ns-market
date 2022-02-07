@@ -83,26 +83,13 @@ export default {
     },
     computed: {
         ...mapGetters(['getCurrentCategory', 'getCategoryProducts',
-            'getPhysicalPerson', 'isProfessionalStatus']),
+            'getPhysicalPerson', 'isProfessionalStatus', 'isPartner']),
         imgPath() {
             const url = WORK_HOST.replace('/api/', '')
             if (this.getCurrentCategory.additional_image)
                 return `${url}${this.getCurrentCategory.additional_image}`
             else
                 return categoryImg
-        },
-        isPartner() {
-            if (this.getPhysicalPerson) {
-                switch (this.getPhysicalPerson.trade_status) {
-                    case 'D':
-                    case 'K':
-                        return true
-                    default:
-                        return false
-                }
-            } else {
-                return false
-            }
         }
     },
     components: {

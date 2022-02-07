@@ -360,6 +360,19 @@ export default {
             } else {
                 return false
             }
+        },
+        isPartner(state) {
+            if (state.physicalPerson) {
+                switch (state.physicalPerson.trade_status) {
+                    case 'D':
+                    case 'K':
+                        return true
+                    default:
+                        return false
+                }
+            } else {
+                return false
+            }
         }
     }
 }

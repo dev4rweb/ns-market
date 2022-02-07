@@ -45,18 +45,20 @@ export default {
                     }
                     break
                 case 1:
-                    switch (path) {
+                    /*switch (path) {
                         case 'products-list':
                             return 'Список'
                         case 'programs':
                             return 'Программы'
                         case 'products':
                             return 'Продукты'
-                    }
-                    break
-                case 2:
+                    }*/
                     if (this.getCurrentCategory)
                         return this.getCurrentCategory.name
+                    break
+                /*case 2:
+                    if (this.getCurrentCategory)
+                        return this.getCurrentCategory.name*/
             }
             return name
         },
@@ -88,6 +90,7 @@ export default {
             const partUrls = window.location.pathname.split('/')
             const removeFirst = partUrls.shift()
             const removeLast = partUrls.pop()
+            const removeLastElse = partUrls.pop()
             // console.log('partUrls', partUrls)
             return partUrls
         }
