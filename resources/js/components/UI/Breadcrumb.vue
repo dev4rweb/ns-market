@@ -11,8 +11,8 @@
                     </li>
                     <li
                         class="breadcrumb-item"
-                        v-if="paths"
                         v-for="(path, i) in paths"
+                        v-if="paths && i !==2"
                         :key="i"
                     >
                         <a

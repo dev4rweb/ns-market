@@ -44,7 +44,7 @@ Vue.component('uploadAvatar', require('./components/Users/physical-person/Upload
 Vue.component('toast', require('./components/UI/Toast.vue').default);
 Vue.component('custom-radio', require('./components/UI/CustomRadio').default);
 Vue.component('radio-box', require('./components/UI/RadioBox').default);
-Vue.component('nav-user-data', require('./components/UI/NavUserData').default);
+Vue.component('nav-product-data', require('./components/UI/NavProductData').default);
 Vue.component('nav-catalog', require('./components/UI/NavCatalog').default);
 Vue.component('change-status-btn', require('./components/UI/ChangeStatusBtn').default);
 Vue.component('tooltip', require('./components/UI/Tooltip').default);
@@ -73,6 +73,8 @@ Vue.component('user-become-status', require('./components/views/UserBecomePartne
 Vue.component('user-choose-pay-page', require('./components/views/UserChoosePayPage').default);
 Vue.component('user-invite-page', require('./components/views/UserInvitePage').default);
 Vue.component('product-detail-page', require('./components/views/ProductDetailPage').default);
+Vue.component('product-detail-reviews-page', require('./components/views/ProductDetailReviewsPage').default);
+Vue.component('product-detail-complectations-page', require('./components/views/ProductDetailComplectations').default);
 Vue.component('partner-congratulation-page', require('./components/views/PartnerCongratulationPage').default);
 Vue.component('mentor-change-phone-form', require('./components/page-parts/mentor/MentorChangePhoneForm').default);
 Vue.component('mentor-phone-founded-form', require('./components/page-parts/mentor/MentorPhoneFoundedForm').default);
@@ -85,6 +87,9 @@ Vue.component('user-address-accordion-item', require('./components/page-parts/us
 Vue.component('user-address-item', require('./components/page-parts/user-address/UserAddressItem').default);
 Vue.component('add-address-form', require('./components/page-parts/user-address/AddAddressForm').default);
 Vue.component('edit-address-form', require('./components/page-parts/user-address/EditAddressForm').default);
+Vue.component('product-description', require('./components/page-parts/detail-product/ProductDescription').default);
+Vue.component('product-reviews', require('./components/page-parts/detail-product/ProductReviews').default);
+Vue.component('product-kits', require('./components/page-parts/detail-product/ProductKits').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

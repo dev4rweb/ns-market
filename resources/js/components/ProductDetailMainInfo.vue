@@ -1,21 +1,23 @@
 <template>
-    <div class="container card d-flex flex-row shadow-lg mb-5 p-1">
+    <div class="container card d-flex flex-row shadow-lg mb-3 p-1">
         <div class="position-relative img-wrapper p-3">
             <img
                 :src="imgPath"
                 alt="main photo"
                 class="img-photo"
             >
-            <span class="min-age">
-                    {{getProductDetail.start_age}}+
-                </span>
+            <span class="min-age"
+                  :class="[getProductDetail.start_age > 9 ? 'smallFont':'']"
+            >
+                    {{ getProductDetail.start_age }}+
+            </span>
         </div>
         <div class="content p-3 d-flex flex-column justify-content-between w-100">
             <p class="article">
-                Артикул: {{getProductDetail.vendor_code}}
+                Артикул: {{ getProductDetail.vendor_code }}
             </p>
             <p class="description">
-                {{getProductDetail.short_description}}
+                {{ getProductDetail.short_description }}
             </p>
             <div class="price-block">
                 <div
@@ -24,7 +26,7 @@
                 >
                     <p>Цена для вас:</p>
                     <span v-if="getProductDetail.price_for_partners">
-                        {{getProductDetail.price_for_partners}} P
+                        {{ getProductDetail.price_for_partners }} P
                     </span>
                 </div>
                 <div
@@ -33,31 +35,31 @@
                 >
                     <p>Цена для вас:</p>
                     <span v-if="getProductDetail.price_retail">
-                        {{getProductDetail.price_retail}} P
+                        {{ getProductDetail.price_retail }} P
                     </span>
                 </div>
                 <div class="divider"></div>
                 <div class="center-side">
                     <div>
                         <span>Базовая цена:</span>
-                        <span>{{getProductDetail.price_retail}} P</span>
+                        <span>{{ getProductDetail.price_retail }} P</span>
                     </div>
                     <div v-if="isPartner">
                         <span>Ваша скидка:</span>
-                        <span>{{getProductDetail.price_retail - getProductDetail.price_for_partners}} P</span>
+                        <span>{{ getProductDetail.price_retail - getProductDetail.price_for_partners }} P</span>
                     </div>
                     <div>
                         <span>Баллы:</span>
-                        <span>{{getProductDetail.points}} PV</span>
+                        <span>{{ getProductDetail.points }} PV</span>
                     </div>
                 </div>
                 <div class="divider"></div>
                 <div
-                    class="right-side"
+                    class="right-side align-items-center"
                     v-if="getProductDetail.is_sell_through_site_status_id && !isProfessionalStatus"
                 >
                     <img :src="icLock" width="30px" class="me-2" alt="lock">
-                    <span class="prof-status">Только для проф косметологов</span>
+                    <span class="prof-status">Доступно только для профессиональных косметологов</span>
                 </div>
                 <div
                     class="right-side"
@@ -120,11 +122,11 @@ export default {
 
 <style lang="scss" scoped>
 
-.img-wrapper{
+.img-wrapper {
     border: 1px solid #DEE5EB;
     border-radius: 8px;
 
-    .min-age{
+    .min-age {
         position: absolute;
         right: 10px;
         top: 10px;
@@ -143,7 +145,12 @@ export default {
         border-radius: 50%;
         color: rgba(3, 142, 215, 0.7);
     }
-    .img-photo{
+
+    .smallFont{
+        font-size: 30px;
+    }
+
+    .img-photo {
         width: 500px;
     }
 }
@@ -158,7 +165,7 @@ export default {
         margin-bottom: 25px;
     }
 
-    .description{
+    .description {
         border-left: 6px solid #038ed7;
         padding-left: 14px;
         font-style: normal;
@@ -170,7 +177,7 @@ export default {
 
     }
 
-    .divider{
+    .divider {
         height: 80%;
         min-height: 84px;
         width: 1px;
@@ -181,6 +188,7 @@ export default {
         display: flex;
         justify-content: space-between;
         align-items: center;
+
         .left-side {
             p {
                 font-style: normal;
@@ -199,6 +207,7 @@ export default {
                 color: #038ED7;
             }
         }
+
         .center-side {
             width: 210px;
 
@@ -215,9 +224,10 @@ export default {
                     color: #383A3F;
                 }
 
-                &:nth-of-type(2){
+                &:nth-of-type(2) {
                     margin-top: 7px;
                     margin-bottom: 7px;
+
                     span {
                         color: #038ED7;
                     }
@@ -240,9 +250,10 @@ export default {
 
 }
 
-.prof-status{
+.prof-status {
     font-size: 16px;
     color: red;
     font-weight: bold;
 }
+
 </style>

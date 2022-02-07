@@ -12,7 +12,7 @@
 
         <div class="container">
             <NavProductData />
-            <ProductDescription />
+            <ProductKits />
         </div>
     </div>
 </template>
@@ -23,9 +23,9 @@ import Breadcrumb from "../UI/Breadcrumb";
 import BackBtn from "../UI/BackBtn";
 import ProductDetailMainInfo from "../ProductDetailMainInfo";
 import NavProductData from "../UI/NavProductData";
-import ProductDescription from "../page-parts/detail-product/ProductDescription";
+import ProductKits from "../page-parts/detail-product/ProductKits";
 export default {
-    name: "ProductDetailPage",
+    name: "ProductDetailComplectations",
     props: ['slug'],
     methods: {
         ...mapActions(['getProductDetailData','fetchPhysicalPerson'])
@@ -39,7 +39,7 @@ export default {
     },
     components: {
         Breadcrumb, BackBtn, ProductDetailMainInfo,
-        NavProductData, ProductDescription
+        NavProductData, ProductKits
     }
 }
 </script>
@@ -55,6 +55,6 @@ h1{
     line-height: 37px;
     color: #333333;
 }
-
-
 </style>
+
+
