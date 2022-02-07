@@ -346,7 +346,7 @@ export default {
         },
 
         isProfessionalStatus(state) {
-            if (state.physicalPerson) {
+            if (state.physicalPerson && state.physicalPerson.statuses) {
                 if (
                     state.physicalPerson.statuses
                     &&
@@ -362,7 +362,7 @@ export default {
             }
         },
         isPartner(state) {
-            if (state.physicalPerson) {
+            if (state.physicalPerson && state.physicalPerson.trade_status) {
                 switch (state.physicalPerson.trade_status) {
                     case 'D':
                     case 'K':

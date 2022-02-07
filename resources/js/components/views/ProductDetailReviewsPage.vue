@@ -34,7 +34,9 @@ export default {
         ...mapGetters(['getProductDetail']),
     },
     mounted() {
-        this.fetchPhysicalPerson()
+        if (window.User) {
+            this.fetchPhysicalPerson()
+        }
         this.getProductDetailData(this.slug)
     },
     components: {

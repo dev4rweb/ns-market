@@ -40,7 +40,7 @@
                 </div>
                 <div class="divider"></div>
                 <div class="center-side">
-                    <div>
+                    <div v-if="isPartner">
                         <span>Базовая цена:</span>
                         <span>{{ getProductDetail.price_retail }} P</span>
                     </div>
@@ -252,6 +252,7 @@ export default {
 
 .prof-status {
     font-size: 16px;
+    max-width: 160px;
     color: red;
     font-weight: bold;
 }
