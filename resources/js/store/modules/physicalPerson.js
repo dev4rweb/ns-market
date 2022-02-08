@@ -269,7 +269,7 @@ export default {
                     return `${HOST}uploads/users/physical_persons/avatars/placeholder_512x512_female.jpg`
                 }
             } else {
-                console.log('else')
+                // console.log('else')
                 return `${HOST}uploads/users/physical_persons/avatars/placeholder_512x512_male.jpg`
             }
         },

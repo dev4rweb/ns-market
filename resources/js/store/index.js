@@ -10,12 +10,13 @@ import addresses from "./modules/addresses";
 import daData from "./modules/daData";
 import feedback from "./modules/feedback";
 import catalogGroups from "./modules/catalogGroups";
+import lStorage from "./modules/lStorage";
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
     modules: {
         users, modals, errors, physicalPerson, phoneApi, mentor, addresses, daData,
-        feedback, catalogGroups
+        feedback, catalogGroups, lStorage
     }
 })

@@ -70,6 +70,7 @@
                 type="number"
                 class="form-control"
                 v-model="amount"
+                @blur="addToBasket"
                 min="0"
             >
             <button
@@ -77,7 +78,7 @@
                 type="button"
                 class="btn btn-lg"
                 :class="[amount > 0 ? 'btn-success': 'btn-info']"
-                @click="amount++"
+                @click="addOne"
             >
                 {{ amount > 0 ? 'добавлено' : 'в корзину' }}
             </button>
@@ -95,7 +96,7 @@
 import {WORK_HOST} from "../../store/routeConsts";
 import productImg from '../../../assets/img/placeholder_300x228.png'
 import icLock from '../../../assets/img/ic-lock.svg'
-import {mapMutations} from 'vuex'
+import {mapMutations, mapGetters, mapActions} from 'vuex'
 
 export default {
     name: "ProductCard",
@@ -108,7 +109,30 @@ export default {
         }
     },
     methods: {
-        ...mapMutations(['setToastError']),
+        ...mapMutations(['setToastError', 'setToastError']),
+        ...mapActions(['addToBasketAction', 'removeFromBasketAction']),
+        addOne() {
+            this.amount++
+            this.addToBasket()
+        },
+        addToBasket() {
+            // console.log('addToBasket')
+            if (this.amount < 0) {
+                this.setToastError('Некорректное значение');
+                return
+            }
+            const orderObj = {
+                prodId: this.product.vendor_code,
+                amount: this.amount
+            };
+            if (this.amount > 0) {
+                this.addToBasketAction(orderObj);
+            }
+            if (this.amount == 0) {
+                this.removeFromBasketAction(orderObj)
+            }
+
+        },
         selectCard(e) {
             if (e.target.tagName !== 'INPUT' && !e.target.innerText.includes('ДОБАВЛЕНО')) {
                 console.log('selectCard', this.product, e.target.innerText);
@@ -120,9 +144,18 @@ export default {
                     this.setToastError('Продукт не имеет адреса')
                 }
             }
+        },
+        checkAmount() {
+            if (this.getLSOrder) {
+                const item = this.getLSOrder.find(i =>  i.prodId === this.product.vendor_code)
+                if (item) {
+                    this.amount = item.amount
+                }
+            }
         }
     },
     computed: {
+        ...mapGetters(['getLSOrder']),
         imagePath() {
             const url = WORK_HOST.replace('/api/', '')
             // console.log('imagePath', this.product.image)
@@ -136,6 +169,9 @@ export default {
                 return `${this.product.short_description.slice(0, 100)}...`
             else return ``
         },
+    },
+    mounted() {
+        this.checkAmount()
     }
 }
 </script>

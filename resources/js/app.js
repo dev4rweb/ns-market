@@ -53,6 +53,7 @@ Vue.component('program-card', require('./components/UI/ProgramCard').default);
 Vue.component('product-list-item', require('./components/UI/ProductListItem').default);
 Vue.component('breadcrumb', require('./components/UI/Breadcrumb').default);
 Vue.component('back-btn', require('./components/UI/BackBtn').default);
+Vue.component('basket-btn', require('./components/UI/BasketBtn').default);
 Vue.component('user-data-tabs', require('./components/views/UserDataTabs').default);
 Vue.component('catalog-page', require('./components/views/CatalogPage').default);
 Vue.component('category-page', require('./components/views/CategoryPage').default);

@@ -73,6 +73,7 @@
                             type="number"
                             class="form-control-lg"
                             v-model="amount"
+                            @change="addToBasket"
                             min="0"
                         >
                     </div>
@@ -80,7 +81,7 @@
                         class="btn btn-lg"
                         type="button"
                         :class="[amount > 0 ? 'btn-success': 'btn-info']"
-                        @click="amount++"
+                        @click="addOne"
                     >
                         {{ amount > 0 ? 'добавлено' : 'в корзину' }}
                     </button>
@@ -106,17 +107,51 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['getProductDetailData'])
+        ...mapActions(['getProductDetailData', 'addToBasketAction', 'removeFromBasketAction']),
+        addOne() {
+            this.amount++
+            this.addToBasket()
+
+        },
+        addToBasket() {
+            if (this.amount < 0) {
+                this.setToastError('Некорректное значение');
+                return
+            }
+            const orderObj = {
+                prodId: this.getProductDetail.vendor_code,
+                amount: this.amount
+            }
+            if (this.amount > 0) {
+                this.addToBasketAction(orderObj)
+            }
+            if (this.amount == 0) {
+                this.removeFromBasketAction(orderObj)
+            }
+        },
+        checkAmount() {
+            if (this.getLSOrder && this.getProductDetail) {
+                const item = this.getLSOrder.find(i => i.prodId === this.getProductDetail.vendor_code)
+                // console.log('checkAmount', item)
+                if (item) {
+                    this.amount = item.amount
+                }
+            }
+        }
     },
     computed: {
-        ...mapGetters(['getProductDetail', 'isProfessionalStatus', 'isPartner']),
+        ...mapGetters(['getProductDetail', 'isProfessionalStatus', 'isPartner',
+        'getLSOrder']),
         imgPath() {
             const url = WORK_HOST.replace('/api/', '')
             if (this.getProductDetail.image) {
                 return `${url}${this.getProductDetail.image}`
             } else return noPhoto
-        }
+        },
     },
+    mounted() {
+        this.checkAmount()
+    }
 }
 </script>
 

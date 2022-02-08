@@ -13,6 +13,18 @@
         <div class="container">
             <NavProductData />
             <ProductReviews />
+            <div v-if="getProductDetail.effective_combinations">
+                <h3 class="mb-3">Вас также могут заинтересовать</h3>
+                <div class="d-flex justify-content-between flex-wrap mb-5">
+                    <ProductCard
+                        v-for="product in getProductDetail.effective_combinations"
+                        :product="product"
+                        :isPartner="isPartner"
+                        :key="product.id"
+                        :isProfessionalStatus="isProfessionalStatus"
+                    />
+                </div>
+            </div>
         </div>
     </div>
 </template>

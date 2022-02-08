@@ -52,8 +52,8 @@ export default {
         imgPath(pathImg) {
             const url = WORK_HOST.replace('/api/', '')
             if (pathImg) {
-                // return `${url}/uploads/${pathImg}`
-                return noPhoto
+                return `${url}/uploads/${pathImg}`
+                // return noPhoto
             } else return noPhoto
         },
         setCurrentBac(bac) {
@@ -75,7 +75,7 @@ export default {
 <style lang="scss" scoped>
 .bac-wrapper{
     display: grid;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: auto auto auto auto auto;
     grid-gap: 1rem;
 
     .bac-item{

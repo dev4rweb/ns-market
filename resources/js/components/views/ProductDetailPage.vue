@@ -44,7 +44,8 @@ export default {
         ...mapActions(['getProductDetailData','fetchPhysicalPerson'])
     },
     computed: {
-        ...mapGetters(['getProductDetail', 'isPartner', 'isProfessionalStatus']),
+        ...mapGetters(['getProductDetail', 'isPartner', 'isProfessionalStatus',
+        'isLocalStorageAvailable']),
     },
     mounted() {
         if (window.User) {

@@ -35,7 +35,7 @@ export default {
     name: "Breadcrumb",
     methods: {
         rusName(path, i) {
-            console.log('rusName', path, i)
+            // console.log('rusName', path, i)
             let name = path
             switch (i) {
                 case 0:
