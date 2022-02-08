@@ -112,8 +112,8 @@ export default {
         ...mapGetters(['getProductDetail', 'isProfessionalStatus', 'isPartner']),
         imgPath() {
             const url = WORK_HOST.replace('/api/', '')
-            if (this.getProductDetail.preview_image) {
-                return `${url}${this.getProductDetail.preview_image}`
+            if (this.getProductDetail.image) {
+                return `${url}${this.getProductDetail.image}`
             } else return noPhoto
         }
     },

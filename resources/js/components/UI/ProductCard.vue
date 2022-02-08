@@ -126,8 +126,8 @@ export default {
         imagePath() {
             const url = WORK_HOST.replace('/api/', '')
             // console.log('imagePath', this.product.image)
-            if (this.product.image)
-                return `${url}${this.product.image}`
+            if (this.product.preview_image)
+                return `${url}${this.product.preview_image}`
             else
                 return productImg
         },

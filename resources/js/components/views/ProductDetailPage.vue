@@ -14,7 +14,7 @@
             <NavProductData />
             <ProductDescription />
             <div v-if="getProductDetail.effective_combinations">
-                <h3 class="mb-3">Продукт особенно эффективен в сочетании с:</h3>
+                <h3 class="mb-3">Вас также могут заинтересовать</h3>
                 <div class="d-flex justify-content-between flex-wrap mb-5">
                     <ProductCard
                         v-for="product in getProductDetail.effective_combinations"
