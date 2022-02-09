@@ -109,7 +109,7 @@ export default {
         }
     },
     methods: {
-        ...mapMutations(['setToastError', 'setToastError']),
+        ...mapMutations(['setToastError']),
         ...mapActions(['addToBasketAction', 'removeFromBasketAction']),
         addOne() {
             this.amount++
@@ -123,7 +123,8 @@ export default {
             }
             const orderObj = {
                 prodId: this.product.vendor_code,
-                amount: this.amount
+                amount: this.amount,
+                product: this.product
             };
             if (this.amount > 0) {
                 this.addToBasketAction(orderObj);

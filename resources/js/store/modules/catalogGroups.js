@@ -61,6 +61,23 @@ export default {
             }).finally(() => {
                 commit('setLoading', false)
             });
+        },
+        getProductDetailDataById({commit}, prodId) {
+            commit('setLoading', true)
+            axios.post(`${WORK_HOST}market/detail-product`, {
+                prodId
+            }).then(res => {
+                console.log('getProductDetailDataById', res)
+                if (res.data.success) {
+                    commit('setProductDetail', res.data.model)
+                    commit('setCurrentCategory', res.data.model.group)
+                } else commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже')
+            }).catch(err => {
+                console.log('getProductDetailDataById err', err)
+                commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже')
+            }).finally(() => {
+                commit('setLoading', false)
+            });
         }
     },
     mutations: {

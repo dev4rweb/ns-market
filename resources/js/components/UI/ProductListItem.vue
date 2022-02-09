@@ -20,6 +20,7 @@
                 type="number"
                 class="form-control"
                 v-model="amount"
+                @blur="addToBasket"
                 min="0"
             >
             <p class="text-center" v-else>&mdash;</p>
@@ -39,7 +40,8 @@
 
 <script>
 import icLock from '../../../assets/img/ic-lock.svg'
-import {mapMutations} from 'vuex'
+import {mapMutations, mapGetters, mapActions} from 'vuex'
+
 export default {
     name: "ProductListItem",
     props: ['product', 'isPartner', 'index', 'isProfessionalStatus'],
@@ -50,6 +52,8 @@ export default {
         }
     },
     methods: {
+        ...mapMutations(['setToastError']),
+        ...mapActions(['addToBasketAction', 'removeFromBasketAction']),
         selectCard(e) {
             if (e.target.tagName !== 'INPUT') {
                 console.log('selectCardList', this.product, e.target.tagName);
@@ -65,7 +69,40 @@ export default {
                     this.setToastError('Продукт не имеет адреса')
                 }
             }
+        },
+        addToBasket() {
+            // console.log('addToBasket')
+            if (this.amount < 0) {
+                this.setToastError('Некорректное значение');
+                this.amount = 0
+            }
+            const orderObj = {
+                prodId: this.product.vendor_code,
+                amount: this.amount,
+                product: this.product
+            };
+            if (this.amount > 0) {
+                this.addToBasketAction(orderObj);
+            }
+            if (this.amount == 0) {
+                this.removeFromBasketAction(orderObj)
+            }
+
+        },
+        checkAmount() {
+            if (this.getLSOrder) {
+                const item = this.getLSOrder.find(i =>  i.prodId === this.product.vendor_code)
+                if (item) {
+                    this.amount = item.amount
+                }
+            }
         }
+    },
+    computed: {
+        ...mapGetters(['getLSOrder']),
+    },
+    mounted() {
+        this.checkAmount()
     }
 }
 </script>

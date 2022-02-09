@@ -10,7 +10,7 @@
 <!--                                <img :src="productImg" alt="product">-->
             </div>
             <h3>{{ product.print_name }}</h3>
-            <p>{{ product.short_description}}</p>
+            <p>{{ product.short_description.slice(0, 100)}}...</p>
         </div>
         <div class="btn-wrapper mt-3">
             <span class="amount">
@@ -104,13 +104,17 @@ export default {
         color: #333333;
     }
 
+    p {
+        font-size: 18px;
+    }
+
     .btn-wrapper{
         display: flex;
         justify-content: space-around;
         align-items: center;
 
         .amount {
-            font-size: 22px;
+            font-size: 32px;
             font-weight: bold;
         }
 

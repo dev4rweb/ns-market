@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminPageController;
+use App\Http\Controllers\BasketPageController;
 use App\Http\Controllers\CatalogPageController;
 use App\Http\Controllers\CategoryPageController;
 use App\Http\Controllers\ContactsPageController;
@@ -70,3 +71,4 @@ Route::get('/catalog/{fromWhere}/{lineSlug}/{slug}/reviews', [ProductCardDetailR
 Route::get('/catalog/{fromWhere}/{lineSlug}/{slug}/kits', [ProductCardComplectPage::class, 'index'])->name('product-detail-kits-page');
 Route::get('/stock', [StockPageController::class, 'index'])->name('stock-page');
 Route::get('/contacts', [ContactsPageController::class, 'index'])->name('contacts-page');
+Route::get('/basket', [BasketPageController::class, 'index'])->name('basket-page');

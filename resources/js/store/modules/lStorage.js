@@ -1,7 +1,7 @@
 export default {
     state: {
         isLocalStorageAvailable: false,
-        lsOrder: []
+        lsOrder: [],
     },
     actions: {
         storageAvailable({commit}) {

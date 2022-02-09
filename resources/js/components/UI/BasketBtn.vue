@@ -1,5 +1,5 @@
 <template>
-    <a class="header-btn" href="/">
+    <a class="header-btn" href="/basket">
         <div class="position-relative basket-wrapper">
             <img
                 v-if="getLSOrder.length"
