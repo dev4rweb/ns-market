@@ -1,39 +1,42 @@
 <template>
     <div class="card shadow-lg mb-3 p-3">
-        <div
-            v-if="getProductDetail && getProductDetail.biologically_active_components"
+        <ProgramComponents v-if="getProductDetail.is_program" />
+        <div v-else>
+            <div
+                v-if="getProductDetail && getProductDetail.biologically_active_components && getProductDetail.biologically_active_components.length > 0"
+            >
+                <div class="bac-wrapper">
+                    <div
+                        v-if="getProductDetail.biologically_active_components.length"
+                        v-for="item in getProductDetail.biologically_active_components"
+                        class="card shadow-sm d-flex flex-column align-items-center justify-content-center bac-item p-3"
+                        @click="setCurrentBac(item)"
+                    >
+                        <img
+                            :src="imgPath(item.image)"
+                            alt="component"
+                        >
+                        <h4 class="mt-3">{{item.name}}</h4>
+                    </div>
+                </div>
 
-        >
-            <div class="bac-wrapper">
                 <div
-                    v-if="getProductDetail.biologically_active_components.length"
-                    v-for="item in getProductDetail.biologically_active_components"
-                    class="card shadow-sm d-flex flex-column align-items-center justify-content-center bac-item"
-                    @click="setCurrentBac(item)"
+                    v-if="currentBac"
+                    class="current-bac mt-4 shadow-sm p-5"
                 >
                     <img
-                        :src="imgPath(item.image)"
-                        alt="component"
+                        :src="imgPath(currentBac.image)"
+                        alt="product"
+                        class="mb-3"
                     >
-                    <h4>{{item.name}}</h4>
+                    <div>
+                        <h3>{{currentBac.pivot.name}}</h3>
+                        <div v-html="currentBac.description"></div>
+                    </div>
                 </div>
             </div>
-
-            <div
-                v-if="currentBac"
-                class="current-bac mt-4 shadow-sm p-5"
-            >
-                <img
-                    :src="imgPath(currentBac.image)"
-                    alt="product"
-                >
-                <div>
-                    <h3>{{currentBac.pivot.name}}</h3>
-                    <div v-html="currentBac.description"></div>
-                </div>
-            </div>
+            <h3 v-else>У продукта нет информации о составе</h3>
         </div>
-        <h3 v-else>У продукта нет информации о составе</h3>
     </div>
 </template>
 
@@ -41,11 +44,12 @@
 import {mapGetters} from 'vuex'
 import {WORK_HOST} from "../../../store/routeConsts";
 import noPhoto from "../../../../assets/img/placeholder_300x228.png";
+import ProgramComponents from "../../UI/ProgramComponents";
 export default {
     name: "ProductKits",
     data() {
         return {
-            currentBac: null
+            currentBac: null,
         }
     },
     methods: {
@@ -63,6 +67,9 @@ export default {
     },
     computed: {
         ...mapGetters(['getProductDetail']),
+    },
+    components: {
+        ProgramComponents
     },
     mounted() {
         if (this.getProductDetail && this.getProductDetail.biologically_active_components) {
@@ -84,6 +91,17 @@ export default {
         -ms-transition: all .3s;
         -o-transition: all .3s;
         transition: all .3s;
+        width: 150px;
+        align-self: center;
+        justify-self: center;
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        border-radius: 10px;
+
+        img{
+            width: 100%;
+        }
+
 
         &:hover{
             cursor: pointer;

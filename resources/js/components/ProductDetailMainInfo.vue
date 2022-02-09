@@ -116,7 +116,7 @@ export default {
         addToBasket() {
             if (this.amount < 0) {
                 this.setToastError('Некорректное значение');
-                return
+                this.amount = 0
             }
             const orderObj = {
                 prodId: this.getProductDetail.vendor_code,

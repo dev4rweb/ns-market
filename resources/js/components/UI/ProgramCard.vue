@@ -2,6 +2,7 @@
     <div
         v-if="product"
         class="program-card"
+        @click="selectCard"
     >
         <div>
             <div class="image-wrapper">
@@ -9,8 +10,12 @@
 <!--                                <img :src="productImg" alt="product">-->
             </div>
             <h3>{{ product.print_name }}</h3>
+            <p>{{ product.short_description}}</p>
         </div>
         <div class="btn-wrapper mt-3">
+            <span class="amount">
+                {{product.pivot.quantity}} шт.
+            </span>
             <button
                 class="btn btn-lg btn-outline-info"
             >
@@ -30,6 +35,18 @@ export default {
     data() {
         return {
             productImg,
+        }
+    },
+    methods: {
+        selectCard(e) {
+            console.log('selectCard', this.product);
+            if (this.product.slug) {
+                const partUrls = window.location.pathname.split('/')
+                console.log(window.location.pathname.split('/'))
+                window.location.href = `/catalog/${partUrls[2]}/${partUrls[3]}/${this.product.slug}`;
+            } else {
+                this.setToastError('Продукт не имеет адреса')
+            }
         }
     },
     computed: {
@@ -89,7 +106,13 @@ export default {
 
     .btn-wrapper{
         display: flex;
-        justify-content: center;
+        justify-content: space-around;
+        align-items: center;
+
+        .amount {
+            font-size: 22px;
+            font-weight: bold;
+        }
 
         .btn-lg {
             height: 40px;

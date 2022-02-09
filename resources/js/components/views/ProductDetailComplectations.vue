@@ -13,7 +13,7 @@
         <div class="container">
             <NavProductData />
             <ProductKits />
-            <div v-if="getProductDetail.effective_combinations">
+            <div v-if="getProductDetail.effective_combinations && getProductDetail.effective_combinations.length > 0">
                 <h3 class="mb-3">Вас также могут заинтересовать</h3>
                 <div class="d-flex justify-content-between flex-wrap mb-5">
                     <ProductCard

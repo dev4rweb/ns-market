@@ -119,7 +119,7 @@ export default {
             // console.log('addToBasket')
             if (this.amount < 0) {
                 this.setToastError('Некорректное значение');
-                return
+                this.amount = 0
             }
             const orderObj = {
                 prodId: this.product.vendor_code,
