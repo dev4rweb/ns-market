@@ -15,7 +15,7 @@
         <td>{{ currentPrice }} p.</td>
         <td>{{ order.product.points }}</td>
         <td>{{ sumPv }}</td>
-        <td>{{ sumPos }}</td>
+        <td>{{ sumPos }} p.</td>
         <td>
             <span
                 class="remove-pos"

@@ -12,8 +12,7 @@ export default {
                 storage.removeItem(x);
                 // commit('setToastError', 'Ok')
                 commit('setLocalStorageAvailable', true)
-            }
-            catch(e) {
+            } catch (e) {
                 // commit('setToastError', "Local storage don't support" )
                 commit('setLocalStorageAvailable', false)
             }
@@ -24,7 +23,7 @@ export default {
                 localStorage.setItem('order', JSON.stringify(order));
                 commit('setLSOrder', order)
             } else {
-                commit('setToastError', "Local storage don't support" )
+                commit('setToastError', "Local storage don't support")
             }
         },
         hasLSOrderAction({commit}) {
@@ -71,6 +70,53 @@ export default {
         },
         getLSOrder(state) {
             return state.lsOrder
+        },
+        getSumOrder(state, getters) {
+            // console.log('getSumOrder', getters.isPartner)
+            if (state.lsOrder.length > 0) {
+                let sum = 0
+                state.lsOrder.forEach(i => {
+                    if (getters.isPartner)
+                        sum += i.amount * i.product.price_for_partners
+                    else sum += i.amount * i.product.price_retail
+                });
+                return `${sum} p.`
+            } else {
+                return '0 p.'
+            }
+        },
+        getWeightOrder(state) {
+            if (state.lsOrder.length > 0) {
+                let weight = 0
+                state.lsOrder.forEach(i => {
+                    weight += i.amount * parseFloat(i.product.weight)
+                });
+                return `${weight} кг`
+            } else {
+                return `-`
+            }
+        },
+        getVolumeOrder(state) {
+            if (state.lsOrder.length > 0) {
+                let volume = 0
+                state.lsOrder.forEach(i => {
+                    volume += i.amount * parseFloat(i.product.volume)
+                });
+                return `${volume} м3`
+            } else {
+                return `-`
+            }
+        },
+        getPointsOrder(state) {
+            if (state.lsOrder.length > 0) {
+                let points = 0
+                state.lsOrder.forEach(i => {
+                    points += i.amount * parseFloat(i.product.points)
+                });
+                return `${points} PV`
+            } else {
+                return `-`
+            }
         }
     }
 }

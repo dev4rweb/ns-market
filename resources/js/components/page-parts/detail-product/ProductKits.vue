@@ -82,11 +82,11 @@ export default {
 <style lang="scss" scoped>
 .bac-wrapper{
     display: grid;
-    grid-template-columns: auto auto auto auto auto auto auto auto auto;
+    grid-template-columns: auto auto auto auto auto auto auto;
     grid-gap: 1rem;
 
     @media screen and (max-width: 1200px){
-        grid-template-columns: auto auto auto auto auto auto;
+        grid-template-columns: auto auto auto auto auto;
 
     }
 

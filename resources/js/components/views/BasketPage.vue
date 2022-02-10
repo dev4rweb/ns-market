@@ -36,6 +36,14 @@
         <OrderDataTable v-if="getOrderActiveTable === 1" />
         <ExpirationDateTable v-if="getOrderActiveTable === 2" />
         <DiscountOrderTable v-if="getOrderActiveTable === 3" />
+        <div class="d-flex justify-content-between align-items-start mt-5 mb-3">
+            <DearFriendsBanner />
+            <OrderSumInfo />
+        </div>
+        <div class="d-flex justify-content-end mb-5">
+            <button class="btn btn-lg btn-secondary me-3">В черновик</button>
+            <button class="btn btn-lg btn-info">Продолжить</button>
+        </div>
     </div>
     <h1 v-else>Корзина пуста</h1>
 </div>
@@ -47,16 +55,20 @@ import {mapMutations, mapGetters, mapActions} from 'vuex'
 import OrderDataTable from "../UI/tables/OrderDataTable";
 import ExpirationDateTable from "../UI/tables/ExpirationDateTable";
 import DiscountOrderTable from "../UI/tables/DiscountOrderTable";
+import DearFriendsBanner from "../UI/DearFriendsBanner";
+import OrderSumInfo from "../UI/OrderSumInfo";
 export default {
     name: "BasketPage",
     methods: {
         ...mapMutations(['setOrderActiveTable']),
+        ...mapActions(['fetchPhysicalPerson']),
         changeTable(activeNumber) {
             this.setOrderActiveTable(activeNumber)
         }
     },
     components: {
-        NavOrder, OrderDataTable, ExpirationDateTable, DiscountOrderTable
+        NavOrder, OrderDataTable, ExpirationDateTable, DiscountOrderTable,
+        DearFriendsBanner, OrderSumInfo
     },
     computed: {
         ...mapGetters(['getLSOrder', 'getOrderActiveTable']),
