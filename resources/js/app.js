@@ -59,6 +59,7 @@ Vue.component('nav-order', require('./components/UI/NavOrder').default);
 Vue.component('order-data-table', require('./components/UI/tables/OrderDataTable').default);
 Vue.component('order-data-table-item', require('./components/UI/tables/OrderDataTableItem').default);
 Vue.component('expiration-date-table', require('./components/UI/tables/ExpirationDateTable').default);
+Vue.component('expiration-date-table-item', require('./components/UI/tables/ExpirationDateTableItem').default);
 Vue.component('discount-order-table', require('./components/UI/tables/DiscountOrderTable').default);
 Vue.component('user-data-tabs', require('./components/views/UserDataTabs').default);
 Vue.component('catalog-page', require('./components/views/CatalogPage').default);

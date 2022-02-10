@@ -23,14 +23,14 @@
                 >
                     Сроки годности
                 </button>
-                <span class="dot">&#9679;</span>
+<!--                <span class="dot">&#9679;</span>
                 <button
                     class="btn btn-link"
                     :class="{active: getOrderActiveTable === 3}"
                     @click="changeTable(3)"
                 >
                     Скидки
-                </button>
+                </button>-->
             </div>
         </div>
         <OrderDataTable v-if="getOrderActiveTable === 1" />
