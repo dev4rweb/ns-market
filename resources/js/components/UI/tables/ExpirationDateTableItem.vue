@@ -3,16 +3,16 @@
         <th style="font-weight: 400" scope="row">{{ index + 1 }}</th>
         <td style="font-weight: 400">{{ order.prodId }}</td>
         <td style="font-weight: 400">{{ order.product.print_name }}</td>
-        <td>
+        <td class="text-center">
             {{ order.product.shelf_life }}
         </td>
-        <td>
+        <td class="text-center">
             {{ manDate }}
         </td>
-        <td>
+        <td class="text-center">
             {{ expirationDate }}
         </td>
-        <td>
+        <td class="d-flex justify-content-center">
             <span
                 class="remove-pos"
                 @click="removeRow"

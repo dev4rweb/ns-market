@@ -40,9 +40,9 @@
             <DearFriendsBanner />
             <OrderSumInfo />
         </div>
-        <div class="d-flex justify-content-end mb-5">
-            <button class="btn btn-lg btn-secondary me-3">В черновик</button>
-            <button class="btn btn-lg btn-info">Продолжить</button>
+        <div class="d-flex justify-content-center mb-5 mt-3">
+            <button class="btn btn-lg btn-link me-3">Сохранить в черновиках</button>
+            <button class="btn btn-lg btn-info">Оформить заказ</button>
         </div>
     </div>
     <h1 v-else>Корзина пуста</h1>

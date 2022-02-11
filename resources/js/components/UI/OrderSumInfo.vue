@@ -5,24 +5,39 @@
     >
         <h3>Итого</h3>
         <div class="d-flex justify-content-between">
-            <span class="title">Количество товаров</span>
+            <span class="title">Наименований </span>
             <span>{{ getLSOrder.length }}</span>
         </div>
         <div class="d-flex justify-content-between">
-            <span class="title">Масса заказа</span>
+            <span class="title">Количество товаров шт.</span>
+            <span>{{ getAmountProduct }}</span>
+        </div>
+        <div class="d-flex justify-content-between">
+            <span class="title">Масса заказа кг</span>
             <span>{{ getWeightOrder }}</span>
         </div>
-        <div class="d-flex justify-content-between">
+<!--        <div class="d-flex justify-content-between">
             <span class="title">Рассчётный объём</span>
             <span>{{ getVolumeOrder }}</span>
-        </div>
+        </div>-->
         <div class="d-flex justify-content-between">
             <span class="title">Сумма баллов</span>
-            <span>617 PV</span>
+            <span>{{ getPointsOrder }}</span>
+        </div>
+        <div
+            v-if="getEconomicSumOrder"
+            class="d-flex justify-content-between"
+        >
+            <span class="title">Ваша Экономия руб.</span>
+            <span>{{ getEconomicSumOrder }}</span>
+        </div>
+        <div class="d-flex justify-content-between">
+            <span class="title">Стоимость заказа руб.</span>
+            <span>{{ getSumOrder }}</span>
         </div>
         <div class="d-flex justify-content-between mt-3">
             <span class="title">К оплате</span>
-            <span class="price">{{ getSumOrder }}</span>
+            <span class="price">{{ getSumOrder }} руб.</span>
         </div>
     </div>
 </template>
@@ -33,7 +48,8 @@ import {mapGetters} from 'vuex'
 export default {
     name: "OrderSumInfo",
     computed: {
-        ...mapGetters(['getSumOrder', 'getLSOrder', 'getWeightOrder', 'getVolumeOrder'])
+        ...mapGetters(['getSumOrder', 'getLSOrder', 'getWeightOrder',
+            'getVolumeOrder', 'getPointsOrder', 'getAmountProduct', 'getEconomicSumOrder'])
     }
 }
 </script>

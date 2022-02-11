@@ -8,7 +8,7 @@
             <th scope="col">Срок годности</th>
             <th scope="col">Дата изготовления</th>
             <th scope="col">Годен до</th>
-            <th scope="col"></th>
+            <th scope="col">Удалить</th>
         </tr>
         </thead>
         <tbody>

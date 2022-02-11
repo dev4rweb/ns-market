@@ -80,9 +80,21 @@ export default {
                         sum += i.amount * i.product.price_for_partners
                     else sum += i.amount * i.product.price_retail
                 });
-                return `${sum} p.`
+                return `${sum}`
             } else {
-                return '0 p.'
+                return '0'
+            }
+        },
+        getEconomicSumOrder(state, getters) {
+            if (state.lsOrder.length > 0 && getters.isPartner) {
+                let sum = 0
+                state.lsOrder.forEach(i => {
+                    sum += i.amount * i.product.price_retail
+                });
+                let dif = sum - getters.getSumOrder
+                return `${dif}`
+            } else {
+                return null
             }
         },
         getWeightOrder(state) {
@@ -91,7 +103,7 @@ export default {
                 state.lsOrder.forEach(i => {
                     weight += i.amount * parseFloat(i.product.weight)
                 });
-                return `${weight} кг`
+                return `${weight.toFixed(3)}`
             } else {
                 return `-`
             }
@@ -102,7 +114,7 @@ export default {
                 state.lsOrder.forEach(i => {
                     volume += i.amount * parseFloat(i.product.volume)
                 });
-                return `${volume} м3`
+                return `${volume.toFixed(6)} м3`
             } else {
                 return `-`
             }
@@ -111,9 +123,20 @@ export default {
             if (state.lsOrder.length > 0) {
                 let points = 0
                 state.lsOrder.forEach(i => {
-                    points += i.amount * parseFloat(i.product.points)
+                    points += i.amount *i.product.points
                 });
-                return `${points} PV`
+                return `${points}`
+            } else {
+                return `-`
+            }
+        },
+        getAmountProduct(state) {
+            if (state.lsOrder.length > 0) {
+                let amount = 0
+                state.lsOrder.forEach(i => {
+                    amount += parseInt(i.amount)
+                });
+                return `${amount}`
             } else {
                 return `-`
             }

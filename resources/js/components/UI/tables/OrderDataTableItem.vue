@@ -9,14 +9,14 @@
                 type="number"
                 class="form-control"
                 v-model="amount"
-                @blur="addToBasket"
+                @change="addToBasket"
             >
         </td>
-        <td>{{ currentPrice }} p.</td>
-        <td>{{ order.product.points }}</td>
-        <td>{{ sumPv }}</td>
-        <td>{{ sumPos }} p.</td>
-        <td>
+        <td class="text-center">{{ currentPrice }} p.</td>
+        <td class="text-center">{{ order.product.points }}</td>
+        <td class="text-center">{{ sumPv }}</td>
+        <td class="text-center">{{ sumPos }} p.</td>
+        <td class="d-flex justify-content-center">
             <span
                 class="remove-pos"
                 @click="removeRow"

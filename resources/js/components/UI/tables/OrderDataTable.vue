@@ -8,9 +8,9 @@
             <th style="width: 90px;" scope="col">Кол-во</th>
             <th scope="col">Цена</th>
             <th scope="col">Баллы</th>
-            <th scope="col">Баллов</th>
+            <th scope="col">Всего баллов</th>
             <th scope="col">Стоимость</th>
-            <th scope="col"></th>
+            <th scope="col">Удалить</th>
         </tr>
         </thead>
         <tbody>
