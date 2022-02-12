@@ -1,25 +1,18 @@
 <template>
     <div class="nav-wrapper">
         <ul class="nav nav-pills nav-fill">
-            <li class="nav-item">
-                <button class="btn btn-outline-info active">
-                    Корзина
-                </button>
-            </li>
-            <li class="nav-item">
-                <button class="btn btn-outline-info">
-                    Параметры заказа
-                </button>
-            </li>
-            <li class="nav-item">
-                <button class="btn btn-outline-info">
-                    Доставка
-                </button>
-            </li>
-            <li class="nav-item">
-                <button class="btn btn-outline-info">
-                    Оплата
-                </button>
+            <li
+                v-for="link in links"
+                class="nav-item"
+                :key="link.id"
+            >
+                <a
+                    :href="link.path"
+                    class="btn btn-outline-info"
+                    :class="{active: isActive(link.path)}"
+                >
+                    {{link.name}}
+                </a>
             </li>
         </ul>
     </div>
@@ -27,7 +20,22 @@
 
 <script>
 export default {
-    name: "NavOrder"
+    name: "NavOrder",
+    data() {
+        return {
+            links: [
+                {id: 1, name: 'Корзина', path: '/basket', isDisabled: true},
+                {id: 2, name: 'Параметры заказа', path: '/order-config', isDisabled: true},
+                {id: 3, name: 'Доставка', path: '/order-delivery', isDisabled: true},
+                {id: 4, name: 'Оплата', path: '/order-payment', isDisabled: true},
+            ]
+        }
+    },
+    methods: {
+        isActive(pathUrl) {
+            return window.location.href.includes(pathUrl)
+        }
+    }
 }
 </script>
 
@@ -36,10 +44,11 @@ export default {
     display: flex;
     justify-content: center;
 
-    .nav{
+    .nav {
         max-width: 570px;
     }
 }
+
 .btn-lg {
     width: 100%;
 }

@@ -72,8 +72,14 @@ export default {
                 axios.post('/login', userLogin)
                     .then(res => {
                         console.log('localLogin', res)
-                        if (res.status === 204)
-                            window.location.href = '/user-panel'
+                        if (res.status === 204) {
+                            if (getters['getFromBasketPage']) {
+                                window.location.href = getters['getFromBasketPage']
+                            } else {
+                                window.location.href = '/user-panel'
+                            }
+                        }
+
                     }).catch(err => {
                     console.log('localLogin err', err.response.data)
                     if (err.response.data.errors.email[0].includes('These credentials do not match our records.'))

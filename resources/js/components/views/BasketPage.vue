@@ -41,8 +41,25 @@
             <OrderSumInfo />
         </div>
         <div class="d-flex justify-content-center mb-5 mt-3">
-            <button class="btn btn-lg btn-link me-3">Сохранить в черновиках</button>
-            <button class="btn btn-lg btn-info">Оформить заказ</button>
+            <button
+                class="btn btn-lg btn-link me-3"
+                @click="addToDraft"
+            >
+                Сохранить в черновиках
+            </button>
+            <button
+                class="btn btn-lg btn-info"
+                @click="createOrder"
+            >
+                Оформить заказ
+            </button>
+            <button
+                style="display: none;"
+                data-toggle="modal"
+                data-target="#loginModal"
+                ref="loginBtn"
+            >
+            </button>
         </div>
     </div>
     <h1 v-else>Корзина пуста</h1>
@@ -60,10 +77,28 @@ import OrderSumInfo from "../UI/OrderSumInfo";
 export default {
     name: "BasketPage",
     methods: {
-        ...mapMutations(['setOrderActiveTable']),
+        ...mapMutations(['setOrderActiveTable', 'setFromBasketPage']),
         ...mapActions(['fetchPhysicalPerson']),
         changeTable(activeNumber) {
             this.setOrderActiveTable(activeNumber)
+        },
+        addToDraft() {
+            console.log('addToDraft', this.getCurrentUser)
+            if (this.getCurrentUser) {
+                window.location.href = '/user-orders-panel'
+            } else {
+                this.setFromBasketPage('/user-orders-panel')
+                $(this.$refs.loginBtn).click();
+            }
+        },
+        createOrder() {
+            console.log('createOrder', this.getCurrentUser)
+            if (this.getCurrentUser) {
+                window.location.href = '/order-config'
+            } else {
+                this.setFromBasketPage('/order-config')
+                $(this.$refs.loginBtn).click();
+            }
         }
     },
     components: {
@@ -71,7 +106,7 @@ export default {
         DearFriendsBanner, OrderSumInfo
     },
     computed: {
-        ...mapGetters(['getLSOrder', 'getOrderActiveTable']),
+        ...mapGetters(['getLSOrder', 'getOrderActiveTable', 'getCurrentUser']),
     },
     mounted() {
         if (window.User) {

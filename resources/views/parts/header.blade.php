@@ -29,6 +29,10 @@
                         <img class="profile-icon" src="{{asset('/images/ic-profile.png')}}" alt="profile">
                         <span class="profile-title">Войти</span>
                     </button>
+                    <a class="header-btn" href="{{route('home-page')}}">
+                        <img class="profile-icon" src="{{asset('/images/ic-orders.png')}}" alt="profile">
+                        <span class="profile-title">Заказы</span>
+                    </a>
                 @else
                     <a
                         href="{{route('user-page')}}"
@@ -37,17 +41,12 @@
                         <img class="profile-icon" src="{{asset('/images/ic-profile.png')}}" alt="profile">
                         <span class="profile-title">{{Auth::user()->name}}</span>
                     </a>
+                    <a class="header-btn" href="{{route('user-orders-page')}}">
+                        <img class="profile-icon" src="{{asset('/images/ic-orders.png')}}" alt="profile">
+                        <span class="profile-title">Заказы</span>
+                    </a>
                 @endguest
-                <a class="header-btn" href="{{route('home-page')}}">
-                    <img class="profile-icon" src="{{asset('/images/ic-orders.png')}}" alt="profile">
-                    <span class="profile-title">Заказы</span>
-                </a>
-
-<!--                <a class="header-btn" href="{{route('home-page')}}">
-                    <img class="profile-icon" src="{{asset('/images/ic-backet.png')}}" alt="profile">
-                    <span class="profile-title">Корзина</span>
-                </a>-->
-                <basket-btn></basket-btn>
+                    <basket-btn></basket-btn>
             </div>
         </div>
     </div>
