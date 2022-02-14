@@ -45,7 +45,7 @@ export default {
         removeLSOrderAction({commit}) {
             localStorage.removeItem('order')
             commit('setLSOrder', [])
-        }
+        },
     },
     mutations: {
         setLocalStorageAvailable(state, isAvailable) {

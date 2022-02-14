@@ -26,7 +26,7 @@ export default {
                         if (res.data.model.mentor_user_id) {
                             dispatch('fetchMentorUserById', res.data.model.mentor_user_id)
                         }
-                        dispatch('getCustomerOrdersByUserId')
+                        dispatch('createBasketOrderOnServer')
                     }
                 }).catch(err => {
                     console.log('fetchPhysicalPerson err', err)
