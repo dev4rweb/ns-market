@@ -96,7 +96,7 @@
                 </button>
             </div>
         </div>
-        <h1 v-else>Корзина пуста</h1>
+        <h1 class="mt-5" v-else>Корзина пуста</h1>
     </div>
 </template>
 
@@ -152,6 +152,7 @@ export default {
         align-items: center;
         color: #333333;
     }
+
 
     .nav-tabs {
 

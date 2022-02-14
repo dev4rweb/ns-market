@@ -41,6 +41,10 @@ export default {
             // console.log('removeFromBasketAction')
             commit('removeBasketItem', orderObj)
             dispatch('createLSOrderAction', getters['getLSOrder'])
+        },
+        removeLSOrderAction({commit}) {
+            localStorage.removeItem('order')
+            commit('setLSOrder', [])
         }
     },
     mutations: {

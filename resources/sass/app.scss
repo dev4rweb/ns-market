@@ -49,9 +49,27 @@
 
 
 .btn-info {
-    border-color: $nsBlue;
+    //border-color: $nsBlue;
+    border-color: white;
     background-color: $nsBlue;
     color: white;
+
+    &:hover, &:active, &:focus, &.active {
+        border-color: $nsBlue;
+        background-color: white;
+        color: $nsBlue;
+    }
+}
+
+.btn-info:not(:disabled):not(.disabled).active{
+    background-color: #fff;
+    color: $nsBlue;
+    border-color: $nsBlue;
+}
+
+.header-navigation a {
+    color: white;
+    border-color: white;
 }
 
 .btn-secondary {
@@ -211,10 +229,10 @@
     border-radius: 8px;
 
     .header-block {
-        background-color: #5AB1E3;
+        background-color: $nsBlue;
         font-style: normal;
         font-weight: 600;
-        font-size: 18px;
+        font-size: 24px;
         line-height: 22px;
         color: #FFFFFF;
         border-radius: 8px 8px 0px 0px;

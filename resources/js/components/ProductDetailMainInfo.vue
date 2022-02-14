@@ -121,7 +121,8 @@ export default {
             const orderObj = {
                 prodId: this.getProductDetail.vendor_code,
                 amount: this.amount,
-                product: this.getProductDetail
+                product: this.getProductDetail,
+                created_at: Date.now(),
             }
             if (this.amount > 0) {
                 this.addToBasketAction(orderObj)
