@@ -47,12 +47,16 @@
                 Техподдержка
             </a>
         </li>
+{{--        <li>--}}
+{{--            <a href="{{ route('logout') }}"--}}
+{{--               onclick="event.preventDefault();--}}
+{{--                            document.getElementById('logout-form').submit();">--}}
+{{--                Выйти--}}
+{{--            </a>--}}
+{{--        </li>--}}
+
         <li>
-            <a href="{{ route('logout') }}"
-               onclick="event.preventDefault();
-                            document.getElementById('logout-form').submit();">
-                Выйти
-            </a>
+            <logout-btn></logout-btn>
         </li>
     </ul>
 </aside>

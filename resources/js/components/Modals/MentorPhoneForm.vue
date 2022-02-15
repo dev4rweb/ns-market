@@ -4,7 +4,7 @@
         class="needs-validation login-form "
         novalidate
     >
-        <Loader v-if="loading"/>
+<!--        <Loader v-if="loading"/>-->
         <h4 class="text-center">Вход и регистрация</h4>
         <p
             class="description"

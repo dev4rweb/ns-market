@@ -1,12 +1,19 @@
 <template>
-    <div class="loader-wrapper">
+    <div
+        v-if="isLoading"
+        class="loader-wrapper"
+    >
         <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
     </div>
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 export default {
-    name: "Loader"
+    name: "Loader",
+    computed: {
+        ...mapGetters(['isLoading'])
+    }
 }
 </script>
 

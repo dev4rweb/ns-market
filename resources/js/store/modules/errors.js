@@ -1,6 +1,6 @@
 export default {
     state: {
-        error: null
+        error: null,
     },
     actions: {
 
@@ -11,11 +11,11 @@ export default {
             setTimeout(() => {
                 state.error = null
             }, 2000);
-        }
+        },
     },
     getters: {
         getToastError(state) {
             return state.error
-        }
+        },
     }
 }

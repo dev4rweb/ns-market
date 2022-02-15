@@ -10596,7 +10596,7 @@ footer h3, footer .h3 {
   padding-left: 0; }
   .user-sidebar li {
     margin-bottom: 8px; }
-    .user-sidebar li a {
+    .user-sidebar li a, .user-sidebar li button {
       text-decoration: none;
       font-style: normal;
       font-weight: 600;
@@ -10608,7 +10608,7 @@ footer h3, footer .h3 {
       -ms-transition: all .3s;
       -o-transition: all .3s;
       transition: all .3s; }
-      .user-sidebar li a:hover, .user-sidebar li a.active {
+      .user-sidebar li a:hover, .user-sidebar li a.active, .user-sidebar li button:hover, .user-sidebar li button.active {
         color: #333333; }
 
 .news-card {

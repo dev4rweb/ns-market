@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Loader v-if="loading"/>
+<!--        <Loader v-if="loading"/>-->
         <LoginWithPhone />
 <!--        <form
             @submit.prevent="login"

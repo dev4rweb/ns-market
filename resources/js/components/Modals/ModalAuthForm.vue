@@ -12,7 +12,7 @@
                     <div class="modal-wrapper">
                         <img :src="logo" alt="logo">
                         <div>
-                            <Loader v-if="isLoading"/>
+<!--                            <Loader v-if="isLoading"/>-->
                             <LoginWithPhone
                                 v-if="loginWithPhoneVisible"
                             />

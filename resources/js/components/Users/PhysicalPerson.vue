@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Loader v-if="isLoading"/>
+<!--        <Loader v-if="isLoading"/>-->
         <p v-if="getPhysicalPerson" class="position-relative">
             ID: {{ getPhysicalPerson.user_id }}
             <br>Статус: {{ tradeStatus }}

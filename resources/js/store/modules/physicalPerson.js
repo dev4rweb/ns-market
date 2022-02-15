@@ -22,17 +22,17 @@ export default {
                         if (!res.data.model.passport_photos) res.data.model.passport_photos = []
                         if (!res.data.model.photos) res.data.model.photos = []
                         commit('setPhysicalPerson', res.data.model)
-                        dispatch('fetchAllAddresses')
+                        dispatch('createBasketOrderOnServer');
+                        if (window.location.href.includes('user-address-panel')) {
+                            dispatch('fetchAllAddresses');
+                        }
                         if (res.data.model.mentor_user_id) {
                             dispatch('fetchMentorUserById', res.data.model.mentor_user_id)
                         }
                         if (window.location.href.includes('/user-orders-panel/save')) {
                             dispatch('createDraftOrderOnServer')
                         }
-                        if (window.location.href.includes('/user-orders-panel')) {
-                            dispatch('getCustomerOrdersByUserId')
-                        }
-                        dispatch('createBasketOrderOnServer');
+                        dispatch('getCustomerOrdersByUserId')
                     }
                 }).catch(err => {
                     console.log('fetchPhysicalPerson err', err)

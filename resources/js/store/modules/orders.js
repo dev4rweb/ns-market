@@ -3,10 +3,11 @@ import {WORK_HOST} from "../routeConsts";
 export default {
     state: {
         orders: [],
+        basketOrder: null,
     },
     actions: {
         getCustomerOrdersByUserId({commit, getters, dispatch}) {
-            console.log('getCustomerOrdersByUserId')
+            // console.log('getCustomerOrdersByUserId')
             const curUser = getters['getPhysicalPerson']
             if (curUser) {
                 commit('setLoading', true)
@@ -16,6 +17,22 @@ export default {
                     console.log('getCustomerOrdersByUserId res', res)
                     if (res.data.success && res.data.models) {
                         commit('setOrders', res.data.models)
+                        const basketOrder = res.data.models.find(i => i.status === 0);
+                        if (basketOrder) {
+                            commit('setBasketOrder', basketOrder)
+                            if (!getters['getLSOrder'].length) {
+                                console.log('creating new basket order')
+                                basketOrder.products.forEach(i => {
+                                    const orderObj = {
+                                        prodId: i.product.vendor_code,
+                                        amount: i.amount_products,
+                                        product: i.product,
+                                        created_at: parseInt(i.order_id)
+                                    }
+                                    dispatch('addToBasketAction', orderObj)
+                                });
+                            }
+                        }
                     }
                 }).catch(err => {
                     console.log('getCustomerOrdersByUserId err', err)
@@ -107,16 +124,16 @@ export default {
         setOrders(state, orders) {
             state.orders = orders
         },
-
+        setBasketOrder(state, basketOrder) {
+            state.basketOrder = basketOrder
+        }
     },
     getters: {
         getOrders(state) {
             return state.orders
         },
         getBasketOrder(state) {
-            if (state.orders.length > 0)
-                return state.orders.find(i => i.status === 0)
-            else return null
+            return state.basketOrder
         }
     }
 }
