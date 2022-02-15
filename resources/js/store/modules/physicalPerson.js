@@ -26,7 +26,13 @@ export default {
                         if (res.data.model.mentor_user_id) {
                             dispatch('fetchMentorUserById', res.data.model.mentor_user_id)
                         }
-                        dispatch('createBasketOrderOnServer')
+                        if (window.location.href.includes('/user-orders-panel/save')) {
+                            dispatch('createDraftOrderOnServer')
+                        }
+                        if (window.location.href.includes('/user-orders-panel')) {
+                            dispatch('getCustomerOrdersByUserId')
+                        }
+                        dispatch('createBasketOrderOnServer');
                     }
                 }).catch(err => {
                     console.log('fetchPhysicalPerson err', err)

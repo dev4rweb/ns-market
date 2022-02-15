@@ -63,6 +63,8 @@ Vue.component('order-data-table-item', require('./components/UI/tables/OrderData
 Vue.component('expiration-date-table', require('./components/UI/tables/ExpirationDateTable').default);
 Vue.component('expiration-date-table-item', require('./components/UI/tables/ExpirationDateTableItem').default);
 Vue.component('discount-order-table', require('./components/UI/tables/DiscountOrderTable').default);
+Vue.component('my-orders-table', require('./components/UI/tables/MyOrdersTable').default);
+Vue.component('my-orders-table-item', require('./components/UI/tables/MyOrdersTableItem').default);
 Vue.component('user-data-tabs', require('./components/views/UserDataTabs').default);
 Vue.component('catalog-page', require('./components/views/CatalogPage').default);
 Vue.component('category-page', require('./components/views/CategoryPage').default);
@@ -78,6 +80,7 @@ Vue.component('user-modal-gallery', require('./components/Modals/UserModalGaller
 Vue.component('user-mentor-panel', require('./components/views/UserMentorPanel').default);
 Vue.component('user-address-panel', require('./components/views/UserAddressPanel').default);
 Vue.component('user-support-panel', require('./components/views/UserSupportPanel').default);
+Vue.component('user-orders-panel', require('./components/views/UserOrdersPanel').default);
 Vue.component('basket-page', require('./components/views/BasketPage').default);
 Vue.component('order-config-page', require('./components/views/OrderConfigPage').default);
 Vue.component('user-mentor-change-page', require('./components/views/UserMentorChangePage').default);

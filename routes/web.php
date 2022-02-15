@@ -57,7 +57,7 @@ Route::get('/user-address-panel', [UserAddressPageController::class, 'index'])->
 Route::get('/user-mentor-panel', [UserMentorPageController::class, 'index'])->name('user-mentor-page');
 Route::get('/user-mentor-change', [UserMentorChangePageController::class, 'index'])->name('user-mentor-change-page');
 Route::get('/user-support-panel', [UserSupportPageController::class, 'index'])->name('user-support-page');
-Route::get('/user-orders-panel', [UserOrdersPage::class, 'index'])->name('user-orders-page');
+Route::get('/user-orders-panel/{fromWhere?}', [UserOrdersPage::class, 'index'])->name('user-orders-page');
 Route::get('/user-passport-panel', [UserPassportPageController::class, 'index'])->name('user-passport-page');
 Route::get('/user-status-panel', [UserStatusPageController::class, 'index'])->name('user-status-page');
 Route::get('/user-become-partner', [UserBecomePartnerPage::class, 'index'])->name('user-become-partner-page');

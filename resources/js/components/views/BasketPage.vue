@@ -85,9 +85,9 @@ export default {
         addToDraft() {
             console.log('addToDraft', this.getCurrentUser)
             if (this.getCurrentUser) {
-                window.location.href = '/user-orders-panel'
+                window.location.href = '/user-orders-panel/saved'
             } else {
-                this.setFromBasketPage('/user-orders-panel')
+                this.setFromBasketPage('/user-orders-panel/saved')
                 $(this.$refs.loginBtn).click();
             }
         },

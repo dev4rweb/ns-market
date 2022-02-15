@@ -34,7 +34,7 @@
         <li>
             <a
                 href="{{route('user-orders-page')}}"
-                class="@if(Request::url() == url('/user-orders-panel')) active @endif"
+                class="@if(Request::url() == url('/user-orders-panel') || Request::url() == url('/user-orders-panel/save')) active @endif"
             >
                 Мои заказы
             </a>

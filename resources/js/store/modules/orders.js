@@ -24,7 +24,7 @@ export default {
                 });
             }
         },
-        createBasketOrderOnServer({getters, commit, dispatch}) {
+        createBasketOrderOnServer({getters, commit}) {
             const lsOrders = getters['getLSOrder']
             const curUser = getters['getPhysicalPerson']
             // console.log('createBasketOrderOnServer ', curUser)
@@ -33,6 +33,7 @@ export default {
                 const customerOrder = {
                     order_id: Date.now(),
                     customer_id: curUser.user_id,
+                    status: 0,
                     order_price: getters['getSumOrder'],
                     amount_score: getters['getPointsOrder'],
                     amount_weight: getters['getWeightOrder'],
@@ -51,10 +52,50 @@ export default {
                 axios.post(`${WORK_HOST}customer-orders`, customerOrder)
                     .then(res => {
                         console.log('createBasketOrderOnServer res', res)
-                        dispatch('getCustomerOrdersByUserId')
                     })
                     .catch(err => {
                         console.log('createBasketOrderOnServer err', err)
+                    })
+                    .finally(() => {
+                        commit('setLoading', false)
+                    });
+            }
+        },
+
+        createDraftOrderOnServer({getters, commit, dispatch}) {
+            const lsOrders = getters['getLSOrder']
+            const curUser = getters['getPhysicalPerson']
+            // console.log('createBasketOrderOnServer ', curUser)
+            if (lsOrders.length > 0 && curUser) {
+                commit('setLoading', true)
+                const customerOrder = {
+                    order_id: Date.now(),
+                    customer_id: curUser.user_id,
+                    status: 1,
+                    order_price: getters['getSumOrder'],
+                    amount_score: getters['getPointsOrder'],
+                    amount_weight: getters['getWeightOrder'],
+                    products: []
+                }
+                lsOrders.forEach(i => {
+                    const orderProduct = {
+                        product_id: i.product.id,
+                        amount_products: i.amount
+                    }
+                    customerOrder.products.push(orderProduct)
+                });
+
+                // console.log('createBasketOrderOnServer', customerOrder)
+
+                axios.post(`${WORK_HOST}customer-orders`, customerOrder)
+                    .then(res => {
+                        console.log('createDraftOrderOnServer res', res)
+                        if (res.data.success) {
+                            dispatch('removeLSOrderAction')
+                        }
+                    })
+                    .catch(err => {
+                        console.log('createDraftOrderOnServer err', err)
                     })
                     .finally(() => {
                         commit('setLoading', false)
