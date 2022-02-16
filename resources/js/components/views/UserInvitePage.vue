@@ -74,6 +74,7 @@
                 <div class="col-md-6 d-flex justify-content-between">
                     <button
                         class="btn btn-lg btn-success"
+                        @click="sendSms"
                     >
                         Отправить СМС
                     </button>
@@ -99,7 +100,7 @@
 
 <script>
 import Tooltip from "../UI/Tooltip";
-import {mapGetters, mapMutations} from 'vuex'
+import {mapGetters, mapMutations, mapActions} from 'vuex'
 import {MARKET_DOMAIN, WORK_HOST} from "../../store/routeConsts";
 
 export default {
@@ -117,6 +118,7 @@ export default {
     },
     methods: {
         ...mapMutations(['setLoading']),
+        ...mapActions(['sendFreeSms']),
         generateLink() {
             console.log('generateLink')
             if (this.getPhysicalPerson) {
@@ -142,7 +144,18 @@ export default {
                 });
             } else {
                 console.log('getPhysicalPerson ', this.getPhysicalPerson)
+                const mobilePhone = this.inviterPhone.replace(/[^0-9]/g, '');
             }
+        },
+        sendSms() {
+            const mobilePhone = this.inviterPhone.replace(/[^0-9]/g, '');
+            const message = `. \n ${this.getCurrentUser.first_name} ${this.getCurrentUser.last_name} \n приглашает Вас В New Star market \n Перейдите по ссылке, чтобы попасть на сайт \n \n ${this.link}`
+            // const message = this.link
+            const smsObj = {
+                mobile_phone: mobilePhone,
+                message
+            }
+            this.sendFreeSms(smsObj)
         }
     },
     computed: {
@@ -179,6 +192,6 @@ a {
 }
 
 .textarea {
-    min-height: 176px;
+    min-height: 220px;
 }
 </style>

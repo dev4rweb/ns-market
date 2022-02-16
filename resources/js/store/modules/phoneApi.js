@@ -28,6 +28,19 @@ export default {
             } else {
                 commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже')
             }
+        },
+        sendFreeSms({commit}, smsObj) {
+            commit('setLoading', true)
+            axios.post(`${WORK_HOST}market/send-message`, {
+                phone_number: smsObj.mobile_phone,
+                message: smsObj.message
+            }).then(res => {
+                console.log('sendFreeSms res', res)
+            }).catch(err => {
+                console.log('sendFreeSms err', err)
+            }).finally(() => {
+                commit('setLoading', false)
+            });
         }
     },
     mutations: {

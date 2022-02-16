@@ -8,5 +8,5 @@ const stagingHost = 'http://staging-admin.newstarmlm.biz/api/'
 const localMarket = 'http://127.0.0.1:8000/'
 const hostMarket = 'http://ns-market.dev4rweb.com/'
 
-export const MARKET_DOMAIN = hostMarket
 export const WORK_HOST = stagingHost
+export const MARKET_DOMAIN = hostMarket
