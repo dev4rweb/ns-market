@@ -6,6 +6,7 @@ use App\Http\Controllers\CatalogPageController;
 use App\Http\Controllers\CategoryPageController;
 use App\Http\Controllers\ContactsPageController;
 use App\Http\Controllers\HomePageController;
+use App\Http\Controllers\InviteController;
 use App\Http\Controllers\ListPageController;
 use App\Http\Controllers\pages\OrderConfigPageController;
 use App\Http\Controllers\pages\OrderDeliveryPageController;
@@ -67,6 +68,7 @@ Route::get('/user-invite', [UserInvitePageController::class, 'index'])->name('us
 Route::get('/partner-congratulation', [PartnerCongratulationPage::class, 'index'])->name('partner-congratulation-page');
 Route::get('/user-payment-info-panel', [UserPaymentInfoPageController::class, 'index'])->name('user-payment-info-page');
 Route::get('/', [HomePageController::class, 'index'])->name('home-page');
+Route::get('/invite/{data}', [InviteController::class, 'inviteUser']);
 Route::get('/catalog', [CatalogPageController::class, 'index'])->name('catalog-page');
 Route::get('/catalog/products/{slug}', [CategoryPageController::class, 'index'])->name('category-page');
 Route::get('/catalog/programs/{slug}', [ProgramsPageController::class, 'index'])->name('programs-page');

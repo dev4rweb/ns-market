@@ -58,10 +58,14 @@
                     <div
                         class="form-control form-control-lg textarea"
                     >
-                        <p>Иван Иванов приглашает Вас В New Star market</p>
+                        <p>
+                            {{ getCurrentUser.first_name }}
+                            {{ getCurrentUser.last_name }}
+                            приглашает Вас В New Star market
+                        </p>
                         <p>Перейдите по ссылке, чтобы попасть на сайт
                             <br>
-                            <a href="#">https://newstar.ru/reg123456_92012345</a>
+                            <a :href="link">{{ link }}</a>
                         </p>
                     </div>
                 </div>
@@ -95,27 +99,59 @@
 
 <script>
 import Tooltip from "../UI/Tooltip";
+import {mapGetters, mapMutations} from 'vuex'
+import {MARKET_DOMAIN, WORK_HOST} from "../../store/routeConsts";
 
 export default {
     name: "UserInvitePage",
     data() {
         return {
-            isShowBlock: true,
+            isShowBlock: false,
             inviterPhone: '+7',
             inviteText: '',
+            link: '',
             isInviterPhoneInValid: false,
             inviterPhoneError: 'Некорректный номер телефона',
             tooltipText: 'Вы можете воспользоваться автоматическим сервисом для отправки SMS-сообщений или скопировать индивидуальную реферальную ссылку для отправки удобным для Вас способом.'
         }
     },
     methods: {
+        ...mapMutations(['setLoading']),
         generateLink() {
             console.log('generateLink')
+            if (this.getPhysicalPerson) {
+                const mobilePhone = this.inviterPhone.replace(/[^0-9]/g, '');
+                if (mobilePhone.length < 10 || mobilePhone.length > 13) {
+                    this.isInviterPhoneInValid = true
+                    return
+                }
+                this.setLoading(true)
+                axios.post(`${WORK_HOST}market/invite-link`, {
+                    mobile_phone: mobilePhone,
+                    user_id: this.getPhysicalPerson.user_id
+                }).then(res => {
+                    console.log('generateLink res', res)
+                    if (res.data.success) {
+                        this.isShowBlock = true
+                        this.link = MARKET_DOMAIN + 'invite/' + res.data.link
+                    }
+                }).catch(err => {
+                    console.log('generateLink err ', err)
+                }).finally(() => {
+                    this.setLoading(false)
+                });
+            } else {
+                console.log('getPhysicalPerson ', this.getPhysicalPerson)
+            }
         }
+    },
+    computed: {
+        ...mapGetters(['getPhysicalPerson', 'getCurrentUser'])
     },
     components: {
         Tooltip
-    }, mounted() {
+    },
+    mounted() {
         setTimeout(() => {
             // console.log('mounted Mentor Change Phone')
             this.$refs.focusMe.focus();

@@ -2,13 +2,16 @@
 
 @section('content')
     <div>
+
     @include('pages-parts.home-page.stock')
     @include('pages-parts.home-page.advantage')
     @include('pages-parts.home-page.reviews')
     @include('pages-parts.home-page.mobile-hands')
-{{--    @include('auth.login-modal')--}}
+    {{--    @include('auth.login-modal')--}}
     <!--        <example-component></example-component>
         <test-component></test-component>-->
-
+        <invite-component
+            :invite='@json(\Session::get('invite'))'
+        ></invite-component>
     </div>
 @endsection

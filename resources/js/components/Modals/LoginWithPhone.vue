@@ -9,6 +9,11 @@
         <div class="form-group form-group-blue">
             <label>
                 Ваш номер телефона
+                <span
+                    v-if="inviter_id"
+                >
+                    {{ inviter_id }}
+                </span>
             </label>
             <input
                 type="tel"
@@ -51,6 +56,7 @@ export default {
         return {
             phone: '+7',
             isPhoneInValid: false,
+            inviter_id: null
         }
     },
     methods: {
@@ -63,8 +69,26 @@ export default {
             if (!this.isPhoneInValid) {
                 this.getUserByPhoneOrUserId(this.phone)
             }
+        },
+        hasInviter() {
+            setTimeout(() => {
+                const data = localStorage.getItem('invite')
+                console.log('hasInviter', data)
+                if (data) {
+                    const mobile = data.split(',');
+                    console.log('hasInviter', mobile)
+                    if (mobile[1]) {
+                        this.phone = `+${mobile[1]}`
+                        this.inviter_id = mobile[0]
+                    }
+                    localStorage.removeItem('invite')
+                }
+            }, 1000);
         }
     },
+    mounted() {
+        this.hasInviter()
+    }
 }
 </script>
 
