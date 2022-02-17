@@ -1,7 +1,8 @@
 export default {
     state: {
         isShowMentorPhoneForm: false,
-        modalFeedbackConfirmRef: null
+        modalFeedbackConfirmRef: null,
+        modalSuccessMessageText: ''
     },
     actions: {
 
@@ -12,6 +13,9 @@ export default {
         },
         setModalFeedbackConfirmRef(state, ref) {
             state.modalFeedbackConfirmRef = ref
+        },
+        setModalSuccessMessage(state, msg) {
+            state.modalSuccessMessageText = msg
         }
     },
     getters: {
@@ -20,6 +24,9 @@ export default {
         },
         getModalFeedbackConfirmRef(state) {
             return state.modalFeedbackConfirmRef
+        },
+        getModalSuccessMessage() {
+            return state.modalSuccessMessageText
         }
     }
 }

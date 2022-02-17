@@ -36,6 +36,13 @@ export default {
                 message: smsObj.message
             }).then(res => {
                 console.log('sendFreeSms res', res)
+                if (res.data.success) {
+                    const modalSuccess = document.getElementById('modalSuccessMessage')
+                    if (modalSuccess) {
+                        commit('setModalSuccessMessage', 'Ваше сообщение успешно оправлено!')
+                        modalSuccess.click()
+                    }
+                }
             }).catch(err => {
                 console.log('sendFreeSms err', err)
             }).finally(() => {

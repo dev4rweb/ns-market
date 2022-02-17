@@ -39,6 +39,7 @@
                 >
                     Продолжить
                 </button>
+
             </div>
         </form>
 
@@ -70,7 +71,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row mb-5">
+            <div class="row mb-5 mt-3">
                 <div class="col-md-6 d-flex justify-content-between">
                     <button
                         class="btn btn-lg btn-success"
@@ -78,9 +79,9 @@
                     >
                         Отправить СМС
                     </button>
-
                     <button
                         class="btn btn-lg btn-success"
+                        @click="copyLink"
                     >
                         Скопировать ссылку
                     </button>
@@ -90,6 +91,7 @@
                 <button
                     class="btn btn-lg btn-info"
                     style="margin-bottom: -50px;"
+                    @click="newInvite"
                 >
                     Новое приглашение
                 </button>
@@ -117,7 +119,7 @@ export default {
         }
     },
     methods: {
-        ...mapMutations(['setLoading']),
+        ...mapMutations(['setLoading', 'setToastError']),
         ...mapActions(['sendFreeSms']),
         generateLink() {
             console.log('generateLink')
@@ -156,6 +158,22 @@ export default {
                 message
             }
             this.sendFreeSms(smsObj)
+        },
+        newInvite() {
+            console.log('newInvite')
+            this.isShowBlock = false
+            this.link = ''
+            this.inviterPhone = '+7'
+        },
+        copyLink() {
+            console.log('copyLink')
+            if (navigator && navigator.clipboard && navigator.clipboard.writeText) {
+                this.setToastError('Ссылка скопирована!')
+                return navigator.clipboard.writeText(this.link);
+            } else {
+                this.setToastError('The Clipboard API is not available.')
+                return Promise.reject('The Clipboard API is not available.');
+            }
         }
     },
     computed: {

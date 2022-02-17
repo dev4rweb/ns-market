@@ -37,8 +37,20 @@
     </main>
 
     @include('parts.footer')
+    <modal-success-message></modal-success-message>
     <toast></toast>
     <loader></loader>
+
+    <!-- Button trigger modal -->
+    <button
+        type="button"
+        class="btn btn-primary"
+        style="display:none;"
+        data-bs-toggle="modal"
+        id="modalSuccessMessage"
+        data-bs-target="#modalSuccessMsg">
+        ModalSuccess
+    </button>
 </div>
 {{--    @include('auth.login-modal')--}}
 {{--    <modal-login></modal-login>--}}
