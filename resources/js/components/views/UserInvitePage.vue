@@ -1,6 +1,17 @@
 <template>
     <div class="card data-card become-partner mb-5">
-        <h3>Пригласить в New Star market</h3>
+        <h3
+            class="d-flex justify-content-between align-items-center"
+        >
+            Пригласить в New Star market
+            <sup
+                class="me-1"
+                data-toggle="modal"
+                data-target="#userInviteModal"
+            >
+                ?
+            </sup>
+        </h3>
         <p>Введите номер телефона Вашего знакомого,
             которого Вы хотите пригласить в New Starmarket</p>
         <form
@@ -97,6 +108,7 @@
                 </button>
             </div>
         </div>
+        <UserInviteModal />
     </div>
 </template>
 
@@ -104,7 +116,7 @@
 import Tooltip from "../UI/Tooltip";
 import {mapGetters, mapMutations, mapActions} from 'vuex'
 import {MARKET_DOMAIN, WORK_HOST} from "../../store/routeConsts";
-
+import UserInviteModal from "../Modals/UserInviteModal";
 export default {
     name: "UserInvitePage",
     data() {
@@ -180,7 +192,7 @@ export default {
         ...mapGetters(['getPhysicalPerson', 'getCurrentUser'])
     },
     components: {
-        Tooltip
+        Tooltip, UserInviteModal
     },
     mounted() {
         setTimeout(() => {
@@ -211,5 +223,45 @@ a {
 
 .textarea {
     min-height: 220px;
+}
+
+h3 {
+    text-transform: uppercase;
+    color: #333333;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 29px;
+
+    sup {
+        color: white;
+        background-color: #038ED7;
+        font-weight: bold;
+        -webkit-transition: all .2s;
+        -moz-transition: all .2s;
+        -ms-transition: all .2s;
+        -o-transition: all .2s;
+        transition: all .2s;
+        padding: 10px 5px;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        border-radius: 50%;
+        -webkit-touch-callout: none; /* iOS Safari */
+        -webkit-user-select: none; /* Safari */
+        -khtml-user-select: none; /* Konqueror HTML */
+        -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+        user-select: none;
+        /* Non-prefixed version, currently
+                                         supported by Chrome, Edge, Opera and Firefox */
+        &:hover {
+            cursor: pointer;
+            -webkit-transform: scale(1.2, 1.2);
+            -moz-transform: scale(1.2, 1.2);
+            -ms-transform: scale(1.2, 1.2);
+            -o-transform: scale(1.2, 1.2);
+            transform: scale(1.2, 1.2);
+        }
+    }
 }
 </style>

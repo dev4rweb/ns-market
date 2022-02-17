@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex'
+import {mapActions, mapGetters} from 'vuex'
 
 export default {
     name: "LoginWithPhone",
@@ -60,7 +60,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['getUserByPhoneOrUserId']),
+        ...mapActions(['getUserByPhoneOrUserId', 'hasInviter']),
         getUser() {
             if (this.phone.length < 12 || this.phone.length > 13) {
                 this.isPhoneInValid = true;
@@ -70,24 +70,22 @@ export default {
                 this.getUserByPhoneOrUserId(this.phone)
             }
         },
-        hasInviter() {
-            setTimeout(() => {
-                const data = localStorage.getItem('invite')
-                console.log('hasInviter', data)
-                if (data) {
-                    const mobile = data.split(',');
-                    console.log('hasInviter', mobile)
-                    if (mobile[1]) {
-                        this.phone = `+${mobile[1]}`
-                        this.inviter_id = mobile[0]
-                    }
-                    localStorage.removeItem('invite')
-                }
-            }, 1000);
+        isHasInviter() {
+            this.hasInviter()
+            if (this.getInviter) {
+                setTimeout(() => {
+                    this.phone = `+${this.getInviter.phone}`
+                    this.inviter_id = this.getInviter.mentor_id
+                }, 1000);
+            }
+
         }
     },
+    computed: {
+        ...mapGetters(['getInviter'])
+    },
     mounted() {
-        this.hasInviter()
+        this.isHasInviter()
     }
 }
 </script>

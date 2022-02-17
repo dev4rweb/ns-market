@@ -4,10 +4,10 @@
         class="needs-validation login-form "
         novalidate
     >
-        <h4 class="text-center">Вход и регистрация</h4>
+        <h4 class="text-center">Регистрация</h4>
         <div class="form-group form-group-blue">
             <label>
-                Ваш номер телефона или ID
+                Ваш номер телефона
             </label>
             <input
                 type="tel"
@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import {mapGetters, mapMutations} from 'vuex'
+import {mapGetters, mapMutations, mapActions} from 'vuex'
 export default {
     name: "RegisterForm",
     data() {
@@ -75,25 +75,32 @@ export default {
         ...mapMutations([
             'setCurrentUser', 'setIsShowRegisterForm', 'setShowWelcomePasswordForm'
         ]),
+        ...mapActions(['phoneVerification', 'findInviterByPhone']),
         registerUser() {
             if (
                 this.pinCode.length !== 4
-                ||
-                this.pinCode !== this.rightPinCode
             ) {
                 this.isSmsInValid = true
                 return
             }
-
-            alert('Ура! Вы зарегистрированы в системе!')
-
+            // console.log('registerUser', this.getSecret, this.pinCode)
+            if (
+                this.pinCode == this.getSecret
+                ||
+                this.pinCode === this.rightPinCode
+            ) {
+                this.findInviterByPhone(this.phone)
+            } else {
+                this.isSmsInValid = true;
+            }
         },
         sendSms() {
             console.log('send Sms')
+            this.phoneVerification(this.phone)
         }
     },
     computed:{
-        ...mapGetters(["getCurrentPhone"])
+        ...mapGetters(["getCurrentPhone", 'getSecret'])
     },
     mounted() {
         this.phone = `+${this.getCurrentPhone}`

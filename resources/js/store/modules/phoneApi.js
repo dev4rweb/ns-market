@@ -1,4 +1,4 @@
-import {WORK_HOST} from "../routeConsts";
+import {LOCAL_HOST, WORK_HOST} from "../routeConsts";
 
 export default {
     state: {
@@ -17,7 +17,7 @@ export default {
                     console.log('updateUserPhysicalPersonBySms res', res)
                     if (res.data.success)
                         commit('setSecret', res.data.model.mobile_phone_confirmation_code)
-                     else
+                    else
                         commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже')
                 }).catch(err => {
                     console.log('updateUserPhysicalPersonBySms err', err)
@@ -28,6 +28,25 @@ export default {
             } else {
                 commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже')
             }
+        },
+        phoneVerification({commit}, phoneNumber) {
+            const mobilePhone = phoneNumber.replace(/[^0-9]/g, '');
+            commit('setLoading', true)
+            const isDebug = WORK_HOST === LOCAL_HOST
+            console.log('phoneVerification', mobilePhone, isDebug)
+            axios.post(`${WORK_HOST}market/phone-verification`, {
+                phone_number: mobilePhone,
+                is_debug: isDebug
+            }).then(res => {
+                console.log('phoneVerification res', res)
+                if (res.data.success) {
+                    commit('setSecret', res.data.secret)
+                }
+            }).catch(err => {
+                console.log('phoneVerification err', err)
+            }).finally(() => {
+                commit('setLoading', false)
+            });
         },
         sendFreeSms({commit}, smsObj) {
             commit('setLoading', true)

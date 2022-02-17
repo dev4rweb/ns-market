@@ -26,9 +26,10 @@
 <!--                <div class="modal-body">
 
                 </div>-->
-                <div class="modal-footer">
+                <div class="modal-footer d-flex justify-content-center">
                     <button
                         type="button"
+                        style="width: 150px"
                         class="btn btn-success"
                         data-bs-dismiss="modal"
                     >

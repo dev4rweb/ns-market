@@ -13,12 +13,13 @@ import catalogGroups from "./modules/catalogGroups";
 import lStorage from "./modules/lStorage";
 import basket from "./modules/basket";
 import orders from "./modules/orders";
+import inviter from "./modules/inviter";
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
     modules: {
         users, modals, errors, physicalPerson, phoneApi, mentor, addresses, daData,
-        feedback, catalogGroups, lStorage, basket, orders
+        feedback, catalogGroups, lStorage, basket, orders, inviter
     }
 })

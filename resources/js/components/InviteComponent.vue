@@ -11,16 +11,27 @@
 </template>
 
 <script>
+import {mapActions, mapGetters} from 'vuex'
 export default {
     name: "InviteComponent",
     props: ['invite'],
     methods: {
+        ...mapActions(['hasInviter']),
         openInvite() {
-            $(this.$refs.loginBtn).click()
-            localStorage.setItem('invite', this.invite)
+            if (this.invite) {
+                localStorage.setItem('invite', this.invite)
+            }
+            if (this.getInviter) {
+                $(this.$refs.loginBtn).click();
+            }
+
         }
     },
+    computed: {
+        ...mapGetters(['getInviter'])
+    },
     mounted() {
+        this.hasInviter()
         this.openInvite()
     }
 }
