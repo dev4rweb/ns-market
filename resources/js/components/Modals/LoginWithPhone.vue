@@ -71,12 +71,9 @@ export default {
             }
         },
         isHasInviter() {
-            this.hasInviter()
             if (this.getInviter) {
-                setTimeout(() => {
-                    this.phone = `+${this.getInviter.phone}`
-                    this.inviter_id = this.getInviter.mentor_id
-                }, 1000);
+                this.phone = `+${this.getInviter.phone}`
+                this.inviter_id = this.getInviter.mentor_id1000
             }
 
         }
@@ -85,6 +82,7 @@ export default {
         ...mapGetters(['getInviter'])
     },
     mounted() {
+        this.hasInviter()
         this.isHasInviter()
     }
 }

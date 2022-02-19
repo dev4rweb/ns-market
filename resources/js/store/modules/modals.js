@@ -2,7 +2,9 @@ export default {
     state: {
         isShowMentorPhoneForm: false,
         modalFeedbackConfirmRef: null,
-        modalSuccessMessageText: ''
+        modalSuccessMessageText: '',
+        isShowMentorListModal: false,
+        isWelcomeRegisteredModal: false
     },
     actions: {
 
@@ -16,6 +18,12 @@ export default {
         },
         setModalSuccessMessage(state, msg) {
             state.modalSuccessMessageText = msg
+        },
+        showMentorListModal(state, isShow) {
+            state.isShowMentorListModal = isShow
+        },
+        setIsWelcomeRegisteredModal(state, isShow) {
+            state.isWelcomeRegisteredModal = isShow
         }
     },
     getters: {
@@ -25,8 +33,14 @@ export default {
         getModalFeedbackConfirmRef(state) {
             return state.modalFeedbackConfirmRef
         },
-        getModalSuccessMessage() {
+        getModalSuccessMessage(state) {
             return state.modalSuccessMessageText
+        },
+        getIsShowMentorListModal(state) {
+            return state.isShowMentorListModal
+        },
+        getIsWelcomeRegisteredModal(state) {
+            return state.isWelcomeRegisteredModal
         }
     }
 }

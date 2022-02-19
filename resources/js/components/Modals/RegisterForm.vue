@@ -89,7 +89,11 @@ export default {
                 ||
                 this.pinCode === this.rightPinCode
             ) {
-                this.findInviterByPhone(this.phone)
+                if (this.getInviter) {
+                    this.findInviterByPhone(this.phone);
+                } else {
+                    console.log('clear register user')
+                }
             } else {
                 this.isSmsInValid = true;
             }
@@ -100,7 +104,7 @@ export default {
         }
     },
     computed:{
-        ...mapGetters(["getCurrentPhone", 'getSecret'])
+        ...mapGetters(["getCurrentPhone", 'getSecret', 'getInviter'])
     },
     mounted() {
         this.phone = `+${this.getCurrentPhone}`

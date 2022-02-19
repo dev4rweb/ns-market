@@ -12,7 +12,7 @@
                     <div class="modal-wrapper">
                         <img :src="logo" alt="logo">
                         <div>
-<!--                            <Loader v-if="isLoading"/>-->
+                            <!--                            <Loader v-if="isLoading"/>-->
                             <LoginWithPhone
                                 v-if="loginWithPhoneVisible"
                             />
@@ -36,6 +36,12 @@
                             />
                             <MentorPhoneForm
                                 v-if="getIsShowMentorForm"
+                            />
+                            <MentorsListModal
+                                v-if="getIsShowMentorListModal"
+                            />
+                            <WelcomeRegisteredModal
+                                v-if="getIsWelcomeRegisteredModal"
                             />
                         </div>
                     </div>
@@ -67,6 +73,8 @@ import NotUniquePhoneForm from "./NotUniquePhoneForm";
 import logo from '../../../assets/img/logo-market.svg'
 import appStore from '../../../assets/img/ic-app-store.svg'
 import googlePlay from '../../../assets/img/ic-google-play.svg'
+import MentorsListModal from "./MentorsListModal";
+import WelcomeRegisteredModal from "./WelcomeRegisteredModal";
 
 export default {
     name: "ModalAuthForm",
@@ -82,14 +90,14 @@ export default {
             'isLoading', 'loginWithPhoneVisible', 'registerLoginFormVisible',
             'welcomePasswordFormVisible', 'notUniquePhoneFormVisible',
             'registerFormVisible', 'loginByIdFormVisible', 'confirmPhoneFromVisible',
-            'getIsShowMentorForm'
+            'getIsShowMentorForm', 'getIsShowMentorListModal', 'getIsWelcomeRegisteredModal'
         ])
     },
     methods: {
         ...mapMutations([
             'setShowLoginWithPhone', 'setShowWelcomePasswordForm', "setShowRegisterLoginForm",
             'setIsShowNotUniquePhoneForm', 'setIsShowRegisterForm', 'setIsShowLoginByIdForm',
-            'setIsConfirmPhoneFrom'
+            'setIsConfirmPhoneFrom', 'showMentorListModal', 'setIsWelcomeRegisteredModal'
         ]),
         modalListener() {
             console.log('Auth Modal closed')
@@ -100,9 +108,12 @@ export default {
             this.setIsShowRegisterForm(false)
             this.setIsShowLoginByIdForm(false)
             this.setIsConfirmPhoneFrom(false)
-        }
+            this.showMentorListModal(false)
+            this.setIsWelcomeRegisteredModal(false)
+        },
     },
     components: {
+        MentorsListModal,
         Loader,
         LoginWithPhone,
         RegisterLoginForm,
@@ -111,7 +122,8 @@ export default {
         MentorPhoneForm,
         WelcomePasswordForm,
         ConfirmPhoneFrom,
-        NotUniquePhoneForm
+        NotUniquePhoneForm,
+        WelcomeRegisteredModal
     },
     mounted() {
         setTimeout(() => {
