@@ -39,7 +39,7 @@
                         class="header-btn"
                     >
                         <img class="profile-icon" src="{{asset('/images/ic-profile.png')}}" alt="profile">
-                        <span class="profile-title">{{Auth::user()->name}}</span>
+                        <span class="profile-title">{{Auth::user()->first_name}}</span>
                     </a>
                     <a class="header-btn" href="{{route('user-orders-page')}}">
                         <img class="profile-icon" src="{{asset('/images/ic-orders.png')}}" alt="profile">

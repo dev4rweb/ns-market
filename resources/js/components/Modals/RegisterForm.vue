@@ -73,7 +73,8 @@ export default {
     },
     methods: {
         ...mapMutations([
-            'setCurrentUser', 'setIsShowRegisterForm', 'setShowWelcomePasswordForm'
+            'setCurrentUser', 'setIsShowRegisterForm', 'setShowWelcomePasswordForm',
+            'setIsShowRegisterForm', 'setShowMentorPhoneForm', 'setInviter'
         ]),
         ...mapActions(['phoneVerification', 'findInviterByPhone']),
         registerUser() {
@@ -92,7 +93,10 @@ export default {
                 if (this.getInviter) {
                     this.findInviterByPhone(this.phone);
                 } else {
-                    console.log('clear register user')
+                    const mobilePhone = this.phone.replace(/[^0-9]/g, '');
+                    this.setInviter({phone: mobilePhone})
+                    this.setIsShowRegisterForm(false)
+                    this.setShowMentorPhoneForm(true)
                 }
             } else {
                 this.isSmsInValid = true;

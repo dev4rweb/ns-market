@@ -38,7 +38,7 @@ export default {
                     commit('showMentorListModal', true)
                     // alert(`Вы успешно зарегистрировались. Количество найденных наставников - ${res.data.models.length}`)
                 } else {
-
+                    console.log('inviters 0')
                 }
             }).catch(err => {
 
@@ -86,6 +86,26 @@ export default {
             console.log('registerUserWithInviter userPhone', userPhone)
             console.log('registerUserWithInviter mentorId', mentorId)
             console.log('registerUserWithInviter tempPassword', tempPassword)
+            commit('setLoading', true)
+
+            axios.post(`${WORK_HOST}market/create-inviter`, {
+                mobile_phone: userPhone,
+                password: 'password',
+                mentorId: mentorId
+            }).then(res => {
+                console.log('registerUserWithInviter res', res)
+                if (res.data.success && res.data.model) {
+                    commit('showMentorListModal', false)
+                    commit('setIsWelcomeRegisteredModal', true)
+                    localStorage.setItem('phone_user', userPhone)
+                    localStorage.setItem('password', 'password')
+                    localStorage.setItem('user_id', res.data.model.id)
+                    commit('setCurrentUser', res.data.model)
+                }
+            }).catch(err => {
+                console.log('registerUserWithInviter err ', err)
+            }).finally(()=> commit('setLoading', false));
+
 
         }
 

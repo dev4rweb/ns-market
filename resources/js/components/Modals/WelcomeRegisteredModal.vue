@@ -18,11 +18,21 @@
 </template>
 
 <script>
+import {mapActions} from 'vuex'
 export default {
     name: "WelcomeRegisteredModal",
     methods: {
+        ...mapActions(['localLogin']),
         toUserPage() {
-            window.location.href = '/user-panel'
+            const password = localStorage.getItem('password')
+            if (password) {
+                this.localLogin(password);
+            }
+            localStorage.removeItem('invite')
+            localStorage.removeItem('user_id')
+            localStorage.removeItem('phone_user')
+            localStorage.removeItem('password')
+
         }
     }
 }
