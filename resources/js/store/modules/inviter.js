@@ -79,10 +79,11 @@ export default {
                 }).finally(() => commit('setLoading', false));
             }
         },
-        registerUserWithInviter({commit, getters}) {
+        registerUserWithInviter({commit, getters, dispatch}) {
             const userPhone = getters['getInviter'].phone
             const mentorId = getters['getCurrentMentorInvite'].id
-            const tempPassword = generateTempPassword(8)
+            // const tempPassword = generateTempPassword(8)
+            const tempPassword = 'password'
             console.log('registerUserWithInviter userPhone', userPhone)
             console.log('registerUserWithInviter mentorId', mentorId)
             console.log('registerUserWithInviter tempPassword', tempPassword)
@@ -101,6 +102,11 @@ export default {
                     localStorage.setItem('password', 'password')
                     localStorage.setItem('user_id', res.data.model.id)
                     commit('setCurrentUser', res.data.model)
+                    dispatch('sendFreeSms', {
+                        mobile_phone: userPhone,
+                        message: `. \n Ваш временный пароль: \n ${tempPassword}`,
+                        modalMsgResponse: null
+                    })
                 }
             }).catch(err => {
                 console.log('registerUserWithInviter err ', err)

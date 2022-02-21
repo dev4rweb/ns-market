@@ -56,6 +56,13 @@
         >
             Назад
         </button>
+        <button
+            type="button"
+            class="btn btn-lg btn-link"
+            @click="forgotPassword"
+        >
+            Забыли пароль?
+        </button>
     </form>
 </template>
 
@@ -72,10 +79,11 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['localLogin', 'comparePassword']),
+        ...mapActions(['localLogin', 'comparePassword', 'updatePassword']),
         ...mapMutations([
             'setIsNeedToConfirmPhone', 'setShowLoginWithPhone',
-            'setShowWelcomePasswordForm', 'setIsConfirmPhoneFrom'
+            'setShowWelcomePasswordForm', 'setIsConfirmPhoneFrom',
+            'setIsForgot'
         ]),
         welcomeLogin() {
             console.log('welcomeLogin');
@@ -92,6 +100,12 @@ export default {
             console.log('backToPrevForm')
             this.setShowLoginWithPhone(true)
             this.setShowWelcomePasswordForm(false)
+        },
+
+        forgotPassword() {
+            console.log('forgot Password')
+            this.setIsForgot(true)
+            this.updatePassword('password')
         }
     },
     computed: {

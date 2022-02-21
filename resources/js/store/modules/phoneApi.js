@@ -49,24 +49,39 @@ export default {
             });
         },
         sendFreeSms({commit}, smsObj) {
-            commit('setLoading', true)
-            axios.post(`${WORK_HOST}market/send-message`, {
-                phone_number: smsObj.mobile_phone,
-                message: smsObj.message
-            }).then(res => {
-                console.log('sendFreeSms res', res)
-                if (res.data.success) {
-                    const modalSuccess = document.getElementById('modalSuccessMessage')
-                    if (modalSuccess) {
-                        commit('setModalSuccessMessage', 'Ваше сообщение успешно оправлено!')
-                        modalSuccess.click()
+            if (WORK_HOST === LOCAL_HOST) {
+                commit('setLoading', true)
+                setTimeout(() => {
+                    commit('setLoading', false);
+                    if (smsObj.modalMsgResponse) {
+                        const modalSuccess = document.getElementById('modalSuccessMessage')
+                        if (modalSuccess) {
+                            commit('setModalSuccessMessage', smsObj.modalMsgResponse)
+                            modalSuccess.click()
+                        }
                     }
-                }
-            }).catch(err => {
-                console.log('sendFreeSms err', err)
-            }).finally(() => {
-                commit('setLoading', false)
-            });
+                }, 1000);
+            } else {
+                commit('setLoading', true);
+                axios.post(`${WORK_HOST}market/send-message`, {
+                    phone_number: smsObj.mobile_phone,
+                    message: smsObj.message
+                }).then(res => {
+                    console.log('sendFreeSms res', res)
+                    if (res.data.success && smsObj.modalMsgResponse) {
+                        const modalSuccess = document.getElementById('modalSuccessMessage')
+                        if (modalSuccess) {
+                            commit('setModalSuccessMessage', smsObj.modalMsgResponse)
+                            modalSuccess.click()
+                        }
+                    }
+                }).catch(err => {
+                    console.log('sendFreeSms err', err)
+                }).finally(() => {
+                    commit('setLoading', false)
+                });
+            }
+
         }
     },
     mutations: {

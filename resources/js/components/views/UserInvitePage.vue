@@ -167,7 +167,8 @@ export default {
             // const message = this.link
             const smsObj = {
                 mobile_phone: mobilePhone,
-                message
+                message,
+                modalMsgResponse: 'Ваше сообщение успешно оправлено!'
             }
             this.sendFreeSms(smsObj)
         },

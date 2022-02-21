@@ -237,6 +237,7 @@ export default {
                 commit('setToastError', 'Что-то пошло не по плану')
             }
         },
+
         updatePassword({commit, getters, dispatch}, password) {
             commit('setLoading', true)
             const currentUser = getters['getCurrentUser']
@@ -256,7 +257,7 @@ export default {
                 commit('setLoading', false)
             });
         },
-        updatePasswordLocal({commit, getters}, password) {
+        updatePasswordLocal({commit, getters, dispatch}, password) {
             console.log('updatePasswordLocal', password)
             const currentUser = getters['getCurrentUser']
             axios.post('/api/update-password', {
@@ -265,7 +266,16 @@ export default {
             }).then(res => {
                 console.log('updatePasswordLocal', res)
                 if (res.data.success) {
-                    commit('setToastError', 'Пароль успешно изменен');
+                    if (getters['getIsForgot']) {
+                        commit('setToastError', 'Временный пароль отправлен на Ваш номер телефона')
+                        dispatch('sendFreeSms', {
+                            mobile_phone: currentUser.mobile_phone,
+                            message: `. \n Ваш временный пароль: \n ${password}`
+                        })
+                        commit('setIsForgot', false)
+                    } else {
+                        commit('setToastError', 'Пароль успешно изменен');
+                    }
                 } else {
                     commit('setToastError', res.data.message)
                 }
@@ -332,6 +342,9 @@ export default {
         }
     },
     mutations: {
+        setIsForgot(state, isForgot) {
+            state.isForgot = isForgot
+        },
         setLoading(state, isLoading) {
             state.loading = isLoading
         },
@@ -375,6 +388,7 @@ export default {
     state: {
         loading: false,
         currentUser: null,
+        isForgot: false,
         currentPhone: '+7',
         password: null,
         users: [],
@@ -388,6 +402,9 @@ export default {
         isShowConfirmPhoneFrom: false,
     },
     getters: {
+        getIsForgot(state) {
+            return state.isForgot
+        },
         isLoading(state) {
             return state.loading
         },
