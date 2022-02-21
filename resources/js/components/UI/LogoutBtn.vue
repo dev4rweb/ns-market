@@ -27,9 +27,13 @@ export default {
                         }
                         window.location.href = '/';
                     }
+
                 })
                 .catch(err => {
                     console.log('logout err', err)
+                    if (er.status === 419) {
+                        document.getElementById('logout-form').submit()
+                    }
                 })
                 .finally(() => {
                     this.setLoading(false)
