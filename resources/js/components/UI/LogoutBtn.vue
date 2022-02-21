@@ -31,7 +31,7 @@ export default {
                 })
                 .catch(err => {
                     console.log('logout err', err)
-                    if (er.status === 419) {
+                    if (err.status === 419) {
                         document.getElementById('logout-form').submit()
                     }
                 })
@@ -42,6 +42,9 @@ export default {
     },
     computed: {
         ...mapGetters(['getLSOrder'])
+    },
+    mounted() {
+        localStorage.removeItem('invite')
     }
 }
 </script>

@@ -2,6 +2,9 @@
     <div>
         <h3 class="mt-3 text-center">Вход и регистрация</h3>
         <hr class="w-100 mt-3 mb-3"/>
+        <p v-if="getMentorsInvite.length && !getCurrentMentorInvite">
+            Вы получили приглашение от
+        </p>
         <div
             v-if="getMentorsInvite.length && !getCurrentMentorInvite"
             v-for="mentor in getMentorsInvite"
@@ -9,7 +12,6 @@
             class="inviterCard mb-3"
             @click="setCurrentMentorInvite(mentor)"
         >
-            <p>Вас пригласил:</p>
             <div class="d-flex align-items-center w-100">
                 <img
                     class="me-3"
@@ -23,7 +25,7 @@
         </div>
 
         <div v-if="getCurrentMentorInvite">
-            <p>Вас пригласил:</p>
+<!--            <p>Вас пригласил:</p>-->
             <div class="d-flex align-items-center w-100">
                 <img
                     class="me-3"
