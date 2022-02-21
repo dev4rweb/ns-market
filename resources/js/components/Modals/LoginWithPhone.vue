@@ -71,11 +71,13 @@ export default {
             }
         },
         isHasInviter() {
-            if (this.getInviter) {
-                this.phone = `+${this.getInviter.phone}`
-                this.inviter_id = this.getInviter.mentor_id1000
-            }
-
+            setTimeout(() => {
+                console.log('isHasInviter', this.getInviter)
+                if (this.getInviter) {
+                    this.phone = `+${this.getInviter.phone}`;
+                    this.inviter_id = this.getInviter.mentor_id;
+                }
+            }, 1000);
         }
     },
     computed: {
