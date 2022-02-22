@@ -91,6 +91,7 @@
             <div class="d-flex justify-content-end mb-5">
                 <button
                     class="btn btn-lg btn-info"
+
                 >
                     Продолжить
                 </button>
@@ -112,7 +113,10 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['fetchPhysicalPerson'])
+        ...mapActions(['fetchPhysicalPerson']),
+        gotoOrderDelivery() {
+            window.location.href = '/order-delivery'
+        }
     },
     components: {
         NavOrder

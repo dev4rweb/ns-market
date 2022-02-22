@@ -12,3 +12,7 @@ const hostMarket = 'http://ns-market.dev4rweb.com/'
 
 export const WORK_HOST = stagingHost
 export const MARKET_DOMAIN = hostMarket
+
+// http://edost.ru/kln/help.html
+export const E_DOST_ID = 4497
+export const E_DOST_PASSWORD = "RReopLKzxMuqHWfxYrQCsT2ccJEvAeaF"
