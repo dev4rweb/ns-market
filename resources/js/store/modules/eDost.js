@@ -2,7 +2,12 @@ import {E_DOST_ID, E_DOST_PASSWORD} from "../routeConsts";
 
 export default {
     state: {
-        eDostDelivery: null
+        eDostDelivery: [
+            {id: 1, price: 250, deliveryTime: '3–5 дней', deliveryService: 'DPD', payType: 'Доставка включена в стоимость заказа. Заказы от 8 000 руб. доставляются бесплатно.'},
+            {id: 2, price: 260, deliveryTime: '2–3 дня', deliveryService: 'Почта России (наземная доставка)', payType: 'Оплата включается в стоимость заказа'},
+            {id: 3, price: 260, deliveryTime: '4–5 дней', deliveryService: 'ТК Энергия', payType: 'Оплата при получении'},
+            {id: 4, price: 270, deliveryTime: '1 день', deliveryService: 'Boxberry', payType: 'Оплата при получении'},
+        ]
     },
     actions: {
         fetchEDostDelivery({commit}, query) {

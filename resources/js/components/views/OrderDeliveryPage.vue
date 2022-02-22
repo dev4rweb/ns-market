@@ -4,34 +4,75 @@
         <div>
             <NavOrder/>
         </div>
-        <div class="card shadow blue-header-info-block mb-3 mt-5">
+        <h3 class="mt-5">Куда доставить заказ</h3>
+        <div class="card shadow blue-header-info-block mb-3">
             <div class="header-block p-3">
-                Общие сведения о заказе
+                Населённый пункт вручения заказа
             </div>
             <div class="body-block p-3">
+                <div class="form-group form-group-blue">
+                    <input
+                        type="text"
+                        class="form-control form-control-lg w-50"
+                        :class="{borderRed: isAddressInvalid}"
+                        v-model="address"
+                        id="loginFormInput"
+                        @input="isAddressInvalid = false"
+                        required
+                    >
+                    <div
+                        class="invalid-feedback"
+                        :class="{show: isAddressInvalid}"
+                    >
+                        Некорректный адрес
+                    </div>
+                </div>
+                <p>Вы можете в любой момент изменить населённый пункт</p>
             </div>
         </div>
+        <div v-if="getEDostDelivery && getEDostDelivery.length">
+            <h3 class="mt-3">Способ доставки</h3>
+            <DeliveryWayTable />
+        </div>
+
     </div>
 </template>
 
 <script>
 import NavOrder from "../UI/NavOrder";
-import {mapActions} from 'vuex'
+import DeliveryWayTable from "../UI/tables/DeliveryWayTable";
+import {mapActions, mapGetters} from 'vuex'
 export default {
     name: "OrderDeliveryPage",
+    data() {
+        return {
+            address: '',
+            isAddressInvalid: false,
+        }
+    },
     methods: {
-        ...mapActions(['fetchEDostDelivery'])
+        ...mapActions(['fetchEDostDelivery']),
+    },
+    computed: {
+        ...mapGetters(['getEDostDelivery'])
     },
     components: {
-        NavOrder
+        NavOrder, DeliveryWayTable
     },
     mounted() {
-        this.fetchEDostDelivery('')
+        // this.fetchEDostDelivery('')
     }
 }
 </script>
 
 <style lang="scss" scoped>
+.show {
+    display: block;
+}
+
+.borderRed {
+    border-color: red;
+}
 .basket-page {
     min-height: calc(100vh - 222px - 288px);
 

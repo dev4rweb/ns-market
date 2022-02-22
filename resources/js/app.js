@@ -71,6 +71,8 @@ Vue.component('expiration-date-table-item', require('./components/UI/tables/Expi
 Vue.component('discount-order-table', require('./components/UI/tables/DiscountOrderTable').default);
 Vue.component('my-orders-table', require('./components/UI/tables/MyOrdersTable').default);
 Vue.component('my-orders-table-item', require('./components/UI/tables/MyOrdersTableItem').default);
+Vue.component('delivery-way-table', require('./components/UI/tables/DeliveryWayTable').default);
+Vue.component('delivery-way-table-item', require('./components/UI/tables/DeliveryWayTableItem').default);
 Vue.component('user-data-tabs', require('./components/views/UserDataTabs').default);
 Vue.component('catalog-page', require('./components/views/CatalogPage').default);
 Vue.component('category-page', require('./components/views/CategoryPage').default);
