@@ -268,7 +268,7 @@ export default {
         changingData() {
             console.log('changingData getCurrentUser', this.getCurrentUser)
             console.log('changingData getPhysicalPerson', this.getPhysicalPerson.birthday)
-            if (this.getCurrentUser.first_name.replace(/\s/g, '').length < 2) {
+            /*if (this.getCurrentUser.first_name.replace(/\s/g, '').length < 2) {
                 this.firstNameError = 'Минимальное кол-во символов - 2'
                 this.isFirstNameInValid = true
                 return;
@@ -290,7 +290,7 @@ export default {
                 this.emailError = 'Минимальное кол-во символов - 2'
                 this.isEmailInValid = true
                 return;
-            }
+            }*/
 
             if (
                 new Date('1950-01-01').getTime() > new Date(this.getPhysicalPerson.birthday).getTime()

@@ -136,7 +136,7 @@ export default {
             // fd.set('name', newUser.name)
             // fd.set('email', newUser.email)
             fd.set('first_name', newUser.first_name)
-            // fd.set('last_name', newUser.last_name)
+            fd.set('last_name', newUser.last_name)
             // fd.set('middle_name', newUser.middle_name)
             fd.set('mobile_phone', newUser.mobile_phone)
             fd.set('password', password)
