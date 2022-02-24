@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\EDostController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -24,3 +25,4 @@ Route::apiResources([
 ]);
 Route::post('/update-password', [UserController::class, 'updatePassword']);
 Route::post('/update-user-data', [UserController::class, 'updateUserData']);
+Route::post('/delivery-services', [EDostController::class, 'getListDeliveryServices']);

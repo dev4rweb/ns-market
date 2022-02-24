@@ -15,11 +15,15 @@
                         type="text"
                         class="form-control form-control-lg w-50"
                         :class="{borderRed: isAddressInvalid}"
-                        v-model="address"
-                        id="loginFormInput"
-                        @input="isAddressInvalid = false"
+                        v-model="fastSearch"
+                        @input="cityOnInput"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                        id="dropdownCity"
+                        autocomplete="chrome-off"
                         required
                     >
+                    <DropdownCityInput/>
                     <div
                         class="invalid-feedback"
                         :class="{show: isAddressInvalid}"
@@ -35,37 +39,83 @@
             <DeliveryWayTable />
         </div>
 
+        <div class="d-flex justify-content-center">
+            <button class="btn btn-lg btn-link">Изменить способ доставки</button>
+        </div>
+
+        <div class="mt-3 mb-5">
+            <RecipientAddress />
+        </div>
+
+        <div class="mt-3 mb-5">
+            <RecipientInfo />
+        </div>
+
+        <div class="mb-5 d-flex justify-content-end">
+            <button
+                style="width: 206px;"
+                class="btn btn-lg btn-info"
+            >
+                Продолжить
+            </button>
+        </div>
+
     </div>
 </template>
 
 <script>
+import RecipientAddress from "../UI/RecipientAddress";
+import RecipientInfo from "../UI/RecipientInfo";
+import DropdownCityInput from "../DropdownCityInput";
 import NavOrder from "../UI/NavOrder";
 import DeliveryWayTable from "../UI/tables/DeliveryWayTable";
-import {mapActions, mapGetters} from 'vuex'
+import {mapActions, mapGetters, mapMutations} from 'vuex'
 export default {
     name: "OrderDeliveryPage",
     data() {
         return {
-            address: '',
             isAddressInvalid: false,
         }
     },
     methods: {
-        ...mapActions(['fetchEDostDelivery']),
+        ...mapActions(['fetchEDostDelivery', 'fetchDaDataAddress']),
+        ...mapMutations(['setFastSearchAddress']),
+        cityOnInput() {
+            this.isAddressInvalid = false
+            this.fetchDaDataAddress({
+                query: this.getFastSearchAddress
+            })
+        }
     },
     computed: {
-        ...mapGetters(['getEDostDelivery'])
+        ...mapGetters(['getEDostDelivery', 'getFastSearchAddress']),
+        fastSearch: {
+            get() {
+                return this.getFastSearchAddress
+            },
+            set(val) {
+                this.setFastSearchAddress(val)
+            }
+        }
     },
     components: {
-        NavOrder, DeliveryWayTable
+        NavOrder, DeliveryWayTable, DropdownCityInput, RecipientAddress,
+        RecipientInfo
     },
     mounted() {
-        // this.fetchEDostDelivery('')
+        this.fetchEDostDelivery('')
     }
 }
 </script>
 
 <style lang="scss" scoped>
+.btn-link{
+    font-style: normal;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 22px;
+    color: #038ED7;
+}
 .show {
     display: block;
 }

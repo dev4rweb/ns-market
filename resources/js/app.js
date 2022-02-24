@@ -64,6 +64,8 @@ Vue.component('nav-order', require('./components/UI/NavOrder').default);
 Vue.component('order-sum-info', require('./components/UI/OrderSumInfo').default);
 Vue.component('dear-friends-banner', require('./components/UI/DearFriendsBanner').default);
 Vue.component('logout-btn', require('./components/UI/LogoutBtn').default);
+Vue.component('recipient-address', require('./components/UI/RecipientAddress').default);
+Vue.component('recipient-info', require('./components/UI/RecipientInfo').default);
 Vue.component('order-data-table', require('./components/UI/tables/OrderDataTable').default);
 Vue.component('order-data-table-item', require('./components/UI/tables/OrderDataTableItem').default);
 Vue.component('expiration-date-table', require('./components/UI/tables/ExpirationDateTable').default);
