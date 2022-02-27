@@ -497,7 +497,8 @@ export default {
         },
         cityOnInput() {
             this.fetchDaDataAddress({
-                query: this.getFastSearchAddress
+                query: this.getFastSearchAddress,
+                fromOrderDelivery: false
             })
         }
     },

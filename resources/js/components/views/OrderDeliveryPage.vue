@@ -39,20 +39,44 @@
             <DeliveryWayTable />
         </div>
 
-        <div class="d-flex justify-content-center">
+        <div v-if="getDpdOffices && getDpdOffices.length">
+            <DPDList />
+        </div>
+
+        <div
+            class="d-flex justify-content-center"
+            v-if="getEDostDelivery"
+        >
             <button class="btn btn-lg btn-link">Изменить способ доставки</button>
         </div>
 
-        <div class="mt-3 mb-5">
+        <div
+            v-if="getEDostDelivery"
+            class="mt-3 mb-5"
+        >
             <RecipientAddress />
         </div>
 
-        <div class="mt-3 mb-5">
+        <div
+            class="mt-3 mb-5"
+            v-if="getEDostDelivery"
+        >
             <RecipientInfo />
         </div>
 
         <div class="mb-5 d-flex justify-content-end">
             <button
+                style="width: 206px;"
+                class="btn btn-lg btn-info"
+                @click="findDeliveries"
+            >
+                Подтвердить адрес
+            </button>
+        </div>
+
+        <div class="mb-5 d-flex justify-content-end">
+            <button
+                v-if="getEDostDelivery"
                 style="width: 206px;"
                 class="btn btn-lg btn-info"
             >
@@ -70,6 +94,7 @@ import DropdownCityInput from "../DropdownCityInput";
 import NavOrder from "../UI/NavOrder";
 import DeliveryWayTable from "../UI/tables/DeliveryWayTable";
 import {mapActions, mapGetters, mapMutations} from 'vuex'
+import DPDList from "../UI/DPDList";
 export default {
     name: "OrderDeliveryPage",
     data() {
@@ -78,17 +103,22 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['fetchEDostDelivery', 'fetchDaDataAddress']),
+        ...mapActions(['fetchDaDataAddress', 'fetchEDostDelivery']),
         ...mapMutations(['setFastSearchAddress']),
         cityOnInput() {
             this.isAddressInvalid = false
             this.fetchDaDataAddress({
-                query: this.getFastSearchAddress
+                query: this.getFastSearchAddress,
+                fromOrderDelivery: true
             })
+        },
+        findDeliveries() {
+            this.fetchEDostDelivery('')
         }
     },
     computed: {
-        ...mapGetters(['getEDostDelivery', 'getFastSearchAddress']),
+        ...mapGetters(['getEDostDelivery', 'getFastSearchAddress', 'getEDostDelivery',
+        'getDpdOffices']),
         fastSearch: {
             get() {
                 return this.getFastSearchAddress
@@ -100,11 +130,8 @@ export default {
     },
     components: {
         NavOrder, DeliveryWayTable, DropdownCityInput, RecipientAddress,
-        RecipientInfo
+        RecipientInfo, DPDList
     },
-    mounted() {
-        this.fetchEDostDelivery('')
-    }
 }
 </script>
 

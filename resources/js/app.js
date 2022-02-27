@@ -61,6 +61,7 @@ Vue.component('back-btn', require('./components/UI/BackBtn').default);
 Vue.component('basket-btn', require('./components/UI/BasketBtn').default);
 Vue.component('program-components', require('./components/UI/ProgramComponents').default);
 Vue.component('nav-order', require('./components/UI/NavOrder').default);
+Vue.component('dpd-list', require('./components/UI/DPDList').default);
 Vue.component('order-sum-info', require('./components/UI/OrderSumInfo').default);
 Vue.component('dear-friends-banner', require('./components/UI/DearFriendsBanner').default);
 Vue.component('logout-btn', require('./components/UI/LogoutBtn').default);

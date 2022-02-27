@@ -8,8 +8,8 @@
         </th>
         <td
             class="p-3 text-center"
+            v-html="delivery.deliveryTime"
         >
-            {{ delivery.deliveryTime }}
         </td>
         <td
             class="p-3 text-center"

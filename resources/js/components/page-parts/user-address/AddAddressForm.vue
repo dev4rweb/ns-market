@@ -476,7 +476,8 @@ export default {
         cityOnInput() {
             this.isCityInvalid = false
             this.fetchDaDataAddress({
-                query: this.getFastSearchAddress
+                query: this.getFastSearchAddress,
+                fromOrderDelivery: false
             })
         }
     },

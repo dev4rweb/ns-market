@@ -18,7 +18,7 @@ export default {
         }
     },
     actions: {
-        fetchDaDataAddress({commit}, queryObj) {
+        fetchDaDataAddress({commit, dispatch}, queryObj) {
             const url = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address";
             const token = "90222d690c2ffcb6923cb1fc7f3f67ebc4fddf2c";
             const query = "москва хабар";
