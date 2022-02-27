@@ -14,20 +14,56 @@ export default {
         dpdNum: null
     },
     actions: {
-        fetchEDostDelivery({commit, getters}, query) {
+        fetchEDostDelivery({commit, getters, dispatch}, query) {
             const currentDaDataAddress = getters['getCurrentDaDataAddress']
             if (currentDaDataAddress && currentDaDataAddress.city) {
                 commit('setLoading', true);
+                const weight = getters['getWeightOrder'] ?
+                    parseFloat(getters['getWeightOrder']) < 1 ? 1:
+                        parseFloat(getters['getWeightOrder']) : 1
+                console.log(weight.toFixed(0), typeof weight)
                 const q ={
                     edost_to_city: currentDaDataAddress.city,
-                    edost_weight: 1,
+                    edost_weight: weight.toFixed(0),
                     edost_strah: 0,
                     edost_rus: 1,
                     edost_kod: "1",
                     edost_lenght: '',
                     edost_width: '',
                     edost_height: '',
-                    edost_zip: '101000',
+                    edost_zip: currentDaDataAddress.postal_code,
+                }
+                // axios.post('http://edost-lara/api/', q)
+                axios.post('http://edost-lara.dev4rweb.com/api/', q)
+                    .then(res => {
+                        console.log('fetchEDostDelivery res', res)
+                        if (res.data.qty_company > 0) {
+                            commit('createEDostDeliveryObject', res.data)
+                        }
+                        if (res.data.qty_company === 0 && res.data.stat === 0) {
+                            // dispatch('fetchEDostDeliveryByRegion', weight)
+                        }
+                    }).catch(err => {
+                    console.log('fetchEDostDelivery err', err)
+                }).finally(() => commit('setLoading', false));
+            } else {
+                commit('setToastError', 'Dadata is empty')
+            }
+        },
+        fetchEDostDeliveryByRegion({commit, getters}, weight) {
+            const currentDaDataAddress = getters['getCurrentDaDataAddress']
+            if (currentDaDataAddress && currentDaDataAddress.region) {
+                commit('setLoading', true);
+                const q ={
+                    edost_to_city: currentDaDataAddress.region,
+                    edost_weight: weight.toFixed(0),
+                    edost_strah: 0,
+                    edost_rus: 1,
+                    edost_kod: "1",
+                    edost_lenght: '',
+                    edost_width: '',
+                    edost_height: '',
+                    edost_zip: currentDaDataAddress.postal_code,
                 }
                 // axios.post('http://edost-lara/api/', q)
                 axios.post('http://edost-lara.dev4rweb.com/api/', q)
@@ -43,7 +79,6 @@ export default {
                 commit('setToastError', 'Dadata is empty')
             }
         },
-
     },
     mutations: {
         setEDostDelivery(state, address) {
@@ -78,7 +113,10 @@ export default {
                     state.dpdOffices = offices
                 }
             }
-            state.eDostDelivery = companies
+            state.eDostDelivery = companies.sort((a,b) =>
+                (parseFloat(a.price) > parseFloat(b.price)) ? 1 :
+                    (parseFloat(a.price) < parseFloat(b.price)) ? -1 : 0
+            )
         },
     },
     getters: {

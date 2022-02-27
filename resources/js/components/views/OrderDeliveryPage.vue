@@ -66,6 +66,7 @@
 
         <div class="mb-5 d-flex justify-content-end">
             <button
+                v-if="!getEDostDelivery"
                 style="width: 206px;"
                 class="btn btn-lg btn-info"
                 @click="findDeliveries"
@@ -103,7 +104,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['fetchDaDataAddress', 'fetchEDostDelivery']),
+        ...mapActions(['fetchDaDataAddress', 'fetchEDostDelivery', 'fetchPhysicalPerson']),
         ...mapMutations(['setFastSearchAddress']),
         cityOnInput() {
             this.isAddressInvalid = false
@@ -132,6 +133,11 @@ export default {
         NavOrder, DeliveryWayTable, DropdownCityInput, RecipientAddress,
         RecipientInfo, DPDList
     },
+    mounted() {
+        if (window.User) {
+            this.fetchPhysicalPerson()
+        }
+    }
 }
 </script>
 

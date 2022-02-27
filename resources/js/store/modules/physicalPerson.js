@@ -32,6 +32,9 @@ export default {
                         if (window.location.href.includes('/user-orders-panel/save')) {
                             dispatch('createDraftOrderOnServer')
                         }
+                        if (window.location.href.includes('/order-delivery')) {
+                            dispatch('fetchAllAddresses')
+                        }
                         dispatch('getCustomerOrdersByUserId')
                     }
                 }).catch(err => {

@@ -4,7 +4,25 @@
             Адрес получателя
         </div>
         <div class="body-block p-3">
-            <button class="btn btn-lg bth-link btn-link-blue mb-3">
+            <UserAddressItem
+                v-if="getAddresses && isShowMyAddresses"
+                v-for="(address, i) in getAddresses"
+                :address="address"
+                :index="i"
+                :key="address.id"
+            />
+            <button
+                class="btn btn-lg bth-link btn-link-blue mb-3"
+                v-if="isShowMyAddresses"
+                @click="isShowMyAddresses = false"
+            >
+                Скрыть список «Мои адреса»
+            </button>
+            <button
+                v-if="!isShowMyAddresses"
+                @click="isShowMyAddresses = true"
+                class="btn btn-lg bth-link btn-link-blue mb-3"
+            >
                 Выбрать из списка «Мои адреса»
             </button>
             <div class="form-group form-group-blue mb-3">
@@ -115,6 +133,8 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
+import UserAddressItem from "../page-parts/user-address/UserAddressItem";
 export default {
     name: "RecipientAddress",
     data() {
@@ -128,8 +148,15 @@ export default {
             building: '', // корпус
             buildingType: '', // строение
             flat: '',
-            office: ''
+            office: '',
+            isShowMyAddresses: false
         }
+    },
+    computed: {
+        ...mapGetters(['getAddresses'])
+    },
+    components: {
+        UserAddressItem
     }
 }
 </script>
