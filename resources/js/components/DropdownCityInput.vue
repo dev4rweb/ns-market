@@ -12,7 +12,8 @@
         >
             <a
                 class="dropdown-item"
-                href="#"
+                href=""
+                @click="selectedTag"
             >
                 {{address.value}}
             </a>
@@ -31,6 +32,10 @@ export default {
             this.setCurrentDaDataAddress(address.data)
             this.setFastSearchAddress(address.value)
             this.setIsSearchingDaDataAddress(true)
+        },
+        selectedTag(e) {
+            console.log('selectedTag')
+            e.preventDefault()
         }
     },
     computed: {

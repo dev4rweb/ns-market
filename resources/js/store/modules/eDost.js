@@ -1,5 +1,4 @@
-import {E_DOST_ID, E_DOST_PASSWORD, WORK_HOST} from "../routeConsts";
-import {encode, decode, labels} from 'windows-1252';
+import {locations_data} from "../utils/location_data";
 
 export default {
     state: {
@@ -41,7 +40,7 @@ export default {
                             commit('createEDostDeliveryObject', res.data)
                         }
                         if (res.data.qty_company === 0 && res.data.stat === 0) {
-                            // dispatch('fetchEDostDeliveryByRegion', weight)
+                            dispatch('fetchEDostDeliveryByRegion', weight)
                         }
                     }).catch(err => {
                     console.log('fetchEDostDelivery err', err)
@@ -55,7 +54,7 @@ export default {
             if (currentDaDataAddress && currentDaDataAddress.region) {
                 commit('setLoading', true);
                 const q ={
-                    edost_to_city: currentDaDataAddress.region,
+                    edost_to_city: `${currentDaDataAddress.region} область`,
                     edost_weight: weight.toFixed(0),
                     edost_strah: 0,
                     edost_rus: 1,

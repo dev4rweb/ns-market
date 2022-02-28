@@ -9,7 +9,10 @@
             <div class="header-block p-3">
                 Населённый пункт вручения заказа
             </div>
-            <div class="body-block p-3">
+            <form
+                @submit.prevent="findDeliveries"
+                class="body-block p-3"
+            >
                 <div class="form-group form-group-blue">
                     <input
                         type="text"
@@ -32,15 +35,15 @@
                     </div>
                 </div>
                 <p>Вы можете в любой момент изменить населённый пункт</p>
-            </div>
+            </form>
         </div>
         <div v-if="getEDostDelivery && getEDostDelivery.length">
             <h3 class="mt-3">Способ доставки</h3>
-            <DeliveryWayTable />
+            <DeliveryWayTable/>
         </div>
 
         <div v-if="getDpdOffices && getDpdOffices.length">
-            <DPDList />
+            <DPDList/>
         </div>
 
         <div
@@ -54,14 +57,14 @@
             v-if="getEDostDelivery"
             class="mt-3 mb-5"
         >
-            <RecipientAddress />
+            <RecipientAddress/>
         </div>
 
         <div
             class="mt-3 mb-5"
             v-if="getEDostDelivery"
         >
-            <RecipientInfo />
+            <RecipientInfo/>
         </div>
 
         <div class="mb-5 d-flex justify-content-end">
@@ -96,6 +99,8 @@ import NavOrder from "../UI/NavOrder";
 import DeliveryWayTable from "../UI/tables/DeliveryWayTable";
 import {mapActions, mapGetters, mapMutations} from 'vuex'
 import DPDList from "../UI/DPDList";
+import {locations_data} from "../../store/utils/location_data";
+
 export default {
     name: "OrderDeliveryPage",
     data() {
@@ -105,7 +110,7 @@ export default {
     },
     methods: {
         ...mapActions(['fetchDaDataAddress', 'fetchEDostDelivery', 'fetchPhysicalPerson']),
-        ...mapMutations(['setFastSearchAddress']),
+        ...mapMutations(['setFastSearchAddress', 'setEDostDelivery']),
         cityOnInput() {
             this.isAddressInvalid = false
             this.fetchDaDataAddress({
@@ -114,12 +119,14 @@ export default {
             })
         },
         findDeliveries() {
-            this.fetchEDostDelivery('')
-        }
+            if (this.getCurrentDaDataAddress)
+                this.fetchEDostDelivery('')
+        },
+
     },
     computed: {
         ...mapGetters(['getEDostDelivery', 'getFastSearchAddress', 'getEDostDelivery',
-        'getDpdOffices']),
+            'getDpdOffices', 'getCurrentDaDataAddress']),
         fastSearch: {
             get() {
                 return this.getFastSearchAddress
@@ -137,18 +144,20 @@ export default {
         if (window.User) {
             this.fetchPhysicalPerson()
         }
+        console.log('OrderDeliveryPage', locations_data.find(i => i[3].includes('Тульская')))
     }
 }
 </script>
 
 <style lang="scss" scoped>
-.btn-link{
+.btn-link {
     font-style: normal;
     font-weight: 600;
     font-size: 22px;
     line-height: 22px;
     color: #038ED7;
 }
+
 .show {
     display: block;
 }
@@ -156,6 +165,7 @@ export default {
 .borderRed {
     border-color: red;
 }
+
 .basket-page {
     min-height: calc(100vh - 222px - 288px);
 
