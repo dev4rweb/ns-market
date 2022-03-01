@@ -1,5 +1,8 @@
 <template>
-    <div class="card shadow blue-header-info-block mb-3">
+    <div
+        v-if="getRecipientInfoData"
+        class="card shadow blue-header-info-block mb-3"
+    >
         <div class="header-block p-3">
             Информация о получателе
         </div>
@@ -10,7 +13,7 @@
                 <input
                     type="text"
                     class="form-control form-control-lg w-50"
-                    v-model="last_name"
+                    v-model="getRecipientInfoData.last_name"
                     placeholder="напр., Иванов"
                 >
             </div>
@@ -20,7 +23,7 @@
                 <input
                     type="text"
                     class="form-control form-control-lg w-50"
-                    v-model="first_name"
+                    v-model="getRecipientInfoData.first_name"
                     placeholder="напр., Иван"
                 >
             </div>
@@ -30,7 +33,7 @@
                 <input
                     type="text"
                     class="form-control form-control-lg w-50"
-                    v-model="middle_name"
+                    v-model="getRecipientInfoData.middle_name"
                     placeholder="напр., Иванович"
                 >
             </div>
@@ -40,7 +43,7 @@
                 <input
                     type="text"
                     class="form-control form-control-lg w-50"
-                    v-model="phone"
+                    v-model="getRecipientInfoData.phone"
                     placeholder="+7 (___) ___ - __ - __"
                 >
             </div>
@@ -50,7 +53,7 @@
                 <input
                     type="text"
                     class="form-control form-control-lg w-50"
-                    v-model="email"
+                    v-model="getRecipientInfoData.email"
                     placeholder="example@yourmail.com"
                 >
             </div>
@@ -59,16 +62,11 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 export default {
     name: "RecipientInfo",
-    data() {
-        return {
-            last_name: '',
-            first_name: '',
-            middle_name: '',
-            phone: '',
-            email: '',
-        }
+    computed: {
+        ...mapGetters(['getRecipientInfoData'])
     }
 }
 </script>

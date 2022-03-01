@@ -10,6 +10,7 @@
                     v-if="getDpdOffices.length"
                     v-for="office in getDpdOffices"
                     :key="office.id"
+                    @click="selectCurrentDpdOffice(office)"
                 >
                     <div>
                         <h4 class="dpd-title">
@@ -30,10 +31,19 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import {mapGetters, mapMutations} from 'vuex'
 
 export default {
     name: "DPDList",
+    methods: {
+        ...mapMutations(['setCurrentDpdOffice', 'setIsShowDpdData', 'setIsShowRecipientData']),
+        selectCurrentDpdOffice(dpdOffice) {
+            console.log('selectCurrentDpdOffice', dpdOffice)
+            this.setCurrentDpdOffice(dpdOffice)
+            this.setIsShowDpdData(false)
+            this.setIsShowRecipientData(true)
+        }
+    },
     computed: {
         ...mapGetters(['getDpdOffices'])
     }
@@ -46,5 +56,22 @@ export default {
     }
     .dpd-code, .dpd-body {
         font-size: 20px;
+    }
+
+    .list-group-item {
+        -webkit-transition: all .3s;
+        -moz-transition: all .3s;
+        -ms-transition: all .3s;
+        -o-transition: all .3s;
+        transition: all .3s;
+
+        &:hover {
+            cursor: pointer;
+            -webkit-transform: scale(1.05, 1.05);
+            -moz-transform: scale(1.05, 1.05);
+            -ms-transform: scale(1.05, 1.05);
+            -o-transform: scale(1.05, 1.05);
+            transform: scale(1.05, 1.05);
+        }
     }
 </style>

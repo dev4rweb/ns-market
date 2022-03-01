@@ -37,50 +37,79 @@
                 <p>Вы можете в любой момент изменить населённый пункт</p>
             </form>
         </div>
-        <div v-if="getEDostDelivery && getEDostDelivery.length">
-            <h3 class="mt-3">Способ доставки</h3>
-            <DeliveryWayTable/>
-        </div>
 
-        <div v-if="getDpdOffices && getDpdOffices.length">
-            <DPDList/>
+        <div
+            class="card shadow blue-header-info-block mb-3"
+            v-if="getAddresses && getIsShowMyAddresses"
+        >
+            <div class="header-block p-3">
+                Мои адреса:
+            </div>
+            <div
+                class="body-block p-3"
+            >
+                <div class="form-group form-group-blue">
+                    <UserAddressList
+                        v-for="(address, i) in getAddresses"
+                        :address="address"
+                        :index="i"
+                        :key="address.id"
+                    />
+                </div>
+            </div>
         </div>
 
         <div
             class="d-flex justify-content-center"
             v-if="getEDostDelivery"
         >
-            <button class="btn btn-lg btn-link">Изменить способ доставки</button>
+            <button
+                class="btn btn-lg btn-link"
+                @click="changeDeliveryWay"
+            >
+                Изменить способ доставки
+            </button>
+        </div>
+
+        <div v-if="getEDostDelivery && getEDostDelivery.length && getIsShowDeliveryWayTable">
+            <h3 class="mt-3">Способ доставки</h3>
+            <DeliveryWayTable/>
+        </div>
+
+        <div v-if="getDpdOffices && getDpdOffices.length && getIsShowDpdData">
+            <DPDList/>
         </div>
 
         <div
-            v-if="getEDostDelivery"
             class="mt-3 mb-5"
+            v-if="getEDostDelivery && getIsShowRecipientData"
         >
             <RecipientAddress/>
+
+
         </div>
 
         <div
-            class="mt-3 mb-5"
-            v-if="getEDostDelivery"
+            class="mt-5 mb-5"
+            v-if="getEDostDelivery && getIsShowRecipientData"
         >
             <RecipientInfo/>
         </div>
 
-        <div class="mb-5 d-flex justify-content-end">
-            <button
-                v-if="!getEDostDelivery"
-                style="width: 206px;"
-                class="btn btn-lg btn-info"
-                @click="findDeliveries"
-            >
-                Подтвердить адрес
-            </button>
-        </div>
+        <!--        <div class="mb-5 d-flex justify-content-end">
+                    <button
+                        v-if="!getEDostDelivery"
+                        style="width: 206px;"
+                        class="btn btn-lg btn-info"
+                        @click="findDeliveries"
+                    >
+                        Подтвердить адрес
+                    </button>
+                </div>-->
 
-        <div class="mb-5 d-flex justify-content-end">
+        <div class="mb-5 d-flex justify-content-center">
             <button
-                v-if="getEDostDelivery"
+                v-if="getEDostDelivery && getIsShowRecipientData"
                 style="width: 206px;"
                 class="btn btn-lg btn-info"
             >
@@ -99,7 +128,7 @@ import NavOrder from "../UI/NavOrder";
 import DeliveryWayTable from "../UI/tables/DeliveryWayTable";
 import {mapActions, mapGetters, mapMutations} from 'vuex'
 import DPDList from "../UI/DPDList";
-import {locations_data} from "../../store/utils/location_data";
+import UserAddressList from "../UI/UserAddressList";
 
 export default {
     name: "OrderDeliveryPage",
@@ -110,7 +139,8 @@ export default {
     },
     methods: {
         ...mapActions(['fetchDaDataAddress', 'fetchEDostDelivery', 'fetchPhysicalPerson']),
-        ...mapMutations(['setFastSearchAddress', 'setEDostDelivery']),
+        ...mapMutations(['setFastSearchAddress', 'setEDostDelivery', 'setCurrentDaDataAddress',
+            'setIsShowMyAddresses', 'setIsShowDeliveryWayTable', 'setIsShowDpdData']),
         cityOnInput() {
             this.isAddressInvalid = false
             this.fetchDaDataAddress({
@@ -122,11 +152,35 @@ export default {
             if (this.getCurrentDaDataAddress)
                 this.fetchEDostDelivery('')
         },
+        changeDeliveryWay() {
+            console.log('changeDeliveryWay', this.getCurrentDaDataAddress)
+            this.setCurrentDaDataAddress({
+                city_with_type: '',
+                postal_code: '',
+                street_with_type: '',
+                area_with_type: '',
+                house: '',
+                house_type_full: '',
+                country: '',
+                block: '',
+                region: '',
+                flat: '',
+                settlement_with_type: '',
+                street: '',
+                building: '',
+                city: ''
+            })
+            this.setFastSearchAddress('')
+            this.setIsShowMyAddresses(true)
+            this.setIsShowDpdData(false)
+            this.setEDostDelivery(null)
 
+        }
     },
     computed: {
         ...mapGetters(['getEDostDelivery', 'getFastSearchAddress', 'getEDostDelivery',
-            'getDpdOffices', 'getCurrentDaDataAddress']),
+            'getDpdOffices', 'getCurrentDaDataAddress', 'getIsShowRecipientData',
+            'getIsShowDpdData', 'getAddresses', 'getIsShowMyAddresses', 'getIsShowDeliveryWayTable']),
         fastSearch: {
             get() {
                 return this.getFastSearchAddress
@@ -138,13 +192,13 @@ export default {
     },
     components: {
         NavOrder, DeliveryWayTable, DropdownCityInput, RecipientAddress,
-        RecipientInfo, DPDList
+        RecipientInfo, DPDList, UserAddressList
     },
     mounted() {
         if (window.User) {
             this.fetchPhysicalPerson()
         }
-        console.log('OrderDeliveryPage', locations_data.find(i => i[3].includes('Тульская')))
+        // console.log('OrderDeliveryPage', locations_data.find(i => i[3].includes('Тульская')))
     }
 }
 </script>

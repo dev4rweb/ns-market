@@ -14,7 +14,10 @@ export default {
             block: '',
             region: '',
             flat: '',
-            settlement_with_type: null
+            settlement_with_type: null,
+            street: '',
+            building: '',
+            city: ''
         }
     },
     actions: {

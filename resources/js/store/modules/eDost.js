@@ -1,4 +1,3 @@
-import {locations_data} from "../utils/location_data";
 
 export default {
     state: {
@@ -10,17 +9,21 @@ export default {
         ]*/
         eDostDelivery: null,
         dpdOffices: null,
-        dpdNum: null
+        currentDpdOffice: null,
+        isShowMyAddresses: true,
+        isShowRecipientData: false,
+        isShowDpdData: false,
+        isShowDeliveryWayTable: false,
     },
     actions: {
         fetchEDostDelivery({commit, getters, dispatch}, query) {
             const currentDaDataAddress = getters['getCurrentDaDataAddress']
+            const weight = getters['getWeightOrder'] ?
+                parseFloat(getters['getWeightOrder']) < 1 ? 1:
+                    parseFloat(getters['getWeightOrder']) : 1
+            console.log(weight.toFixed(0), typeof weight)
             if (currentDaDataAddress && currentDaDataAddress.city) {
                 commit('setLoading', true);
-                const weight = getters['getWeightOrder'] ?
-                    parseFloat(getters['getWeightOrder']) < 1 ? 1:
-                        parseFloat(getters['getWeightOrder']) : 1
-                console.log(weight.toFixed(0), typeof weight)
                 const q ={
                     edost_to_city: currentDaDataAddress.city,
                     edost_weight: weight.toFixed(0),
@@ -38,6 +41,8 @@ export default {
                         console.log('fetchEDostDelivery res', res)
                         if (res.data.qty_company > 0) {
                             commit('createEDostDeliveryObject', res.data)
+                            commit('setIsShowMyAddresses', false)
+                            commit('setIsShowDeliveryWayTable', true)
                         }
                         if (res.data.qty_company === 0 && res.data.stat === 0) {
                             dispatch('fetchEDostDeliveryByRegion', weight)
@@ -45,6 +50,8 @@ export default {
                     }).catch(err => {
                     console.log('fetchEDostDelivery err', err)
                 }).finally(() => commit('setLoading', false));
+            } else if (currentDaDataAddress.region) {
+                dispatch('fetchEDostDeliveryByRegion', weight)
             } else {
                 commit('setToastError', 'Dadata is empty')
             }
@@ -70,6 +77,8 @@ export default {
                         console.log('fetchEDostDelivery res', res)
                         if (res.data.qty_company > 0) {
                             commit('createEDostDeliveryObject', res.data)
+                            commit('setIsShowMyAddresses', false)
+                            commit('setIsShowDeliveryWayTable', true)
                         }
                     }).catch(err => {
                     console.log('fetchEDostDelivery err', err)
@@ -117,6 +126,21 @@ export default {
                     (parseFloat(a.price) < parseFloat(b.price)) ? -1 : 0
             )
         },
+        setIsShowMyAddresses(state, isShow) {
+            state.isShowMyAddresses = isShow
+        },
+        setIsShowRecipientData(state, isShow) {
+            state.isShowRecipientData = isShow
+        },
+        setIsShowDpdData(state, isShow) {
+            state.isShowDpdData = isShow
+        },
+        setIsShowDeliveryWayTable(state, isShow) {
+            state.isShowDeliveryWayTable = isShow
+        },
+        setCurrentDpdOffice(state, office) {
+            state.currentDpdOffice = office
+        }
     },
     getters: {
         getEDostDelivery(state) {
@@ -124,6 +148,21 @@ export default {
         },
         getDpdOffices(state) {
             return state.dpdOffices
+        },
+        getIsShowMyAddresses(state) {
+            return state.isShowMyAddresses
+        },
+        getIsShowRecipientData(state) {
+            return state.isShowRecipientData
+        },
+        getIsShowDpdData(state) {
+            return state.isShowDpdData
+        },
+        getIsShowDeliveryWayTable(state) {
+            return state.isShowDeliveryWayTable
+        },
+        getCurrentDpdOffice(state) {
+            return state.currentDpdOffice
         }
     }
 }

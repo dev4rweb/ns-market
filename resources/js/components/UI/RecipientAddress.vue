@@ -4,137 +4,145 @@
             Адрес получателя
         </div>
         <div class="body-block p-3">
-            <UserAddressItem
-                v-if="getAddresses && isShowMyAddresses"
-                v-for="(address, i) in getAddresses"
-                :address="address"
-                :index="i"
-                :key="address.id"
-            />
-            <button
+<!--            <button
                 class="btn btn-lg bth-link btn-link-blue mb-3"
-                v-if="isShowMyAddresses"
-                @click="isShowMyAddresses = false"
+                v-if="!getEDostDelivery"
+                @click="showMyAddresses(false)"
             >
                 Скрыть список «Мои адреса»
             </button>
             <button
-                v-if="!isShowMyAddresses"
-                @click="isShowMyAddresses = true"
+                v-if="!getEDostDelivery"
+                @click="showMyAddresses(true)"
                 class="btn btn-lg bth-link btn-link-blue mb-3"
             >
                 Выбрать из списка «Мои адреса»
-            </button>
-            <div class="form-group form-group-blue mb-3">
-                <label>Страна</label>
-                <input
-                    type="text"
-                    class="form-control form-control-lg w-50"
-                    v-model="country"
-                    placeholder="напр., Россия"
-                >
-            </div>
+            </button>-->
 
-            <div class="form-group form-group-blue mb-3">
-                <label>Индекс</label>
-                <input
-                    type="text"
-                    class="form-control form-control-lg w-50"
-                    v-model="postcode"
-                    placeholder="напр., 300000"
-                >
-            </div>
 
-            <div class="form-group form-group-blue mb-3">
-                <label>Край, область</label>
-                <input
-                    type="text"
-                    class="form-control form-control-lg w-50"
-                    v-model="region"
-                    placeholder="напр., Тульская обл."
-                >
-            </div>
-
-            <div class="form-group form-group-blue mb-3">
-                <label>Населённый пункт</label>
-                <input
-                    type="text"
-                    class="form-control form-control-lg w-50"
-                    v-model="city"
-                    placeholder="напр., г. Тула"
-                >
-            </div>
-
-            <div class="form-group form-group-blue mb-3">
-                <label>Улица</label>
-                <input
-                    type="text"
-                    class="form-control form-control-lg w-50"
-                    v-model="street"
-                    placeholder="напр., ул. Ленина"
-                >
-            </div>
-
-            <div class="d-flex justify-content-between w-50">
+            <div>
                 <div class="form-group form-group-blue mb-3">
-                    <label>Дом</label>
+                    <label>Страна</label>
                     <input
                         type="text"
-                        class="form-control form-control-lg"
-                        v-model="house"
-                        placeholder="напр., д. 18"
-                    >
-                </div>
-
-                <div class="form-group form-group-blue mb-3 ms-3 me-3">
-                    <label>Корпус</label>
-                    <input
-                        type="text"
-                        class="form-control form-control-lg"
-                        v-model="building"
-                        placeholder="напр., к. 3"
+                        class="form-control form-control-lg w-50"
+                        v-model="getCurrentDaDataAddress.country"
+                        placeholder="напр., Россия"
+                        disabled
                     >
                 </div>
 
                 <div class="form-group form-group-blue mb-3">
-                    <label>Строение</label>
+                    <label>Индекс</label>
                     <input
                         type="text"
-                        class="form-control form-control-lg"
-                        v-model="buildingType"
-                        placeholder="напр., с. 1"
-                    >
-                </div>
-            </div>
-
-            <div class="d-flex justify-content-between w-50">
-                <div class="form-group form-group-blue mb-3 me-3">
-                    <label>Квартира</label>
-                    <input
-                        type="text"
-                        class="form-control form-control-lg"
-                        v-model="flat"
-                        placeholder="напр., 33"
+                        class="form-control form-control-lg w-50"
+                        v-model="getCurrentDaDataAddress.postal_code"
+                        placeholder="напр., 300000"
                     >
                 </div>
 
                 <div class="form-group form-group-blue mb-3">
-                    <label>Офис</label>
+                    <label>Край, область</label>
                     <input
                         type="text"
-                        class="form-control form-control-lg"
-                        v-model="office"
-                        placeholder="напр., 300"
+                        class="form-control form-control-lg w-50"
+                        v-model="getCurrentDaDataAddress.region"
+                        placeholder="напр., Тульская обл."
+                        disabled
                     >
                 </div>
+
+                <div class="form-group form-group-blue mb-3">
+                    <label>Населённый пункт</label>
+                    <input
+                        v-if="getCurrentDaDataAddress.settlement_with_type"
+                        type="text"
+                        class="form-control form-control-lg w-50"
+                        v-model="getCurrentDaDataAddress.settlement_with_type"
+                        placeholder="напр., г. Тула"
+                    >
+                    <input
+                        v-else
+                        type="text"
+                        class="form-control form-control-lg w-50"
+                        v-model="getCurrentDaDataAddress.city"
+                        placeholder="напр., г. Тула"
+                    >
+                </div>
+
+                <div class="form-group form-group-blue mb-3">
+                    <label>Улица</label>
+                    <input
+                        type="text"
+                        class="form-control form-control-lg w-50"
+                        v-model="getCurrentDaDataAddress.street"
+                        placeholder="напр., ул. Ленина"
+                    >
+                </div>
+
+                <div class="d-flex justify-content-between w-50">
+                    <div class="form-group form-group-blue mb-3">
+                        <label>Дом</label>
+                        <input
+                            type="text"
+                            class="form-control form-control-lg"
+                            v-model="getCurrentDaDataAddress.house"
+                            placeholder="напр., д. 18"
+                        >
+                    </div>
+
+                    <div class="form-group form-group-blue mb-3 ms-3 me-3">
+                        <label>Корпус</label>
+                        <input
+                            type="text"
+                            class="form-control form-control-lg"
+                            v-model="getCurrentDaDataAddress.building"
+                            placeholder="напр., к. 3"
+                        >
+                    </div>
+
+                    <div class="form-group form-group-blue mb-3">
+                        <label>Строение</label>
+                        <input
+                            type="text"
+                            class="form-control form-control-lg"
+                            v-model="buildingType"
+                            placeholder="напр., с. 1"
+                        >
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between w-50">
+                    <div class="form-group form-group-blue mb-3 me-3">
+                        <label>Квартира</label>
+                        <input
+                            type="text"
+                            class="form-control form-control-lg"
+                            v-model="getCurrentDaDataAddress.flat"
+                            placeholder="напр., 33"
+                        >
+                    </div>
+
+                    <div class="form-group form-group-blue mb-3">
+                        <label>Офис</label>
+                        <input
+                            type="text"
+                            class="form-control form-control-lg"
+                            v-model="office"
+                            placeholder="напр., 300"
+                        >
+                    </div>
+                </div>
             </div>
+
         </div>
     </div>
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
-import UserAddressItem from "../page-parts/user-address/UserAddressItem";
+import {mapGetters, mapMutations} from 'vuex'
+
 export default {
     name: "RecipientAddress",
     data() {
@@ -149,15 +157,18 @@ export default {
             buildingType: '', // строение
             flat: '',
             office: '',
-            isShowMyAddresses: false
+        }
+    },
+    methods: {
+      ...mapMutations(['setIsShowMyAddresses']),
+        showMyAddresses(isShow) {
+            this.setIsShowMyAddresses(isShow)
         }
     },
     computed: {
-        ...mapGetters(['getAddresses'])
+        ...mapGetters(['getEDostDelivery',
+        'getCurrentDaDataAddress'])
     },
-    components: {
-        UserAddressItem
-    }
 }
 </script>
 

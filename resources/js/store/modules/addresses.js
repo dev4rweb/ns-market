@@ -4,7 +4,14 @@ export default {
     state: {
         address: [],
         isShowAddressForm: false,
-        editAddress: null
+        editAddress: null,
+        recipientInfoData: {
+            last_name: '',
+            first_name: '',
+            middle_name: '',
+            phone: '',
+            email: '',
+        }
     },
     actions: {
         fetchAllAddresses({commit, getters}) {
@@ -101,6 +108,9 @@ export default {
         },
         addNewAddress(state, address) {
             state.address.push(address)
+        },
+        setRecipientInfoData(state, recipient) {
+            state.recipientInfoData = recipient
         }
     },
     getters: {
@@ -112,6 +122,9 @@ export default {
         },
         getEditAddress(state) {
             return state.editAddress
+        },
+        getRecipientInfoData(state) {
+            return state.recipientInfoData
         }
     }
 }

@@ -1,6 +1,5 @@
 import {WORK_HOST} from "../routeConsts";
 import axios from "axios";
-import {generateTempPassword} from "../utils/generateTempPassword";
 
 export default {
     state: {

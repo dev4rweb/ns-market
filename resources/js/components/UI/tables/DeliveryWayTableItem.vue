@@ -1,5 +1,7 @@
 <template>
-    <tr>
+    <tr
+        @click="selectDeliveryCompany"
+    >
         <th
             scope="row"
             class="p-3 text-center"
@@ -25,9 +27,23 @@
 </template>
 
 <script>
+import {mapMutations} from 'vuex'
 export default {
     name: "DeliveryWayTableItem",
-    props: ['delivery']
+    props: ['delivery'],
+    methods: {
+        ...mapMutations(['setIsShowDpdData', 'setIsShowRecipientData', 'setIsShowDeliveryWayTable']),
+        selectDeliveryCompany() {
+            console.log('selectDeliveryCompany', this.delivery)
+            if (this.delivery.deliveryService.includes('DPD')) {
+                this.setIsShowDpdData(true)
+
+            } else {
+                this.setIsShowRecipientData(true)
+            }
+            this.setIsShowDeliveryWayTable(false)
+        }
+    }
 }
 </script>
 
