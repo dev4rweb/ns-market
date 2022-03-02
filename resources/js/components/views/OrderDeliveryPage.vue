@@ -16,7 +16,7 @@
                 <div class="form-group form-group-blue">
                     <input
                         type="text"
-                        class="form-control form-control-lg w-50"
+                        class="form-control form-control-lg"
                         :class="{borderRed: isAddressInvalid}"
                         v-model="fastSearch"
                         @input="cityOnInput"
@@ -34,7 +34,7 @@
                         Некорректный адрес
                     </div>
                 </div>
-                <p>Вы можете в любой момент изменить населённый пункт</p>
+<!--                <p>Вы можете в любой момент изменить населённый пункт</p>-->
             </form>
         </div>
 
@@ -109,9 +109,16 @@
 
         <div class="mb-5 d-flex justify-content-center">
             <button
+                class="btn btn-lg btn-link me-3"
+                @click="goBack"
+            >
+                Назад
+            </button>
+            <button
                 v-if="getEDostDelivery && getIsShowRecipientData"
                 style="width: 206px;"
                 class="btn btn-lg btn-info"
+                @click="gotoToPayPage"
             >
                 Продолжить
             </button>
@@ -147,6 +154,12 @@ export default {
                 query: this.getFastSearchAddress,
                 fromOrderDelivery: true
             })
+        },
+        goBack() {
+           window.history.back()
+        },
+        gotoToPayPage() {
+            window.location.href = '/order-payment'
         },
         findDeliveries() {
             if (this.getCurrentDaDataAddress)
@@ -216,6 +229,10 @@ export default {
     display: block;
 }
 
+/*.form-control-lg{
+    font-size: 20px;
+}*/
+
 .borderRed {
     border-color: red;
 }
@@ -269,6 +286,14 @@ export default {
                 line-height: 22px;
                 color: #038ED7;
             }
+        }
+    }
+
+    .btn-info {
+        &:hover {
+            border-color: white;
+            background-color: #038ED7;
+            color: white;
         }
     }
 }

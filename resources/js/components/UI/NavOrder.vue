@@ -45,8 +45,18 @@ export default {
     justify-content: center;
 
     .nav {
-        max-width: 570px;
+        //max-width: 570px;
+
+        .nav-item{
+            width: 170px;
+
+            a{
+                width: 100%;
+            }
+        }
     }
+
+
 }
 
 .btn-lg {

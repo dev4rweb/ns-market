@@ -10584,7 +10584,9 @@ footer h3, footer .h3 {
   line-height: 21px; }
 .form-group-blue .form-control {
   background-color: #fff;
-  border-color: #038ED7; }
+  border-color: #038ED7;
+  padding: 0 1rem;
+  font-size: 25px; }
 
 .invalid-feedback {
   font-weight: 400;

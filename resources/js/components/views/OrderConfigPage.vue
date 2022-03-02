@@ -12,7 +12,6 @@
                     Общие сведения о заказе
                 </div>
                 <div class="body-block p-3">
-                    <h4 class="mb-3">Общие сведения о заказе</h4>
                     <div class="d-flex justify-content-between content-wrapper">
                         <span>Наименований</span>
                         <span class="value">{{ getLSOrder.length }}</span>
@@ -43,11 +42,16 @@
                     </div>
                 </div>
             </div>
-            <div class="card shadow blue-header-info-block mb-3">
+            <div
+                class="card shadow blue-header-info-block mb-3"
+                v-if="isPartner"
+            >
                 <div class="header-block p-3">
                     Выберите тип заказа
                 </div>
-                <div class="body-block p-3">
+                <div
+                    class="body-block p-3"
+                >
                     <div class="form-check">
                         <input
                             class="form-check-input"
@@ -83,15 +87,20 @@
                         <textarea
                             class="form-control form-control-lg"
                             v-model="comment"
-                            placeholder="При необходимости оставьте комментарий"
                         ></textarea>
                     </div>
                 </div>
             </div>
-            <div class="d-flex justify-content-end mb-5">
+            <div class="d-flex justify-content-center mb-5">
+                <button
+                    class="btn btn-lg btn-link me-3"
+                    @click="goBack"
+                >
+                    Назад
+                </button>
                 <button
                     class="btn btn-lg btn-info"
-
+                    @click="gotoOrderDelivery"
                 >
                     Продолжить
                 </button>
@@ -116,14 +125,17 @@ export default {
         ...mapActions(['fetchPhysicalPerson']),
         gotoOrderDelivery() {
             window.location.href = '/order-delivery'
-        }
+        },
+        goBack() {
+            window.history.back()
+        },
     },
     components: {
         NavOrder
     },
     computed: {
         ...mapGetters(['getLSOrder', 'getAmountProduct', 'getWeightOrder',
-        'getPointsOrder', 'getSumOrder', 'getEconomicSumOrder'])
+            'getPointsOrder', 'getSumOrder', 'getEconomicSumOrder', 'isPartner'])
     },
     mounted() {
         if (window.User) {
@@ -185,10 +197,20 @@ export default {
             }
         }
     }
+
+    .btn-info {
+        &:hover {
+            border-color: white;
+            background-color: #038ED7;
+            color: white;
+        }
+    }
 }
+
 textarea {
     resize: none;
     min-height: 219px;
     max-width: 536px;
 }
+
 </style>

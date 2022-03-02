@@ -166,5 +166,13 @@ export default {
             }
         }
     }
+
+    .btn-info{
+        &:hover{
+            border-color: white;
+            background-color: #038ED7;
+            color: white;
+        }
+    }
 }
 </style>
