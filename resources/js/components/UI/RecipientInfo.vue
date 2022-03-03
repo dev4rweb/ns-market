@@ -18,44 +18,50 @@
                 >
             </div>
 
-            <div class="form-group form-group-blue mb-3">
-                <label>Имя <span>*</span></label>
-                <input
-                    type="text"
-                    class="form-control form-control-lg w-50"
-                    v-model="getRecipientInfoData.first_name"
-                    placeholder="напр., Иван"
-                >
+            <div class="row">
+                <div class="form-group form-group-blue mb-3 col-md-6">
+                    <label>Имя <span>*</span></label>
+                    <input
+                        type="text"
+                        class="form-control form-control-lg me-3"
+                        v-model="getRecipientInfoData.first_name"
+                        placeholder="напр., Иван"
+                    >
+                </div>
+
+                <div class="form-group form-group-blue mb-3  col-md-6">
+                    <label>Отчество</label>
+                    <input
+                        type="text"
+                        class="form-control form-control-lg"
+                        v-model="getRecipientInfoData.middle_name"
+                        placeholder="напр., Иванович"
+                    >
+                </div>
             </div>
 
-            <div class="form-group form-group-blue mb-3">
-                <label>Отчество</label>
-                <input
-                    type="text"
-                    class="form-control form-control-lg w-50"
-                    v-model="getRecipientInfoData.middle_name"
-                    placeholder="напр., Иванович"
-                >
-            </div>
+            <div class="row">
 
-            <div class="form-group form-group-blue mb-3">
-                <label>Мобильный телефон <span>*</span></label>
-                <input
-                    type="text"
-                    class="form-control form-control-lg w-50"
-                    v-model="getRecipientInfoData.phone"
-                    placeholder="+7 (___) ___ - __ - __"
-                >
-            </div>
+                <div class="form-group form-group-blue mb-3 col-md-6">
+                    <label>Мобильный телефон <span>*</span></label>
+                    <input
+                        type="text"
+                        class="form-control form-control-lg"
+                        v-model="getRecipientInfoData.phone"
+                        placeholder="+7 (___) ___ - __ - __"
+                    >
+                </div>
 
-            <div class="form-group form-group-blue mb-3">
-                <label>E-mail получателя</label>
-                <input
-                    type="text"
-                    class="form-control form-control-lg w-50"
-                    v-model="getRecipientInfoData.email"
-                    placeholder="example@yourmail.com"
-                >
+                <div class="form-group form-group-blue mb-3 col-md-6">
+                    <label>E-mail получателя</label>
+                    <input
+                        type="text"
+                        class="form-control form-control-lg"
+                        v-model="getRecipientInfoData.email"
+                        placeholder="example@yourmail.com"
+                    >
+                </div>
+
             </div>
         </div>
     </div>
@@ -63,6 +69,7 @@
 
 <script>
 import {mapGetters} from 'vuex'
+
 export default {
     name: "RecipientInfo",
     computed: {
@@ -72,13 +79,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-p{
+p {
     font-style: normal;
     font-weight: normal;
     font-size: 20px;
     line-height: 20px;
     color: #EB5757;
 }
+
 .form-group-blue {
     label {
         font-style: normal;
@@ -87,7 +95,7 @@ p{
         line-height: 22px;
         color: #333333;
 
-        span{
+        span {
             font-style: normal;
             font-weight: 600;
             font-size: 22px;

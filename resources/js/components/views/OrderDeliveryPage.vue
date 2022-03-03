@@ -60,6 +60,42 @@
         </div>
 
         <div
+            class="card shadow blue-header-info-block mb-3"
+            v-if="getCurrentDeliveryCompany"
+        >
+            <div class="header-block p-3">
+                Способ доставки
+            </div>
+            <div
+                class="body-block p-3"
+            >
+                <h3>
+                    {{ getCurrentDeliveryCompany.deliveryService }} <br>
+                    {{ getCurrentDeliveryCompany.payType}}
+                </h3>
+                <h4>Срок доставки - {{ getCurrentDeliveryCompany.deliveryTime }}</h4>
+                <span
+                    style="font-size: 25px"
+                >
+                    Стоимость - {{ getCurrentDeliveryCompany.price }} руб.
+                </span>
+
+                <div v-if="getCurrentDpdOffice">
+                    <h4 class="dpd-title">
+                        Пункт выдачи:
+                        <b>{{ getCurrentDpdOffice.address }}</b> <br>
+                        <a :href="`http://www.edost.ru/office.php?c=${getCurrentDpdOffice.id}`">Показать на карте</a>
+                    </h4>
+                    <span class="dpd-code">код: {{ getCurrentDpdOffice.code }}</span>
+                    <p class="dpd-body">
+                        телефон: {{ getCurrentDpdOffice.tel }} <br>
+                        офис: {{ getCurrentDpdOffice.schedule }}
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div
             class="d-flex justify-content-center"
             v-if="getEDostDelivery"
         >
@@ -193,7 +229,8 @@ export default {
     computed: {
         ...mapGetters(['getEDostDelivery', 'getFastSearchAddress', 'getEDostDelivery',
             'getDpdOffices', 'getCurrentDaDataAddress', 'getIsShowRecipientData',
-            'getIsShowDpdData', 'getAddresses', 'getIsShowMyAddresses', 'getIsShowDeliveryWayTable']),
+            'getIsShowDpdData', 'getAddresses', 'getIsShowMyAddresses', 'getIsShowDeliveryWayTable',
+        'getCurrentDeliveryCompany', 'getCurrentDpdOffice']),
         fastSearch: {
             get() {
                 return this.getFastSearchAddress

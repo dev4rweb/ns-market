@@ -16,33 +16,38 @@
         <td
             class="p-3 text-center"
         >
-            {{ delivery.deliveryService }}
+            {{ delivery.deliveryService }} <br>
+            {{ delivery.payType }}
         </td>
         <td
             class="p-3 text-end"
         >
-            {{ delivery.payType }}
+            {{getCurrentDaDataAddress.country.includes('Россия') ? 'Предоплата' : 'Оплата доставки - при получении'}}
         </td>
     </tr>
 </template>
 
 <script>
-import {mapMutations} from 'vuex'
+import {mapMutations, mapGetters} from 'vuex'
 export default {
     name: "DeliveryWayTableItem",
     props: ['delivery'],
     methods: {
-        ...mapMutations(['setIsShowDpdData', 'setIsShowRecipientData', 'setIsShowDeliveryWayTable']),
+        ...mapMutations(['setIsShowDpdData', 'setIsShowRecipientData', 'setIsShowDeliveryWayTable',
+        'setCurrentDeliveryCompany']),
         selectDeliveryCompany() {
             console.log('selectDeliveryCompany', this.delivery)
             if (this.delivery.deliveryService.includes('DPD')) {
                 this.setIsShowDpdData(true)
-
             } else {
                 this.setIsShowRecipientData(true)
             }
+            this.setCurrentDeliveryCompany(this.delivery)
             this.setIsShowDeliveryWayTable(false)
         }
+    },
+    computed:{
+        ...mapGetters(['getCurrentDaDataAddress']),
     }
 }
 </script>

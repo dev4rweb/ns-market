@@ -1,6 +1,6 @@
 <template>
     <table class="table table-lg table-responsive-lg table-light table-striped table-hover shadow-lg">
-        <thead  class="table-info">
+        <thead class="table-info">
         <tr class="p-3">
             <th
                 class="p-3 text-center"
@@ -32,12 +32,12 @@
         </tr>
         </thead>
         <tbody>
-            <DeliveryWayTableItem
-                v-if="getEDostDelivery.length"
-                v-for="delivery in getEDostDelivery"
-                :delivery="delivery"
-                :key="delivery.id"
-            />
+        <DeliveryWayTableItem
+            v-if="getDeliveryTable.length"
+            v-for="delivery in getDeliveryTable"
+            :delivery="delivery"
+            :key="delivery.id"
+        />
         </tbody>
     </table>
 </template>
@@ -45,19 +45,28 @@
 <script>
 import DeliveryWayTableItem from "./DeliveryWayTableItem";
 import {mapGetters} from 'vuex'
+
 export default {
     name: "DeliveryWayTable",
     computed: {
-        ...mapGetters(['getEDostDelivery'])
+        ...mapGetters(['getEDostDelivery', 'getCurrentDaDataAddress']),
+        getDeliveryTable() {
+            console.log('getDeliveryTable', this.getCurrentDaDataAddress)
+            if (this.getCurrentDaDataAddress && !this.getCurrentDaDataAddress.region.includes('Тульск')) {
+                return this.getEDostDelivery.filter(i => !i.deliveryService.includes('Самовывоз'));
+            } else {
+                return this.getEDostDelivery
+            }
+        }
     },
     components: {
         DeliveryWayTableItem
-    }
+    },
 }
 </script>
 
 <style lang="scss" scoped>
-.light th, .table-light thead th{
+.light th, .table-light thead th {
     background-color: #038ED7;
     color: #FFFFFF;
     font-style: normal;
@@ -79,7 +88,7 @@ tbody {
     line-height: 27px;
 }
 
-.table > :not(caption) > * > *{
-    background-color:  rgba(3, 142, 215, 0.06);;
+.table > :not(caption) > * > * {
+    background-color: rgba(3, 142, 215, 0.06);;
 }
 </style>

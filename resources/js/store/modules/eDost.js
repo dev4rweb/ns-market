@@ -1,4 +1,3 @@
-
 export default {
     state: {
         /*eDostDelivery: [
@@ -10,6 +9,7 @@ export default {
         eDostDelivery: null,
         dpdOffices: null,
         currentDpdOffice: null,
+        currentDeliveryCompany: null,
         isShowMyAddresses: true,
         isShowRecipientData: false,
         isShowDpdData: false,
@@ -19,12 +19,12 @@ export default {
         fetchEDostDelivery({commit, getters, dispatch}, query) {
             const currentDaDataAddress = getters['getCurrentDaDataAddress']
             const weight = getters['getWeightOrder'] ?
-                parseFloat(getters['getWeightOrder']) < 1 ? 1:
+                parseFloat(getters['getWeightOrder']) < 1 ? 1 :
                     parseFloat(getters['getWeightOrder']) : 1
             console.log(weight.toFixed(0), typeof weight)
             if (currentDaDataAddress && currentDaDataAddress.city) {
                 commit('setLoading', true);
-                const q ={
+                const q = {
                     edost_to_city: currentDaDataAddress.city,
                     edost_weight: weight.toFixed(0),
                     edost_strah: 0,
@@ -60,7 +60,7 @@ export default {
             const currentDaDataAddress = getters['getCurrentDaDataAddress']
             if (currentDaDataAddress && currentDaDataAddress.region) {
                 commit('setLoading', true);
-                const q ={
+                const q = {
                     edost_to_city: `${currentDaDataAddress.region} область`,
                     edost_weight: weight.toFixed(0),
                     edost_strah: 0,
@@ -89,6 +89,9 @@ export default {
         },
     },
     mutations: {
+        setCurrentDeliveryCompany(state, deliveryCompany) {
+            state.currentDeliveryCompany = deliveryCompany
+        },
         setEDostDelivery(state, address) {
             state.eDostDelivery = address
         },
@@ -98,10 +101,10 @@ export default {
             for (let i = 1; i <= deliveries.qty_company; i++) {
                 companies.push({
                     id: i,
-                    deliveryService: deliveries['company'+i],
-                    deliveryTime: deliveries['day'+i],
-                    price: deliveries['price'+i],
-                    payType: deliveries['name'+i],
+                    deliveryService: deliveries['company' + i],
+                    deliveryTime: deliveries['day' + i],
+                    price: deliveries['price' + i],
+                    payType: deliveries['name' + i],
                 })
 
                 if (deliveries['company' + i].includes('DPD')) {
@@ -121,7 +124,7 @@ export default {
                     state.dpdOffices = offices
                 }
             }
-            state.eDostDelivery = companies.sort((a,b) =>
+            state.eDostDelivery = companies.sort((a, b) =>
                 (parseFloat(a.price) > parseFloat(b.price)) ? 1 :
                     (parseFloat(a.price) < parseFloat(b.price)) ? -1 : 0
             )
@@ -143,8 +146,11 @@ export default {
         }
     },
     getters: {
+        getCurrentDeliveryCompany(state) {
+            return state.currentDeliveryCompany
+        },
         getEDostDelivery(state) {
-            return state.eDostDelivery
+            return state.eDostDelivery;
         },
         getDpdOffices(state) {
             return state.dpdOffices
