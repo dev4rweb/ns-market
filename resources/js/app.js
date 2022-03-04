@@ -96,6 +96,7 @@ Vue.component('user-orders-panel', require('./components/views/UserOrdersPanel')
 Vue.component('basket-page', require('./components/views/BasketPage').default);
 Vue.component('order-config-page', require('./components/views/OrderConfigPage').default);
 Vue.component('order-delivery-page', require('./components/views/OrderDeliveryPage').default);
+Vue.component('order-payment-page', require('./components/views/OrderPaymentPage').default);
 Vue.component('user-mentor-change-page', require('./components/views/UserMentorChangePage').default);
 Vue.component('user-become-status', require('./components/views/UserBecomePartner').default);
 Vue.component('user-choose-pay-page', require('./components/views/UserChoosePayPage').default);

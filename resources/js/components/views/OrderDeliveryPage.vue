@@ -65,7 +65,7 @@
             v-if="getCurrentDeliveryCompany"
         >
             <div class="header-block p-3">
-                Способ доставки
+                Выберите способ доставки
             </div>
             <div
                 class="body-block p-3"
