@@ -4,8 +4,8 @@
         <div>
             <NavOrder/>
         </div>
-        <h3 class="mt-5">Куда доставить заказ</h3>
-        <div class="card shadow blue-header-info-block mb-3">
+<!--        <h3 class="mt-5">Куда доставить заказ</h3>-->
+        <div class="card shadow blue-header-info-block mb-3 mt-3">
             <div class="header-block p-3">
                 Населённый пункт вручения заказа
             </div>
@@ -20,6 +20,7 @@
                         :class="{borderRed: isAddressInvalid}"
                         v-model="fastSearch"
                         @input="cityOnInput"
+                        ref="searchCity"
                         data-bs-toggle="dropdown"
                         aria-expanded="false"
                         id="dropdownCity"
@@ -248,6 +249,9 @@ export default {
         if (window.User) {
             this.fetchPhysicalPerson()
         }
+        setTimeout(() => {
+            this.$refs.searchCity.focus();
+        }, 500);
         // console.log('OrderDeliveryPage', locations_data.find(i => i[3].includes('Тульская')))
     }
 }

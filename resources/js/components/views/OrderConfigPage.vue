@@ -5,7 +5,7 @@
             <NavOrder/>
         </div>
         <div
-            class="mt-5"
+            class="mt-3"
             v-if="getLSOrder.length > 0">
             <div class="card shadow blue-header-info-block mb-3">
                 <div class="header-block p-3">
@@ -80,7 +80,7 @@
             </div>
             <div class="card shadow blue-header-info-block mb-4">
                 <div class="header-block p-3">
-                    Комментарий к заказу
+                    При необходимости добавьте комментарий к заказ
                 </div>
                 <div class="body-block p-3">
                     <div class="form-group form-group-blue">

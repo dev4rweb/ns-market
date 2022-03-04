@@ -1,6 +1,6 @@
 <template>
     <table class="table table-lg table-responsive-lg table-light table-striped table-hover shadow-lg">
-        <thead  class="table-danger">
+        <thead class="table-danger">
         <tr>
             <th scope="col">#</th>
             <th style="width: 120px" scope="col">Код</th>
@@ -14,13 +14,13 @@
         </tr>
         </thead>
         <tbody>
-            <OrderDataTableItem
-                v-if="getLSOrder.length"
-                v-for="(order, i) in getLSOrder"
-                :order="order"
-                :key="order.prodId"
-                :index="i"
-            />
+        <OrderDataTableItem
+            v-if="sortingOrder.length"
+            v-for="(order, i) in sortingOrder"
+            :order="order"
+            :key="order.prodId"
+            :index="i"
+        />
         </tbody>
     </table>
 </template>
@@ -28,10 +28,15 @@
 <script>
 import {mapGetters} from 'vuex'
 import OrderDataTableItem from "./OrderDataTableItem";
+
 export default {
     name: "OrderDataTable",
     computed: {
-        ...mapGetters(['getLSOrder'])
+        ...mapGetters(['getLSOrder']),
+        sortingOrder() {
+            return this.getLSOrder.sort((a, b) => (parseInt(a.prodId) > parseInt(b.prodId)) ?
+                1 : ((parseInt(b.prodId) > parseInt(a.prodId)) ? -1 : 0))
+        }
     },
     components: {
         OrderDataTableItem
@@ -46,7 +51,8 @@ table {
     line-height: 22px;
     font-weight: 800;
 }
-thead tr th{
+
+thead tr th {
     background-color: #EB5757;
     color: white;
 }
