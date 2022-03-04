@@ -4,7 +4,7 @@
         <div>
             <NavOrder/>
         </div>
-<!--        <h3 class="mt-5">Куда доставить заказ</h3>-->
+        <!--        <h3 class="mt-5">Куда доставить заказ</h3>-->
         <div class="card shadow blue-header-info-block mb-3 mt-3">
             <div class="header-block p-3">
                 Населённый пункт вручения заказа
@@ -35,7 +35,7 @@
                         Некорректный адрес
                     </div>
                 </div>
-<!--                <p>Вы можете в любой момент изменить населённый пункт</p>-->
+                <!--                <p>Вы можете в любой момент изменить населённый пункт</p>-->
             </form>
         </div>
 
@@ -72,7 +72,7 @@
             >
                 <h3>
                     {{ getCurrentDeliveryCompany.deliveryService }} <br>
-                    {{ getCurrentDeliveryCompany.payType}}
+                    {{ getCurrentDeliveryCompany.payType }}
                 </h3>
                 <h4>Срок доставки - {{ getCurrentDeliveryCompany.deliveryTime }}</h4>
                 <span
@@ -122,8 +122,6 @@
             v-if="getEDostDelivery && getIsShowRecipientData"
         >
             <RecipientAddress/>
-
-
         </div>
 
         <div
@@ -184,7 +182,7 @@ export default {
     methods: {
         ...mapActions(['fetchDaDataAddress', 'fetchEDostDelivery', 'fetchPhysicalPerson']),
         ...mapMutations(['setFastSearchAddress', 'setEDostDelivery', 'setCurrentDaDataAddress',
-            'setIsShowMyAddresses', 'setIsShowDeliveryWayTable', 'setIsShowDpdData']),
+            'setIsShowMyAddresses', 'setIsShowDeliveryWayTable', 'setIsShowDpdData', 'setToastError']),
         cityOnInput() {
             this.isAddressInvalid = false
             this.fetchDaDataAddress({
@@ -193,10 +191,14 @@ export default {
             })
         },
         goBack() {
-           window.history.back()
+            window.history.back()
         },
         gotoToPayPage() {
-            window.location.href = '/order-payment'
+            if (this.getRecipientInfoData.first_name &&
+                this.getRecipientInfoData.last_name &&
+                this.getRecipientInfoData.phone)
+                window.location.href = '/order-payment'
+            else this.setToastError('Заполните все необходимые поля для перехода на следующую страницу')
         },
         findDeliveries() {
             if (this.getCurrentDaDataAddress)
@@ -231,7 +233,7 @@ export default {
         ...mapGetters(['getEDostDelivery', 'getFastSearchAddress', 'getEDostDelivery',
             'getDpdOffices', 'getCurrentDaDataAddress', 'getIsShowRecipientData',
             'getIsShowDpdData', 'getAddresses', 'getIsShowMyAddresses', 'getIsShowDeliveryWayTable',
-        'getCurrentDeliveryCompany', 'getCurrentDpdOffice']),
+            'getCurrentDeliveryCompany', 'getCurrentDpdOffice', 'getRecipientInfoData']),
         fastSearch: {
             get() {
                 return this.getFastSearchAddress
@@ -250,7 +252,8 @@ export default {
             this.fetchPhysicalPerson()
         }
         setTimeout(() => {
-            this.$refs.searchCity.focus();
+            this.$refs.searchCity.click();
+            // this.$refs.searchCity.focus();
         }, 500);
         // console.log('OrderDeliveryPage', locations_data.find(i => i[3].includes('Тульская')))
     }

@@ -25,7 +25,8 @@
                     {{ getCurrentDaDataAddress.postal_code ? `${getCurrentDaDataAddress.postal_code},` : '' }}
                     {{ getCurrentDaDataAddress.region ? `${getCurrentDaDataAddress.region} обл.,` : '' }}
                     {{
-                        getCurrentDaDataAddress.settlement_with_type ? `${getCurrentDaDataAddress.settlement_with_type},` : `г. ${getCurrentDaDataAddress.city}`
+                        getCurrentDaDataAddress.settlement_with_type ? `${getCurrentDaDataAddress.settlement_with_type},`
+                            : getCurrentDaDataAddress.city ? `г. ${getCurrentDaDataAddress.city}` : ''
                     }}
                     <br>
                     {{ getCurrentDaDataAddress.street ? `ул. ${getCurrentDaDataAddress.street},` : '' }}
@@ -35,121 +36,141 @@
                 </h4>
             </div>
 
-            <!--            <div>
-                            <div class="form-group form-group-blue mb-3">
-                                <label>Страна</label>
-                                <input
-                                    type="text"
-                                    class="form-control form-control-lg w-50"
-                                    v-model="getCurrentDaDataAddress.country"
-                                    placeholder="напр., Россия"
-                                    disabled
-                                >
-                            </div>
+            <div>
+<!--                <div class="form-group form-group-blue mb-3">
+                    <label>Страна</label>
+                    <input
+                        type="text"
+                        class="form-control form-control-lg w-50"
+                        v-model="getCurrentDaDataAddress.country"
+                        placeholder="напр., Россия"
+                        disabled
+                    >
+                </div>
 
-                            <div class="form-group form-group-blue mb-3">
-                                <label>Индекс</label>
-                                <input
-                                    type="text"
-                                    class="form-control form-control-lg w-50"
-                                    v-model="getCurrentDaDataAddress.postal_code"
-                                    placeholder="напр., 300000"
-                                >
-                            </div>
+                <div class="form-group form-group-blue mb-3">
+                    <label>Индекс</label>
+                    <input
+                        type="text"
+                        class="form-control form-control-lg w-50"
+                        v-model="getCurrentDaDataAddress.postal_code"
+                        placeholder="напр., 300000"
+                    >
+                </div>
 
-                            <div class="form-group form-group-blue mb-3">
-                                <label>Край, область</label>
-                                <input
-                                    type="text"
-                                    class="form-control form-control-lg w-50"
-                                    v-model="getCurrentDaDataAddress.region"
-                                    placeholder="напр., Тульская обл."
-                                    disabled
-                                >
-                            </div>
+                <div class="form-group form-group-blue mb-3">
+                    <label>Край, область</label>
+                    <input
+                        type="text"
+                        class="form-control form-control-lg w-50"
+                        v-model="getCurrentDaDataAddress.region"
+                        placeholder="напр., Тульская обл."
+                        disabled
+                    >
+                </div>
 
-                            <div class="form-group form-group-blue mb-3">
-                                <label>Населённый пункт</label>
-                                <input
-                                    v-if="getCurrentDaDataAddress.settlement_with_type"
-                                    type="text"
-                                    class="form-control form-control-lg w-50"
-                                    v-model="getCurrentDaDataAddress.settlement_with_type"
-                                    placeholder="напр., г. Тула"
-                                >
-                                <input
-                                    v-else
-                                    type="text"
-                                    class="form-control form-control-lg w-50"
-                                    v-model="getCurrentDaDataAddress.city"
-                                    placeholder="напр., г. Тула"
-                                >
-                            </div>
+                <div class="form-group form-group-blue mb-3">
+                    <label>Населённый пункт</label>
+                    <input
+                        v-if="getCurrentDaDataAddress.settlement_with_type"
+                        type="text"
+                        class="form-control form-control-lg w-50"
+                        v-model="getCurrentDaDataAddress.settlement_with_type"
+                        placeholder="напр., г. Тула"
+                    >
+                    <input
+                        v-else
+                        type="text"
+                        class="form-control form-control-lg w-50"
+                        v-model="getCurrentDaDataAddress.city"
+                        placeholder="напр., г. Тула"
+                    >
+                </div>-->
 
-                            <div class="form-group form-group-blue mb-3">
-                                <label>Улица</label>
-                                <input
-                                    type="text"
-                                    class="form-control form-control-lg w-50"
-                                    v-model="getCurrentDaDataAddress.street"
-                                    placeholder="напр., ул. Ленина"
-                                >
-                            </div>
+                <div
+                    class="mb-4 mt-3"
+                >
+                    <div
+                        v-if="!streetNone"
+                        class="form-group form-group-blue mb-3"
+                    >
+                        <label>Улица</label>
+                        <input
+                            type="text"
+                            class="form-control form-control-lg w-50"
+                            v-model="getCurrentDaDataAddress.street"
+                            placeholder="напр., Ленина"
+                        >
+                    </div>
 
-                            <div class="d-flex justify-content-between w-50">
-                                <div class="form-group form-group-blue mb-3">
-                                    <label>Дом</label>
-                                    <input
-                                        type="text"
-                                        class="form-control form-control-lg"
-                                        v-model="getCurrentDaDataAddress.house"
-                                        placeholder="напр., д. 18"
-                                    >
-                                </div>
+                    <div class="form-check">
+                        <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            v-model="streetNone"
+                            :onchange="streetNone ? getCurrentDaDataAddress.street = null : ''"
+                        >
+                        <label class="form-check-label">
+                            Нет улицы
+                        </label>
+                    </div>
+                </div>
 
-                                <div class="form-group form-group-blue mb-3 ms-3 me-3">
-                                    <label>Корпус</label>
-                                    <input
-                                        type="text"
-                                        class="form-control form-control-lg"
-                                        v-model="getCurrentDaDataAddress.building"
-                                        placeholder="напр., к. 3"
-                                    >
-                                </div>
+                <div class="d-flex justify-content-between w-50">
+                    <div class="form-group form-group-blue mb-3">
+                        <label>Дом</label>
+                        <input
+                            type="text"
+                            class="form-control form-control-lg"
+                            v-model="getCurrentDaDataAddress.house"
+                            placeholder="напр., 18"
+                        >
+                    </div>
 
-                                <div class="form-group form-group-blue mb-3">
-                                    <label>Строение</label>
-                                    <input
-                                        type="text"
-                                        class="form-control form-control-lg"
-                                        v-model="buildingType"
-                                        placeholder="напр., с. 1"
-                                    >
-                                </div>
-                            </div>
+                    <div class="form-group form-group-blue mb-3 ms-3 me-3">
+                        <label>Корпус</label>
+                        <input
+                            type="text"
+                            class="form-control form-control-lg"
+                            v-model="getCurrentDaDataAddress.building"
+                            placeholder="напр., 3"
+                        >
+                    </div>
 
-                            <div class="d-flex justify-content-between w-50">
-                                <div class="form-group form-group-blue mb-3 me-3">
-                                    <label>Квартира</label>
-                                    <input
-                                        type="text"
-                                        class="form-control form-control-lg"
-                                        v-model="getCurrentDaDataAddress.flat"
-                                        placeholder="напр., 33"
-                                    >
-                                </div>
+                    <div class="form-group form-group-blue mb-3">
+                        <label>Строение</label>
+                        <input
+                            type="text"
+                            class="form-control form-control-lg"
+                            v-model="buildingType"
+                            placeholder="напр., 1"
+                        >
+                    </div>
+                </div>
 
-                                <div class="form-group form-group-blue mb-3">
-                                    <label>Офис</label>
-                                    <input
-                                        type="text"
-                                        class="form-control form-control-lg"
-                                        v-model="office"
-                                        placeholder="напр., 300"
-                                    >
-                                </div>
-                            </div>
-                        </div>-->
+                <div class="d-flex justify-content-between w-50">
+                    <div class="form-group form-group-blue mb-3 me-3">
+                        <label>Квартира</label>
+                        <input
+                            type="text"
+                            class="form-control form-control-lg"
+                            v-model="getCurrentDaDataAddress.flat"
+                            placeholder="напр., 33"
+                        >
+                    </div>
+
+                    <div class="form-group form-group-blue mb-3">
+                        <label>Офис</label>
+                        <input
+                            type="text"
+                            class="form-control form-control-lg"
+                            v-model="office"
+                            placeholder="напр., 300"
+                        >
+                    </div>
+                </div>
+            </div>
 
         </div>
     </div>
@@ -166,7 +187,7 @@ export default {
             postcode: '',
             region: '',
             city: '',
-            street: '',
+            streetNone: false,
             house: '',
             building: '', // корпус
             buildingType: '', // строение
