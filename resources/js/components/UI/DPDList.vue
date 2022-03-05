@@ -6,8 +6,25 @@
         <div class="body-block p-3">
             <ol class="list-group">
                 <li
+                    class="list-group-item item-selected"
+                    v-if="getCurrentDpdOffice"
+                >
+                    <div>
+                        <h4 class="dpd-title">
+                            Пункт выдачи:
+                            <b>{{ getCurrentDpdOffice.address }}</b> <br>
+                            <a :href="`http://www.edost.ru/office.php?c=${getCurrentDpdOffice.id}`">Показать на карте</a>
+                        </h4>
+                        <span class="dpd-code">код: {{ getCurrentDpdOffice.code }}</span>
+                        <p class="dpd-body">
+                            телефон: {{ getCurrentDpdOffice.tel }} <br>
+                            офис: {{ getCurrentDpdOffice.schedule }}
+                        </p>
+                    </div>
+                </li>
+                <li
                     class="list-group-item"
-                    v-if="getDpdOffices.length"
+                    v-if="getDpdOffices.length && !getCurrentDpdOffice"
                     v-for="office in getDpdOffices"
                     :key="office.id"
                     @click="selectCurrentDpdOffice(office)"
@@ -45,7 +62,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['getDpdOffices'])
+        ...mapGetters(['getDpdOffices', 'getCurrentDpdOffice'])
     }
 }
 </script>
@@ -72,6 +89,23 @@ export default {
             -ms-transform: scale(1.05, 1.05);
             -o-transform: scale(1.05, 1.05);
             transform: scale(1.05, 1.05);
+        }
+    }
+
+    .item-selected{
+        -webkit-transition: none;
+        -moz-transition: none ;
+        -ms-transition: none ;
+        -o-transition: none ;
+        transition: none ;
+
+        &:hover {
+            cursor: default !important;
+            -webkit-transform: none;
+            -moz-transform: none;
+            -ms-transform: none;
+            -o-transform: none;
+            transform: none;
         }
     }
 </style>

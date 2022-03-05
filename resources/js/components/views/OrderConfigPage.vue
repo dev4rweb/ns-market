@@ -127,7 +127,7 @@ export default {
             window.location.href = '/order-delivery'
         },
         goBack() {
-            window.history.back()
+            window.location.href = '/basket'
         },
     },
     components: {

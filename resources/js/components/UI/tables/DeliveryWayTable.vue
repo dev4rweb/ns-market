@@ -33,7 +33,11 @@
         </thead>
         <tbody>
         <DeliveryWayTableItem
-            v-if="getDeliveryTable.length"
+            v-if="getCurrentDeliveryCompany"
+            :delivery="getCurrentDeliveryCompany"
+        />
+        <DeliveryWayTableItem
+            v-if="getDeliveryTable.length && !getCurrentDeliveryCompany"
             v-for="delivery in getDeliveryTable"
             :delivery="delivery"
             :key="delivery.id"
@@ -49,7 +53,8 @@ import {mapGetters} from 'vuex'
 export default {
     name: "DeliveryWayTable",
     computed: {
-        ...mapGetters(['getEDostDelivery', 'getCurrentDaDataAddress']),
+        ...mapGetters(['getEDostDelivery', 'getCurrentDaDataAddress',
+        'getCurrentDeliveryCompany']),
         getDeliveryTable() {
             console.log('getDeliveryTable', this.getCurrentDaDataAddress)
             if (this.getCurrentDaDataAddress && !this.getCurrentDaDataAddress.region.includes('Тульск')) {

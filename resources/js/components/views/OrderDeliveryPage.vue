@@ -59,8 +59,7 @@
                 </div>
             </div>
         </div>
-
-        <div
+<!--        <div
             class="card shadow blue-header-info-block mb-3"
             v-if="getCurrentDeliveryCompany"
         >
@@ -94,6 +93,11 @@
                     </p>
                 </div>
             </div>
+        </div>-->
+
+        <div v-if="getCurrentDeliveryCompany">
+            <h3 class="mt-3">Способ доставки</h3>
+            <DeliveryWayTable/>
         </div>
 
         <div
@@ -114,6 +118,10 @@
         </div>
 
         <div v-if="getDpdOffices && getDpdOffices.length && getIsShowDpdData">
+            <DPDList/>
+        </div>
+
+        <div v-if="getCurrentDpdOffice">
             <DPDList/>
         </div>
 
@@ -191,7 +199,7 @@ export default {
             })
         },
         goBack() {
-            window.history.back()
+            window.location.href = '/order-config'
         },
         gotoToPayPage() {
             if (this.getRecipientInfoData.first_name &&
