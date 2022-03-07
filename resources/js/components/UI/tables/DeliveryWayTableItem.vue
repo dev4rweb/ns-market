@@ -34,20 +34,23 @@ export default {
     props: ['delivery'],
     methods: {
         ...mapMutations(['setIsShowDpdData', 'setIsShowRecipientData', 'setIsShowDeliveryWayTable',
-        'setCurrentDeliveryCompany']),
+        'setCurrentDeliveryCompany', 'setCurrentTransportCompanyId']),
         selectDeliveryCompany() {
             console.log('selectDeliveryCompany', this.delivery)
+          if (!this.getCurrentDeliveryCompany) {
             if (this.delivery.deliveryService.includes('DPD')) {
-                this.setIsShowDpdData(true)
+              this.setIsShowDpdData(true);
             } else {
-                this.setIsShowRecipientData(true)
+              this.setIsShowRecipientData(true);
             }
             this.setCurrentDeliveryCompany(this.delivery)
+            this.setCurrentTransportCompanyId(this.delivery)
             this.setIsShowDeliveryWayTable(false)
+          }
         }
     },
     computed:{
-        ...mapGetters(['getCurrentDaDataAddress']),
+        ...mapGetters(['getCurrentDaDataAddress', 'getCurrentDeliveryCompany']),
     }
 }
 </script>

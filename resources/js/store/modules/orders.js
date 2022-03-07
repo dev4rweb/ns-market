@@ -118,6 +118,39 @@ export default {
                         commit('setLoading', false)
                     });
             }
+        },
+
+        createOrderAddress({getters, dispatch}, ) {
+            const currentOrder = getters['getBasketOrder']
+            const recipientInfoData = getters['getRecipientInfoData']
+            const currentDaDataAddress = getters['getCurrentDaDataAddress']
+            const transportCompanyId = getters['getCurrentTransportCompanyId']
+            const dpdCode = getters['getCurrentDpdOffice']
+            console.log('createOrderAddress', currentOrder)
+            console.log('createOrderAddress currentDaDataAddress',  currentDaDataAddress)
+            console.log('createOrderAddress recipientInfoData',  recipientInfoData)
+            // window.location.href = '/order-payment'
+            dispatch('updateOrCreateOrderAddressOnServer', {
+                order_id: parseInt(currentOrder.order_id),
+                user_id: currentOrder.customer_id,
+                recipient_full_name: `${recipientInfoData.first_name} ${recipientInfoData.last_name}`,
+                recipient_phone: recipientInfoData.phone,
+                recipient_email: recipientInfoData.email,
+                transport_company_id: transportCompanyId,
+                country: currentDaDataAddress.country,
+                region: currentDaDataAddress.region,
+                city: currentDaDataAddress.city,
+                street: currentDaDataAddress.street,
+                house_num: currentDaDataAddress.house,
+                // ownership: currentOrder.order_id,
+                // house_building: currentOrder.order_id,
+                apartment: currentDaDataAddress.flat,
+                // isEdit: currentOrder.order_id,
+                // sender_id: currentOrder.order_id,
+                // isRemember: currentOrder.order_id,
+                // track_num: currentOrder.order_id,
+                dpd_code: dpdCode,
+            })
         }
     },
     mutations: {

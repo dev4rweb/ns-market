@@ -90,6 +90,7 @@ export default {
     },
     mutations: {
         setCurrentDeliveryCompany(state, deliveryCompany) {
+
             state.currentDeliveryCompany = deliveryCompany
         },
         setEDostDelivery(state, address) {

@@ -59,41 +59,41 @@
                 </div>
             </div>
         </div>
-<!--        <div
-            class="card shadow blue-header-info-block mb-3"
-            v-if="getCurrentDeliveryCompany"
-        >
-            <div class="header-block p-3">
-                Выберите способ доставки
-            </div>
-            <div
-                class="body-block p-3"
-            >
-                <h3>
-                    {{ getCurrentDeliveryCompany.deliveryService }} <br>
-                    {{ getCurrentDeliveryCompany.payType }}
-                </h3>
-                <h4>Срок доставки - {{ getCurrentDeliveryCompany.deliveryTime }}</h4>
-                <span
-                    style="font-size: 25px"
+        <!--        <div
+                    class="card shadow blue-header-info-block mb-3"
+                    v-if="getCurrentDeliveryCompany"
                 >
-                    Стоимость - {{ getCurrentDeliveryCompany.price }} руб.
-                </span>
+                    <div class="header-block p-3">
+                        Выберите способ доставки
+                    </div>
+                    <div
+                        class="body-block p-3"
+                    >
+                        <h3>
+                            {{ getCurrentDeliveryCompany.deliveryService }} <br>
+                            {{ getCurrentDeliveryCompany.payType }}
+                        </h3>
+                        <h4>Срок доставки - {{ getCurrentDeliveryCompany.deliveryTime }}</h4>
+                        <span
+                            style="font-size: 25px"
+                        >
+                            Стоимость - {{ getCurrentDeliveryCompany.price }} руб.
+                        </span>
 
-                <div v-if="getCurrentDpdOffice">
-                    <h4 class="dpd-title">
-                        Пункт выдачи:
-                        <b>{{ getCurrentDpdOffice.address }}</b> <br>
-                        <a :href="`http://www.edost.ru/office.php?c=${getCurrentDpdOffice.id}`">Показать на карте</a>
-                    </h4>
-                    <span class="dpd-code">код: {{ getCurrentDpdOffice.code }}</span>
-                    <p class="dpd-body">
-                        телефон: {{ getCurrentDpdOffice.tel }} <br>
-                        офис: {{ getCurrentDpdOffice.schedule }}
-                    </p>
-                </div>
-            </div>
-        </div>-->
+                        <div v-if="getCurrentDpdOffice">
+                            <h4 class="dpd-title">
+                                Пункт выдачи:
+                                <b>{{ getCurrentDpdOffice.address }}</b> <br>
+                                <a :href="`http://www.edost.ru/office.php?c=${getCurrentDpdOffice.id}`">Показать на карте</a>
+                            </h4>
+                            <span class="dpd-code">код: {{ getCurrentDpdOffice.code }}</span>
+                            <p class="dpd-body">
+                                телефон: {{ getCurrentDpdOffice.tel }} <br>
+                                офис: {{ getCurrentDpdOffice.schedule }}
+                            </p>
+                        </div>
+                    </div>
+                </div>-->
 
         <div v-if="getCurrentDeliveryCompany">
             <h3 class="mt-3">Способ доставки</h3>
@@ -101,7 +101,7 @@
         </div>
 
         <div
-            class="d-flex justify-content-center"
+            class="d-flex"
             v-if="getEDostDelivery"
         >
             <button
@@ -113,7 +113,7 @@
         </div>
 
         <div v-if="getEDostDelivery && getEDostDelivery.length && getIsShowDeliveryWayTable">
-            <h3 class="mt-3">Способ доставки</h3>
+            <h3 class="mt-3"> Выберите способ доставки</h3>
             <DeliveryWayTable/>
         </div>
 
@@ -188,9 +188,12 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['fetchDaDataAddress', 'fetchEDostDelivery', 'fetchPhysicalPerson']),
+        ...mapActions(['fetchDaDataAddress', 'fetchEDostDelivery', 'fetchPhysicalPerson',
+            'createOrderAddress', 'fetchTransportCompanies']),
         ...mapMutations(['setFastSearchAddress', 'setEDostDelivery', 'setCurrentDaDataAddress',
-            'setIsShowMyAddresses', 'setIsShowDeliveryWayTable', 'setIsShowDpdData', 'setToastError']),
+            'setIsShowMyAddresses', 'setIsShowDeliveryWayTable', 'setIsShowDpdData', 'setToastError',
+        'setCurrentDeliveryCompany', 'setCurrentDpdOffice', 'setIsShowRecipientData',
+        'setCurrentTransportCompanyId']),
         cityOnInput() {
             this.isAddressInvalid = false
             this.fetchDaDataAddress({
@@ -204,8 +207,9 @@ export default {
         gotoToPayPage() {
             if (this.getRecipientInfoData.first_name &&
                 this.getRecipientInfoData.last_name &&
-                this.getRecipientInfoData.phone)
-                window.location.href = '/order-payment'
+                this.getRecipientInfoData.phone
+            )
+                this.createOrderAddress()
             else this.setToastError('Заполните все необходимые поля для перехода на следующую страницу')
         },
         findDeliveries() {
@@ -214,6 +218,17 @@ export default {
         },
         changeDeliveryWay() {
             console.log('changeDeliveryWay', this.getCurrentDaDataAddress)
+
+            this.setCurrentDpdOffice(null)
+            this.setCurrentDeliveryCompany(null)
+            this.setCurrentTransportCompanyId(null)
+            this.setIsShowRecipientData(false)
+            this.fetchEDostDelivery('')
+
+        },
+        // now this function unused
+        changeAddress() {
+            console.log('changeAddress', this.getCurrentDaDataAddress)
             this.setCurrentDaDataAddress({
                 city_with_type: '',
                 postal_code: '',
@@ -232,9 +247,7 @@ export default {
             })
             this.setFastSearchAddress('')
             this.setIsShowMyAddresses(true)
-            this.setIsShowDpdData(false)
             this.setEDostDelivery(null)
-
         }
     },
     computed: {
@@ -263,6 +276,7 @@ export default {
             this.$refs.searchCity.click();
             // this.$refs.searchCity.focus();
         }, 500);
+        this.fetchTransportCompanies()
         // console.log('OrderDeliveryPage', locations_data.find(i => i[3].includes('Тульская')))
     }
 }

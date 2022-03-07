@@ -15,12 +15,15 @@ import basket from "./modules/basket";
 import orders from "./modules/orders";
 import inviter from "./modules/inviter";
 import eDost from "./modules/eDost";
+import transportCompanies from "./modules/transportCompanies";
+import orderAddress from "./modules/orderAddress";
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
     modules: {
         users, modals, errors, physicalPerson, phoneApi, mentor, addresses, daData,
-        feedback, catalogGroups, lStorage, basket, orders, inviter, eDost
+        feedback, catalogGroups, lStorage, basket, orders, inviter, eDost,
+        transportCompanies, orderAddress
     }
 })
