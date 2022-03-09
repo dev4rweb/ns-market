@@ -26,9 +26,10 @@ export default {
                         if (window.location.href.includes('user-address-panel')) {
                             dispatch('fetchAllAddresses');
                         }
-                        if (res.data.model.mentor_user_id) {
-                            dispatch('fetchMentorUserById', res.data.model.mentor_user_id)
-                        }
+                        if (window.location.href.includes('user') && window.location.href.includes('panel'))
+                            if (res.data.model.mentor_user_id) {
+                                dispatch('fetchMentorUserById', res.data.model.mentor_user_id)
+                            }
                         if (window.location.href.includes('/user-orders-panel/save')) {
                             dispatch('createDraftOrderOnServer')
                         }

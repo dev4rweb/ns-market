@@ -48,11 +48,12 @@ export default {
             if (
                 link.path.includes('/order-payment')
                 &&
-                this.getLSOrder.length && this.getCurrentDeliveryCompany
+                this.getLSOrder.length && this.getOrderAddress
+                /*this.getCurrentDeliveryCompany
                 &&
                 this.getRecipientInfoData.first_name &&
                 this.getRecipientInfoData.last_name &&
-                this.getRecipientInfoData.phone
+                this.getRecipientInfoData.phone*/
             ) window.location.href = link.path
             /*else {
                 this.setToastError('Пустая корзина');
@@ -61,7 +62,8 @@ export default {
         },
     },
     computed: {
-        ...mapGetters(['getLSOrder', 'getCurrentDeliveryCompany', 'getRecipientInfoData']),
+        ...mapGetters(['getLSOrder', 'getCurrentDeliveryCompany', 'getRecipientInfoData',
+        'getOrderAddress']),
     },
     mounted() {
     }

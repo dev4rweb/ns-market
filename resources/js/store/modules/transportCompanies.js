@@ -6,13 +6,18 @@ export default {
         currentTransportCompanyId: null,
     },
     actions: {
-        fetchTransportCompanies({commit}) {
+        fetchTransportCompanies({commit, dispatch, getters}) {
             commit('setLoading', true)
             axios.post(`${WORK_HOST}market/transport-companies`)
                 .then(res => {
                     console.log('fetchTransportCompanies', res)
                     if (res.data.success) {
                         commit('setTransportCompanies', res.data.models)
+                        if (window.location.href.includes('/order-payment')) {
+                            console.log('Create eDost query from updateOrderAddressOrderId')
+
+                            dispatch('fetchEDostDelivery', 'order-payment')
+                        }
                     }
                 }).catch(err => {
                 console.log('fetchTransportCompanies err', err)
@@ -26,14 +31,16 @@ export default {
             state.transportCompanies = tCompanies
         },
         setCurrentTransportCompanyId(state, transportCompany) {
+            // console.log('setCurrentTransportCompanyId',transportCompany)
+            // console.log('setCurrentTransportCompanyId',state.transportCompanies)
             if (transportCompany && !transportCompany.deliveryService.includes('вывоз')) {
                 let company = transportCompany
                 if (transportCompany.deliveryService.toLowerCase().includes('почта россии')) {
-                    if (transportCompany.name.toLowerCase().includes('клас'))
+                    if (transportCompany.deliveryService.toLowerCase().includes('клас'))
                         company = state.transportCompanies.find(i => i.name.includes('клас'))
-                    if (transportCompany.name.toLowerCase().includes('назем'))
+                    if (transportCompany.deliveryService.toLowerCase().includes('назем'))
                         company = state.transportCompanies.find(i => i.name.includes('назем'))
-                    if (transportCompany.name.toLowerCase().includes('ems'))
+                    if (transportCompany.deliveryService.toLowerCase().includes('ems'))
                         company = state.transportCompanies.find(i => i.name.includes('ems'))
                 } else {
                     company = state.transportCompanies.find(i =>

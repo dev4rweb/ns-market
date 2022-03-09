@@ -16,24 +16,43 @@ export default {
         isShowDeliveryWayTable: false,
     },
     actions: {
-        fetchEDostDelivery({commit, getters, dispatch}, query) {
+        fetchEDostDelivery({commit, getters, dispatch}, query = null) {
             const currentDaDataAddress = getters['getCurrentDaDataAddress']
             const weight = getters['getWeightOrder'] ?
                 parseFloat(getters['getWeightOrder']) < 1 ? 1 :
                     parseFloat(getters['getWeightOrder']) : 1
             console.log(weight.toFixed(0), typeof weight)
-            if (currentDaDataAddress && currentDaDataAddress.city) {
+
+            if ((currentDaDataAddress && currentDaDataAddress.city) ||
+                window.location.href.includes('order-payment')
+            ) {
                 commit('setLoading', true);
-                const q = {
-                    edost_to_city: currentDaDataAddress.city,
-                    edost_weight: weight.toFixed(0),
-                    edost_strah: 0,
-                    edost_rus: 1,
-                    edost_kod: "1",
-                    edost_lenght: '',
-                    edost_width: '',
-                    edost_height: '',
-                    edost_zip: currentDaDataAddress.postal_code,
+                let q
+                if (window.location.href.includes('order-payment')) {
+                    const curAddress = getters['getOrderAddress']
+                    q = {
+                        edost_to_city: curAddress.city,
+                        edost_weight: weight.toFixed(0),
+                        edost_strah: 0,
+                        edost_rus: 1,
+                        edost_kod: "1",
+                        edost_lenght: '',
+                        edost_width: '',
+                        edost_height: '',
+                        edost_zip: '',
+                    };
+                } else {
+                    q = {
+                        edost_to_city: currentDaDataAddress.city,
+                        edost_weight: weight.toFixed(0),
+                        edost_strah: 0,
+                        edost_rus: 1,
+                        edost_kod: "1",
+                        edost_lenght: '',
+                        edost_width: '',
+                        edost_height: '',
+                        edost_zip: currentDaDataAddress.postal_code,
+                    };
                 }
                 // axios.post('http://edost-lara/api/', q)
                 axios.post('http://edost-lara.dev4rweb.com/api/', q)
@@ -41,8 +60,13 @@ export default {
                         console.log('fetchEDostDelivery res', res)
                         if (res.data.qty_company > 0) {
                             commit('createEDostDeliveryObject', res.data)
-                            commit('setIsShowMyAddresses', false)
-                            commit('setIsShowDeliveryWayTable', true)
+                            if (window.location.href.includes('order-payment')) {
+                                console.log('fetchEDostDelivery by query');
+                            } else {
+                                commit('setIsShowMyAddresses', false);
+                                commit('setIsShowDeliveryWayTable', true)
+                            }
+
                         }
                         if (res.data.qty_company === 0 && res.data.stat === 0) {
                             dispatch('fetchEDostDeliveryByRegion', weight)
@@ -51,25 +75,41 @@ export default {
                     console.log('fetchEDostDelivery err', err)
                 }).finally(() => commit('setLoading', false));
             } else if (currentDaDataAddress.region) {
-                dispatch('fetchEDostDeliveryByRegion', weight)
+                dispatch('fetchEDostDeliveryByRegion', weight);
             } else {
-                commit('setToastError', 'Dadata is empty')
+                commit('setToastError', 'Dadata is empty');
             }
         },
         fetchEDostDeliveryByRegion({commit, getters}, weight) {
             const currentDaDataAddress = getters['getCurrentDaDataAddress']
             if (currentDaDataAddress && currentDaDataAddress.region) {
                 commit('setLoading', true);
-                const q = {
-                    edost_to_city: `${currentDaDataAddress.region} область`,
-                    edost_weight: weight.toFixed(0),
-                    edost_strah: 0,
-                    edost_rus: 1,
-                    edost_kod: "1",
-                    edost_lenght: '',
-                    edost_width: '',
-                    edost_height: '',
-                    edost_zip: currentDaDataAddress.postal_code,
+                let q
+                if (window.location.href.includes('order-payment')) {
+                    const curAddress = getters['getOrderAddress'];
+                    q = {
+                        edost_to_city: curAddress.region,
+                        edost_weight: weight.toFixed(0),
+                        edost_strah: 0,
+                        edost_rus: 1,
+                        edost_kod: "1",
+                        edost_lenght: '',
+                        edost_width: '',
+                        edost_height: '',
+                        edost_zip: '',
+                    };
+                } else {
+                    q = {
+                        edost_to_city: `${currentDaDataAddress.region} область`,
+                        edost_weight: weight.toFixed(0),
+                        edost_strah: 0,
+                        edost_rus: 1,
+                        edost_kod: "1",
+                        edost_lenght: '',
+                        edost_width: '',
+                        edost_height: '',
+                        edost_zip: currentDaDataAddress.postal_code,
+                    };
                 }
                 // axios.post('http://edost-lara/api/', q)
                 axios.post('http://edost-lara.dev4rweb.com/api/', q)
@@ -77,8 +117,12 @@ export default {
                         console.log('fetchEDostDelivery res', res)
                         if (res.data.qty_company > 0) {
                             commit('createEDostDeliveryObject', res.data)
-                            commit('setIsShowMyAddresses', false)
-                            commit('setIsShowDeliveryWayTable', true)
+                            if (window.location.href.includes('order-payment')) {
+                                console.log('fetchEDostDelivery by query region');
+                            } else {
+                                commit('setIsShowMyAddresses', false);
+                                commit('setIsShowDeliveryWayTable', true)
+                            }
                         }
                     }).catch(err => {
                     console.log('fetchEDostDelivery err', err)

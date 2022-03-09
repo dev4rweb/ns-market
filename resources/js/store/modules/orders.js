@@ -41,10 +41,11 @@ export default {
                 });
             }
         },
-        createBasketOrderOnServer({getters, commit}) {
+        createBasketOrderOnServer({getters, commit, dispatch}) {
             const lsOrders = getters['getLSOrder']
             const curUser = getters['getPhysicalPerson']
             // console.log('createBasketOrderOnServer ', curUser)
+            // console.log('createBasketOrderOnServer ', lsOrders)
             if (lsOrders.length > 0 && curUser) {
                 commit('setLoading', true)
                 const customerOrder = {
@@ -69,6 +70,12 @@ export default {
                 axios.post(`${WORK_HOST}customer-orders`, customerOrder)
                     .then(res => {
                         console.log('createBasketOrderOnServer res', res)
+                        if (res.data.success) {
+                            dispatch('updateOrderAddressOrderId', {
+                                user_id: res.data.model.customer_id,
+                                order_id: res.data.model.id
+                            })
+                        }
                     })
                     .catch(err => {
                         console.log('createBasketOrderOnServer err', err)
@@ -131,7 +138,7 @@ export default {
             console.log('createOrderAddress recipientInfoData',  recipientInfoData)
             // window.location.href = '/order-payment'
             dispatch('updateOrCreateOrderAddressOnServer', {
-                order_id: parseInt(currentOrder.order_id),
+                order_id: parseInt(currentOrder.id),
                 user_id: currentOrder.customer_id,
                 recipient_full_name: `${recipientInfoData.first_name} ${recipientInfoData.last_name}`,
                 recipient_phone: recipientInfoData.phone,

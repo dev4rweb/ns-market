@@ -11,8 +11,31 @@ export default {
                 axios.post(`${WORK_HOST}customer-order-addresses`, orderAddress)
                     .then(res => {
                         console.log('createOrderAddressOnServer', res)
+                        if (res.data.success) {
+                            commit('setOrderAddress', res.data.models)
+                            window.location.href = 'order-payment'
+                        }
                     }).catch(err => {
                     console.log('createOrderAddressOnServer err', err)
+                }).finally(() => {
+                    commit('setLoading', false)
+                });
+            }
+        },
+        updateOrderAddressOrderId({commit, dispatch}, orderObj) {
+            if (orderObj) {
+                commit('setLoading', true)
+                axios.post(`${WORK_HOST}customer-order-addresses/update-order`, orderObj)
+                    .then(res => {
+                        console.log('updateOrderAddressOrderId', res)
+                        if (res.data.success) {
+                            commit('setOrderAddress', res.data.model)
+                            if (window.location.href.includes('/order-payment')) {
+                                dispatch('fetchTransportCompanies')
+                            }
+                        }
+                    }).catch(err => {
+                    console.log('updateOrderAddressOrderId err', err)
                 }).finally(() => {
                     commit('setLoading', false)
                 });

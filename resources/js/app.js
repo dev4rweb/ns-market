@@ -119,6 +119,9 @@ Vue.component('edit-address-form', require('./components/page-parts/user-address
 Vue.component('product-description', require('./components/page-parts/detail-product/ProductDescription').default);
 Vue.component('product-reviews', require('./components/page-parts/detail-product/ProductReviews').default);
 Vue.component('product-kits', require('./components/page-parts/detail-product/ProductKits').default);
+Vue.component('general-order-info', require('./components/page-parts/order-payment/GeneralOrderInfo').default);
+Vue.component('account-payment-type', require('./components/page-parts/order-payment/AccountPaymentType').default);
+Vue.component('payment-way', require('./components/page-parts/order-payment/PaymentWay').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
