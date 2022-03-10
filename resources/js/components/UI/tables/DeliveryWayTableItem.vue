@@ -22,41 +22,42 @@
         <td
             class="p-3 text-end"
         >
-            {{getCurrentDaDataAddress.country.includes('Россия') ? 'Предоплата' : 'Оплата доставки - при получении'}}
+            {{ getCurrentDaDataAddress.country.includes('Россия') ? 'Предоплата' : 'Оплата доставки - при получении' }}
         </td>
     </tr>
 </template>
 
 <script>
 import {mapMutations, mapGetters} from 'vuex'
+
 export default {
     name: "DeliveryWayTableItem",
     props: ['delivery'],
     methods: {
         ...mapMutations(['setIsShowDpdData', 'setIsShowRecipientData', 'setIsShowDeliveryWayTable',
-        'setCurrentDeliveryCompany', 'setCurrentTransportCompanyId']),
+            'setCurrentDeliveryCompany', 'setCurrentTransportCompanyId']),
         selectDeliveryCompany() {
             console.log('selectDeliveryCompany', this.delivery)
-          if (!this.getCurrentDeliveryCompany) {
-            if (this.delivery.deliveryService.includes('DPD')) {
-              this.setIsShowDpdData(true);
-            } else {
-              this.setIsShowRecipientData(true);
+            if (!this.getCurrentDeliveryCompany) {
+                if (this.delivery.deliveryService.includes('DPD')) {
+                    this.setIsShowDpdData(true);
+                } else {
+                    this.setIsShowRecipientData(true);
+                }
+                this.setCurrentDeliveryCompany(this.delivery)
+                this.setCurrentTransportCompanyId(this.delivery)
+                this.setIsShowDeliveryWayTable(false)
             }
-            this.setCurrentDeliveryCompany(this.delivery)
-            this.setCurrentTransportCompanyId(this.delivery)
-            this.setIsShowDeliveryWayTable(false)
-          }
         }
     },
-    computed:{
+    computed: {
         ...mapGetters(['getCurrentDaDataAddress', 'getCurrentDeliveryCompany']),
     }
 }
 </script>
 
 <style scoped>
- tr:hover{
-     cursor: pointer;
- }
+tr:hover {
+    cursor: pointer;
+}
 </style>

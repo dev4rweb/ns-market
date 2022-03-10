@@ -100,18 +100,6 @@
             <DeliveryWayTable/>
         </div>
 
-        <div
-            class="d-flex"
-            v-if="getEDostDelivery"
-        >
-            <button
-                class="btn btn-lg btn-link"
-                @click="changeDeliveryWay"
-            >
-                Изменить способ доставки
-            </button>
-        </div>
-
         <div v-if="getEDostDelivery && getEDostDelivery.length && getIsShowDeliveryWayTable">
             <h3 class="mt-3"> Выберите способ доставки</h3>
             <DeliveryWayTable/>
@@ -126,8 +114,21 @@
         </div>
 
         <div
+            class="d-flex"
+            v-if="getCurrentDeliveryCompany"
+        >
+            <button
+                class="btn btn-lg btn-link"
+                @click="changeDeliveryWay"
+            >
+                Изменить способ доставки
+            </button>
+        </div>
+
+        <div
             class="mt-3 mb-5"
-            v-if="getEDostDelivery && getIsShowRecipientData"
+            v-if="getEDostDelivery && getIsShowRecipientData
+            && getCurrentDeliveryCompany.deliveryService.toLowerCase().includes('россии')"
         >
             <RecipientAddress/>
         </div>

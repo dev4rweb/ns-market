@@ -1,7 +1,7 @@
 <template>
     <div class="card shadow blue-header-info-block mb-3">
         <div class="header-block p-3">
-            DPD:
+            Выберите пункт выдачи заказа DPD:
         </div>
         <div class="body-block p-3">
             <ol class="list-group">
@@ -13,13 +13,21 @@
                         <h4 class="dpd-title">
                             Пункт выдачи:
                             <b>{{ getCurrentDpdOffice.address }}</b> <br>
-                            <a :href="`http://www.edost.ru/office.php?c=${getCurrentDpdOffice.id}`">Показать на карте</a>
+<!--                            <a :href="`http://www.edost.ru/office.php?c=${getCurrentDpdOffice.id}`">Показать на карте</a>-->
                         </h4>
-                        <span class="dpd-code">код: {{ getCurrentDpdOffice.code }}</span>
+<!--                        <span class="dpd-code">код: {{ getCurrentDpdOffice.code }}</span>-->
                         <p class="dpd-body">
                             телефон: {{ getCurrentDpdOffice.tel }} <br>
                             офис: {{ getCurrentDpdOffice.schedule }}
                         </p>
+                    </div>
+                    <div>
+                        <button
+                            class="btn btn-lg btn-link"
+                            @click="changeDpdOffice"
+                        >
+                            Выбрать другой пункт выдачи заказа
+                        </button>
                     </div>
                 </li>
                 <li
@@ -33,9 +41,9 @@
                         <h4 class="dpd-title">
                             Пункт выдачи:
                             <b>{{ office.address }}</b> <br>
-                            <a :href="`http://www.edost.ru/office.php?c=${office.id}`">Показать на карте</a>
+<!--                            <a :href="`http://www.edost.ru/office.php?c=${office.id}`">Показать на карте</a>-->
                         </h4>
-                        <span class="dpd-code">код: {{ office.code }}</span>
+<!--                        <span class="dpd-code">код: {{ office.code }}</span>-->
                         <p class="dpd-body">
                             телефон: {{ office.tel }} <br>
                             офис: {{ office.schedule }}
@@ -59,6 +67,12 @@ export default {
             this.setCurrentDpdOffice(dpdOffice)
             this.setIsShowDpdData(false)
             this.setIsShowRecipientData(true)
+        },
+        changeDpdOffice() {
+            console.log('changeDpdOffice')
+            this.setCurrentDpdOffice(null)
+            this.setIsShowRecipientData(false)
+            this.setIsShowDpdData(true)
         }
     },
     computed: {
@@ -106,6 +120,22 @@ export default {
             -ms-transform: none;
             -o-transform: none;
             transform: none;
+        }
+    }
+
+    .btn-link {
+        font-style: normal;
+        font-weight: 600;
+        font-size: 22px;
+        line-height: 22px;
+        color: #038ED7;
+
+        &.active {
+            font-style: normal;
+            font-weight: bold;
+            font-size: 18px;
+            line-height: 22px;
+            color: #038ED7;
         }
     }
 </style>

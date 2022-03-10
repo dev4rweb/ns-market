@@ -99,7 +99,6 @@
                             type="text"
                             class="form-control form-control-lg w-50"
                             v-model="getCurrentDaDataAddress.street"
-                            placeholder="напр., Ленина"
                         >
                     </div>
 
@@ -124,7 +123,6 @@
                             type="text"
                             class="form-control form-control-lg"
                             v-model="getCurrentDaDataAddress.house"
-                            placeholder="напр., 18"
                         >
                     </div>
 
@@ -134,7 +132,6 @@
                             type="text"
                             class="form-control form-control-lg"
                             v-model="getCurrentDaDataAddress.building"
-                            placeholder="напр., 3"
                         >
                     </div>
 
@@ -144,7 +141,6 @@
                             type="text"
                             class="form-control form-control-lg"
                             v-model="buildingType"
-                            placeholder="напр., 1"
                         >
                     </div>
                 </div>
@@ -156,7 +152,6 @@
                             type="text"
                             class="form-control form-control-lg"
                             v-model="getCurrentDaDataAddress.flat"
-                            placeholder="напр., 33"
                         >
                     </div>
 
@@ -166,7 +161,6 @@
                             type="text"
                             class="form-control form-control-lg"
                             v-model="office"
-                            placeholder="напр., 300"
                         >
                     </div>
                 </div>

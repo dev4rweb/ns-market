@@ -28,7 +28,7 @@ export default {
         index: Number
     },
     methods: {
-        ...mapMutations(['setCurrentDaDataAddress', 'setRecipientInfoData']),
+        ...mapMutations(['setCurrentDaDataAddress', 'setRecipientInfoData', 'setFastSearchAddress']),
         ...mapActions(['fetchEDostDelivery']),
         selectAddress() {
             console.log('selectAddress', this.address)
@@ -56,6 +56,8 @@ export default {
                 phone: this.address.phone ?? '',
                 email: this.address.email ?? '',
             })
+            const adr = `${this.address.country}, ${this.address.city}, ${this.address.street}, ${this.address.house}`
+            this.setFastSearchAddress(adr)
         },
 
     },

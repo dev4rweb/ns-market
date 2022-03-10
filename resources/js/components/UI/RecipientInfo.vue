@@ -14,7 +14,6 @@
                     type="text"
                     class="form-control form-control-lg w-50"
                     v-model="getRecipientInfoData.last_name"
-                    placeholder="напр., Иванов"
                 >
             </div>
 
@@ -25,7 +24,6 @@
                         type="text"
                         class="form-control form-control-lg me-3"
                         v-model="getRecipientInfoData.first_name"
-                        placeholder="напр., Иван"
                     >
                 </div>
 
@@ -35,7 +33,6 @@
                         type="text"
                         class="form-control form-control-lg"
                         v-model="getRecipientInfoData.middle_name"
-                        placeholder="напр., Иванович"
                     >
                 </div>
             </div>
@@ -48,7 +45,6 @@
                         type="text"
                         class="form-control form-control-lg"
                         v-model="getRecipientInfoData.phone"
-                        placeholder="+7 (___) ___ - __ - __"
                     >
                 </div>
 
@@ -58,7 +54,6 @@
                         type="text"
                         class="form-control form-control-lg"
                         v-model="getRecipientInfoData.email"
-                        placeholder="example@yourmail.com"
                     >
                 </div>
 
