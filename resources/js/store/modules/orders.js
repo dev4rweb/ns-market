@@ -138,7 +138,7 @@ export default {
             console.log('createOrderAddress recipientInfoData',  recipientInfoData)
             // window.location.href = '/order-payment'
             dispatch('updateOrCreateOrderAddressOnServer', {
-                order_id: parseInt(currentOrder.id),
+                order_id: currentOrder.id,
                 user_id: currentOrder.customer_id,
                 recipient_full_name: `${recipientInfoData.first_name} ${recipientInfoData.last_name}`,
                 recipient_phone: recipientInfoData.phone,
@@ -156,7 +156,7 @@ export default {
                 // sender_id: currentOrder.order_id,
                 // isRemember: currentOrder.order_id,
                 // track_num: currentOrder.order_id,
-                dpd_code: dpdCode,
+                dpd_code: dpdCode.code,
             })
         }
     },

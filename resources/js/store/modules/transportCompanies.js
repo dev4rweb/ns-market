@@ -37,14 +37,14 @@ export default {
                 let company = transportCompany
                 if (transportCompany.deliveryService.toLowerCase().includes('почта россии')) {
                     if (transportCompany.deliveryService.toLowerCase().includes('клас'))
-                        company = state.transportCompanies.find(i => i.name.includes('клас'))
+                        company = state.transportCompanies.find(i => i.name_alias.includes('клас'))
                     if (transportCompany.deliveryService.toLowerCase().includes('назем'))
-                        company = state.transportCompanies.find(i => i.name.includes('назем'))
+                        company = state.transportCompanies.find(i => i.name_alias.includes('назем'))
                     if (transportCompany.deliveryService.toLowerCase().includes('ems'))
-                        company = state.transportCompanies.find(i => i.name.includes('ems'))
+                        company = state.transportCompanies.find(i => i.name_alias.includes('ems'))
                 } else {
                     company = state.transportCompanies.find(i =>
-                        i.name.toLowerCase()
+                        i.name_alias.toLowerCase()
                             .includes(transportCompany.deliveryService.toLowerCase()));
                 }
                 state.currentTransportCompanyId = company.id

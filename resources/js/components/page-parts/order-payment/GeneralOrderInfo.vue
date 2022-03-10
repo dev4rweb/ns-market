@@ -22,9 +22,12 @@
                 <span>Стоимость заказа, со скидкой</span>
                 <span class="value">{{ getSumOrder }} р.</span>
             </div>
-            <div class="d-flex justify-content-between content-wrapper">
+            <div
+                v-if="deliveryCost"
+                class="d-flex justify-content-between content-wrapper"
+            >
                 <span>Стоимость доставки </span>
-                <span class="value">260 р.</span>
+                <span class="value">{{ deliveryCost.price }} р.</span>
             </div>
             <div class="d-flex justify-content-between content-wrapper mt-3">
                 <span class="value">Итого к оплате</span>
@@ -55,7 +58,22 @@ export default {
     },
     computed: {
         ...mapGetters(['getBasketOrder', 'getPointsOrder', 'getWeightOrder',
-            'getEconomicSumOrder', 'getSumOrder'])
+            'getEconomicSumOrder', 'getSumOrder', 'getOrderAddress', 'getTransportCompanies',
+            'getEDostDelivery'
+        ]),
+        deliveryCost() {
+            let cost = null
+            if (this.getOrderAddress && this.getTransportCompanies && this.getEDostDelivery) {
+                const company = this.getTransportCompanies
+                    .find(i => i.id === this.getOrderAddress.transport_company_id)
+                if (company) {
+                    cost = this.getEDostDelivery
+                        .find(i => i.deliveryService.toLowerCase()
+                            .includes(company.name_alias.toLowerCase()))
+                }
+            }
+            return cost
+        }
     },
     mounted() {
         if (window.User) {

@@ -6,6 +6,7 @@ export default {
     },
     actions: {
         updateOrCreateOrderAddressOnServer({commit}, orderAddress) {
+            console.log('updateOrCreateOrderAddressOnServer request', orderAddress)
             if (orderAddress) {
                 commit('setLoading', true)
                 axios.post(`${WORK_HOST}customer-order-addresses`, orderAddress)

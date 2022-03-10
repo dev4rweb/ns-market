@@ -174,6 +174,7 @@ export default {
                     (parseFloat(a.price) < parseFloat(b.price)) ? -1 : 0
             )
         },
+
         setIsShowMyAddresses(state, isShow) {
             state.isShowMyAddresses = isShow
         },
@@ -188,7 +189,7 @@ export default {
         },
         setCurrentDpdOffice(state, office) {
             state.currentDpdOffice = office
-        }
+        },
     },
     getters: {
         getCurrentDeliveryCompany(state) {
@@ -214,6 +215,6 @@ export default {
         },
         getCurrentDpdOffice(state) {
             return state.currentDpdOffice
-        }
+        },
     }
 }

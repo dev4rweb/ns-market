@@ -1,7 +1,9 @@
 <template>
     <div class="card shadow blue-header-info-block mb-3">
         <div class="header-block p-3">
-            <div class=" d-flex justify-content-between own-payment-list">
+            <div
+                class=" d-flex justify-content-between own-payment-list"
+            >
                 <span>Тип счёта</span>
                 <span>Тип счёта</span>
                 <span>Оплата со счёта (р.)</span>
@@ -100,7 +102,26 @@ export default {
         }
     }
 
-    .btn-info
+    .form-group-blue {
+        label {
+            font-style: normal;
+            font-weight: 600;
+            font-size: 22px;
+            line-height: 22px;
+            color: #333333;
+
+            span {
+                font-style: normal;
+                font-weight: 600;
+                font-size: 22px;
+                line-height: 22px;
+                color: #EB5757;
+            }
+        }
+    }
+}
+
+.blue-header-info-block{
     .own-payment-list {
         width: 100%;
         max-width: 655px;
@@ -124,22 +145,6 @@ export default {
     }
 }
 
-.form-group-blue {
-    label {
-        font-style: normal;
-        font-weight: 600;
-        font-size: 22px;
-        line-height: 22px;
-        color: #333333;
 
-        span {
-            font-style: normal;
-            font-weight: 600;
-            font-size: 22px;
-            line-height: 22px;
-            color: #EB5757;
-        }
-    }
-}
 
 </style>
