@@ -1,0 +1,210 @@
+<template>
+<div>
+    <div class="form-check">
+        <input
+            class="form-check-input"
+            type="checkbox"
+            value=""
+            id="officeCategory"
+        >
+        <label
+            class="form-check-label"
+            for="officeCategory"
+        >
+            Офисные
+        </label>
+    </div>
+    <div class="form-check">
+        <input
+            class="form-check-input"
+            type="checkbox"
+            value=""
+            id="braveCategory"
+        >
+        <label
+            class="form-check-label"
+            for="braveCategory"
+        >
+            Смелые
+        </label>
+    </div>
+    <div class="form-check">
+        <input
+            class="form-check-input"
+            type="checkbox"
+            value=""
+            id="confidentCategory"
+        >
+        <label
+            class="form-check-label"
+            for="confidentCategory"
+        >
+            Уверенные
+        </label>
+    </div>
+    <div class="form-check">
+        <input
+            class="form-check-input"
+            type="checkbox"
+            value=""
+            id="businessCategory"
+        >
+        <label
+            class="form-check-label"
+            for="businessCategory"
+        >
+            Бизнес
+        </label>
+    </div>
+    <div class="form-check">
+        <input
+            class="form-check-input"
+            type="checkbox"
+            value=""
+            id="sexyCategory"
+        >
+        <label
+            class="form-check-label"
+            for="sexyCategory"
+        >
+            Сексуальные
+        </label>
+    </div>
+    <div class="form-check">
+        <input
+            class="form-check-input"
+            type="checkbox"
+            value=""
+            id="charmCategory"
+        >
+        <label
+            class="form-check-label"
+            for="charmCategory"
+        >
+            Чарующие
+        </label>
+    </div>
+    <div class="form-check">
+        <input
+            class="form-check-input"
+            type="checkbox"
+            value=""
+            id="elegantCategory"
+        >
+        <label
+            class="form-check-label"
+            for="elegantCategory"
+        >
+            Элегантные
+        </label>
+    </div>
+    <div class="form-check">
+        <input
+            class="form-check-input"
+            type="checkbox"
+            value=""
+            id="provocativeCategory"
+        >
+        <label
+            class="form-check-label"
+            for="provocativeCategory"
+        >
+            Провокационные
+        </label>
+    </div>
+    <div class="form-check">
+        <input
+            class="form-check-input"
+            type="checkbox"
+            value=""
+            id="clubCategory"
+        >
+        <label
+            class="form-check-label"
+            for="clubCategory"
+        >
+            Клубные
+        </label>
+    </div>
+    <div class="form-check">
+        <input
+            class="form-check-input"
+            type="checkbox"
+            value=""
+            id="sensualCategory"
+        >
+        <label
+            class="form-check-label"
+            for="sensualCategory"
+        >
+            Чувственные
+        </label>
+    </div>
+    <div class="form-check">
+        <input
+            class="form-check-input"
+            type="checkbox"
+            value=""
+            id="romanticCategory"
+        >
+        <label
+            class="form-check-label"
+            for="romanticCategory"
+        >
+            Романтические
+        </label>
+    </div>
+    <div class="form-check">
+        <input
+            class="form-check-input"
+            type="checkbox"
+            value=""
+            id="misteryCategory"
+        >
+        <label
+            class="form-check-label"
+            for="misteryCategory"
+        >
+            Таинственные
+        </label>
+    </div>
+    <div class="form-check">
+        <input
+            class="form-check-input"
+            type="checkbox"
+            value=""
+            id="sportCategory"
+        >
+        <label
+            class="form-check-label"
+            for="sportCategory"
+        >
+            Спортивные
+        </label>
+    </div>
+    <div class="form-check">
+        <input
+            class="form-check-input"
+            type="checkbox"
+            value=""
+            id="resoluteCategory"
+        >
+        <label
+            class="form-check-label"
+            for="resoluteCategory"
+        >
+            Решительные
+        </label>
+    </div>
+</div>
+</template>
+
+<script>
+export default {
+    name: "SpiritFilter"
+}
+</script>
+
+<style scoped>
+
+</style>

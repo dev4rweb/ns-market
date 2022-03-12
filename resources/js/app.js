@@ -122,6 +122,15 @@ Vue.component('product-kits', require('./components/page-parts/detail-product/Pr
 Vue.component('general-order-info', require('./components/page-parts/order-payment/GeneralOrderInfo').default);
 Vue.component('account-payment-type', require('./components/page-parts/order-payment/AccountPaymentType').default);
 Vue.component('payment-way', require('./components/page-parts/order-payment/PaymentWay').default);
+Vue.component('aroma-vis-header', require('./components/UI/aroma-vis/AromaVisHeader').default);
+Vue.component('aroma-sidebar', require('./components/UI/aroma-vis/AromaSidebar').default);
+Vue.component('aroma-product-card', require('./components/UI/aroma-vis/AromaProductCard').default);
+Vue.component('catalog-products-header', require('./components/page-parts/headers/CatalogProductsHeader').default);
+Vue.component('sex-filter', require('./components/UI/aroma-vis/filters/SexFilter').default);
+Vue.component('color-filter', require('./components/UI/aroma-vis/filters/ColorFilter').default);
+Vue.component('daily-filter', require('./components/UI/aroma-vis/filters/DailyFilter').default);
+Vue.component('smell-filter', require('./components/UI/aroma-vis/filters/SmellFilter').default);
+Vue.component('spirit-filter', require('./components/UI/aroma-vis/filters/SpiritFilter').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

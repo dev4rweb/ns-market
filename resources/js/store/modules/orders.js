@@ -156,7 +156,7 @@ export default {
                 // sender_id: currentOrder.order_id,
                 // isRemember: currentOrder.order_id,
                 // track_num: currentOrder.order_id,
-                dpd_code: dpdCode.code,
+                dpd_code: dpdCode ? dpdCode.code : null,
             })
         }
     },
