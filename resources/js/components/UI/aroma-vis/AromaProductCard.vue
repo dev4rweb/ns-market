@@ -3,9 +3,9 @@
         v-if="product"
         class="aroma-product-card"
     >
-        <div class="circle-color">
-            <h3>C-01</h3>
-            <span>женский аромат</span>
+        <div class="circle-color" :style="{backgroundColor: getCircleColor}">
+            <h3>{{ getVendorExp }}</h3>
+            <span>{{ getSex }}</span>
         </div>
         <p>
             {{ product.vendor_code }} <br>
@@ -20,11 +20,51 @@
 export default {
     name: "AromaProductCard",
     props: ['product'],
+    computed: {
+        getCircleColor() {
+            const firstNumber = this.product.vendor_code.charAt(0)
+            switch (firstNumber) {
+                case '1':
+                    return '#EBAA3C'
+                case '2':
+                    return '#86B649'
+                case '3':
+                    return '#D75C34'
+                default:
+                    return '#3D8BCC'
+            }
+        },
+        getVendorExp() {
+            const firstNumber = this.product.vendor_code.charAt(0)
+            const aromaNumber = this.product.vendor_code.charAt(1) + this.product.vendor_code.charAt(2)
+            switch (firstNumber) {
+                case '1':
+                    return `C-${aromaNumber}`
+                case '2':
+                    return `D-${aromaNumber}`
+                case '3':
+                    return `K-${aromaNumber}`
+                default:
+                    return `M-${aromaNumber}`
+            }
+        },
+        getSex() {
+            const sex = this.product.gender
+            switch (sex) {
+                case 'Ж':
+                    return 'женский аромат'
+                case 'М':
+                    return 'мужской аромат'
+                default:
+                    return 'унисекс'
+            }
+        }
+    }
 }
 </script>
 
 <style lang="scss" scoped>
-.aroma-product-card{
+.aroma-product-card {
     display: flex;
     align-items: center;
     padding: 8px 8px 8px 16px;
@@ -49,7 +89,7 @@ export default {
         transform: scale(1.05, 1.05);
     }
 
-    .circle-color{
+    .circle-color {
         width: 72px;
         height: 72px;
         padding: 15px;
@@ -60,11 +100,11 @@ export default {
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        background-color: #EBAA3C;
+        //background-color: #EBAA3C;
         color: white;
         margin-right: 25px;
 
-        h3{
+        h3 {
             margin-bottom: 0;
             font-style: normal;
             font-weight: 700;
@@ -75,7 +115,7 @@ export default {
             text-transform: uppercase;
         }
 
-        span{
+        span {
             font-style: normal;
             font-weight: 400;
             font-size: 12px;

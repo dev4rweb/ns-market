@@ -10,13 +10,14 @@
         <hr class="divider">
         <ColorFilter />
         <hr class="divider">
+        <SearchAromaSidebar />
+        <hr class="divider">
         <DailyFilter />
         <hr class="divider">
         <SmellFilter />
         <hr class="divider">
         <SpiritFilter />
         <hr class="divider">
-
         <div class="form-check">
             <input class="form-check-input" type="checkbox" value="" id="categoryPair">
             <label class="form-check-label" for="categoryPair">
@@ -33,10 +34,12 @@ import ColorFilter from "./filters/ColorFilter";
 import DailyFilter from "./filters/DailyFilter";
 import SmellFilter from "./filters/SmellFilter";
 import SpiritFilter from "./filters/SpiritFilter";
+import SearchAromaSidebar from "./filters/SearchAromaSidebar";
 export default {
     name: "AromaSidebar",
     components: {
-        SexFilter, ColorFilter, DailyFilter, SmellFilter, SpiritFilter
+        SexFilter, ColorFilter, DailyFilter, SmellFilter, SpiritFilter,
+        SearchAromaSidebar
     }
 }
 </script>
@@ -47,7 +50,7 @@ export default {
     padding: 16px;
     background: #FFFFFF;
     border-radius: 8px;
-    max-height: 1390px;
+    max-height: 1490px;
 
     .divider {
         height: 1px;
