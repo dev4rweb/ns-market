@@ -2,17 +2,13 @@
     <div
         v-if="product"
         class="aroma-product-card"
+        @click="selectProduct"
     >
         <div class="circle-color" :style="{backgroundColor: getCircleColor}">
-            <h3>{{ getVendorExp }}</h3>
+            <h3>{{ product.code }}</h3>
             <span>{{ getSex }}</span>
         </div>
-        <p>
-            {{ product.vendor_code }} <br>
-            {{ product.name }} <br>
-            Аромат с магическим звучанием. Уже первые ноты этой таинственной «мелодии» пробуждают чувственность, которую
-            через несколько мгновений усиливают пленительные цветочные аккорды с чарующми...
-        </p>
+        <p> {{product.short_description}} </p>
     </div>
 </template>
 
@@ -20,15 +16,21 @@
 export default {
     name: "AromaProductCard",
     props: ['product'],
+    methods: {
+        selectProduct() {
+            console.log('selectProduct', this.product)
+        }
+    },
     computed: {
         getCircleColor() {
-            const firstNumber = this.product.vendor_code.charAt(0)
+            // const firstNumber = this.product.vendor_code.charAt(0)
+            const firstNumber = this.product.code.charAt(0)
             switch (firstNumber) {
-                case '1':
+                case 'C':
                     return '#EBAA3C'
-                case '2':
+                case 'D':
                     return '#86B649'
-                case '3':
+                case 'K':
                     return '#D75C34'
                 default:
                     return '#3D8BCC'

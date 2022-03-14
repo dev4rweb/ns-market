@@ -11,4 +11,9 @@ class CategoryPageController extends Controller
     {
         return view('category-page', compact(['slug']));
     }
+
+    public function indexFavorite($slug)
+    {
+        return view('list-page-fav', compact(['slug']));
+    }
 }

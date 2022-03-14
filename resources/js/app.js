@@ -77,11 +77,15 @@ Vue.component('my-orders-table', require('./components/UI/tables/MyOrdersTable')
 Vue.component('my-orders-table-item', require('./components/UI/tables/MyOrdersTableItem').default);
 Vue.component('delivery-way-table', require('./components/UI/tables/DeliveryWayTable').default);
 Vue.component('delivery-way-table-item', require('./components/UI/tables/DeliveryWayTableItem').default);
+Vue.component('category-products-table', require('./components/UI/tables/CategoryProductsTable').default);
+Vue.component('aroma-groups-table', require('./components/UI/tables/AromaGroupsTable').default);
+Vue.component('aroma-groups-table-item', require('./components/UI/tables/AromaGroupsTableItem').default);
 Vue.component('user-data-tabs', require('./components/views/UserDataTabs').default);
 Vue.component('catalog-page', require('./components/views/CatalogPage').default);
 Vue.component('category-page', require('./components/views/CategoryPage').default);
 Vue.component('product-programs-page', require('./components/views/ProductProgramsPage').default);
 Vue.component('product-list-page', require('./components/views/ProductListPage').default);
+Vue.component('product-list-page-fav', require('./components/views/ProductListPageFav').default);
 Vue.component('user-data-panel', require('./components/views/UserDataPanel').default);
 Vue.component('user-data-read-panel', require('./components/views/UserDataReadPanel').default);
 Vue.component('user-status-panel', require('./components/views/UserStatusPanel').default);

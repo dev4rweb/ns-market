@@ -71,6 +71,7 @@ Route::get('/', [HomePageController::class, 'index'])->name('home-page');
 Route::get('/invite/{data}', [InviteController::class, 'inviteUser']);
 Route::get('/catalog', [CatalogPageController::class, 'index'])->name('catalog-page');
 Route::get('/catalog/products/{slug}', [CategoryPageController::class, 'index'])->name('category-page');
+Route::get('/catalog/products-list-favorite/{slug}', [CategoryPageController::class, 'indexFavorite'])->name('category-page-fav');
 Route::get('/catalog/programs/{slug}', [ProgramsPageController::class, 'index'])->name('programs-page');
 Route::get('/catalog/products-list/{slug}', [ListPageController::class, 'index'])->name('products-list-page');
 Route::get('/catalog/{fromWhere}/{lineSlug}/{slug}', [ProductCardDetailPage::class, 'index'])->name('product-detail-page');

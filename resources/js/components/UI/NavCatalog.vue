@@ -7,10 +7,13 @@
                     :class="{active: isActive('/products/')}"
                     @click="moveToPage('/products/')"
                 >
-                    Продукты
+                    {{slug.includes('AromaVis') ? 'Список' : 'Продукты'}}
                 </button>
             </li>
-            <li class="nav-item">
+            <li
+                class="nav-item"
+                v-if="!slug.includes('AromaVis')"
+            >
                 <button
                     class="btn btn-lg btn-outline-info"
                     :class="{active: isActive('/programs/')}"
@@ -25,7 +28,19 @@
                     :class="{active: isActive('/products-list/')}"
                     @click="moveToPage('/products-list/')"
                 >
-                    Список
+                    {{slug.includes('AromaVis') ? 'Таблица' : 'Список'}}
+                </button>
+            </li>
+            <li
+                class="nav-item"
+                v-if="slug.includes('AromaVis')"
+            >
+                <button
+                    class="btn btn-lg btn-outline-info"
+                    :class="{active: isActive('/products-list-favorite/')}"
+                    @click="moveToPage('/products-list-favorite/')"
+                >
+                    Избранное
                 </button>
             </li>
         </ul>

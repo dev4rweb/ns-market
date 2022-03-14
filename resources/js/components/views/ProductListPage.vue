@@ -5,31 +5,15 @@
     <div class="mb-3">
         <NavCatalog :slug="slug" />
     </div>
-    <div class="container"
+    <div
+        class="container"
          v-if="getCategoryProducts">
-        <table class="table table-lg table-responsive-lg table-light table-bordered border-secondary table-striped table-hover shadow-lg">
-            <thead  class="table-primary">
-            <tr>
-                <th scope="col">#</th>
-                <th style="width: 120px" scope="col">Код</th>
-                <th scope="col">Наименование</th>
-                <th style="width: 90px;" scope="col">Кол-во</th>
-                <th scope="col">Цена</th>
-                <th scope="col">Баллов</th>
-            </tr>
-            </thead>
-            <tbody>
-            <ProductListItem
-                v-if="getCategoryProducts"
-                v-for="(product, i) in getCategoryProducts"
-                :product="product"
-                :isPartner="isPartner"
-                :index="i"
-                :key="product.id"
-                :isProfessionalStatus="isProfessionalStatus"
-            />
-            </tbody>
-        </table>
+        <AromaGroupsTable
+            v-if="getAromaGroups"
+        />
+        <CategoryProductsTable
+            v-else
+        />
 
         <div class="d-flex justify-content-center mb-5">
             <a
@@ -52,8 +36,9 @@ import {mapActions, mapGetters} from 'vuex'
 import NavCatalog from "../UI/NavCatalog";
 import Breadcrumb from "../UI/Breadcrumb";
 import categoryImg from '../../../assets/img/category-additional.png'
-import ProductListItem from "../UI/ProductListItem";
 import CatalogProductsHeader from "../page-parts/headers/CatalogProductsHeader";
+import CategoryProductsTable from "../UI/tables/CategoryProductsTable";
+import AromaGroupsTable from "../UI/tables/AromaGroupsTable";
 export default {
     name: "ProductListPage",
     props: ['slug'],
@@ -67,11 +52,11 @@ export default {
     },
     computed: {
         ...mapGetters(['getCurrentCategory', 'getCategoryProducts',
-            'getPhysicalPerson', 'isProfessionalStatus', 'isPartner']),
+            'getPhysicalPerson', 'getAromaGroups']),
     },
     components: {
-        NavCatalog, ProductListItem, Breadcrumb,
-        CatalogProductsHeader
+        NavCatalog, Breadcrumb, AromaGroupsTable,
+        CatalogProductsHeader, CategoryProductsTable
     },
     mounted() {
         const data = {

@@ -7,6 +7,7 @@ export default {
         currentCategory: null,
         categoryProducts: [],
         productDetail: null,
+        aromaGroups: []
     },
     actions: {
         fetchCatalogGroups({commit}) {
@@ -37,6 +38,7 @@ export default {
                 if (res.data.success) {
                     commit('setCurrentCategory', res.data.category)
                     commit('setCategoryProducts', res.data.models)
+                    if (res.data.aromaGroups) commit('setAromaGroups', res.data.aromaGroups)
                 } else commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже')
             }).catch(err => {
                 console.log('getCategoryPage err', err)
@@ -81,6 +83,9 @@ export default {
         }
     },
     mutations: {
+        setAromaGroups(state, aromaGroups) {
+            state.aromaGroups = aromaGroups
+        },
         setProductDetail(state, product) {
             state.productDetail = product
         },
@@ -95,6 +100,9 @@ export default {
         }
     },
     getters: {
+        getAromaGroups(state) {
+            return state.aromaGroups
+        },
         getProductDetail(state) {
             return state.productDetail
         },
