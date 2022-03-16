@@ -2,67 +2,86 @@
     <tr
         v-if="getCategoryProducts"
         class="aroma-table-item">
-        <th scope="row">{{ product.code }}</th>
-        <td>{{ product.gender }}</td>
+        <th
+            scope="row"
+            :class="getCellStyle"
+        >
+            {{ product.code }}
+        </th>
+        <td
+            :class="getCellStyle"
+        >
+            {{ product.gender }}
+        </td>
         <td>
             <input
+                v-if="isDisabledTwo"
                 type="number"
                 class="form-control"
                 min="0"
                 name="2мл"
                 v-model="amountTwo"
-                :class="{disabled: !isDisabledTwo}"
+                :class="{disabled: isDisabledTwo}"
                 :disabled="!isDisabledTwo"
                 @blur="addToBasket"
             >
+            <div v-else class="empty-cell">-</div>
         </td>
         <td>
             <input
+                v-if="isDisabledThree"
                 type="number"
                 class="form-control"
                 min="0"
                 name="3мл"
                 v-model="amountThree"
-                :class="{disabled: !isDisabledThree}"
+                :class="{disabled: isDisabledThree}"
                 :disabled="!isDisabledThree"
                 @blur="addToBasket"
             >
+            <div v-else class="empty-cell">-</div>
         </td>
         <td>
             <input
+                v-if="isDisabledSeven"
                 type="number"
                 class="form-control"
                 min="0"
                 name="7мл"
                 v-model="amountSeven"
-                :class="{disabled: !isDisabledSeven}"
+                :class="{disabled: isDisabledSeven}"
                 :disabled="!isDisabledSeven"
                 @blur="addToBasket"
             >
+            <div v-else class="empty-cell">-</div>
         </td>
         <td>
             <input
+                v-if="isDisabledTwelve"
                 type="number"
                 class="form-control"
                 min="0"
                 name="12мл"
                 v-model="amountTwelve"
-                :class="{disabled: !isDisabledTwelve}"
+                :class="{disabled: isDisabledTwelve}"
                 :disabled="!isDisabledTwelve"
                 @blur="addToBasket"
             >
+            <div v-else class="empty-cell">-</div>
         </td>
         <td>
             <input
+                v-if="isDisabledFifty"
                 type="number"
                 class="form-control"
                 min="0"
                 name="50мл"
                 v-model="amountFifty"
-                :class="{disabled: !isDisabledFifty}"
+                :class="{disabled: isDisabledFifty}"
                 :disabled="!isDisabledFifty"
                 @blur="addToBasket"
             >
+            <div v-else class="empty-cell">-</div>
         </td>
     </tr>
 </template>
@@ -75,11 +94,11 @@ export default {
     props: ['product'],
     data() {
         return {
-            amountTwo: 0,
-            amountThree: 0,
-            amountSeven: 0,
-            amountTwelve: 0,
-            amountFifty: 0,
+            amountTwo: '',
+            amountThree: '',
+            amountSeven: '',
+            amountTwelve: '',
+            amountFifty: '',
         }
     },
     methods: {
@@ -89,7 +108,7 @@ export default {
             console.log('addToBasket', e.target.value)
             if (e.target.value < 0) {
                 this.setToastError('Некорректное значение');
-                e.target.value = 0;
+                e.target.value = '';
             }
             if (e.target.value >= 0) {
                 // console.log('addToBasket target name', e.target.name)
@@ -164,7 +183,12 @@ export default {
     },
     computed: {
         ...mapGetters(['getCategoryProducts', 'getLSOrder']),
-
+        getCellStyle() {
+            if (this.product.code.includes('C-')) return 'orange'
+            if (this.product.code.includes('D-')) return 'green'
+            if (this.product.code.includes('K-')) return 'red'
+            if (this.product.code.includes('M-')) return 'blue'
+        },
         isDisabledTwo() {
             const curProd = this.getCategoryProducts
                 .find(i => i.name.includes(this.product.code)
@@ -212,6 +236,35 @@ export default {
 .aroma-table-item {
     td, th {
         text-align: center;
+        vertical-align: middle;
+    }
+
+    th {
+        font-size: 20px;
+    }
+
+    td {
+        .empty-cell {
+            font-size: 25px;
+            font-weight: bold;
+        }
+    }
+
+    .orange {
+        background-color: #EBAA3C;
+        color: white;
+    }
+    .green {
+        background-color: #86B649;
+        color: white;
+    }
+    .red {
+        background-color: #D75C34;
+        color: white;
+    }
+    .blue {
+        background-color: #3D8BCC;
+        color: white;
     }
 }
 

@@ -1,10 +1,8 @@
 <template>
 <div class="aroma-sidebar">
     <div>
-        <div class="d-flex justify-content-center mb-3">
-            <button class="btn btn-outline-info">
-                Очистить фильтр
-            </button>
+        <div class="d-flex mb-3">
+            <ToggleAromaFilter />
         </div>
         <SexFilter />
         <hr class="divider">
@@ -19,8 +17,14 @@
         <SpiritFilter />
         <hr class="divider">
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="categoryPair">
-            <label class="form-check-label" for="categoryPair">
+            <input
+                class="form-check-input"
+                type="checkbox"
+                v-model="categoryPair"
+                id="categoryPair">
+            <label
+                class="form-check-label"
+                for="categoryPair">
                 Парные
             </label>
         </div>
@@ -35,11 +39,27 @@ import DailyFilter from "./filters/DailyFilter";
 import SmellFilter from "./filters/SmellFilter";
 import SpiritFilter from "./filters/SpiritFilter";
 import SearchAromaSidebar from "./filters/SearchAromaSidebar";
+import ToggleAromaFilter from "../ToggleAromaFilter";
+import {mapGetters, mapActions} from 'vuex'
 export default {
     name: "AromaSidebar",
+    methods: {
+        ...mapActions(['fetchCategoryPair'])
+    },
+    computed: {
+        ...mapGetters(['getCategoryPair']),
+        categoryPair: {
+            get: function () {
+                return this.getCategoryPair
+            },
+            set: function () {
+                this.fetchCategoryPair(!this.getCategoryPair)
+            }
+        },
+    },
     components: {
         SexFilter, ColorFilter, DailyFilter, SmellFilter, SpiritFilter,
-        SearchAromaSidebar
+        SearchAromaSidebar, ToggleAromaFilter
     }
 }
 </script>

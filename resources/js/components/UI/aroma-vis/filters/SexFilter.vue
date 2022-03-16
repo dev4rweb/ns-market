@@ -4,7 +4,7 @@
             <input
                 class="form-check-input"
                 type="checkbox"
-                value=""
+                v-model="categoryMan"
                 id="categoryMan"
             >
             <label
@@ -18,7 +18,7 @@
             <input
                 class="form-check-input"
                 type="checkbox"
-                value=""
+                v-model="categoryWoman"
                 id="categoryWoman"
             >
             <label
@@ -32,7 +32,7 @@
             <input
                 class="form-check-input"
                 type="checkbox"
-                value=""
+                v-model="categoryUnisex"
                 id="categoryUnisex"
             >
             <label
@@ -46,8 +46,39 @@
 </template>
 
 <script>
+import {mapGetters, mapActions} from 'vuex'
 export default {
-    name: "SexFilter"
+    name: "SexFilter",
+    computed: {
+      ...mapGetters(['getCategoryMan', 'getCategoryWoman', 'getCategoryUnisex']),
+        categoryMan: {
+            get: function () {
+                return this.getCategoryMan
+            },
+            set: function () {
+                this.fetchCategoryMan(!this.getCategoryMan)
+            }
+        },
+        categoryWoman: {
+            get: function () {
+                return this.getCategoryWoman
+            },
+            set: function () {
+                this.fetchCategoryWoman(!this.getCategoryWoman)
+            }
+        },
+        categoryUnisex: {
+            get: function () {
+                return this.getCategoryUnisex
+            },
+            set: function () {
+                this.fetchCategoryUnisex(!this.getCategoryUnisex)
+            }
+        }
+    },
+    methods: {
+        ...mapActions(['fetchCategoryMan', 'fetchCategoryWoman', 'fetchCategoryUnisex'])
+    }
 }
 </script>
 

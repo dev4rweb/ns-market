@@ -9,7 +9,7 @@
         class="container"
          v-if="getCategoryProducts">
         <AromaGroupsTable
-            v-if="getAromaGroups"
+            v-if="getAromaGroups.length"
         />
         <CategoryProductsTable
             v-else

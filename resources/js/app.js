@@ -136,6 +136,7 @@ Vue.component('daily-filter', require('./components/UI/aroma-vis/filters/DailyFi
 Vue.component('smell-filter', require('./components/UI/aroma-vis/filters/SmellFilter').default);
 Vue.component('spirit-filter', require('./components/UI/aroma-vis/filters/SpiritFilter').default);
 Vue.component('search-aroma-sidebar', require('./components/UI/aroma-vis/filters/SearchAromaSidebar').default);
+Vue.component('toggle-aroma-filter', require('./components/UI/ToggleAromaFilter').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

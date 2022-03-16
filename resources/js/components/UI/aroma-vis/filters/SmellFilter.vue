@@ -4,7 +4,7 @@
             <input
                 class="form-check-input"
                 type="checkbox"
-                value=""
+                v-model="citrusCategory"
                 id="citrusCategory"
             >
             <label
@@ -18,7 +18,7 @@
             <input
                 class="form-check-input"
                 type="checkbox"
-                value=""
+                v-model="waterCategory"
                 id="waterCategory"
             >
             <label
@@ -32,7 +32,7 @@
             <input
                 class="form-check-input"
                 type="checkbox"
-                value=""
+                v-model="greenCategory"
                 id="greenCategory"
             >
             <label
@@ -46,7 +46,7 @@
             <input
                 class="form-check-input"
                 type="checkbox"
-                value=""
+                v-model="fruitCategory"
                 id="fruitCategory"
             >
             <label
@@ -60,7 +60,7 @@
             <input
                 class="form-check-input"
                 type="checkbox"
-                value=""
+                v-model="flowerCategory"
                 id="flowerCategory"
             >
             <label
@@ -74,7 +74,7 @@
             <input
                 class="form-check-input"
                 type="checkbox"
-                value=""
+                v-model="softFloralCategory"
                 id="softFloralCategory"
             >
             <label
@@ -88,7 +88,7 @@
             <input
                 class="form-check-input"
                 type="checkbox"
-                value=""
+                v-model="floralOrientalCategory"
                 id="floralOrientalCategory"
             >
             <label
@@ -102,7 +102,7 @@
             <input
                 class="form-check-input"
                 type="checkbox"
-                value=""
+                v-model="softOrientalCategory"
                 id="softOrientalCategory"
             >
             <label
@@ -116,7 +116,7 @@
             <input
                 class="form-check-input"
                 type="checkbox"
-                value=""
+                v-model="orientalCategory"
                 id="orientalCategory"
             >
             <label
@@ -130,7 +130,7 @@
             <input
                 class="form-check-input"
                 type="checkbox"
-                value=""
+                v-model="woodyOrientalCategory"
                 id="woodyOrientalCategory"
             >
             <label
@@ -144,7 +144,7 @@
             <input
                 class="form-check-input"
                 type="checkbox"
-                value=""
+                v-model="woodyCategory"
                 id="woodyCategory"
             >
             <label
@@ -158,7 +158,7 @@
             <input
                 class="form-check-input"
                 type="checkbox"
-                value=""
+                v-model="chypreCategory"
                 id="chypreCategory"
             >
             <label
@@ -172,7 +172,7 @@
             <input
                 class="form-check-input"
                 type="checkbox"
-                value=""
+                v-model="wineGlassCategory"
                 id="wineGlassCategory"
             >
             <label
@@ -186,8 +186,147 @@
 </template>
 
 <script>
+import {mapGetters, mapActions} from 'vuex'
 export default {
-    name: "SmellFilter"
+    name: "SmellFilter",
+    methods: {
+        ...mapActions([
+            'fetchCitrusCategory',
+            'fetchWaterCategory',
+            'fetchGreenCategory',
+            'fetchFruitCategory',
+            'fetchFlowerCategory',
+            'fetchSoftFloralCategory',
+            'fetchFloralOrientalCategory',
+            'fetchSoftOrientalCategory',
+            'fetchOrientalCategory',
+            'fetchWoodyOrientalCategory',
+            'fetchWoodyCategory',
+            'fetchChypreCategory',
+            'fetchWineGlassCategory',
+        ])
+    },
+    computed: {
+        ...mapGetters([
+            'getCitrusCategory',
+            'getWaterCategory',
+            'getGreenCategory',
+            'getFruitCategory',
+            'getFlowerCategory',
+            'getSoftFloralCategory',
+            'getFloralOrientalCategory',
+            'getSoftOrientalCategory',
+            'getOrientalCategory',
+            'getWoodyOrientalCategory',
+            'getWoodyCategory',
+            'getChypreCategory',
+            'getWineGlassCategory',
+        ]),
+        citrusCategory: {
+            get: function () {
+                return this.getCitrusCategory
+            },
+            set: function () {
+                this.fetchCitrusCategory(!this.getCitrusCategory)
+            }
+        },
+        waterCategory: {
+            get: function () {
+                return this.getWaterCategory
+            },
+            set: function () {
+                this.fetchWaterCategory(!this.getWaterCategory)
+            }
+        },
+        greenCategory: {
+            get: function () {
+                return this.getGreenCategory
+            },
+            set: function () {
+                this.fetchGreenCategory(!this.getGreenCategory)
+            }
+        },
+        fruitCategory: {
+            get: function () {
+                return this.getFruitCategory
+            },
+            set: function () {
+                this.fetchFruitCategory(!this.getFruitCategory)
+            }
+        },
+        flowerCategory: {
+            get: function () {
+                return this.getFlowerCategory
+            },
+            set: function () {
+                this.fetchFlowerCategory(!this.getFlowerCategory)
+            }
+        },
+        softFloralCategory: {
+            get: function () {
+                return this.getSoftFloralCategory
+            },
+            set: function () {
+                this.fetchSoftFloralCategory(!this.getSoftFloralCategory)
+            }
+        },
+        floralOrientalCategory: {
+            get: function () {
+                return this.getFloralOrientalCategory
+            },
+            set: function () {
+                this.fetchFloralOrientalCategory(!this.getFloralOrientalCategory)
+            }
+        },
+        softOrientalCategory: {
+            get: function () {
+                return this.getSoftOrientalCategory
+            },
+            set: function () {
+                this.fetchSoftOrientalCategory(!this.getSoftOrientalCategory)
+            }
+        },
+        orientalCategory: {
+            get: function () {
+                return this.getOrientalCategory
+            },
+            set: function () {
+                this.fetchOrientalCategory(!this.getOrientalCategory)
+            }
+        },
+        woodyOrientalCategory: {
+            get: function () {
+                return this.getWoodyOrientalCategory
+            },
+            set: function () {
+                this.fetchWoodyOrientalCategory(!this.getWoodyOrientalCategory)
+            }
+        },
+        woodyCategory: {
+            get: function () {
+                return this.getWoodyCategory
+            },
+            set: function () {
+                this.fetchWoodyCategory(!this.getWoodyCategory)
+            }
+        },
+        chypreCategory: {
+            get: function () {
+                return this.getChypreCategory
+            },
+            set: function () {
+                this.fetchChypreCategory(!this.getChypreCategory)
+            }
+        },
+        wineGlassCategory: {
+            get: function () {
+                return this.getWineGlassCategory
+            },
+            set: function () {
+                this.fetchWineGlassCategory(!this.getWineGlassCategory)
+            }
+        },
+    }
 }
 </script>
 

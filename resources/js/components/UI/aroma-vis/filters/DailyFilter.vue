@@ -4,7 +4,7 @@
             <input
                 class="form-check-input"
                 type="checkbox"
-                value=""
+                v-model="morningCategory"
                 id="morningCategory"
             >
             <label
@@ -18,7 +18,7 @@
             <input
                 class="form-check-input"
                 type="checkbox"
-                value=""
+                v-model="afternoonCategory"
                 id="afternoonCategory"
             >
             <label
@@ -32,7 +32,7 @@
             <input
                 class="form-check-input"
                 type="checkbox"
-                value=""
+                v-model="eveningCategory"
                 id="eveningCategory"
             >
             <label
@@ -46,7 +46,7 @@
             <input
                 class="form-check-input"
                 type="checkbox"
-                value=""
+                v-model="morningAfterEveningCategory"
                 id="morningAfterEveningCategory"
             >
             <label
@@ -60,7 +60,7 @@
             <input
                 class="form-check-input"
                 type="checkbox"
-                value=""
+                v-model="morningAfternoonCategory"
                 id="morningAfternoonCategory"
             >
             <label
@@ -74,7 +74,7 @@
             <input
                 class="form-check-input"
                 type="checkbox"
-                value=""
+                v-model="afternoonEveningCategory"
                 id="afternoonEveningCategory"
             >
             <label
@@ -88,8 +88,73 @@
 </template>
 
 <script>
+import {mapGetters, mapActions} from 'vuex'
 export default {
-    name: "DailyFilter"
+    name: "DailyFilter",
+    methods: {
+        ...mapActions([
+            'fetchMorningCategory', 'fetchAfternoonCategory', 'fetchEveningCategory',
+            'fetchMorningAfterEveningCategory', 'fetchMorningAfternoonCategory', 'fetchAfternoonEveningCategory'
+        ])
+    },
+    computed: {
+        ...mapGetters([
+            'getMorningCategory',
+            'getAfternoonCategory',
+            'getEveningCategory',
+            'getMorningAfterEveningCategory',
+            'getMorningAfternoonCategory',
+            'getAfternoonEveningCategory',
+        ]),
+        morningCategory: {
+            get: function () {
+                return this.getMorningCategory
+            },
+            set: function () {
+                this.fetchMorningCategory(!this.getMorningCategory)
+            }
+        },
+        afternoonCategory: {
+            get: function () {
+                return this.getAfternoonCategory
+            },
+            set: function () {
+                this.fetchAfternoonCategory(!this.getAfternoonCategory)
+            }
+        },
+        eveningCategory: {
+            get: function () {
+                return this.getEveningCategory
+            },
+            set: function () {
+                this.fetchEveningCategory(!this.getEveningCategory)
+            }
+        },
+        morningAfterEveningCategory: {
+            get: function () {
+                return this.getMorningAfterEveningCategory
+            },
+            set: function () {
+                this.fetchMorningAfterEveningCategory(!this.getMorningAfterEveningCategory)
+            }
+        },
+        morningAfternoonCategory: {
+            get: function () {
+                return this.getMorningAfternoonCategory
+            },
+            set: function () {
+                this.fetchMorningAfternoonCategory(!this.getMorningAfternoonCategory)
+            }
+        },
+        afternoonEveningCategory: {
+            get: function () {
+                return this.getAfternoonEveningCategory
+            },
+            set: function () {
+                this.fetchAfternoonEveningCategory(!this.getAfternoonEveningCategory)
+            }
+        }
+    }
 }
 </script>
 

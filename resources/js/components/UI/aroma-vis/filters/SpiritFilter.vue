@@ -4,7 +4,7 @@
         <input
             class="form-check-input"
             type="checkbox"
-            value=""
+            v-model="officeCategory"
             id="officeCategory"
         >
         <label
@@ -18,7 +18,7 @@
         <input
             class="form-check-input"
             type="checkbox"
-            value=""
+            v-model="braveCategory"
             id="braveCategory"
         >
         <label
@@ -32,7 +32,7 @@
         <input
             class="form-check-input"
             type="checkbox"
-            value=""
+            v-model="confidentCategory"
             id="confidentCategory"
         >
         <label
@@ -46,7 +46,7 @@
         <input
             class="form-check-input"
             type="checkbox"
-            value=""
+            v-model="businessCategory"
             id="businessCategory"
         >
         <label
@@ -60,7 +60,7 @@
         <input
             class="form-check-input"
             type="checkbox"
-            value=""
+            v-model="sexyCategory"
             id="sexyCategory"
         >
         <label
@@ -74,7 +74,7 @@
         <input
             class="form-check-input"
             type="checkbox"
-            value=""
+            v-model="charmCategory"
             id="charmCategory"
         >
         <label
@@ -88,7 +88,7 @@
         <input
             class="form-check-input"
             type="checkbox"
-            value=""
+            v-model="elegantCategory"
             id="elegantCategory"
         >
         <label
@@ -102,7 +102,7 @@
         <input
             class="form-check-input"
             type="checkbox"
-            value=""
+            v-model="provocativeCategory"
             id="provocativeCategory"
         >
         <label
@@ -116,7 +116,7 @@
         <input
             class="form-check-input"
             type="checkbox"
-            value=""
+            v-model="clubCategory"
             id="clubCategory"
         >
         <label
@@ -130,7 +130,7 @@
         <input
             class="form-check-input"
             type="checkbox"
-            value=""
+            v-model="sensualCategory"
             id="sensualCategory"
         >
         <label
@@ -144,7 +144,7 @@
         <input
             class="form-check-input"
             type="checkbox"
-            value=""
+            v-model="romanticCategory"
             id="romanticCategory"
         >
         <label
@@ -158,7 +158,7 @@
         <input
             class="form-check-input"
             type="checkbox"
-            value=""
+            v-model="misteryCategory"
             id="misteryCategory"
         >
         <label
@@ -172,7 +172,7 @@
         <input
             class="form-check-input"
             type="checkbox"
-            value=""
+            v-model="sportCategory"
             id="sportCategory"
         >
         <label
@@ -186,7 +186,7 @@
         <input
             class="form-check-input"
             type="checkbox"
-            value=""
+            v-model="resoluteCategory"
             id="resoluteCategory"
         >
         <label
@@ -200,8 +200,157 @@
 </template>
 
 <script>
+import {mapGetters, mapActions} from 'vuex'
 export default {
-    name: "SpiritFilter"
+    name: "SpiritFilter",
+    methods: {
+        ...mapActions([
+            'fetchOfficeCategory',
+            'fetchBraveCategory',
+            'fetchConfidentCategory',
+            'fetchBusinessCategory',
+            'fetchSexyCategory',
+            'fetchCharmCategory',
+            'fetchElegantCategory',
+            'fetchProvocativeCategory',
+            'fetchClubCategory',
+            'fetchSensualCategory',
+            'fetchRomanticCategory',
+            'fetchMisteryCategory',
+            'fetchSportCategory',
+            'fetchResoluteCategory',
+        ])
+    },
+    computed: {
+        ...mapGetters([
+            'getOfficeCategory',
+            'getBraveCategory',
+            'getConfidentCategory',
+            'getBusinessCategory',
+            'getSexyCategory',
+            'getCharmCategory',
+            'getElegantCategory',
+            'getProvocativeCategory',
+            'getClubCategory',
+            'getSensualCategory',
+            'getRomanticCategory',
+            'getMisteryCategory',
+            'getSportCategory',
+            'getResoluteCategory',
+        ]),
+        officeCategory: {
+            get: function () {
+                return this.getOfficeCategory
+            },
+            set: function () {
+                this.fetchOfficeCategory(!this.getOfficeCategory)
+            }
+        },
+        braveCategory: {
+            get: function () {
+                return this.getBraveCategory
+            },
+            set: function () {
+                this.fetchBraveCategory(!this.getBraveCategory)
+            }
+        },
+        confidentCategory: {
+            get: function () {
+                return this.getConfidentCategory
+            },
+            set: function () {
+                this.fetchConfidentCategory(!this.getConfidentCategory)
+            }
+        },
+        businessCategory: {
+            get: function () {
+                return this.getBusinessCategory
+            },
+            set: function () {
+                this.fetchBusinessCategory(!this.getBusinessCategory)
+            }
+        },
+        sexyCategory: {
+            get: function () {
+                return this.getSexyCategory
+            },
+            set: function () {
+                this.fetchSexyCategory(!this.getSexyCategory)
+            }
+        },
+        charmCategory: {
+            get: function () {
+                return this.getCharmCategory
+            },
+            set: function () {
+                this.fetchCharmCategory(!this.getCharmCategory)
+            }
+        },
+        elegantCategory: {
+            get: function () {
+                return this.getElegantCategory
+            },
+            set: function () {
+                this.fetchElegantCategory(!this.getElegantCategory)
+            }
+        },
+        provocativeCategory: {
+            get: function () {
+                return this.getProvocativeCategory
+            },
+            set: function () {
+                this.fetchProvocativeCategory(!this.getProvocativeCategory)
+            }
+        },
+        clubCategory: {
+            get: function () {
+                return this.getClubCategory
+            },
+            set: function () {
+                this.fetchClubCategory(!this.getClubCategory)
+            }
+        },
+        sensualCategory: {
+            get: function () {
+                return this.getSensualCategory
+            },
+            set: function () {
+                this.fetchSensualCategory(!this.getSensualCategory)
+            }
+        },
+        romanticCategory: {
+            get: function () {
+                return this.getRomanticCategory
+            },
+            set: function () {
+                this.fetchRomanticCategory(!this.getRomanticCategory)
+            }
+        },
+        misteryCategory: {
+            get: function () {
+                return this.getMisteryCategory
+            },
+            set: function () {
+                this.fetchMisteryCategory(!this.getMisteryCategory)
+            }
+        },
+        sportCategory: {
+            get: function () {
+                return this.getSportCategory
+            },
+            set: function () {
+                this.fetchSportCategory(!this.getSportCategory)
+            }
+        },
+        resoluteCategory: {
+            get: function () {
+                return this.getResoluteCategory
+            },
+            set: function () {
+                this.fetchResoluteCategory(!this.getResoluteCategory)
+            }
+        }
+    }
 }
 </script>
 
