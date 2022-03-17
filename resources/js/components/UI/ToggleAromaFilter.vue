@@ -16,7 +16,7 @@
 <script>
 import cbxFill from '../../../assets/img/ic-cbx-fill.svg'
 import cbx from '../../../assets/img/ic-cbx.svg'
-import {mapGetters, mapActions} from 'vuex'
+import {mapGetters, mapActions, mapMutations} from 'vuex'
 
 export default {
     name: "ToggleAromaFilter",
@@ -27,7 +27,8 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['fetchIsMainFilterOn'])
+        ...mapActions(['fetchIsMainFilterOn']),
+        ...mapMutations(['setAromaGroupsFilter']),
     },
     computed: {
         ...mapGetters(['getIsMainFilterOn']),

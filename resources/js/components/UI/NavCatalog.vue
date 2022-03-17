@@ -7,7 +7,7 @@
                     :class="{active: isActive('/products/')}"
                     @click="moveToPage('/products/')"
                 >
-                    {{slug.includes('AromaVis') ? 'Список' : 'Продукты'}}
+                    {{slug.includes('AromaVis') ? 'Подбор' : 'Продукты'}}
                 </button>
             </li>
             <li

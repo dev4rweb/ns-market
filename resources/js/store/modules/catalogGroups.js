@@ -7,7 +7,9 @@ export default {
         currentCategory: null,
         categoryProducts: [],
         productDetail: null,
-        aromaGroups: []
+        aromaGroups: [],
+        aromaGroupsFilter: [],
+        aromaCategoryFilters: []
     },
     actions: {
         fetchCatalogGroups({commit}) {
@@ -38,7 +40,11 @@ export default {
                 if (res.data.success) {
                     commit('setCurrentCategory', res.data.category)
                     commit('setCategoryProducts', res.data.models)
-                    if (res.data.aromaGroups) commit('setAromaGroups', res.data.aromaGroups)
+                    if (res.data.aromaGroups) {
+                        commit('setAromaGroups', res.data.aromaGroups)
+                        commit('setAromaGroupsFilter', res.data.aromaGroups)
+                        commit('setAromaCategoryFilters', res.data.filter)
+                    }
                 } else commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже')
             }).catch(err => {
                 console.log('getCategoryPage err', err)
@@ -83,6 +89,10 @@ export default {
         }
     },
     mutations: {
+
+        setAromaGroupsFilter(state, aromaGroups) {
+            state.aromaGroupsFilter = aromaGroups
+        },
         setAromaGroups(state, aromaGroups) {
             state.aromaGroups = aromaGroups
         },
@@ -97,9 +107,16 @@ export default {
         },
         setCategoryProducts(state, categoryProducts) {
             state.categoryProducts = categoryProducts
-        }
+        },
+        setAromaCategoryFilters(state, aromaCategoryFilters) {
+            state.aromaCategoryFilters = aromaCategoryFilters
+        },
     },
     getters: {
+
+        getAromaGroupsFilter(state) {
+            return state.aromaGroupsFilter
+        },
         getAromaGroups(state) {
             return state.aromaGroups
         },
@@ -114,6 +131,9 @@ export default {
         },
         getCategoryProducts(state) {
             return state.categoryProducts
+        },
+        getAromaCategoryFilters(state) {
+            return state.aromaCategoryFilters
         }
     }
 }

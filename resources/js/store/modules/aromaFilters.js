@@ -1,3 +1,5 @@
+import {multiLevelFilter} from "../utils/multiLevelFilter";
+
 export default {
     state: {
         isMainFilterOn: true,
@@ -51,7 +53,7 @@ export default {
         categoryPair: false,
     },
     actions: {
-        fetchIsMainFilterOn({commit}, isChecked) {
+        fetchIsMainFilterOn({commit, getters}, isChecked) {
             commit('setIsMainFilterOn', isChecked)
             if (isChecked) {
                 commit('setCategoryMan', false)
@@ -100,178 +102,327 @@ export default {
                 commit('setResoluteCategory', false)
 
                 commit('setCategoryPair', false)
+
+                commit('setAromaGroupsFilter', getters['getAromaGroups'])
             }
         },
 
-        fetchCategoryPair({commit, getters}, isChecked) {
+        fetchCategoryPair({commit, getters, dispatch}, isChecked) {
             commit('setCategoryPair', isChecked)
             commit('setIsMainFilterOn', getters['isAllFiltersOff'])
+            dispatch('updateFilter')
         },
 
-        fetchOfficeCategory({commit, getters}, isChecked) {
+        fetchOfficeCategory({commit, getters, dispatch}, isChecked) {
             commit('setOfficeCategory', isChecked)
             commit('setIsMainFilterOn', getters['isAllFiltersOff'])
+            dispatch('updateFilter')
         },
-        fetchBraveCategory({commit, getters}, isChecked) {
+        fetchBraveCategory({commit, getters, dispatch}, isChecked) {
             commit('setBraveCategory', isChecked)
             commit('setIsMainFilterOn', getters['isAllFiltersOff'])
+            dispatch('updateFilter')
         },
-        fetchConfidentCategory({commit, getters}, isChecked) {
+        fetchConfidentCategory({commit, getters, dispatch}, isChecked) {
             commit('setConfidentCategory', isChecked)
             commit('setIsMainFilterOn', getters['isAllFiltersOff'])
+            dispatch('updateFilter')
         },
-        fetchBusinessCategory({commit, getters}, isChecked) {
+        fetchBusinessCategory({commit, getters, dispatch}, isChecked) {
             commit('setBusinessCategory', isChecked)
             commit('setIsMainFilterOn', getters['isAllFiltersOff'])
+            dispatch('updateFilter')
         },
-        fetchSexyCategory({commit, getters}, isChecked) {
+        fetchSexyCategory({commit, getters, dispatch}, isChecked) {
             commit('setSexyCategory', isChecked)
             commit('setIsMainFilterOn', getters['isAllFiltersOff'])
+            dispatch('updateFilter')
         },
-        fetchCharmCategory({commit, getters}, isChecked) {
+        fetchCharmCategory({commit, getters, dispatch}, isChecked) {
             commit('setCharmCategory', isChecked)
             commit('setIsMainFilterOn', getters['isAllFiltersOff'])
+            dispatch('updateFilter')
         },
-        fetchElegantCategory({commit, getters}, isChecked) {
+        fetchElegantCategory({commit, getters, dispatch}, isChecked) {
             commit('setElegantCategory', isChecked)
             commit('setIsMainFilterOn', getters['isAllFiltersOff'])
+            dispatch('updateFilter')
         },
-        fetchProvocativeCategory({commit, getters}, isChecked) {
+        fetchProvocativeCategory({commit, getters, dispatch}, isChecked) {
             commit('setProvocativeCategory', isChecked)
             commit('setIsMainFilterOn', getters['isAllFiltersOff'])
+            dispatch('updateFilter')
         },
-        fetchClubCategory({commit, getters}, isChecked) {
+        fetchClubCategory({commit, getters, dispatch}, isChecked) {
             commit('setClubCategory', isChecked)
             commit('setIsMainFilterOn', getters['isAllFiltersOff'])
+            dispatch('updateFilter')
         },
-        fetchSensualCategory({commit, getters}, isChecked) {
+        fetchSensualCategory({commit, getters, dispatch}, isChecked) {
             commit('setSensualCategory', isChecked)
             commit('setIsMainFilterOn', getters['isAllFiltersOff'])
+            dispatch('updateFilter')
         },
-        fetchRomanticCategory({commit, getters}, isChecked) {
+        fetchRomanticCategory({commit, getters, dispatch}, isChecked) {
             commit('setRomanticCategory', isChecked)
             commit('setIsMainFilterOn', getters['isAllFiltersOff'])
+            dispatch('updateFilter')
         },
-        fetchMisteryCategory({commit, getters}, isChecked) {
+        fetchMisteryCategory({commit, getters, dispatch}, isChecked) {
             commit('setMisteryCategory', isChecked)
             commit('setIsMainFilterOn', getters['isAllFiltersOff'])
+            dispatch('updateFilter')
         },
-        fetchSportCategory({commit, getters}, isChecked) {
+        fetchSportCategory({commit, getters, dispatch}, isChecked) {
             commit('setSportCategory', isChecked)
             commit('setIsMainFilterOn', getters['isAllFiltersOff'])
+            dispatch('updateFilter')
         },
-        fetchResoluteCategory({commit, getters}, isChecked) {
+        fetchResoluteCategory({commit, getters, dispatch}, isChecked) {
             commit('setResoluteCategory', isChecked)
             commit('setIsMainFilterOn', getters['isAllFiltersOff'])
+            dispatch('updateFilter')
         },
 
-        fetchCitrusCategory({commit, getters}, isChecked) {
+        fetchCitrusCategory({commit, getters, dispatch}, isChecked) {
             commit('setCitrusCategory', isChecked)
             commit('setIsMainFilterOn', getters['isAllFiltersOff'])
+            dispatch('updateFilter')
         },
-        fetchWaterCategory({commit, getters}, isChecked) {
+        fetchWaterCategory({commit, getters, dispatch}, isChecked) {
             commit('setWaterCategory', isChecked)
             commit('setIsMainFilterOn', getters['isAllFiltersOff'])
+            dispatch('updateFilter')
         },
-        fetchGreenCategory({commit, getters}, isChecked) {
+        fetchGreenCategory({commit, getters, dispatch}, isChecked) {
             commit('setGreenCategory', isChecked)
             commit('setIsMainFilterOn', getters['isAllFiltersOff'])
+            dispatch('updateFilter')
         },
-        fetchFruitCategory({commit, getters}, isChecked) {
+        fetchFruitCategory({commit, getters, dispatch}, isChecked) {
             commit('setFruitCategory', isChecked)
             commit('setIsMainFilterOn', getters['isAllFiltersOff'])
+            dispatch('updateFilter')
         },
-        fetchFlowerCategory({commit, getters}, isChecked) {
+        fetchFlowerCategory({commit, getters, dispatch}, isChecked) {
             commit('setFlowerCategory', isChecked)
             commit('setIsMainFilterOn', getters['isAllFiltersOff'])
+            dispatch('updateFilter')
         },
-        fetchSoftFloralCategory({commit, getters}, isChecked) {
+        fetchSoftFloralCategory({commit, getters, dispatch}, isChecked) {
             commit('setSoftFloralCategory', isChecked)
             commit('setIsMainFilterOn', getters['isAllFiltersOff'])
+            dispatch('updateFilter')
         },
-        fetchFloralOrientalCategory({commit, getters}, isChecked) {
+        fetchFloralOrientalCategory({commit, getters, dispatch}, isChecked) {
             commit('setFloralOrientalCategory', isChecked)
             commit('setIsMainFilterOn', getters['isAllFiltersOff'])
+            dispatch('updateFilter')
         },
-        fetchSoftOrientalCategory({commit, getters}, isChecked) {
+        fetchSoftOrientalCategory({commit, getters, dispatch}, isChecked) {
             commit('setSoftOrientalCategory', isChecked)
             commit('setIsMainFilterOn', getters['isAllFiltersOff'])
+            dispatch('updateFilter')
         },
-        fetchOrientalCategory({commit, getters}, isChecked) {
+        fetchOrientalCategory({commit, getters, dispatch}, isChecked) {
             commit('setOrientalCategory', isChecked)
             commit('setIsMainFilterOn', getters['isAllFiltersOff'])
+            dispatch('updateFilter')
         },
-        fetchWoodyOrientalCategory({commit, getters}, isChecked) {
+        fetchWoodyOrientalCategory({commit, getters, dispatch}, isChecked) {
             commit('setWoodyOrientalCategory', isChecked)
             commit('setIsMainFilterOn', getters['isAllFiltersOff'])
+            dispatch('updateFilter')
         },
-        fetchWoodyCategory({commit, getters}, isChecked) {
+        fetchWoodyCategory({commit, getters, dispatch}, isChecked) {
             commit('setWoodyCategory', isChecked)
             commit('setIsMainFilterOn', getters['isAllFiltersOff'])
+            dispatch('updateFilter')
         },
-        fetchChypreCategory({commit, getters}, isChecked) {
+        fetchChypreCategory({commit, getters, dispatch}, isChecked) {
             commit('setChypreCategory', isChecked)
             commit('setIsMainFilterOn', getters['isAllFiltersOff'])
+            dispatch('updateFilter')
         },
-        fetchWineGlassCategory({commit, getters}, isChecked) {
+        fetchWineGlassCategory({commit, getters, dispatch}, isChecked) {
             commit('setWineGlassCategory', isChecked)
             commit('setIsMainFilterOn', getters['isAllFiltersOff'])
+            dispatch('updateFilter')
         },
 
-        fetchMorningCategory({commit, getters}, isChecked) {
+        fetchMorningCategory({commit, getters, dispatch}, isChecked) {
             commit('setMorningCategory', isChecked)
             commit('setIsMainFilterOn', getters['isAllFiltersOff'])
+            dispatch('updateFilter')
         },
-        fetchAfternoonCategory({commit, getters}, isChecked) {
+        fetchAfternoonCategory({commit, getters, dispatch}, isChecked) {
             commit('setAfternoonCategory', isChecked)
             commit('setIsMainFilterOn', getters['isAllFiltersOff'])
+            dispatch('updateFilter')
         },
-        fetchEveningCategory({commit, getters}, isChecked) {
+        fetchEveningCategory({commit, getters, dispatch}, isChecked) {
             commit('setEveningCategory', isChecked)
             commit('setIsMainFilterOn', getters['isAllFiltersOff'])
+            dispatch('updateFilter')
         },
-        fetchMorningAfterEveningCategory({commit, getters}, isChecked) {
+        fetchMorningAfterEveningCategory({commit, getters, dispatch}, isChecked) {
             commit('setMorningAfterEveningCategory', isChecked)
             commit('setIsMainFilterOn', getters['isAllFiltersOff'])
+            dispatch('updateFilter')
         },
-        fetchMorningAfternoonCategory({commit, getters}, isChecked) {
+        fetchMorningAfternoonCategory({commit, getters, dispatch}, isChecked) {
             commit('setMorningAfternoonCategory', isChecked)
             commit('setIsMainFilterOn', getters['isAllFiltersOff'])
+            dispatch('updateFilter')
         },
-        fetchAfternoonEveningCategory({commit, getters}, isChecked) {
+        fetchAfternoonEveningCategory({commit, getters, dispatch}, isChecked) {
             commit('setAfternoonEveningCategory', isChecked)
             commit('setIsMainFilterOn', getters['isAllFiltersOff'])
+            dispatch('updateFilter')
         },
 
-        fetchCategoryC({commit, getters}, isChecked) {
+        fetchCategoryC({commit, getters, dispatch}, isChecked) {
             commit('setCategoryC', isChecked)
             commit('setIsMainFilterOn', getters['isAllFiltersOff'])
+            dispatch('updateFilter')
         },
-        fetchCategoryD({commit, getters}, isChecked) {
+        fetchCategoryD({commit, getters, dispatch}, isChecked) {
             commit('setCategoryD', isChecked)
             commit('setIsMainFilterOn', getters['isAllFiltersOff'])
+            dispatch('updateFilter')
         },
-        fetchCategoryK({commit, getters}, isChecked) {
+        fetchCategoryK({commit, getters, dispatch}, isChecked) {
             commit('setCategoryK', isChecked)
             commit('setIsMainFilterOn', getters['isAllFiltersOff'])
+            dispatch('updateFilter')
         },
-        fetchCategoryM({commit, getters}, isChecked) {
+        fetchCategoryM({commit, getters, dispatch}, isChecked) {
             commit('setCategoryM', isChecked)
             commit('setIsMainFilterOn', getters['isAllFiltersOff'])
-
+            dispatch('updateFilter')
         },
-        fetchCategoryUnisex({commit, getters}, isChecked) {
+        fetchCategoryUnisex({commit, getters, dispatch}, isChecked) {
             commit('setCategoryUnisex', isChecked)
             commit('setIsMainFilterOn', getters['isAllFiltersOff'])
+            dispatch('updateFilter')
         },
-        fetchCategoryMan({commit, getters}, isChecked) {
+        fetchCategoryMan({commit, getters, dispatch}, isChecked) {
             commit('setCategoryMan', isChecked)
             commit('setIsMainFilterOn', getters['isAllFiltersOff'])
+            dispatch('updateFilter')
         },
-        fetchCategoryWoman({commit, getters}, isChecked) {
+        fetchCategoryWoman({commit, getters, dispatch}, isChecked) {
             commit('setCategoryWoman', isChecked)
             commit('setIsMainFilterOn', getters['isAllFiltersOff'])
+            dispatch('updateFilter')
         },
+        /* multi level filter */
+        /*https://gist.github.com/jherax/f11d669ba286f21b7a2dcff69621eb72*/
+        updateFilter({getters, commit}) {
+
+            let genders = []
+            if (getters['getCategoryWoman']) genders.push('Ж')
+            if (getters['getCategoryMan']) genders.push('М')
+            if (getters['getCategoryUnisex']) genders.push('У')
+            if(!genders.length) genders = ['Ж', 'М', 'У']
+
+            let codes = []
+            if (getters['getCategoryC']) codes.push('C')
+            if (getters['getCategoryD']) codes.push('D')
+            if (getters['getCategoryK']) codes.push('K')
+            if (getters['getCategoryM']) codes.push('M')
+            if (!codes.length) codes = ['C', 'D', 'K', 'M']
+
+            let universals = []
+            if (getters['getMorningCategory']) universals.push('утренние')
+            if (getters['getAfternoonCategory']) universals.push('дневные')
+            if (getters['getEveningCategory']) universals.push('вечерние')
+            if (getters['getMorningAfterEveningCategory']) universals.push('утренние, дневные, вечерние')
+            if (getters['getMorningAfternoonCategory']) universals.push('утренние, дневные')
+            if (getters['getAfternoonEveningCategory']) universals.push('дневные, вечерние')
+
+            if (getters['getCitrusCategory']) universals.push('цитрусовые')
+            if (getters['getWaterCategory']) universals.push('водные')
+            if (getters['getGreenCategory']) universals.push('зелёные')
+            if (getters['getFruitCategory']) universals.push('фруктовые')
+            if (getters['getFlowerCategory']) universals.push('цветочные')
+            if (getters['getSoftFloralCategory']) universals.push('мягкие цветочные')
+            if (getters['getFloralOrientalCategory']) universals.push('цветочные восточные')
+            if (getters['getSoftOrientalCategory']) universals.push('мягкие восточные')
+            if (getters['getOrientalCategory']) universals.push('восточные')
+            if (getters['getWoodyOrientalCategory']) universals.push('древесные восточные')
+            if (getters['getWoodyCategory']) universals.push('древесные')
+            if (getters['getChypreCategory']) universals.push('шипровые')
+            if (getters['getWineGlassCategory']) universals.push('фужерные')
+
+            if (getters['getOfficeCategory']) universals.push('офисные')
+            if (getters['getBraveCategory']) universals.push('смелые')
+            if (getters['getConfidentCategory']) universals.push('уверенные')
+            if (getters['getBusinessCategory']) universals.push('бизнес')
+            if (getters['getSexyCategory']) universals.push('сексуальные')
+            if (getters['getCharmCategory']) universals.push('чарующие')
+            if (getters['getElegantCategory']) universals.push('элегантные')
+            if (getters['getProvocativeCategory']) universals.push('провокационные')
+            if (getters['getClubCategory']) universals.push('клубные')
+            if (getters['getSensualCategory']) universals.push('чувственные')
+            if (getters['getRomanticCategory']) universals.push('романтические')
+            if (getters['getMisteryCategory']) universals.push('таинственные')
+            if (getters['getSportCategory']) universals.push('спортивные')
+            if (getters['getResoluteCategory']) universals.push('решительные')
+
+            if (!universals.length)
+                universals = [
+                    'утренние',
+                    'дневные',
+                    'вечерние',
+                    'утренние, дневные, вечерние',
+                    'утренние, дневные',
+                    'дневные, вечерние',
+
+                    'цитрусовые',
+                    'водные',
+                    'зелёные',
+                    'фруктовые',
+                    'цветочные',
+                    'мягкие цветочные',
+                    'цветочные восточные',
+                    'мягкие восточные',
+                    'восточные',
+                    'древесные восточные',
+                    'древесные',
+                    'шипровые',
+                    'фужерные',
+
+                    'офисные',
+                    'смелые',
+                    'уверенные',
+                    'бизнес',
+                    'сексуальные',
+                    'чарующие',
+                    'элегантные',
+                    'провокационные',
+                    'клубные',
+                    'чувственные',
+                    'романтические',
+                    'таинственные',
+                    'спортивные',
+                    'решительные',
+                ]
+
+            const filters = {
+                gender: gender => genders.includes(gender),
+                code: code => codes.includes(code.substring(0, 1)),
+                filter_values: filter_values => filter_values
+                    .find(x => universals.includes(x.name.toLowerCase()))
+            }
+            console.log('filters', genders, codes, universals)
+            const filteredGroups = multiLevelFilter(getters['getAromaGroups'], filters)
+            commit('setAromaGroupsFilter', filteredGroups)
+            // if (filteredGroups.length !== 0) commit('setAromaGroupsFilter', filteredGroups);
+            // else commit('setAromaGroupsFilter', getters['getAromaGroups']);
+
+            console.log('filteredGroups', filteredGroups);
+        }
     },
     mutations: {
         setCategoryPair(state, isChecked) {
@@ -412,6 +563,7 @@ export default {
         },
     },
     getters: {
+
         isAllFiltersOff(state) {
             if (
                 !state.categoryMan

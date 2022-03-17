@@ -12,8 +12,8 @@
             <AromaSidebar />
             <div>
                 <AromaProductCard
-                    v-if="getAromaGroups"
-                    v-for="product in getAromaGroups"
+                    v-if="getAromaGroupsFilter"
+                    v-for="product in getAromaGroupsFilter"
                     :product="product"
                     :key="product.id"
                 />
@@ -53,7 +53,7 @@ export default {
     },
     computed: {
         ...mapGetters(['getCurrentCategory', 'getCategoryProducts',
-            'getPhysicalPerson', 'isProfessionalStatus', 'getAromaGroups']),
+            'getPhysicalPerson', 'isProfessionalStatus', 'getAromaGroupsFilter']),
 
         isPartner() {
             if (this.getPhysicalPerson) {

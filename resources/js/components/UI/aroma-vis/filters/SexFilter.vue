@@ -77,7 +77,8 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['fetchCategoryMan', 'fetchCategoryWoman', 'fetchCategoryUnisex'])
+        ...mapActions(['fetchCategoryMan', 'fetchCategoryWoman', 'fetchCategoryUnisex']),
+
     }
 }
 </script>

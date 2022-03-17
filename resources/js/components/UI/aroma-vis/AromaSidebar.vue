@@ -47,7 +47,7 @@ export default {
         ...mapActions(['fetchCategoryPair'])
     },
     computed: {
-        ...mapGetters(['getCategoryPair']),
+        ...mapGetters(['getCategoryPair','getAromaCategoryFilters']),
         categoryPair: {
             get: function () {
                 return this.getCategoryPair
