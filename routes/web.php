@@ -75,6 +75,7 @@ Route::get('/catalog/products-list-favorite/{slug}', [CategoryPageController::cl
 Route::get('/catalog/programs/{slug}', [ProgramsPageController::class, 'index'])->name('programs-page');
 Route::get('/catalog/products-list/{slug}', [ListPageController::class, 'index'])->name('products-list-page');
 Route::get('/catalog/{fromWhere}/{lineSlug}/{slug}', [ProductCardDetailPage::class, 'index'])->name('product-detail-page');
+Route::get('/catalog-aroma/{fromWhere}/{lineSlug}/{slug}', [ProductCardDetailPage::class, 'indexAroma'])->name('product-aroma-detail-page');
 Route::get('/catalog/{fromWhere}/{lineSlug}/{slug}/reviews', [ProductCardDetailReviewsPage::class, 'index'])->name('product-detail-reviews-page');
 Route::get('/catalog/{fromWhere}/{lineSlug}/{slug}/kits', [ProductCardComplectPage::class, 'index'])->name('product-detail-kits-page');
 Route::get('/stock', [StockPageController::class, 'index'])->name('stock-page');

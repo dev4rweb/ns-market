@@ -19,6 +19,12 @@ export default {
     methods: {
         selectProduct() {
             console.log('selectProduct', this.product)
+            if (this.product.code) {
+                const partUrls = window.location.pathname.split('/')
+                window.location.href = `/catalog-aroma/${partUrls[2]}/${partUrls[3]}/${this.product.code}`;
+            } else {
+                this.setToastError('Продукт не имеет адреса')
+            }
         }
     },
     computed: {

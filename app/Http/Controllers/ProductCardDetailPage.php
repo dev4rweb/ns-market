@@ -10,4 +10,9 @@ class ProductCardDetailPage extends Controller
     {
         return view('product-card-detail', compact(['fromWhere','lineSlug','slug']));
     }
+
+    public function indexAroma($fromWhere, $lineSlug, $slug)
+    {
+        return view('aroma.product-aroma-detail', compact(['fromWhere','lineSlug','slug']));
+    }
 }

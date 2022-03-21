@@ -106,6 +106,7 @@ Vue.component('user-become-status', require('./components/views/UserBecomePartne
 Vue.component('user-choose-pay-page', require('./components/views/UserChoosePayPage').default);
 Vue.component('user-invite-page', require('./components/views/UserInvitePage').default);
 Vue.component('product-detail-page', require('./components/views/ProductDetailPage').default);
+Vue.component('product-aroma-detail-page', require('./components/views/aroma/ProductAromaDetailPage').default);
 Vue.component('product-detail-reviews-page', require('./components/views/ProductDetailReviewsPage').default);
 Vue.component('product-detail-complectations-page', require('./components/views/ProductDetailComplectations').default);
 Vue.component('partner-congratulation-page', require('./components/views/PartnerCongratulationPage').default);
@@ -135,6 +136,9 @@ Vue.component('color-filter', require('./components/UI/aroma-vis/filters/ColorFi
 Vue.component('daily-filter', require('./components/UI/aroma-vis/filters/DailyFilter').default);
 Vue.component('smell-filter', require('./components/UI/aroma-vis/filters/SmellFilter').default);
 Vue.component('spirit-filter', require('./components/UI/aroma-vis/filters/SpiritFilter').default);
+Vue.component('quick-filter', require('./components/UI/aroma-vis/filters/QuickFilter').default);
+Vue.component('category-oil', require('./components/UI/aroma-vis/CategoryOil').default);
+Vue.component('pyramid', require('./components/UI/aroma-vis/Pyramid').default);
 Vue.component('search-aroma-sidebar', require('./components/UI/aroma-vis/filters/SearchAromaSidebar').default);
 Vue.component('toggle-aroma-filter', require('./components/UI/ToggleAromaFilter').default);
 /**
