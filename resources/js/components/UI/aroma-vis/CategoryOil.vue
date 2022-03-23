@@ -1,17 +1,37 @@
 <template>
-<div class="d-flex flex-column justify-content-center align-items-center">
-    <div class="circle-color mb-5">
-        <h3>C-01</h3>
-        <span>женский аромат</span>
+<div class="d-flex flex-column align-items-center">
+    <div
+        class="circle-color mb-5"
+        :style="{backgroundColor: getCircleColor}"
+    >
+        <h3>{{curAromaGroup.code}}</h3>
+        <span>{{ getSex }}</span>
     </div>
-    <img :src="icOil" alt="oil">
+    <img
+        v-if="isOilPresent"
+        :src="icOil"
+        alt="oil"
+    >
 </div>
 </template>
 
 <script>
+import {getAromaGroupColor} from "../../../store/utils/getAromaGroupColor";
+import {getGender} from "../../../store/utils/getGender";
 import icOil from '../../../../assets/img/ic-oil.png'
 export default {
     name: "CategoryOil",
+    props: ['curAromaGroup', 'isOilPresent'],
+    methods: {
+    },
+    computed: {
+        getCircleColor() {
+            return  getAromaGroupColor(this.curAromaGroup.code)
+        },
+        getSex() {
+            return getGender(this.curAromaGroup.gender)
+        }
+    },
     data() {
         return {
             icOil
@@ -32,7 +52,7 @@ export default {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background-color: #EBAA3C;
+    //background-color: #EBAA3C;
     color: white;
 
     h3 {

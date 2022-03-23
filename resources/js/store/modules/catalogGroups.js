@@ -9,7 +9,9 @@ export default {
         productDetail: null,
         aromaGroups: [],
         aromaGroupsFilter: [],
-        aromaCategoryFilters: []
+        aromaCategoryFilters: [],
+        aromaCurrentGroup: null,
+        aromaCurrentProducts: []
     },
     actions: {
         fetchCatalogGroups({commit}) {
@@ -89,7 +91,12 @@ export default {
         }
     },
     mutations: {
-
+        setAromaCurrentGroup(state, curAromaGroup) {
+            state.aromaCurrentGroup = curAromaGroup
+        },
+        setAromaCurrentProducts(state, curAromaProducts) {
+            state.aromaCurrentProducts = curAromaProducts
+        },
         setAromaGroupsFilter(state, aromaGroups) {
             state.aromaGroupsFilter = aromaGroups
         },
@@ -113,7 +120,12 @@ export default {
         },
     },
     getters: {
-
+        getAromaCurrentGroup(state) {
+            return state.aromaCurrentGroup
+        },
+        getAromaCurrentProducts(state) {
+            return state.aromaCurrentProducts
+        },
         getAromaGroupsFilter(state) {
             return state.aromaGroupsFilter
         },

@@ -3,40 +3,38 @@
     <img :src="perfumeImg" alt="perfume" class="perfume">
     <div class="note-wrapper">
         <div class="top-note">
-            <img :src="noteOne" alt="note-top">
+            <img :src="getPathToImage(curAromaGroup.note_1_image)" alt="note">
+<!--            <img :src="noteOne" alt="note-top">-->
             <div class="right-side">
                 <div class="top-line"></div>
                 <div class="content-side">
                     <h5 class="title">верхние ноты</h5>
                     <p class="desc">
-                        бергамот, африканский апельсиновый цвет,
-                        гардения, мускатный орех и зелёные ноты
+                        {{ curAromaGroup.note_1_description }}
                     </p>
                 </div>
             </div>
         </div>
         <div class="center-note">
-            <img :src="noteTwo" alt="note-center">
+            <img :src="getPathToImage(curAromaGroup.note_2_image)" alt="note">
             <div class="right-side">
                 <div class="center-line"></div>
                 <div class="content-side">
                     <h5 class="title">ноты сердца</h5>
                     <p class="desc">
-                        жимолость, тубероза, жасмин, ирис,
-                        грецкий орех и пион
+                        {{ curAromaGroup.note_2_description }}
                     </p>
                 </div>
             </div>
         </div>
         <div class="base-note">
-            <img :src="noteThree" alt="note-base">
+            <img :src="getPathToImage(curAromaGroup.note_3_image)" alt="note">
             <div class="right-side">
                 <div class="base-line"></div>
                 <div class="content-side">
                     <h5 class="title">ноты базы</h5>
                     <p class="desc">
-                        ваниль, амбра, кедр из Вирджинии,
-                        уд и древесные ноты
+                        {{ curAromaGroup.note_3_description }}
                     </p>
                 </div>
             </div>
@@ -50,11 +48,21 @@ import perfumeImg from '../../../../assets/img/perfume-pyramid.png'
 import noteOne from '../../../../assets/img/note-one.png'
 import noteTwo from '../../../../assets/img/note-two.png'
 import noteThree from '../../../../assets/img/note-three.png'
+import {WORK_HOST} from "../../../store/routeConsts";
 export default {
     name: "Pyramid",
+    props: ['curAromaGroup'],
     data() {
         return {
             perfumeImg, noteOne, noteTwo, noteThree
+        }
+    },
+    methods: {
+        getPathToImage(path) {
+            let host = WORK_HOST.replace('/api', '')
+            if (path) {
+                return `${host}uploads/${path}`
+            } else return null
         }
     }
 }
@@ -84,14 +92,14 @@ export default {
             max-width: 370px;
             .title{
                 font-weight: 700;
-                font-size: 18px;
+                font-size: 20px;
                 line-height: 120%;
                 text-transform: uppercase;
                 margin-bottom: 0;
             }
             .desc {
                 font-weight: 400;
-                font-size: 18px;
+                font-size: 20px;
                 line-height: 20px;
             }
         }
@@ -99,6 +107,7 @@ export default {
             display: flex;
             align-items: center;
             justify-content: space-between;
+            height: 130px;
 
             .top-line {
                 width: 164px;
@@ -114,6 +123,7 @@ export default {
             display: flex;
             align-items: center;
             justify-content: space-between;
+            height: 130px;
 
             .center-line {
                 width: 98px;
@@ -128,6 +138,7 @@ export default {
             display: flex;
             align-items: center;
             justify-content: space-between;
+            height: 130px;
 
             .base-line {
                 width: 46px;

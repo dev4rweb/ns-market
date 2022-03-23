@@ -4,15 +4,15 @@
             <li class="nav-item">
                 <button
                     class="btn btn-lg btn-outline-info"
-                    :class="{active: isActive('/products/')}"
+                    :class="{active: isActive('/products/') && !slug.includes('DetailAroma')}"
                     @click="moveToPage('/products/')"
                 >
-                    {{slug.includes('AromaVis') ? 'Подбор' : 'Продукты'}}
+                    {{slug.includes('AromaVis') || slug.includes('DetailAroma') ? 'Подбор' : 'Продукты'}}
                 </button>
             </li>
             <li
                 class="nav-item"
-                v-if="!slug.includes('AromaVis')"
+                v-if="!slug.includes('AromaVis') && !slug.includes('DetailAroma')"
             >
                 <button
                     class="btn btn-lg btn-outline-info"
@@ -28,12 +28,12 @@
                     :class="{active: isActive('/products-list/')}"
                     @click="moveToPage('/products-list/')"
                 >
-                    {{slug.includes('AromaVis') ? 'Таблица' : 'Список'}}
+                    {{slug.includes('AromaVis') || slug.includes('DetailAroma') ? 'Таблица' : 'Список'}}
                 </button>
             </li>
             <li
                 class="nav-item"
-                v-if="slug.includes('AromaVis')"
+                v-if="slug.includes('AromaVis')  || slug.includes('DetailAroma')"
             >
                 <button
                     class="btn btn-lg btn-outline-info"
@@ -57,8 +57,11 @@ export default {
         },
         moveToPage(partUrl) {
             console.log('moveToPage', partUrl)
-            if (!this.isActive(partUrl))
+            if (!this.isActive(partUrl) && !this.slug.includes('DetailAroma'))
                 window.location.href = `/catalog${partUrl}${this.slug}`
+
+            if (this.slug.includes('DetailAroma'))
+                window.location.href = `/catalog${partUrl}AromaVis`
         }
     },
     computed: {
