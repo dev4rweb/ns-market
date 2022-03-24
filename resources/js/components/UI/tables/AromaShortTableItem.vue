@@ -1,8 +1,8 @@
 <template>
     <tr>
-        <th scope="row">
+        <th v-if="isPartner" scope="row">
             <div
-                v-if="isDisabledTwo"
+                v-if=" isDisabledTwo"
                 class="d-flex justify-content-center"
             >
                 <input

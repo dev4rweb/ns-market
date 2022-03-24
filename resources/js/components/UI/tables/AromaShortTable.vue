@@ -1,10 +1,11 @@
 <template>
     <div>
         <table
-            class="table table-sm table-responsive-sm table-light table-bordered border-secondary table-hover shadow-lg small-table">
+            class="table table-sm table-responsive-sm table-light table-bordered border-secondary shadow-lg small-table">
             <thead class="table-primary">
             <tr>
                 <th
+                    v-if="isPartner"
                     scope="col"
                     class="text-center"
                 >
@@ -40,9 +41,9 @@
                 <AromaShortTableItem />
             </tbody>
         </table>
-        <div class="d-flex justify-content-between align-items-center mt-4 mb-3">
+        <div class="d-flex justify-content-end align-items-center mt-4 mb-3 ">
             <span
-                class="price"
+                class="price me-3"
             >
                 Итого:
                 {{ getPointsShortTable }} PV
@@ -73,7 +74,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['getPriceShortTable', 'getPointsShortTable'])
+        ...mapGetters(['getPriceShortTable', 'getPointsShortTable', 'isPartner'])
     }
 }
 </script>

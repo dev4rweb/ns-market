@@ -44,7 +44,16 @@ export default {
                     commit('setCategoryProducts', res.data.models)
                     if (res.data.aromaGroups) {
                         commit('setAromaGroups', res.data.aromaGroups)
-                        commit('setAromaGroupsFilter', res.data.aromaGroups)
+                        if (window.location.href.includes('/catalog-aroma/products/AromaVis/')) {
+                            console.log('AromaDetailPage')
+                            const arGroupFilters = JSON.parse(localStorage.getItem('aromaGroupFilters'))
+                            commit('setAromaGroupsFilter', arGroupFilters)
+                        } else {
+                            console.log('AromaListPage')
+                            localStorage.removeItem('aromaGroupFilters')
+                            commit('setAromaGroupsFilter', res.data.aromaGroups);
+                        }
+
                         commit('setAromaCategoryFilters', res.data.filter)
                     }
                 } else commit('setToastError', 'Непредвиденная ошибка. Попробуйте позже')

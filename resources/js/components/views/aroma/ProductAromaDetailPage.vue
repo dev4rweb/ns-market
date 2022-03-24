@@ -9,7 +9,10 @@
         >
             <div class="container">
                 <div class="pt-3">
-                    <QuickFilter/>
+                    <QuickFilter
+                        v-if="getAromaGroupsFilter && curProdGroup"
+                        :curProdGroup="curProdGroup"
+                    />
                 </div>
                 <div
                     v-if="curProdGroup"
@@ -87,7 +90,7 @@ import ComplementaryAromas from "../../UI/aroma-vis/ComplementaryAromas";
 import AntagonistAromas from "../../UI/aroma-vis/AntagonistAromas";
 import PairAromas from "../../UI/aroma-vis/PairAromas";
 import NavCatalog from "../../UI/NavCatalog";
-
+import MultiCarousel from "../../UI/MultiCarousel";
 export default {
     name: "ProductAromaDetailPage",
     props: ['slug'],
@@ -98,10 +101,11 @@ export default {
     },
     methods: {
         ...mapActions(['getCategoryPage', 'fetchPhysicalPerson']),
-        ...mapMutations(['setAromaCurrentGroup', 'setAromaCurrentProducts'])
+        ...mapMutations(['setAromaCurrentGroup', 'setAromaCurrentProducts']),
+
     },
     computed: {
-        ...mapGetters(['getCategoryProducts', 'getAromaGroups']),
+        ...mapGetters(['getCategoryProducts', 'getAromaGroups', 'getAromaGroupsFilter']),
         aromaProperties() {
             if (this.curProdGroup)
                 return `${this.curProdGroup.filter_values[0].name}, ${this.curProdGroup.filter_values[1].name}, ${this.curProdGroup.filter_values[2].name}`
@@ -141,7 +145,7 @@ export default {
     components: {
         CatalogProductsHeader, Breadcrumb, QuickFilter, CategoryOil, Pyramid,
         AromaShortTable, ComplementaryAromas, AntagonistAromas, PairAromas,
-        NavCatalog
+        NavCatalog, MultiCarousel
     },
     mounted() {
         const data = {

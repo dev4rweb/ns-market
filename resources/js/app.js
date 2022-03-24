@@ -145,7 +145,8 @@ Vue.component('pyramid', require('./components/UI/aroma-vis/Pyramid').default);
 Vue.component('aroma-short-table', require('./components/UI/tables/AromaShortTable').default);
 Vue.component('aroma-short-table-item', require('./components/UI/tables/AromaShortTableItem').default);
 Vue.component('search-aroma-sidebar', require('./components/UI/aroma-vis/filters/SearchAromaSidebar').default);
-Vue.component('toggle-aroma-filter', require('./components/UI/ToggleAromaFilter').default);
+Vue.component('multi-carousel', require('./components/UI/MultiCarousel').default);
+Vue.component('multi-carousel-aroma-filter', require('./components/UI/MultiCarouselAromaFilter').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
