@@ -1,22 +1,31 @@
 <template>
     <div class="mb-5">
-        <h4 class="mb-3">Быстрый просмотр по фильтру:</h4>
+        <BackBtn path-to="/catalog/products/AromaVis" />
 
-        <MultiCarouselAromaFilter :curProdGroup="curProdGroup" />
+        <div class="d-flex justify-content-between align-items-center mt-3">
+            <div class="me-5">
+                <h4 class="mb-0">Ваш выбор:</h4>
+                <TextFilterResult />
+            </div>
+
+            <MultiCarouselAromaFilter :curProdGroup="curProdGroup" />
+        </div>
+
     </div>
 </template>
 
 <script>
 import MultiCarouselAromaFilter from "../../MultiCarouselAromaFilter";
-
+import BackBtn from "../../BackBtn";
+import TextFilterResult from "./TextFilterResult";
 export default {
     name: "QuickFilter",
     props: ['curProdGroup'],
     components: {
-        MultiCarouselAromaFilter
+        MultiCarouselAromaFilter, BackBtn, TextFilterResult
     }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 </style>

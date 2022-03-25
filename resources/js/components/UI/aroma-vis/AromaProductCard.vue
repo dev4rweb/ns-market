@@ -23,6 +23,8 @@ export default {
             if (this.product.code) {
                 const arGroupFilters = JSON.stringify(this.getAromaGroupsFilter)
                 localStorage.setItem('aromaGroupFilters', arGroupFilters)
+                const allFilters = JSON.stringify(this.getAllFilters)
+                localStorage.setItem('aromaAllFilters', allFilters)
                 // console.log('selectProduct', arGroupFilters)
                 const partUrls = window.location.pathname.split('/')
                 window.location.href = `/catalog-aroma/${partUrls[2]}/${partUrls[3]}/${this.product.code}`;
@@ -32,7 +34,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['getAromaGroupsFilter']),
+        ...mapGetters(['getAromaGroupsFilter', 'getAllFilters']),
         getCircleColor() {
             // const firstNumber = this.product.vendor_code.charAt(0)
             const firstNumber = this.product.code.charAt(0)

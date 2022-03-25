@@ -43,15 +43,31 @@ export default {
                     commit('setCurrentCategory', res.data.category)
                     commit('setCategoryProducts', res.data.models)
                     if (res.data.aromaGroups) {
-                        commit('setAromaGroups', res.data.aromaGroups)
+                        let aromaGroups = res.data.aromaGroups
+                        aromaGroups.forEach(i => {
+                            i.filter_values_daily = i.filter_values[0]
+                            i.filter_values_smells = i.filter_values[1]
+                            i.filter_values_spirits = i.filter_values[2]
+                        });
+                        commit('setAromaGroups', aromaGroups)
                         if (window.location.href.includes('/catalog-aroma/products/AromaVis/')) {
                             console.log('AromaDetailPage')
                             const arGroupFilters = JSON.parse(localStorage.getItem('aromaGroupFilters'))
                             commit('setAromaGroupsFilter', arGroupFilters)
+                            const allFilters = JSON.parse(localStorage.getItem('aromaAllFilters'))
+                            commit('setAllFilters', allFilters)
                         } else {
                             console.log('AromaListPage')
+                            const arGroupFilters = JSON.parse(localStorage.getItem('aromaGroupFilters'))
+                            if(arGroupFilters) commit('setAromaGroupsFilter', arGroupFilters)
+                            else commit('setAromaGroupsFilter', aromaGroups);
+
+                            const allFilters = JSON.parse(localStorage.getItem('aromaAllFilters'))
+                            if (allFilters) commit('setAllFilters', allFilters)
+
                             localStorage.removeItem('aromaGroupFilters')
-                            commit('setAromaGroupsFilter', res.data.aromaGroups);
+                            localStorage.removeItem('aromaAllFilters')
+                            // commit('setAromaGroupsFilter', res.data.aromaGroups);
                         }
 
                         commit('setAromaCategoryFilters', res.data.filter)

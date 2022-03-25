@@ -140,6 +140,7 @@ Vue.component('daily-filter', require('./components/UI/aroma-vis/filters/DailyFi
 Vue.component('smell-filter', require('./components/UI/aroma-vis/filters/SmellFilter').default);
 Vue.component('spirit-filter', require('./components/UI/aroma-vis/filters/SpiritFilter').default);
 Vue.component('quick-filter', require('./components/UI/aroma-vis/filters/QuickFilter').default);
+Vue.component('text-filter-result', require('./components/UI/aroma-vis/filters/TextFilterResult').default);
 Vue.component('category-oil', require('./components/UI/aroma-vis/CategoryOil').default);
 Vue.component('pyramid', require('./components/UI/aroma-vis/Pyramid').default);
 Vue.component('aroma-short-table', require('./components/UI/tables/AromaShortTable').default);

@@ -419,6 +419,87 @@ export default {
             if (getters['getCategoryM']) codes.push('M')
             if (!codes.length) codes = ['C', 'D', 'K', 'M']
 
+            let daily = []
+            if (getters['getMorningCategory']) daily.push('утренние')
+            if (getters['getAfternoonCategory']) daily.push('дневные')
+            if (getters['getEveningCategory']) daily.push('вечерние')
+            if (getters['getMorningAfterEveningCategory']) daily.push('утренние, дневные, вечерние')
+            if (getters['getMorningAfternoonCategory']) daily.push('утренние, дневные')
+            if (getters['getAfternoonEveningCategory']) daily.push('дневные, вечерние')
+            if (!daily.length)
+                daily = [
+                    'утренние',
+                    'дневные',
+                    'вечерние',
+                    'утренние, дневные, вечерние',
+                    'утренние, дневные',
+                    'дневные, вечерние'
+                ]
+
+            let smells = []
+            if (getters['getCitrusCategory']) smells.push('цитрусовые')
+            if (getters['getWaterCategory']) smells.push('водные')
+            if (getters['getGreenCategory']) smells.push('зелёные')
+            if (getters['getFruitCategory']) smells.push('фруктовые')
+            if (getters['getFlowerCategory']) smells.push('цветочные')
+            if (getters['getSoftFloralCategory']) smells.push('мягкие цветочные')
+            if (getters['getFloralOrientalCategory']) smells.push('цветочные восточные')
+            if (getters['getSoftOrientalCategory']) smells.push('мягкие восточные')
+            if (getters['getOrientalCategory']) smells.push('восточные')
+            if (getters['getWoodyOrientalCategory']) smells.push('древесные восточные')
+            if (getters['getWoodyCategory']) smells.push('древесные')
+            if (getters['getChypreCategory']) smells.push('шипровые')
+            if (getters['getWineGlassCategory']) smells.push('фужерные')
+            if (!smells.length)
+                smells = [
+                    'цитрусовые',
+                    'водные',
+                    'зелёные',
+                    'фруктовые',
+                    'цветочные',
+                    'мягкие цветочные',
+                    'цветочные восточные',
+                    'мягкие восточные',
+                    'восточные',
+                    'древесные восточные',
+                    'древесные',
+                    'шипровые',
+                    'фужерные'
+                ]
+
+            let spirits = []
+            if (getters['getOfficeCategory']) spirits.push('офисные')
+            if (getters['getBraveCategory']) spirits.push('смелые')
+            if (getters['getConfidentCategory']) spirits.push('уверенные')
+            if (getters['getBusinessCategory']) spirits.push('бизнес')
+            if (getters['getSexyCategory']) spirits.push('сексуальные')
+            if (getters['getCharmCategory']) spirits.push('чарующие')
+            if (getters['getElegantCategory']) spirits.push('элегантные')
+            if (getters['getProvocativeCategory']) spirits.push('провокационные')
+            if (getters['getClubCategory']) spirits.push('клубные')
+            if (getters['getSensualCategory']) spirits.push('чувственные')
+            if (getters['getRomanticCategory']) spirits.push('романтические')
+            if (getters['getMisteryCategory']) spirits.push('таинственные')
+            if (getters['getSportCategory']) spirits.push('спортивные')
+            if (getters['getResoluteCategory']) spirits.push('решительные')
+            if (!spirits.length)
+                spirits = [
+                    'офисные',
+                    'смелые',
+                    'уверенные',
+                    'бизнес',
+                    'сексуальные',
+                    'чарующие',
+                    'элегантные',
+                    'провокационные',
+                    'клубные',
+                    'чувственные',
+                    'романтические',
+                    'таинственные',
+                    'спортивные',
+                    'решительные',
+                ]
+
             let universals = []
             if (getters['getMorningCategory']) universals.push('утренние')
             if (getters['getAfternoonCategory']) universals.push('дневные')
@@ -505,12 +586,13 @@ export default {
                     gender: gender => genders.includes(gender),
                     code: code => codes.includes(code.substring(0, 1)),
                     filter_values: filter_values => filter_values.find(x => {
-                            // console.log('universals', universals[0])
+                            console.log('universals', universals)
+                            console.log('x.name', x.name)
                             return (
                                 universals.includes(x.name.toLowerCase())
                             )
                         }
-                    )
+                    ),
                 };
                 console.log('filters', genders, codes, universals)
                 const filteredGroups = multiLevelFilter(getters['getAromaGroups'], filters)
@@ -656,8 +738,108 @@ export default {
         setCategoryM(state, isChecked) {
             state.categoryM = isChecked
         },
+
+        setAllFilters(state, filters) {
+            state.categoryMan = filters.categoryMan
+            state.categoryWoman = filters.categoryWoman
+            state.categoryUnisex = filters.categoryUnisex
+
+            state.categoryC = filters.categoryC
+            state.categoryD = filters.categoryD
+            state.categoryK = filters.categoryK
+            state.categoryM = filters.categoryM
+
+            state.morningCategory = filters.morningCategory
+            state.afternoonCategory = filters.afternoonCategory
+            state.eveningCategory = filters.eveningCategory
+            state.morningAfterEveningCategory = filters.morningAfterEveningCategory
+            state.morningAfternoonCategory = filters.morningAfternoonCategory
+
+            state.citrusCategory = filters.citrusCategory
+            state.waterCategory = filters.waterCategory
+            state.greenCategory = filters.greenCategory
+            state.fruitCategory = filters.fruitCategory
+            state.flowerCategory = filters.flowerCategory
+            state.softFloralCategory = filters.softFloralCategory
+            state.floralOrientalCategory = filters.floralOrientalCategory
+            state.softOrientalCategory = filters.softOrientalCategory
+            state.orientalCategory = filters.orientalCategory
+            state.woodyOrientalCategory = filters.woodyOrientalCategory
+            state.woodyCategory = filters.woodyCategory
+            state.chypreCategory = filters.chypreCategory
+            state.wineGlassCategory = filters.wineGlassCategory
+
+            state.officeCategory = filters.officeCategory
+            state.braveCategory = filters.braveCategory
+            state.confidentCategory = filters.confidentCategory
+            state.businessCategory = filters.businessCategory
+            state.sexyCategory = filters.sexyCategory
+            state.charmCategory = filters.charmCategory
+            state.elegantCategory = filters.elegantCategory
+            state.provocativeCategory = filters.provocativeCategory
+            state.clubCategory = filters.clubCategory
+            state.sensualCategory = filters.sensualCategory
+            state.romanticCategory = filters.romanticCategory
+            state.misteryCategory = filters.misteryCategory
+            state.sportCategory = filters.sportCategory
+            state.resoluteCategory = filters.resoluteCategory
+
+            state.categoryPair = filters.categoryPair
+        }
     },
     getters: {
+
+        getAllFilters(state) {
+            const filters = {
+                categoryMan: state.categoryMan,
+                categoryWoman: state.categoryWoman,
+                categoryUnisex: state.categoryUnisex,
+
+                categoryC: state.categoryC,
+                categoryD: state.categoryD,
+                categoryK: state.categoryK,
+                categoryM: state.categoryM,
+
+                morningCategory: state.morningCategory,
+                afternoonCategory: state.afternoonCategory,
+                eveningCategory: state.eveningCategory,
+                morningAfterEveningCategory: state.morningAfterEveningCategory,
+                morningAfternoonCategory: state.morningAfternoonCategory,
+
+                citrusCategory: state.citrusCategory,
+                waterCategory: state.waterCategory,
+                greenCategory: state.greenCategory,
+                fruitCategory: state.fruitCategory,
+                flowerCategory: state.flowerCategory,
+                softFloralCategory: state.softFloralCategory,
+                floralOrientalCategory: state.floralOrientalCategory,
+                softOrientalCategory: state.softOrientalCategory,
+                orientalCategory: state.orientalCategory,
+                woodyOrientalCategory: state.woodyOrientalCategory,
+                woodyCategory: state.woodyCategory,
+                chypreCategory: state.chypreCategory,
+                wineGlassCategory: state.wineGlassCategory,
+
+                officeCategory: state.officeCategory,
+                braveCategory: state.braveCategory,
+                confidentCategory: state.confidentCategory,
+                businessCategory: state.businessCategory,
+                sexyCategory: state.sexyCategory,
+                charmCategory: state.charmCategory,
+                elegantCategory: state.elegantCategory,
+                provocativeCategory: state.provocativeCategory,
+                clubCategory: state.clubCategory,
+                sensualCategory: state.sensualCategory,
+                romanticCategory: state.romanticCategory,
+                misteryCategory: state.misteryCategory,
+                sportCategory: state.sportCategory,
+                resoluteCategory: state.resoluteCategory,
+
+                categoryPair: state.categoryPair,
+            }
+
+            return filters
+        },
 
         isAllFiltersOff(state) {
             if (

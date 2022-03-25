@@ -85,28 +85,29 @@ export default {
         getCenterPosition() {
             const index = this.getAromaGroupsFilter.findIndex(i => i.id === this.curProdGroup.id)
             console.log('getCenterPosition', index)
-            if (
-                (this.getAromaGroupsFilter.length - 5) > index
-                &&
-                this.getAromaGroupsFilter.length > this.windowSize
-                &&
-                index > 4
-            ) {
-                this.currentOffset = - (96 * (index - 4))
-            }
+            if (this.getAromaGroupsFilter.length > 9) {
+                if (
+                    (this.getAromaGroupsFilter.length - 5) > index
+                    &&
+                    this.getAromaGroupsFilter.length > this.windowSize
+                    &&
+                    index > 4
+                ) {
+                    this.currentOffset = - (96 * (index - 4))
+                }
 
-            if (
-                (this.getAromaGroupsFilter.length - 5) <= index
-            ) {
-                this.currentOffset = - (96 * (this.getAromaGroupsFilter.length - 9))
-            }
-
+                if (
+                    (this.getAromaGroupsFilter.length - 5) <= index
+                ) {
+                    this.currentOffset = - (96 * (this.getAromaGroupsFilter.length - 9))
+                }
+            } else this.currentOffset = 0
         }
     },
     computed: {
         ...mapGetters(['getAromaGroupsFilter']),
         atEndOfList() {
-            console.log('atEndOfList currentOffset', this.currentOffset)
+            // console.log('atEndOfList currentOffset', this.currentOffset)
             // console.log('atEndOfList paginationFactor', this.paginationFactor)
             // console.log('atEndOfList getAromaGroupsFilter', this.getAromaGroupsFilter.length)
             // console.log('atEndOfList computed', (this.paginationFactor * -1) * (this.getAromaGroupsFilter.length - this.windowSize))

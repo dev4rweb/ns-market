@@ -10,9 +10,11 @@
 <script>
 export default {
     name: "BackBtn",
+    props: ['pathTo'],
     methods: {
         gotoBack() {
-            window.history.back()
+            if (this.pathTo) window.location.href = this.pathTo
+            else window.history.back()
         }
     }
 }
