@@ -45,9 +45,10 @@ export default {
                     if (res.data.aromaGroups) {
                         let aromaGroups = res.data.aromaGroups
                         aromaGroups.forEach(i => {
-                            i.filter_values_daily = i.filter_values[0]
-                            i.filter_values_smells = i.filter_values[1]
-                            i.filter_values_spirits = i.filter_values[2]
+                            // console.log('get I - ', i)
+                            i.filter_values_daily = i.filter_values.find(x => x.filter_id === 1 )
+                            i.filter_values_smells = i.filter_values.find(x => x.filter_id === 4 )
+                            i.filter_values_spirits = i.filter_values.find(x => x.filter_id === 2 )
                         });
                         commit('setAromaGroups', aromaGroups)
                         if (window.location.href.includes('/catalog-aroma/products/AromaVis/')) {

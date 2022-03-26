@@ -585,16 +585,19 @@ export default {
                 const filters = {
                     gender: gender => genders.includes(gender),
                     code: code => codes.includes(code.substring(0, 1)),
-                    filter_values: filter_values => filter_values.find(x => {
+                    /*filter_values: filter_values => filter_values.find(x => {
                             console.log('universals', universals)
                             console.log('x.name', x.name)
                             return (
                                 universals.includes(x.name.toLowerCase())
                             )
                         }
-                    ),
+                    ),*/
+                    filter_values_daily: day => daily.includes(day.name.toLowerCase()),
+                    filter_values_smells: smell => smells.includes(smell.name.toLowerCase()),
+                    filter_values_spirits: spirit => spirits.includes(spirit.name.toLowerCase()),
                 };
-                console.log('filters', genders, codes, universals)
+                console.log('filters', filters)
                 const filteredGroups = multiLevelFilter(getters['getAromaGroups'], filters)
                 commit('setAromaGroupsFilter', filteredGroups)
                 console.log('filteredGroups', filteredGroups);
