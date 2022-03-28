@@ -31,7 +31,7 @@ export default {
         ...mapMutations(['setAromaGroupsFilter']),
     },
     computed: {
-        ...mapGetters(['getIsMainFilterOn']),
+        ...mapGetters(['getIsMainFilterOn', 'getAromaGroupsFilter', 'getAromaGroups']),
         isOn: {
             get: function () {
                 return this.getIsMainFilterOn
@@ -40,6 +40,11 @@ export default {
                 if (!this.getIsMainFilterOn)
                     this.fetchIsMainFilterOn(!this.getIsMainFilterOn)
             }
+        }
+    },
+    mounted() {
+        if (this.getAromaGroupsFilter.length < this.getAromaGroups.length) {
+            this.fetchIsMainFilterOn(false)
         }
     }
 }

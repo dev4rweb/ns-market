@@ -11,7 +11,7 @@ export default {
         aromaGroupsFilter: [],
         aromaCategoryFilters: [],
         aromaCurrentGroup: null,
-        aromaCurrentProducts: []
+        aromaCurrentProducts: [],
     },
     actions: {
         fetchCatalogGroups({commit}) {

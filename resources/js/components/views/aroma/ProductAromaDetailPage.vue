@@ -14,6 +14,9 @@
                         :curProdGroup="curProdGroup"
                     />
                 </div>
+                <div>
+                    <MultiCarouselAromaFilter :cur-prod-group="curProdGroup" />
+                </div>
                 <div
                     v-if="curProdGroup"
                     class="d-flex justify-content-between"
@@ -26,11 +29,14 @@
                         :curAromaGroup="curProdGroup"
                     />
                 </div>
-                <div class="d-flex justify-content-end">
-                    <button class="btn btn-lg btn-outline-info">
+<!--                <div class="d-flex justify-content-end">
+                    <button
+                        class="btn btn-lg btn-outline-info"
+                        @click="addToFavorite"
+                    >
                         В избранное <img :src="icHeart" alt="fav">
                     </button>
-                </div>
+                </div>-->
                 <p
                     v-if="aromaProperties"
                     class="aroma-prop"
@@ -90,7 +96,7 @@ import ComplementaryAromas from "../../UI/aroma-vis/ComplementaryAromas";
 import AntagonistAromas from "../../UI/aroma-vis/AntagonistAromas";
 import PairAromas from "../../UI/aroma-vis/PairAromas";
 import NavCatalog from "../../UI/NavCatalog";
-import MultiCarousel from "../../UI/MultiCarousel";
+import MultiCarouselAromaFilter from "../../UI/MultiCarouselAromaFilter";
 export default {
     name: "ProductAromaDetailPage",
     props: ['slug'],
@@ -102,7 +108,9 @@ export default {
     methods: {
         ...mapActions(['getCategoryPage', 'fetchPhysicalPerson']),
         ...mapMutations(['setAromaCurrentGroup', 'setAromaCurrentProducts']),
-
+        addToFavorite() {
+            console.log('addToFavorite', this.curProdGroup)
+        }
     },
     computed: {
         ...mapGetters(['getCategoryProducts', 'getAromaGroups', 'getAromaGroupsFilter']),
@@ -145,7 +153,7 @@ export default {
     components: {
         CatalogProductsHeader, Breadcrumb, QuickFilter, CategoryOil, Pyramid,
         AromaShortTable, ComplementaryAromas, AntagonistAromas, PairAromas,
-        NavCatalog, MultiCarousel
+        NavCatalog, MultiCarouselAromaFilter
     },
     mounted() {
         const data = {
@@ -187,7 +195,7 @@ export default {
     -o-transition: all .2s;
     transition: all .2s;
 
-    &:hover {
+    &:hover, &:focus, &:active {
         -webkit-transform: scale(1.1, 1.1);
         -moz-transform: scale(1.1, 1.1);
         -ms-transform: scale(1.1, 1.1);

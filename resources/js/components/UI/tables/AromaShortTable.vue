@@ -9,31 +9,37 @@
                     scope="col"
                     class="text-center"
                 >
-                    <b>Пробник, 2 мл</b><br> 1 PV / 50 руб.
+                    <b>Пробник, 2 мл</b><br>
+                    {{ getAromaCurrentProducts[0].points }} PV
+                    / {{ getAromaCurrentProducts[0].price_for_partners }} руб.
                 </th>
                 <th
                     scope="col"
                     class="text-center"
                 >
-                    <b>Спрей, 3 мл</b><br> 3 PV / 110 руб.
+                    <b>Спрей, 3 мл</b><br>
+                    {{ getPricePv('03') }}
                 </th>
                 <th
                     scope="col"
                     class="text-center"
                 >
-                    <b>Масло, 7 мл</b><br> 19 PV / 450 руб.
+                    <b>Масло, 7 мл</b><br>
+                    {{ getPricePv('07') }}
                 </th>
                 <th
                     scope="col"
                     class="text-center"
                 >
-                    <b>Спрей, 12 мл</b><br> 19 PV / 500 руб.
+                    <b>Спрей, 12 мл</b><br>
+                    {{ getPricePv('12') }}
                 </th>
                 <th
                     scope="col"
                     class="text-center"
                 >
-                    <b>Спрей, 50 мл</b><br> 52 PV / 1400 руб.
+                    <b>Спрей, 50 мл</b><br>
+                    {{ getPricePv('50') }}
                 </th>
             </tr>
             </thead>
@@ -50,12 +56,12 @@
                 /
                 {{ getPriceShortTable }} руб.
             </span>
-            <button
+<!--            <button
                 class="btn btn-lg btn-info"
                 @click="basketAdd"
             >
                 добавить в корзину
-            </button>
+            </button>-->
         </div>
     </div>
 </template>
@@ -71,10 +77,29 @@ export default {
     methods: {
         basketAdd() {
             alert('Что я должна делать? :-)')
+        },
+        getPricePv(vendorCode) {
+            if (this.getAromaCurrentProducts) {
+                const curProd = this.getAromaCurrentProducts.find(i => {
+                    const lastNumbers = i.vendor_code.charAt(3) + i.vendor_code.charAt(4)
+                    return vendorCode === lastNumbers
+                });
+                if (curProd && this.isPartner) {
+                    const price = curProd.price_for_partners ?? curProd.price_retail ?? '0'
+                    const points = curProd.points ?? '0'
+                    return `${points} PV / ${price} руб.`
+                }
+                if (curProd) {
+                    const price = curProd.price_retail ?? '0'
+                    const points = curProd.points ?? '0'
+                    return `${points} PV / ${price} руб.`
+                }
+                return '-'
+            } else return '-'
         }
     },
     computed: {
-        ...mapGetters(['getPriceShortTable', 'getPointsShortTable', 'isPartner'])
+        ...mapGetters(['getPriceShortTable', 'getPointsShortTable', 'isPartner', 'getAromaCurrentProducts'])
     }
 }
 </script>

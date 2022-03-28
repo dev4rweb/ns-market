@@ -31,7 +31,7 @@
                     {{slug.includes('AromaVis') || slug.includes('DetailAroma') ? 'Таблица' : 'Список'}}
                 </button>
             </li>
-            <li
+<!--            <li
                 class="nav-item"
                 v-if="slug.includes('AromaVis')  || slug.includes('DetailAroma')"
             >
@@ -42,7 +42,7 @@
                 >
                     Избранное
                 </button>
-            </li>
+            </li>-->
         </ul>
     </div>
 </template>

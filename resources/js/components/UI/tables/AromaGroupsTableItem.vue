@@ -4,22 +4,22 @@
         class="aroma-table-item">
         <th
             scope="row"
-            :class="getCellStyle"
+            style="background-color: #ff99cc;"
         >
-            {{ product.code }}
+            {{ product.gender }}
         </th>
         <td
             :class="getCellStyle"
         >
-            {{ product.gender }}
+            {{ product.code }}
         </td>
-        <td>
+        <td v-if="isPartner">
             <input
                 v-if="isDisabledTwo"
                 type="number"
                 class="form-control"
                 min="0"
-                name="2мл"
+                name="02"
                 v-model="amountTwo"
                 :class="{disabled: isDisabledTwo}"
                 :disabled="!isDisabledTwo"
@@ -33,7 +33,7 @@
                 type="number"
                 class="form-control"
                 min="0"
-                name="3мл"
+                name="03"
                 v-model="amountThree"
                 :class="{disabled: isDisabledThree}"
                 :disabled="!isDisabledThree"
@@ -47,7 +47,7 @@
                 type="number"
                 class="form-control"
                 min="0"
-                name="7мл"
+                name="07"
                 v-model="amountSeven"
                 :class="{disabled: isDisabledSeven}"
                 :disabled="!isDisabledSeven"
@@ -61,7 +61,7 @@
                 type="number"
                 class="form-control"
                 min="0"
-                name="12мл"
+                name="12"
                 v-model="amountTwelve"
                 :class="{disabled: isDisabledTwelve}"
                 :disabled="!isDisabledTwelve"
@@ -75,7 +75,7 @@
                 type="number"
                 class="form-control"
                 min="0"
-                name="50мл"
+                name="50"
                 v-model="amountFifty"
                 :class="{disabled: isDisabledFifty}"
                 :disabled="!isDisabledFifty"
@@ -182,7 +182,7 @@ export default {
         },
     },
     computed: {
-        ...mapGetters(['getCategoryProducts', 'getLSOrder']),
+        ...mapGetters(['getCategoryProducts', 'getLSOrder', 'isPartner']),
         getCellStyle() {
             if (this.product.code.includes('C-')) return 'orange'
             if (this.product.code.includes('D-')) return 'green'
@@ -193,7 +193,9 @@ export default {
             const curProd = this.getCategoryProducts
                 .find(i => i.name.includes(this.product.code)
                     &&
-                    i.name.includes('2мл'))
+                    // i.name.includes('2мл')
+                    (i.vendor_code.charAt(3)+i.vendor_code.charAt(4)) === '02'
+                )
             // console.log('isDisabledTwo', curProd, !!curProd)
             return !!curProd;
         },
@@ -201,28 +203,36 @@ export default {
             const curProd = this.getCategoryProducts
                 .find(i => i.name.includes(this.product.code)
                     &&
-                    i.name.includes('3мл'))
+                    // i.name.includes('3мл')
+                    (i.vendor_code.charAt(3)+i.vendor_code.charAt(4)) === '03'
+                )
             return !!curProd;
         },
         isDisabledSeven() {
             const curProd = this.getCategoryProducts
                 .find(i => i.name.includes(this.product.code)
                     &&
-                    i.name.includes('7мл'))
+                    // i.name.includes('7мл')
+                    (i.vendor_code.charAt(3)+i.vendor_code.charAt(4)) === '07'
+                )
             return !!curProd;
         },
         isDisabledTwelve() {
             const curProd = this.getCategoryProducts
                 .find(i => i.name.includes(this.product.code)
                     &&
-                    i.name.includes('12мл'))
+                    // i.name.includes('12мл')
+                    (i.vendor_code.charAt(3)+i.vendor_code.charAt(4)) === '12'
+                )
             return !!curProd;
         },
         isDisabledFifty() {
             const curProd = this.getCategoryProducts
                 .find(i => i.name.includes(this.product.code)
                     &&
-                    i.name.includes('50мл'))
+                    // i.name.includes('50мл')
+                    (i.vendor_code.charAt(3)+i.vendor_code.charAt(4)) === '50'
+                )
             return !!curProd;
         },
     },
@@ -239,7 +249,7 @@ export default {
         vertical-align: middle;
     }
 
-    th {
+    td:first-of-type {
         font-size: 20px;
     }
 
@@ -275,6 +285,7 @@ export default {
 }
 
 .disabled {
-    background-color: #cfe2ff;
+    //background-color: #cfe2ff;
+    background-color: white;
 }
 </style>

@@ -1,29 +1,31 @@
 <template>
-    <div class="mb-5">
-        <BackBtn path-to="/catalog/products/AromaVis" />
-
-        <div class="d-flex justify-content-between align-items-center mt-3">
-            <div class="me-5">
-                <h4 class="mb-0">Ваш выбор:</h4>
-                <TextFilterResult />
-            </div>
-
-            <MultiCarouselAromaFilter :curProdGroup="curProdGroup" />
-        </div>
-
+  <div class="d-flex align-items-center mt-3">
+    <BackBtn path-to="/catalog/products/AromaVis"/>
+    <div
+        class="d-flex align-items-baseline w-100"
+    >
+      <h4 style="width: 110px;" class="mb-0 me-2">Ваш выбор:</h4>
+      <TextFilterResult v-if="getAromaGroups.length > getAromaGroupsFilter.length"/>
+      <p class="mb-0" v-else>все ароматы</p>
     </div>
+  </div>
 </template>
 
 <script>
 import MultiCarouselAromaFilter from "../../MultiCarouselAromaFilter";
 import BackBtn from "../../BackBtn";
 import TextFilterResult from "./TextFilterResult";
+import {mapGetters} from 'vuex'
+
 export default {
-    name: "QuickFilter",
-    props: ['curProdGroup'],
-    components: {
-        MultiCarouselAromaFilter, BackBtn, TextFilterResult
-    }
+  name: "QuickFilter",
+  props: ['curProdGroup'],
+  components: {
+    MultiCarouselAromaFilter, BackBtn, TextFilterResult
+  },
+  computed: {
+    ...mapGetters(['getAromaGroups', 'getAromaGroupsFilter'])
+  },
 }
 </script>
 
