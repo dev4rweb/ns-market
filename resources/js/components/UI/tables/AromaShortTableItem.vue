@@ -121,6 +121,23 @@ export default {
             if (e.target.value < 0) {
                 this.setToastError('Некорректное значение');
                 e.target.value = '';
+                switch (e.target.name) {
+                    case '02':
+                        this.amountTwo = 0
+                        break
+                    case '03':
+                        this.amountThree = 0
+                        break
+                    case '07':
+                        this.amountSeven = 0
+                        break
+                    case '12':
+                        this.amountTwelve = 0
+                        break
+                    case '50':
+                        this.amountFifty = 0
+                        break
+                }
             }
             if (e.target.value >= 0) {
                 // console.log('addToBasket target name', e.target.name)
@@ -158,18 +175,20 @@ export default {
                     };
                     console.log('addToBasket orderObj', orderObj)
                     if (e.target.value > 0) this.addToBasketAction(orderObj)
-                    if (e.target.value == 0) this.removeFromBasketAction(orderObj)
+                    if (e.target.value == 0) {
+                        this.removeFromBasketAction(orderObj)
+                    }
                 }
                 this.checkProdGroup()
             }
         },
         checkProdGroup() {
+            this.price = 0
+            this.points = 0
             if (this.getLSOrder) {
                 const groupProds = this.getLSOrder
                     .filter(i => this.getVendorExp(i.prodId) === this.getAromaCurrentGroup.code)
                 if (groupProds.length) {
-                    this.price = 0
-                    this.points = 0
                     groupProds.forEach(groupProd => {
                         console.log('checkAmountTwo lsOrder&product', this.getLSOrder, this.product)
                         console.log('checkAmountTwo groupProd', groupProd)
@@ -202,10 +221,14 @@ export default {
                             this.points += parseInt(groupProd.amount) * groupProd.product.points
                         }
                     });
-                    this.setPriceShortTable(this.price)
-                    this.setPointsShortTable(this.points)
                 }
             }
+            this.setPriceShortTable(this.price)
+            this.setPointsShortTable(this.points)
+            console.log('checkProdGroup this.price', this.price)
+            if(this.price > 0) this.$emit('chang-btn', true)
+            else this.$emit('chang-btn', false)
+            // console.log('checkProdGroup this.points', this.points)
         },
         getVendorExp(prodId) {
             const firstNumber = prodId.charAt(0)
@@ -232,7 +255,7 @@ export default {
                 .find(i => i.name.includes(this.getAromaCurrentGroup.code)
                     &&
                     // i.name.includes('2мл')
-                    (i.vendor_code.charAt(3)+i.vendor_code.charAt(4)) === '02'
+                    (i.vendor_code.charAt(3) + i.vendor_code.charAt(4)) === '02'
                 )
             return !!curProd;
         },
@@ -241,7 +264,7 @@ export default {
                 .find(i => i.name.includes(this.getAromaCurrentGroup.code)
                     &&
                     // i.name.includes('3мл')
-                    (i.vendor_code.charAt(3)+i.vendor_code.charAt(4)) === '03'
+                    (i.vendor_code.charAt(3) + i.vendor_code.charAt(4)) === '03'
                 )
             // console.log('isDisabledTwo', curProd, !!curProd)
             return !!curProd;
@@ -251,7 +274,7 @@ export default {
                 .find(i => i.name.includes(this.getAromaCurrentGroup.code)
                     &&
                     // i.name.includes('7мл')
-                    (i.vendor_code.charAt(3)+i.vendor_code.charAt(4)) === '07'
+                    (i.vendor_code.charAt(3) + i.vendor_code.charAt(4)) === '07'
                 )
             return !!curProd;
         },
@@ -260,7 +283,7 @@ export default {
                 .find(i => i.name.includes(this.getAromaCurrentGroup.code)
                     &&
                     // i.name.includes('12мл')
-                    (i.vendor_code.charAt(3)+i.vendor_code.charAt(4)) === '12'
+                    (i.vendor_code.charAt(3) + i.vendor_code.charAt(4)) === '12'
                 )
             return !!curProd;
         },
@@ -269,7 +292,7 @@ export default {
                 .find(i => i.name.includes(this.getAromaCurrentGroup.code)
                     &&
                     // i.name.includes('50мл'))
-                    (i.vendor_code.charAt(3)+i.vendor_code.charAt(4)) === '50'
+                    (i.vendor_code.charAt(3) + i.vendor_code.charAt(4)) === '50'
                 )
             // console.log('isDisabledTwo', curProd, !!curProd)
             return !!curProd;

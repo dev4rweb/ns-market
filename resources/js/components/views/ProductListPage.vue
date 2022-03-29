@@ -22,7 +22,7 @@
             >Добавить и перейти в каталог
             </a>
             <a
-                href="/catalog"
+                href="/basket"
                 class="btn btn-lg btn-success"
             >Добавить и перейти в корзину
             </a>

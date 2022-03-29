@@ -44,7 +44,7 @@
             </tr>
             </thead>
             <tbody>
-                <AromaShortTableItem />
+                <AromaShortTableItem @chang-btn="changeBtnHandler" />
             </tbody>
         </table>
         <div class="d-flex justify-content-end align-items-center mt-4 mb-3 ">
@@ -56,12 +56,21 @@
                 /
                 {{ getPriceShortTable }} руб.
             </span>
-<!--            <button
+
+            <button
+                v-if="isAdded"
+                class="btn btn-lg btn-success"
+                @click="basketAdd"
+            >
+                Добавлено
+            </button>
+            <button
+                v-else
                 class="btn btn-lg btn-info"
                 @click="basketAdd"
             >
                 добавить в корзину
-            </button>-->
+            </button>
         </div>
     </div>
 </template>
@@ -71,14 +80,23 @@ import AromaShortTableItem from "./AromaShortTableItem";
 import {mapGetters} from 'vuex'
 export default {
     name: "AromaShortTable",
+    data() {
+        return {
+            isAdded: false
+        }
+    },
     components: {
         AromaShortTableItem
     },
     methods: {
+        changeBtnHandler(isAdded) {
+            this.isAdded = isAdded
+        },
         basketAdd() {
-            alert('Что я должна делать? :-)')
+            window.location.href = '/basket'
         },
         getPricePv(vendorCode) {
+            // console.log('getPricePv')
             if (this.getAromaCurrentProducts) {
                 const curProd = this.getAromaCurrentProducts.find(i => {
                     const lastNumbers = i.vendor_code.charAt(3) + i.vendor_code.charAt(4)
@@ -87,12 +105,12 @@ export default {
                 if (curProd && this.isPartner) {
                     const price = curProd.price_for_partners ?? curProd.price_retail ?? '0'
                     const points = curProd.points ?? '0'
-                    return `${points} PV / ${price} руб.`
+                    return `${points} баллов / ${price} руб.`
                 }
                 if (curProd) {
                     const price = curProd.price_retail ?? '0'
                     const points = curProd.points ?? '0'
-                    return `${points} PV / ${price} руб.`
+                    return `${points} баллов / ${price} руб.`
                 }
                 return '-'
             } else return '-'
