@@ -19,12 +19,12 @@
             <a
                 href="/catalog"
                 class="btn btn-lg btn-success me-3"
-            >Добавить и перейти в каталог
+            >Перейти в каталог
             </a>
             <a
                 href="/basket"
                 class="btn btn-lg btn-success"
-            >Добавить и перейти в корзину
+            >Перейти в корзину
             </a>
         </div>
     </div>

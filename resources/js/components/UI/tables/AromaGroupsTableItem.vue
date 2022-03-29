@@ -23,7 +23,7 @@
                 v-model="amountTwo"
                 :class="{disabled: isDisabledTwo}"
                 :disabled="!isDisabledTwo"
-                @blur="addToBasket"
+                @input="addToBasket"
             >
             <div v-else class="empty-cell">-</div>
         </td>
@@ -37,7 +37,7 @@
                 v-model="amountThree"
                 :class="{disabled: isDisabledThree}"
                 :disabled="!isDisabledThree"
-                @blur="addToBasket"
+                @input="addToBasket"
             >
             <div v-else class="empty-cell">-</div>
         </td>
@@ -51,7 +51,7 @@
                 v-model="amountSeven"
                 :class="{disabled: isDisabledSeven}"
                 :disabled="!isDisabledSeven"
-                @blur="addToBasket"
+                @input="addToBasket"
             >
             <div v-else class="empty-cell">-</div>
         </td>
@@ -65,7 +65,7 @@
                 v-model="amountTwelve"
                 :class="{disabled: isDisabledTwelve}"
                 :disabled="!isDisabledTwelve"
-                @blur="addToBasket"
+                @input="addToBasket"
             >
             <div v-else class="empty-cell">-</div>
         </td>
@@ -79,7 +79,7 @@
                 v-model="amountFifty"
                 :class="{disabled: isDisabledFifty}"
                 :disabled="!isDisabledFifty"
-                @blur="addToBasket"
+                @input="addToBasket"
             >
             <div v-else class="empty-cell">-</div>
         </td>
@@ -109,29 +109,53 @@ export default {
             if (e.target.value < 0) {
                 this.setToastError('Некорректное значение');
                 e.target.value = '';
+                switch (e.target.name) {
+                    case '02':
+                        this.amountTwo = 0
+                        break
+                    case '03':
+                        this.amountThree = 0
+                        break
+                    case '07':
+                        this.amountSeven = 0
+                        break
+                    case '12':
+                        this.amountTwelve = 0
+                        break
+                    case '50':
+                        this.amountFifty = 0
+                        break
+                }
             }
             if (e.target.value >= 0) {
-                // console.log('addToBasket target name', e.target.name)
+                console.log('addToBasket target name', e.target.name)
                 const curProduct = this.getCategoryProducts
-                    .find(i => i.name.includes(this.product.code)
-                        &&
-                        i.name.includes(e.target.name))
+                    .find(i => {
+                        if(
+                            i.name.includes(this.product.code)
+                            &&
+                            // i.name.includes(e.target.name)
+                            (i.vendor_code.charAt(3) + i.vendor_code.charAt(4) === e.target.name)
+                        ) return true
+                    })
                 console.log('addToBasket curProduct', curProduct)
+                console.log('addToBasket this.product', this.product)
+                console.log('addToBasket this.getCategoryProducts', this.getCategoryProducts)
                 let curAmount = null
                 switch (e.target.name) {
-                    case '2мл':
+                    case '02':
                         curAmount = this.amountTwo
                         break
-                    case '3мл':
+                    case '03':
                         curAmount = this.amountThree
                         break
-                    case '7мл':
+                    case '07':
                         curAmount = this.amountSeven
                         break
-                    case '12мл':
+                    case '12':
                         curAmount = this.amountTwelve
                         break
-                    case '50мл':
+                    case '50':
                         curAmount = this.amountFifty
                         break
                 }
@@ -147,6 +171,7 @@ export default {
                     if (e.target.value == 0) this.removeFromBasketAction(orderObj)
                 }
             }
+            this.checkProdGroup()
         },
         checkProdGroup() {
             if (this.getLSOrder) {
@@ -165,6 +190,7 @@ export default {
                     });
                 }
             }
+            this.$emit('changeSum')
         },
         getVendorExp(prodId) {
             const firstNumber = prodId.charAt(0)
@@ -238,6 +264,7 @@ export default {
     },
     mounted() {
         this.checkProdGroup()
+        console.log('AromaGroupsItem', this.product)
     }
 }
 </script>

@@ -1,7 +1,7 @@
 export default {
     state: {
         priceShortTable: 0,
-        pointsShortTable: 0
+        pointsShortTable: 0,
     },
     actions: {},
     mutations: {
@@ -10,7 +10,7 @@ export default {
         },
         setPointsShortTable(state, points) {
             state.pointsShortTable = points
-        }
+        },
     },
     getters: {
         getPriceShortTable(state) {
@@ -18,6 +18,6 @@ export default {
         },
         getPointsShortTable(state) {
             return state.pointsShortTable
-        }
+        },
     }
 }
