@@ -49,6 +49,17 @@
                 @changeSum="getPricePointsAroma"
             />
             </tbody>
+            <tfoot>
+            <tr>
+                <td></td>
+                <td> Всего: </td>
+                <td v-if="isPartner">{{ twoMl }}</td>
+                <td>{{ threeMl }}</td>
+                <td>{{ sevenMl }}</td>
+                <td>{{ twelveMl }}</td>
+                <td>{{ fiftyMl }}</td>
+            </tr>
+            </tfoot>
         </table>
         <div
             class="mb-3 price"
@@ -73,6 +84,11 @@ export default {
             codeDesc: true,
             codeDescSort: 0,
             pricePointsAroma: null,
+            twoMl: ' - ',
+            threeMl: ' - ',
+            sevenMl: ' - ',
+            twelveMl: ' - ',
+            fiftyMl: ' - ',
         }
     },
     methods: {
@@ -117,8 +133,9 @@ export default {
                 let points = 0
                 aromas.forEach(i => {
                     const priceItem = this.isPartner ?
-                        i.product.price_retail :
-                        i.product.price_for_partners
+                        i.product.price_for_partners :
+                        i.product.price_retail
+
                     price += parseInt(i.amount) * priceItem
                     points += parseInt(i.amount) * i.product.points
                 });
@@ -152,18 +169,18 @@ export default {
                             break;
                     }
                 });
-                twoBottles = twoBottles ? `2мл - ${twoBottles}шт. <br>` : ''
+                /*twoBottles = twoBottles ? `2мл - ${twoBottles}шт. <br>` : ''
                 threeBottles = threeBottles ? `3мл - ${threeBottles}шт. <br>` : ''
                 sevenBottles = sevenBottles ? `7мл - ${sevenBottles}шт. <br>` : ''
                 twelveBottles = twelveBottles ? `12мл - ${twelveBottles}шт. <br>` : ''
-                fiftyBottles = fiftyBottles ? `50мл - ${fiftyBottles}шт. <br>` : ''
-                this.pricePointsAroma = `Итого: <br>
-                 ${twoBottles}
-                 ${threeBottles}
-                 ${sevenBottles}
-                 ${twelveBottles}
-                 ${fiftyBottles}
-                Баллов - ${points} / Рублей ${price}`
+                fiftyBottles = fiftyBottles ? `50мл - ${fiftyBottles}шт. <br>` : ''*/
+                this.twoMl = twoBottles ?? ' - '
+                this.threeMl = threeBottles ?? ' - '
+                this.sevenMl = sevenBottles ?? ' - '
+                this.twelveMl = twelveBottles ?? ' - '
+                this.fiftyMl = fiftyBottles ?? ' - '
+                this.pricePointsAroma = `Итого:
+                Баллов - ${points} / Рублей - ${price}`
             } else this.pricePointsAroma = null
         }
     },
@@ -191,6 +208,15 @@ export default {
 
     th {
         text-align: center;
+    }
+
+    tfoot {
+        td {
+            text-align: center;
+            vertical-align: middle;
+            font-size: 20px;
+            font-weight: bold;
+        }
     }
 }
 
