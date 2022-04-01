@@ -2,7 +2,8 @@ import {getAllNewsApi} from "../actions/newsApi";
 
 export default {
     state: {
-        allNews: []
+        allNews: null,
+        currentNews: null
     },
     actions: {
         fetchAllNews({commit}) {
@@ -10,6 +11,7 @@ export default {
             getAllNewsApi()
                 .then(res => {
                     console.log('fetchAllNews res',res)
+                    // commit('setAllNews', res.data.models)
                     commit('setAllNews', res.data.news)
                 }).finally(()=>commit('setLoading',false));
         }
@@ -17,11 +19,17 @@ export default {
     mutations: {
         setAllNews(state, news) {
             state.allNews = news
+        },
+        setCurrentNews(state, oneNews) {
+            state.currentNews = oneNews
         }
     },
     getters: {
         getAllNews(state) {
             return state.allNews
+        },
+        getCurrentNews(state) {
+            return state.currentNews
         }
     }
 }

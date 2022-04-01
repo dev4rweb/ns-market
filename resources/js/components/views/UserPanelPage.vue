@@ -1,45 +1,30 @@
 <template>
-    <div>
-        <div class="row">
-            <div
-                class="card news-card"
-                v-if="getAllNews"
-                v-for="i in getAllNews"
-                :key="i.id"
-            >
-                <img
-                    class="img-preview"
-                    :src="newsOne"
-                    alt="card">
-                <div class="card-body news-content">
-                    <h3>{{i.title}}</h3>
-                    <p>{{i.description}}</p>
-                    <div class="btn-wrapper">
-                        <button class="btn btn-outline-info">Читать далее</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div v-if="getAllNews">
+        <NewsDetail v-if="getCurrentNews" />
+<!--        <NewsItem
+            :news="getAllNews.data"
+            v-else
+        />-->
+        <NewsItem
+            :news="getAllNews"
+            v-else
+        />
     </div>
 </template>
 
 <script>
-import newsOne from '../../../assets/img/news-one.png'
-import newsTwo from '../../../assets/img/news-two.png'
 import {mapActions, mapGetters} from 'vuex'
+import NewsItem from "../UI/news/NewsItem";
+import NewsDetail from "../UI/news/NewsDetail";
 
 export default {
     name: "UserPanelPage",
-    data() {
-        return {
-            newsOne, newsTwo
-        }
-    },
+    components: { NewsItem, NewsDetail},
     computed: {
-        ...mapGetters(['getAllNews'])
+        ...mapGetters(['getCurrentNews', 'getAllNews']),
     },
     methods: {
-        ...mapActions(['fetchAllNews'])
+        ...mapActions(['fetchAllNews']),
     },
     mounted() {
         this.fetchAllNews()
@@ -48,5 +33,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

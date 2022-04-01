@@ -150,6 +150,8 @@ Vue.component('aroma-short-table-item', require('./components/UI/tables/AromaSho
 Vue.component('search-aroma-sidebar', require('./components/UI/aroma-vis/filters/SearchAromaSidebar').default);
 Vue.component('multi-carousel', require('./components/UI/MultiCarousel').default);
 Vue.component('multi-carousel-aroma-filter', require('./components/UI/MultiCarouselAromaFilter').default);
+Vue.component('news-item', require('./components/UI/news/NewsItem').default);
+Vue.component('news-detail', require('./components/UI/news/NewsDetail').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
