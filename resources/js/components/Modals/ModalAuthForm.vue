@@ -43,6 +43,7 @@
                             <WelcomeRegisteredModal
                                 v-if="getIsWelcomeRegisteredModal"
                             />
+                            <FoundOldBasket v-if="getIsShowFoundOldBasket" />
                         </div>
                     </div>
                     <p style="text-align: center;">
@@ -75,6 +76,7 @@ import appStore from '../../../assets/img/ic-app-store.svg'
 import googlePlay from '../../../assets/img/ic-google-play.svg'
 import MentorsListModal from "./MentorsListModal";
 import WelcomeRegisteredModal from "./WelcomeRegisteredModal";
+import FoundOldBasket from "./FoundOldBasket";
 
 export default {
     name: "ModalAuthForm",
@@ -90,16 +92,20 @@ export default {
             'isLoading', 'loginWithPhoneVisible', 'registerLoginFormVisible',
             'welcomePasswordFormVisible', 'notUniquePhoneFormVisible',
             'registerFormVisible', 'loginByIdFormVisible', 'confirmPhoneFromVisible',
-            'getIsShowMentorForm', 'getIsShowMentorListModal', 'getIsWelcomeRegisteredModal'
+            'getIsShowMentorForm', 'getIsShowMentorListModal', 'getIsWelcomeRegisteredModal',
+            'getIsShowFoundOldBasket'
         ])
     },
     methods: {
         ...mapMutations([
             'setShowLoginWithPhone', 'setShowWelcomePasswordForm', "setShowRegisterLoginForm",
             'setIsShowNotUniquePhoneForm', 'setIsShowRegisterForm', 'setIsShowLoginByIdForm',
-            'setIsConfirmPhoneFrom', 'showMentorListModal', 'setIsWelcomeRegisteredModal'
+            'setIsConfirmPhoneFrom', 'showMentorListModal', 'setIsWelcomeRegisteredModal',
+            'setIsShowFoundOldBasket'
         ]),
         modalListener() {
+            if (this.getIsShowFoundOldBasket)
+                window.location.reload()
             console.log('Auth Modal closed')
             this.setShowLoginWithPhone(true)
             this.setShowWelcomePasswordForm(false)
@@ -110,6 +116,7 @@ export default {
             this.setIsConfirmPhoneFrom(false)
             this.showMentorListModal(false)
             this.setIsWelcomeRegisteredModal(false)
+            this.setIsShowFoundOldBasket(false)
         },
     },
     components: {
@@ -123,7 +130,8 @@ export default {
         WelcomePasswordForm,
         ConfirmPhoneFrom,
         NotUniquePhoneForm,
-        WelcomeRegisteredModal
+        WelcomeRegisteredModal,
+        FoundOldBasket
     },
     mounted() {
         setTimeout(() => {

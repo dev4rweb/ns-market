@@ -19,6 +19,7 @@ import transportCompanies from "./modules/transportCompanies";
 import orderAddress from "./modules/orderAddress";
 import aromaFilters from "./modules/aromaFilters";
 import aromaDetail from "./modules/aromaDetail";
+import news from "./modules/news";
 
 Vue.use(Vuex)
 
@@ -26,6 +27,6 @@ export default new Vuex.Store({
     modules: {
         users, modals, errors, physicalPerson, phoneApi, mentor, addresses, daData,
         feedback, catalogGroups, lStorage, basket, orders, inviter, eDost,
-        transportCompanies, orderAddress, aromaFilters, aromaDetail
+        transportCompanies, orderAddress, aromaFilters, aromaDetail, news
     }
 })

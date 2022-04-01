@@ -74,10 +74,15 @@ export default {
                     .then(res => {
                         console.log('localLogin', res)
                         if (res.status === 204) {
-                            if (getters['getFromBasketPage']) {
-                                window.location.href = getters['getFromBasketPage'];
+                            const lsOrder = getters['getLSOrder']
+                            if (lsOrder && lsOrder.length) {
+                                dispatch('checkOldBasketOnServer');
                             } else {
-                                window.location.href = '/user-panel';
+                                if (getters['getFromBasketPage']) {
+                                    window.location.href = getters['getFromBasketPage'];
+                                } else {
+                                    window.location.href = '/user-panel';
+                                }
                             }
                         }
 

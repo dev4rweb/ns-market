@@ -22,6 +22,7 @@ export default {
                         if (!res.data.model.passport_photos) res.data.model.passport_photos = []
                         if (!res.data.model.photos) res.data.model.photos = []
                         commit('setPhysicalPerson', res.data.model)
+
                         dispatch('createBasketOrderOnServer');
                         if (window.location.href.includes('user-address-panel')) {
                             dispatch('fetchAllAddresses');
@@ -36,6 +37,7 @@ export default {
                         if (window.location.href.includes('/order-delivery')) {
                             dispatch('fetchAllAddresses')
                         }
+
                         dispatch('getCustomerOrdersByUserId')
                     }
                 }).catch(err => {

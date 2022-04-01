@@ -4,12 +4,16 @@ export default {
         modalFeedbackConfirmRef: null,
         modalSuccessMessageText: '',
         isShowMentorListModal: false,
-        isWelcomeRegisteredModal: false
+        isWelcomeRegisteredModal: false,
+        isShowFoundOldBasket: false,
     },
     actions: {
 
     },
     mutations: {
+        setIsShowFoundOldBasket(state, isShow) {
+            state.isShowFoundOldBasket = isShow
+        },
         setShowMentorPhoneForm(state, isShow) {
             state.isShowMentorPhoneForm = isShow
         },
@@ -27,6 +31,9 @@ export default {
         }
     },
     getters: {
+        getIsShowFoundOldBasket(state) {
+            return state.isShowFoundOldBasket
+        },
         getIsShowMentorForm(state) {
             return state.isShowMentorPhoneForm
         },

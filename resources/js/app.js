@@ -41,6 +41,7 @@ Vue.component('feedback-confirm', require('./components/Modals/FeedbackConfirm')
 Vue.component('modal-success-message', require('./components/Modals/ModalSuccessMessage').default);
 Vue.component('user-invite-modal', require('./components/Modals/UserInviteModal').default);
 Vue.component('mentor-list-modal', require('./components/Modals/MentorsListModal').default);
+Vue.component('found-old-basket', require('./components/Modals/FoundOldBasket').default);
 Vue.component('welcome-registered-modal', require('./components/Modals/WelcomeRegisteredModal').default);
 Vue.component('loader', require('./components/UI/Loader').default);
 Vue.component('users', require('./components/Users/Users').default);
@@ -89,6 +90,7 @@ Vue.component('product-list-page-fav', require('./components/views/ProductListPa
 Vue.component('user-data-panel', require('./components/views/UserDataPanel').default);
 Vue.component('user-data-read-panel', require('./components/views/UserDataReadPanel').default);
 Vue.component('user-status-panel', require('./components/views/UserStatusPanel').default);
+Vue.component('user-panel-page', require('./components/views/UserPanelPage').default);
 Vue.component('user-status-modal', require('./components/Modals/UserStatusModal').default);
 Vue.component('user-passport-panel', require('./components/views/UserPassportPanel').default);
 Vue.component('user-passport-modal', require('./components/Modals/UserPassportModal').default);

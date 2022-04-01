@@ -10,7 +10,8 @@
                         <h3>Здравствуйте, {{Auth::user()->first_name}}!</h3>
                     </div>
                 </div>
-                <div class="row">
+                <user-panel-page></user-panel-page>
+<!--                <div class="row">
                     <div class="card news-card">
                         <img class="img-preview" src="{{asset('images/news-one.png')}}" alt="card">
                         <div class="card-body news-content">
@@ -33,7 +34,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>-->
             </div>
         </div>
     </div>
