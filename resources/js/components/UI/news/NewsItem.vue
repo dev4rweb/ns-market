@@ -13,14 +13,14 @@
                 class="img-preview"
                 :src="newsOne"
                 alt="card">-->
-<!--            <img
-                class="img-preview"
-                :src="getImagePath(i.prev_img_path)"
-                alt="card">-->
             <img
                 class="img-preview"
-                :src="getImagePath(i.prevImgPath)"
+                :src="getImagePath(i.prev_img_path)"
                 alt="card">
+<!--            <img
+                class="img-preview"
+                :src="getImagePath(i.prevImgPath)"
+                alt="card">-->
             <div class="card-body news-content">
                 <h6>{{ dateStartNews(i.date_start) }}</h6>
                 <h3>{{ i.title }}</h3>
@@ -51,7 +51,7 @@ export default {
         ...mapMutations(['setCurrentNews']),
         getImagePath(path) {
             if (path) {
-                let HOST = WORK_HOST.replace('/api', '')
+                let HOST = WORK_HOST.replace('/api/', '')
                 return HOST + path
             }
         },

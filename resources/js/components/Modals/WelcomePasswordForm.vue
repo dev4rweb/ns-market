@@ -68,6 +68,7 @@
 
 <script>
 import {mapActions, mapGetters, mapMutations} from 'vuex'
+import {generateTempPassword} from "../../store/utils/generateTempPassword";
 
 export default {
     name: "WelcomePasswordForm",
@@ -105,7 +106,10 @@ export default {
         forgotPassword() {
             console.log('forgot Password')
             this.setIsForgot(true)
-            this.updatePassword('password')
+            const rndPassword = generateTempPassword(8)
+            localStorage.setItem('password', rndPassword)
+            console.log('password', rndPassword)
+            this.updatePassword(rndPassword)
         }
     },
     computed: {

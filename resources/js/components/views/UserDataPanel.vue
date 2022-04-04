@@ -211,7 +211,9 @@
             </form>
 
 
-            <ChangePasswordForm/>
+            <ChangePasswordForm
+                @hideEditForm="hideEditForm"
+            />
         </div>
 
         <div class="position-relative" v-else>
@@ -315,7 +317,9 @@ export default {
             window.location.reload()
             // this.isEditFields = false
         },
-
+        hideEditForm() {
+            this.isEditFields = false
+        }
     },
     computed: {
         ...mapGetters(['getCurrentUser', 'getPhysicalPerson']),

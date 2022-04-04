@@ -8,8 +8,8 @@
             <!--            <img :src="newsTwo" alt="news">-->
         </div>
         <h1 class="mb-3 text-center">{{ getCurrentNews.title }}</h1>
-<!--        <div v-html="getCurrentNews.detail_text"></div>-->
-        <div v-html="getCurrentNews.detailText"></div>
+        <div v-html="getCurrentNews.detail_text"></div>
+<!--        <div v-html="getCurrentNews.detailText"></div>-->
         <div class="d-flex justify-content-end mt-3">
             <button
                 class="btn btn-lg btn-info"
@@ -37,7 +37,7 @@ export default {
         ...mapGetters(['getCurrentNews']),
         getImagePath() {
             if (this.getCurrentNews.detail_img_path) {
-                let HOST = WORK_HOST.replace('/api', '')
+                let HOST = WORK_HOST.replace('/api/', '')
                 return `${HOST}${this.getCurrentNews.detail_img_path}`
             }
             if (this.getCurrentNews.detailImgPath) {

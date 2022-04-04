@@ -11,8 +11,8 @@ export default {
             getAllNewsApi()
                 .then(res => {
                     console.log('fetchAllNews res',res)
-                    // commit('setAllNews', res.data.models)
-                    commit('setAllNews', res.data.news)
+                    commit('setAllNews', res.data.models)
+                    // commit('setAllNews', res.data.news)
                 }).finally(()=>commit('setLoading',false));
         }
     },

@@ -10,7 +10,11 @@
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="modal-wrapper">
-                        <img :src="logo" alt="logo">
+                        <img
+                            :src="logo"
+                            alt="logo"
+                            v-if="!getIsShowFoundOldBasket"
+                        >
                         <div>
                             <!--                            <Loader v-if="isLoading"/>-->
                             <LoginWithPhone
@@ -46,11 +50,17 @@
                             <FoundOldBasket v-if="getIsShowFoundOldBasket" />
                         </div>
                     </div>
-                    <p style="text-align: center;">
+                    <p
+                        style="text-align: center;"
+                        v-if="!getIsShowFoundOldBasket"
+                    >
                         Установите приложение New Star Market для быстрого доступа к каталогу на вашем мобильном
                         устройстве.
                     </p>
-                    <div class="market-wrapper">
+                    <div
+                        class="market-wrapper"
+                        v-if="!getIsShowFoundOldBasket"
+                    >
                         <a href="/"><img :src="appStore" alt="app-store"></a>
                         <a href="/"><img :src="googlePlay" alt="google-play"></a>
                     </div>

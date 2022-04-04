@@ -149,6 +149,7 @@ export default {
                 new_password: this.newPassword,
             }
             this.changePassword(passwords)
+            this.$emit('hideEditForm')
         }
     }
 }

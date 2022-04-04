@@ -1,14 +1,14 @@
 <template>
     <div v-if="getAllNews">
         <NewsDetail v-if="getCurrentNews" />
-<!--        <NewsItem
+        <NewsItem
             :news="getAllNews.data"
             v-else
-        />-->
-        <NewsItem
+        />
+<!--        <NewsItem
             :news="getAllNews"
             v-else
-        />
+        />-->
     </div>
 </template>
 
