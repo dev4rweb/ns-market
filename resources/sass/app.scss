@@ -54,10 +54,15 @@
     background-color: $nsBlue;
     color: white;
 
-    &:hover, &:active, &:focus, &.active {
+    /*&:hover, &:active, &:focus, &.active {
         border-color: $nsBlue;
         background-color: white;
         color: $nsBlue;
+    }*/
+    &:hover, &:active, &:focus {
+        border-color: $nsBlue;
+        background-color: $nsBlue;
+        color: white;
     }
 }
 

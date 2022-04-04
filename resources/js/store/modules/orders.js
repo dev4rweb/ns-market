@@ -51,7 +51,7 @@ export default {
                             const basketOrder = res.data.models.find(i => i.status === 0);
                             if (basketOrder) {
                                 commit('setBasketOrder', basketOrder);
-                                console.log('BASKET ORDER', basketOrder)
+                                // console.log('BASKET ORDER', basketOrder)
                                 if (!getters['getLSOrder'].length) {
                                     console.log('creating new basket order')
                                     basketOrder.products.forEach(i => {

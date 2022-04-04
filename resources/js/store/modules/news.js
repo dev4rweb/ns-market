@@ -3,20 +3,25 @@ import {getAllNewsApi} from "../actions/newsApi";
 export default {
     state: {
         allNews: null,
-        currentNews: null
+        currentNews: null,
+        newsCurrentPage: 1
     },
     actions: {
-        fetchAllNews({commit}) {
+        fetchAllNews({commit, getters}, page = 1) {
             commit('setLoading', true)
-            getAllNewsApi()
+            getAllNewsApi(page)
                 .then(res => {
-                    console.log('fetchAllNews res',res)
+                    console.log('fetchAllNews res', res)
                     commit('setAllNews', res.data.models)
-                    // commit('setAllNews', res.data.news)
-                }).finally(()=>commit('setLoading',false));
+                    if (res.data.models.per_page > 1)
+                        commit('setNewsCurrentPage', res.data.models.current_page)
+                }).finally(() => commit('setLoading', false));
         }
     },
     mutations: {
+        setNewsCurrentPage(state, currentPage) {
+            state.newsCurrentPage = currentPage
+        },
         setAllNews(state, news) {
             state.allNews = news
         },
@@ -25,6 +30,9 @@ export default {
         }
     },
     getters: {
+        getNewsCurrentPage(state) {
+            return state.newsCurrentPage
+        },
         getAllNews(state) {
             return state.allNews
         },

@@ -10558,11 +10558,16 @@ footer h3, footer .h3 {
 .btn-info {
   border-color: white;
   background-color: #038ED7;
-  color: white; }
-  .btn-info:hover, .btn-info:active, .btn-info:focus, .btn-info.active {
+  color: white;
+  /*&:hover, &:active, &:focus, &.active {
+      border-color: $nsBlue;
+      background-color: white;
+      color: $nsBlue;
+  }*/ }
+  .btn-info:hover, .btn-info:active, .btn-info:focus {
     border-color: #038ED7;
-    background-color: white;
-    color: #038ED7; }
+    background-color: #038ED7;
+    color: white; }
 
 .btn-info:not(:disabled):not(.disabled).active {
   background-color: #fff;
