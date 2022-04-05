@@ -39,6 +39,7 @@ export default {
                         }
 
                         dispatch('getCustomerOrdersByUserId')
+                        // dispatch('createBasketOrderOnServer');
                     }
                 }).catch(err => {
                     console.log('fetchPhysicalPerson err', err)

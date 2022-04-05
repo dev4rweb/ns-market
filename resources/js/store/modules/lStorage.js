@@ -2,6 +2,7 @@ export default {
     state: {
         isLocalStorageAvailable: false,
         lsOrder: [],
+        lsOrderId: null
     },
     actions: {
         storageAvailable({commit}) {
@@ -26,10 +27,25 @@ export default {
                 commit('setToastError', "Local storage don't support")
             }
         },
+        createLSOrderIdAction({commit, getters, dispatch}, orderId) {
+            dispatch('storageAvailable')
+            if (getters['isLocalStorageAvailable']) {
+                localStorage.setItem('orderId', orderId);
+                commit('setLSOrderId', orderId)
+            } else {
+                commit('setToastError', "Local storage don't support")
+            }
+        },
         hasLSOrderAction({commit}) {
             const lsOrder = localStorage.getItem('order')
             if (lsOrder) {
                 commit('setLSOrder', JSON.parse(lsOrder))
+            }
+        },
+        hasLSOrderIdAction({commit}) {
+            const lsOrderId = localStorage.getItem('orderId')
+            if (lsOrderId) {
+                commit('setLSOrderId', parseInt(lsOrderId))
             }
         },
         addToBasketAction({getters, commit, dispatch}, orderObj) {
@@ -45,6 +61,8 @@ export default {
         removeLSOrderAction({commit}) {
             localStorage.removeItem('order')
             commit('setLSOrder', [])
+            localStorage.removeItem('orderId')
+            commit('setLSOrderId', null)
         },
     },
     mutations: {
@@ -53,6 +71,9 @@ export default {
         },
         setLSOrder(state, order) {
             state.lsOrder = order
+        },
+        setLSOrderId(state, orderId) {
+            state.lsOrderId = orderId
         },
         setToBasket(state, orderObj) {
             const duplicate = state.lsOrder.find(i => i.prodId === orderObj.prodId)
@@ -74,6 +95,9 @@ export default {
         },
         getLSOrder(state) {
             return state.lsOrder
+        },
+        getLSOrderId(state) {
+            return state.lsOrderId
         },
         getSumOrder(state, getters) {
             // console.log('getSumOrder', getters.isPartner)

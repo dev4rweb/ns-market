@@ -51,6 +51,7 @@ export default {
                             const basketOrder = res.data.models.find(i => i.status === 0);
                             if (basketOrder) {
                                 commit('setBasketOrder', basketOrder);
+                                dispatch('createLSOrderIdAction', basketOrder.id)
                                 // console.log('BASKET ORDER', basketOrder)
                                 if (!getters['getLSOrder'].length) {
                                     console.log('creating new basket order')
@@ -80,20 +81,37 @@ export default {
         },
         createBasketOrderOnServer({getters, commit, dispatch}) {
             const lsOrders = getters['getLSOrder']
+            const lsOrderId = getters['getLSOrderId']
             const curUser = getters['getPhysicalPerson']
-            console.log('createBasketOrderOnServer ', curUser)
-            console.log('createBasketOrderOnServer ', lsOrders)
+            // console.log('createBasketOrderOnServer ', curUser)
+            console.log('createBasketOrderOnServer lsOrders', lsOrders)
+            console.log('createBasketOrderOnServer lsOrderId', lsOrderId)
             if (lsOrders.length > 0 && curUser) {
                 commit('setLoading', true)
-                const customerOrder = {
-                    order_id: Date.now(),
-                    customer_id: curUser.user_id,
-                    status: 0,
-                    order_price: getters['getSumOrder'],
-                    amount_score: getters['getPointsOrder'],
-                    amount_weight: getters['getWeightOrder'],
-                    products: []
+                let customerOrder
+                if (lsOrderId) {
+                    customerOrder = {
+                        id: lsOrderId,
+                        order_id: Date.now(),
+                        customer_id: curUser.user_id,
+                        status: 0,
+                        order_price: parseInt(getters['getSumOrder']),
+                        amount_score: parseInt(getters['getPointsOrder']),
+                        amount_weight: parseInt(getters['getWeightOrder']),
+                        products: []
+                    };
+                } else {
+                    customerOrder = {
+                        order_id: Date.now(),
+                        customer_id: curUser.user_id,
+                        status: 0,
+                        order_price: parseInt(getters['getSumOrder']),
+                        amount_score: parseInt(getters['getPointsOrder']),
+                        amount_weight: parseInt(getters['getWeightOrder']),
+                        products: []
+                    };
                 }
+
                 lsOrders.forEach(i => {
                     const orderProduct = {
                         product_id: i.product.id,
@@ -102,12 +120,14 @@ export default {
                     customerOrder.products.push(orderProduct)
                 });
 
-                // console.log('createBasketOrderOnServer', customerOrder)
+                console.log('createBasketOrderOnServer customerOrder', customerOrder)
 
                 axios.post(`${WORK_HOST}customer-orders`, customerOrder)
                     .then(res => {
                         console.log('createBasketOrderOnServer res', res)
                         if (res.data.success) {
+                            dispatch('createLSOrderIdAction', res.data.model.id)
+                            // localStorage.setItem('orderId', res.data.model.id)
                             dispatch('updateOrderAddressOrderId', {
                                 user_id: res.data.model.customer_id,
                                 order_id: res.data.model.id
@@ -125,6 +145,7 @@ export default {
 
         createDraftOrderOnServer({getters, commit, dispatch}, order = null) {
             const lsOrders = getters['getLSOrder']
+            const lsOrderId = getters['getLSOrderId']
             const curUser = order ? getters['getCurrentUser'] : getters['getPhysicalPerson']
             console.log('createDraftOrderOnServer ', curUser)
             if (lsOrders.length > 0 && curUser) {
@@ -132,6 +153,7 @@ export default {
                 if (!order) {
                     commit('setLoading', true)
                     customerOrder = {
+                        id: lsOrderId,
                         order_id: Date.now(),
                         customer_id: curUser.user_id,
                         status: 1,

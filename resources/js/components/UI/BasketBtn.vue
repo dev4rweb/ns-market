@@ -38,12 +38,13 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['hasLSOrderAction'])
+        ...mapActions(['hasLSOrderAction', 'hasLSOrderIdAction'])
     },
     computed: {
         ...mapGetters(['getLSOrder'])
     },
     mounted() {
+        this.hasLSOrderIdAction()
         this.hasLSOrderAction()
     }
 }
