@@ -1,5 +1,5 @@
 <template>
-    <table class="table table-lg table-responsive-lg table-light table-striped table-hover shadow-lg">
+    <table class="table table-lg table-responsive-lg table-light table-striped shadow-lg">
         <thead  class="table-danger">
         <tr>
             <th scope="col">#</th>
@@ -9,6 +9,8 @@
             <th scope="col">PV</th>
             <th scope="col">Сумма</th>
             <th scope="col">Статус</th>
+            <th scope="col">edit</th>
+            <th scope="col">del</th>
         </tr>
         </thead>
         <tbody>

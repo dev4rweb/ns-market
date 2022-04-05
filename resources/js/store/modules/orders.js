@@ -1,4 +1,5 @@
 import {WORK_HOST} from "../routeConsts";
+import {removeCustomerOrderApi} from "../actions/ordersApi";
 
 export default {
     state: {
@@ -140,6 +141,22 @@ export default {
                     .finally(() => {
                         commit('setLoading', false)
                     });
+            }
+        },
+
+        removeMyOrderAction({commit, getters}, id) {
+            if (id) {
+                commit('setLoading', true)
+                removeCustomerOrderApi(id)
+                    .then(res => {
+                        console.log('removeMyOrderAction',res)
+                        if (res.data.success) {
+                            const orders = getters['getOrders'].filter(i => i.id !== id)
+                            commit('setToastError', 'Заказ удален')
+                            commit('setOrders', orders)
+                        }
+                    })
+                    .finally(()=> commit('setLoading', false));
             }
         },
 
