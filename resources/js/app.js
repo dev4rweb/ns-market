@@ -152,6 +152,8 @@ Vue.component('multi-carousel', require('./components/UI/MultiCarousel').default
 Vue.component('multi-carousel-aroma-filter', require('./components/UI/MultiCarouselAromaFilter').default);
 Vue.component('news-item', require('./components/UI/news/NewsItem').default);
 Vue.component('news-detail', require('./components/UI/news/NewsDetail').default);
+Vue.component('remove-order-modal', require('./components/Modals/RemoveOrderModal').default);
+Vue.component('edit-order-modal', require('./components/Modals/EditOrderModal').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

@@ -6,11 +6,19 @@ export default {
         isShowMentorListModal: false,
         isWelcomeRegisteredModal: false,
         isShowFoundOldBasket: false,
+        removeOrderModal: null,
+        editOrderModal: null
     },
     actions: {
 
     },
     mutations: {
+        setRemoveOrderModal(state, order) {
+            state.removeOrderModal = order
+        },
+        setEditOrderModal(state, order) {
+            state.editOrderModal = order
+        },
         setIsShowFoundOldBasket(state, isShow) {
             state.isShowFoundOldBasket = isShow
         },
@@ -31,6 +39,12 @@ export default {
         }
     },
     getters: {
+        getEditOrderModal(state) {
+            return state.editOrderModal
+        },
+        getRemoveOrderModal(state) {
+            return state.removeOrderModal
+        },
         getIsShowFoundOldBasket(state) {
             return state.isShowFoundOldBasket
         },

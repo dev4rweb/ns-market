@@ -11,7 +11,7 @@
         <td>
             <div class="d-flex justify-content-center align-items-center">
                 <i
-                    v-if="order.status < 2"
+                    v-if="order.status === 1"
                     class="bi bi-pencil edit-my-order"
                     @click="editOrder"
                 >
@@ -34,29 +34,38 @@
 
 <script>
 import {orderStatuses} from "../../../store/utils/orderStatuses";
-import {mapActions} from 'vuex'
+import {mapMutations, mapGetters, mapActions} from 'vuex'
 
 export default {
     name: "MyOrdersTableItem",
     props: ['order', 'index'],
     methods: {
-        ...mapActions(['removeMyOrderAction']),
+        ...mapMutations(['setRemoveOrderModal', 'setEditOrderModal']),
+        ...mapActions(['replaceBasketDraftOrderAction']),
         editOrder() {
-            console.log('editOrder', this.order)
+            // console.log('editOrder', this.order)
+            if (this.getBasketOrder) {
+                this.setEditOrderModal(this.order)
+            } else {
+                // console.log('basket empty')
+                this.replaceBasketDraftOrderAction(this.order)
+                this.setEditOrderModal(null)
+            }
         },
         removeOrder() {
             console.log('removeOrder', this.order)
-            this.removeMyOrderAction(this.order.id)
+            this.setRemoveOrderModal(this.order)
         }
     },
     computed: {
+        ...mapGetters(['getBasketOrder']),
         getDataOrder() {
             if (this.order.created_at) {
                 const date = new Date(this.order.created_at)
                 const day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()
                 const month = date.getMonth() < 9 ? `0${date.getMonth() + 1}` : date.getMonth() + 1;
                 const hours = date.getHours()
-                const minutes = date.getMinutes()
+                const minutes = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes()
                 return `${day}.${month}.${date.getFullYear()} ${hours}:${minutes}`;
             }
             return ''

@@ -1,5 +1,5 @@
 import {WORK_HOST} from "../routeConsts";
-import {removeCustomerOrderApi} from "../actions/ordersApi";
+import {removeCustomerOrderApi, updateOrCreateBasketOrderApi} from "../actions/ordersApi";
 
 export default {
     state: {
@@ -85,6 +85,47 @@ export default {
                 });
             }
         },
+        replaceBasketDraftOrderAction({commit, getters, dispatch}, draftOrder) {
+            const basketOrder = getters['getOrders'].find(i => i.status === 0)
+            console.log('changingPlaceBasketDraftOrderAction draftOrder', draftOrder)
+            console.log('changingPlaceBasketDraftOrderAction basketOrder', basketOrder)
+            if (basketOrder && draftOrder) {
+                console.log('need replace')
+                commit('setLoading', true)
+                basketOrder.status = 1
+                updateOrCreateBasketOrderApi(basketOrder)
+                    .then(res => {
+                        if (res.data.success) {
+                            dispatch('removeLSOrderAction');
+                            commit('setBasketOrder', null)
+                            draftOrder.status = 0
+                            return updateOrCreateBasketOrderApi(draftOrder)
+                        } else
+                            console.log('updateOrCreateBasketOrderApi BASKET res', res)
+                    }).then(res => {
+                    if (res.data.success) window.location.reload()
+                    else console.log('updateOrCreateBasketOrderApi DRAFT res', res)
+                }).catch(err => console.log('updateOrCreateBasketOrderApi err', err))
+                    .finally(() => commit('setLoading', false));
+            }
+            if (!basketOrder && draftOrder) {
+                console.log('need update draftOrderStatus')
+                commit('setLoading', true)
+                draftOrder.status = 0
+                updateOrCreateBasketOrderApi(draftOrder)
+                    .then(res => {
+                        if (res.data.success) {
+                            dispatch('removeLSOrderAction');
+                            commit('setBasketOrder', null)
+                            window.location.reload();
+                        } else {
+                            console.log('updateOrCreateBasketOrderApi res', res)
+                            commit('setToastError', 'Something wrong')
+                        }
+                    }).catch(err => console.log('updateOrCreateBasketOrderApi err', err))
+                    .finally(() => commit('setLoading', false));
+            }
+        },
         createBasketOrderOnServer({getters, commit, dispatch}) {
             const lsOrders = getters['getLSOrder']
             const lsOrderId = getters['getLSOrderId']
@@ -148,23 +189,26 @@ export default {
                     });
             }
         },
-
-        removeMyOrderAction({commit, getters}, id) {
+        removeMyOrderAction({commit, getters, dispatch}, id) {
             if (id) {
                 commit('setLoading', true)
                 removeCustomerOrderApi(id)
                     .then(res => {
-                        console.log('removeMyOrderAction',res)
+                        console.log('removeMyOrderAction', res)
                         if (res.data.success) {
                             const orders = getters['getOrders'].filter(i => i.id !== id)
                             commit('setToastError', 'Заказ удален')
                             commit('setOrders', orders)
+                            const basketOrder = getters['getBasketOrder']
+                            if (basketOrder && basketOrder.id === id) {
+                                commit('setBasketOrder', null)
+                                dispatch('removeLSOrderAction')
+                            }
                         }
                     })
-                    .finally(()=> commit('setLoading', false));
+                    .finally(() => commit('setLoading', false));
             }
         },
-
         createDraftOrderOnServer({getters, commit, dispatch}, order = null) {
             const lsOrders = getters['getLSOrder']
             const lsOrderId = getters['getLSOrderId']
@@ -214,7 +258,6 @@ export default {
                     });
             }
         },
-
         createOrderAddress({getters, dispatch},) {
             const currentOrder = getters['getBasketOrder']
             const recipientInfoData = getters['getRecipientInfoData']
