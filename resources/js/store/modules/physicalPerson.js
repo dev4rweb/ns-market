@@ -23,7 +23,9 @@ export default {
                         if (!res.data.model.photos) res.data.model.photos = []
                         commit('setPhysicalPerson', res.data.model)
 
-                        dispatch('createBasketOrderOnServer');
+                        if (getters['getLSOrder'].length)
+                            dispatch('createBasketOrderOnServer');
+
                         if (window.location.href.includes('user-address-panel')) {
                             dispatch('fetchAllAddresses');
                         }

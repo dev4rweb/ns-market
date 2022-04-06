@@ -48,7 +48,12 @@ export default {
                     console.log('getCustomerOrdersByUserId res', res)
                     if (res.data.success) {
                         if (res.data.models) {
-                            commit('setOrders', res.data.models)
+                            commit('setOrders',
+                                res.data.models.sort((a, b) =>
+                                    (a.status > b.status) ? 1 :
+                                        (b.status > a.status) ? -1 : 0
+                                )
+                            );
                             const basketOrder = res.data.models.find(i => i.status === 0);
                             if (basketOrder) {
                                 commit('setBasketOrder', basketOrder);

@@ -9,8 +9,8 @@
             <th scope="col">PV</th>
             <th scope="col">Сумма</th>
             <th scope="col">Статус</th>
-            <th scope="col">edit</th>
-            <th scope="col">del</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
         </tr>
         </thead>
         <tbody>
