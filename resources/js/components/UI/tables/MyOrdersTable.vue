@@ -1,6 +1,6 @@
 <template>
     <table class="table table-lg table-responsive-lg table-light table-striped shadow-lg">
-        <thead  class="table-danger">
+        <thead class="table-success">
         <tr>
             <th scope="col">#</th>
             <th scope="col">Дата</th>
@@ -14,13 +14,13 @@
         </tr>
         </thead>
         <tbody>
-            <MyOrdersTableItem
-                v-if="getOrders.length"
-                v-for="(order, i) in getOrders"
-                :order="order"
-                :key="i"
-                :index="i"
-            />
+        <MyOrdersTableItem
+            v-if="getOrders.length"
+            v-for="(order, i) in getOrders"
+            :order="order"
+            :key="i"
+            :index="i"
+        />
         </tbody>
     </table>
 </template>
@@ -28,6 +28,7 @@
 <script>
 import MyOrdersTableItem from "./MyOrdersTableItem";
 import {mapGetters} from 'vuex'
+
 export default {
     name: "MyOrdersTable",
     components: {
@@ -39,6 +40,14 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+.table-success {
+    tr {
+        th {
+            background-color: #94be3e;
+            //background-color: #a8f705;
+            color: white;
+        }
+    }
+}
 </style>

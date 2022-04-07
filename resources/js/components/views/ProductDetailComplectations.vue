@@ -34,6 +34,7 @@ import {mapActions, mapGetters} from 'vuex'
 import Breadcrumb from "../UI/Breadcrumb";
 import BackBtn from "../UI/BackBtn";
 import ProductDetailMainInfo from "../ProductDetailMainInfo";
+import ProductCard from "../UI/ProductCard";
 import NavProductData from "../UI/NavProductData";
 import ProductKits from "../page-parts/detail-product/ProductKits";
 export default {
@@ -43,7 +44,7 @@ export default {
         ...mapActions(['getProductDetailData','fetchPhysicalPerson'])
     },
     computed: {
-        ...mapGetters(['getProductDetail']),
+        ...mapGetters(['getProductDetail', 'isPartner', 'isProfessionalStatus']),
     },
     mounted() {
         if (window.User) {
@@ -53,7 +54,7 @@ export default {
     },
     components: {
         Breadcrumb, BackBtn, ProductDetailMainInfo,
-        NavProductData, ProductKits
+        NavProductData, ProductKits, ProductCard
     }
 }
 </script>

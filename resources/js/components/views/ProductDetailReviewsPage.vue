@@ -8,11 +8,16 @@
             <BackBtn />
             <h1>{{getProductDetail.print_name}}</h1>
         </div>
-        <ProductDetailMainInfo />
+        <ProductDetailMainInfo/>
 
         <div class="container">
             <NavProductData />
-            <ProductReviews />
+
+            <ProductReviews
+                v-if="getProductDetail.review_keyword"
+                :keyword="getProductDetail.review_keyword"
+            />
+
             <div v-if="getProductDetail.effective_combinations && getProductDetail.effective_combinations.length > 0">
                 <h3 class="mb-3">Вас также могут заинтересовать</h3>
                 <div class="d-flex justify-content-between flex-wrap mb-5">
@@ -35,6 +40,7 @@ import Breadcrumb from "../UI/Breadcrumb";
 import BackBtn from "../UI/BackBtn";
 import ProductDetailMainInfo from "../ProductDetailMainInfo";
 import NavProductData from "../UI/NavProductData";
+import ProductCard from "../UI/ProductCard";
 import ProductReviews from "../page-parts/detail-product/ProductReviews";
 export default {
     name: "ProductDetailReviewsPage",
@@ -43,7 +49,7 @@ export default {
         ...mapActions(['getProductDetailData','fetchPhysicalPerson'])
     },
     computed: {
-        ...mapGetters(['getProductDetail']),
+        ...mapGetters(['getProductDetail', 'isPartner', 'isProfessionalStatus']),
     },
     mounted() {
         if (window.User) {
@@ -53,7 +59,7 @@ export default {
     },
     components: {
         Breadcrumb, BackBtn, ProductDetailMainInfo,
-        NavProductData, ProductReviews
+        NavProductData, ProductReviews, ProductCard
     }
 }
 </script>

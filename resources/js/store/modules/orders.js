@@ -103,7 +103,7 @@ export default {
                         } else
                             console.log('updateOrCreateBasketOrderApi BASKET res', res)
                     }).then(res => {
-                    if (res.data.success) window.location.reload()
+                    if (res.data.success) window.location.href = '/basket'
                     else console.log('updateOrCreateBasketOrderApi DRAFT res', res)
                 }).catch(err => console.log('updateOrCreateBasketOrderApi err', err))
                     .finally(() => commit('setLoading', false));

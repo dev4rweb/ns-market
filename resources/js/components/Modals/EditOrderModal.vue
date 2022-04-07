@@ -7,7 +7,7 @@
                 В Вашей корзине есть незавершённый заказ. <br>
                 Переместить его в черновики?
             </h3>
-            <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-end">
                 <button
                     class="btn btn-warning me-3"
                     @click="moveToBasket"
@@ -40,6 +40,7 @@ export default {
         },
         cancelToMove() {
             this.setEditOrderModal(null)
+            window.location.href = '/basket'
         }
     },
     computed: {
