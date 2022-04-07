@@ -3,15 +3,39 @@
         class="detail-product"
         v-if="getProductDetail"
     >
-        <Breadcrumb />
+        <Breadcrumb/>
         <div class="container d-flex align-items-center mb-3">
-            <BackBtn />
-            <h1>{{getProductDetail.print_name}}</h1>
+            <BackBtn/>
+            <h1>{{ getProductDetail.print_name }}</h1>
         </div>
         <ProductDetailMainInfo/>
 
         <div class="container">
-            <NavProductData />
+            <NavProductData/>
+
+            <div class="card p-3">
+                <p
+                    v-if="getCurrentCategory.slug.includes('masterdoktor')"
+                    class="notice"
+                >
+                    Опубликованные результаты применения продуктов программы активного долголетия линии Мастер Доктор не
+                    являются основанием для отказа от приема назначенных лекарственных препаратов и квалифицированной
+                    врачебной помощи.
+                </p>
+                <div class="d-flex justify-content-center">
+                    <button
+                        class="btn btn-success me-3"
+                    >
+                        Оставить свой отзыв
+                    </button>
+                    <a
+                        href="/reviews"
+                        class="btn btn-info"
+                    >
+                        Смотреть все отзывы
+                    </a>
+                </div>
+            </div>
 
             <ProductReviews
                 v-if="getProductDetail.review_keyword"
@@ -42,14 +66,16 @@ import ProductDetailMainInfo from "../ProductDetailMainInfo";
 import NavProductData from "../UI/NavProductData";
 import ProductCard from "../UI/ProductCard";
 import ProductReviews from "../page-parts/detail-product/ProductReviews";
+
 export default {
     name: "ProductDetailReviewsPage",
     props: ['slug'],
     methods: {
-        ...mapActions(['getProductDetailData','fetchPhysicalPerson'])
+        ...mapActions(['getProductDetailData', 'fetchPhysicalPerson'])
     },
     computed: {
-        ...mapGetters(['getProductDetail', 'isPartner', 'isProfessionalStatus']),
+        ...mapGetters(['getProductDetail', 'isPartner', 'isProfessionalStatus',
+        'getCurrentCategory']),
     },
     mounted() {
         if (window.User) {
@@ -65,10 +91,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.detail-product{
+.detail-product {
     min-height: calc(100vh - 222px - 288px);
 }
-h1{
+
+.notice {
+    font-size: 18px;
+}
+
+h1 {
     font-style: normal;
     font-weight: bold;
     font-size: 30px;

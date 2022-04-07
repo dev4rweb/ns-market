@@ -8,11 +8,15 @@ export default {
         reviewKeyword: ''
     },
     actions: {
-        fetchAllReviewsByQueryAction({commit, getters}, reviewQuery) {
+        fetchAllReviewsByQueryAction({commit, getters}) {
             commit('setLoading', true)
-            getAllReviewsByQuery(reviewQuery)
+            getAllReviewsByQuery({
+                keyword: getters['getReviewKeyword'],
+                page: getters['getReviewsCurrentPage']
+            })
                 .then(res => {
                     console.log('fetchAllReviewsByQueryAction res', res)
+                    commit('setReviewsCurrentPage', res.data.models.current_page)
                     commit('setAllReviews', res.data.models)
                 }).catch(err =>
                 console.log('fetchAllReviewsByQueryAction err', err)
@@ -26,7 +30,7 @@ export default {
         setReviewsCurrentPage(state, currentPage) {
             state.reviewsCurrentPage = currentPage
         },
-        setKeyword(state, keyword) {
+        setReviewKeyword(state, keyword) {
             state.reviewKeyword = keyword
         }
     },

@@ -1,6 +1,6 @@
 <template>
     <div v-if="getAllNews">
-        <NewsDetail v-if="getCurrentNews" />
+        <NewsDetail v-if="getCurrentNews"/>
         <NewsItem
             :news="getAllNews.data"
             v-else
@@ -39,7 +39,7 @@ export default {
             page: 1
         }
     },
-    components: { NewsItem, NewsDetail},
+    components: {NewsItem, NewsDetail},
     computed: {
         ...mapGetters(['getCurrentNews', 'getAllNews']),
     },
@@ -49,7 +49,8 @@ export default {
             return this.getAllNews.current_page === page
         },
         changeNewsPage(page) {
-            this.fetchAllNews(page)
+            if (this.getAllNews.current_page !== page)
+                this.fetchAllNews(page)
         }
     },
     mounted() {

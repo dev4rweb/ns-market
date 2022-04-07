@@ -8,8 +8,12 @@
             :key="review.id"
             class="card shadow-lg mb-3 p-3"
         >
-            <h3>{{ getReviewTitle(review) }}</h3>
-            <p> {{ review.comment }} </p>
+            <div class="d-flex justify-content-between align-items-center">
+                <h3>{{ getReviewTitle(review) }}</h3>
+                <span>{{ getDateReview(review) }}</span>
+            </div>
+<!--            <p> {{ review.comment }} </p>-->
+            <p v-html="highLightSearchingWord(review.comment)"></p>
         </div>
 
         <nav
@@ -33,7 +37,7 @@
 </template>
 
 <script>
-import {mapActions, mapGetters} from 'vuex'
+import {mapActions, mapGetters, mapMutations} from 'vuex'
 import {declensionRusAge} from "../../../store/utils/declensionRusAge";
 
 export default {
@@ -46,6 +50,7 @@ export default {
     },
     methods: {
         ...mapActions(['fetchAllReviewsByQueryAction']),
+        ...mapMutations(['setReviewsCurrentPage', 'setReviewKeyword']),
         getReviewTitle(review) {
             const gender = review.gender === 0 ? 'Женщина' : 'Мужчина'
             const age = declensionRusAge(review.age)
@@ -56,34 +61,55 @@ export default {
         },
         changeReviewsPage(page) {
             if (this.getAllReviews.current_page !== page)
-                this.fetchAllReviewsByQueryAction({
-                    page: page,
-                    keyword: ''
-                })
+                this.setReviewsCurrentPage(page)
+                this.fetchAllReviewsByQueryAction()
+        },
+        getDateReview(review) {
+            if (review.created_at) {
+                const date = new Date(review.created_at)
+                const day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()
+                const month = date.getMonth() < 9 ? `0${date.getMonth() + 1}` : date.getMonth() + 1;
+                const hours = date.getHours()
+                const minutes = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes()
+                return `${day}.${month}.${date.getFullYear()} ${hours}:${minutes}`;
+            }
+            return ''
+        },
+        highLightSearchingWord(words) {
+            if (words) {
+                return words.replace(this.getReviewKeyword,
+                `<b>${this.getReviewKeyword}</b>`)
+            }
         }
     },
     computed: {
-        ...mapGetters(['getAllReviews'])
+        ...mapGetters(['getAllReviews', 'getReviewsCurrentPage', 'getReviewKeyword'])
     },
     mounted() {
-        this.fetchAllReviewsByQueryAction({
-            page: this.page,
-            keyword: ''
-            // keyword: this.keyword
-        })
+        this.setReviewKeyword(this.keyword)
+        this.fetchAllReviewsByQueryAction()
     }
 }
 </script>
 
 <style lang="scss" scoped>
 .card {
-    h3 {
+    h3, span {
         font-style: normal;
-        font-weight: 600;
         font-size: 18px;
         line-height: 120%;
+    }
+
+    h3{
+        font-weight: 600;
         /* identical to box height, or 22px */
         text-transform: uppercase;
+    }
+
+    span{
+        font-weight: 400;
+        text-transform: capitalize;
+        font-style: italic;
     }
 
     p {

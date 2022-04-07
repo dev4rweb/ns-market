@@ -16,6 +16,7 @@ use App\Http\Controllers\ProductCardComplectPage;
 use App\Http\Controllers\ProductCardDetailPage;
 use App\Http\Controllers\ProductCardDetailReviewsPage;
 use App\Http\Controllers\ProgramsPageController;
+use App\Http\Controllers\ReviewsPageController;
 use App\Http\Controllers\StockPageController;
 use App\Http\Controllers\UserAddressPageController;
 use App\Http\Controllers\UserBecomePartnerPage;
@@ -84,3 +85,4 @@ Route::get('/basket', [BasketPageController::class, 'index'])->name('basket-page
 Route::get('/order-config', [OrderConfigPageController::class, 'index'])->name('order-config-page');
 Route::get('/order-delivery', [OrderDeliveryPageController::class, 'index'])->name('order-delivery-page');
 Route::get('/order-payment', [OrderPaymentPageController::class, 'index'])->name('order-payment-page');
+Route::get('/reviews', [ReviewsPageController::class, 'index'])->name('reviews-page');

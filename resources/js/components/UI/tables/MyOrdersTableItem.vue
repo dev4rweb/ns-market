@@ -66,7 +66,8 @@ export default {
                 const month = date.getMonth() < 9 ? `0${date.getMonth() + 1}` : date.getMonth() + 1;
                 const hours = date.getHours()
                 const minutes = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes()
-                return `${day}.${month}.${date.getFullYear()} ${hours}:${minutes}`;
+                const seconds = date.getSeconds() < 10 ? `0${date.getSeconds()}` : date.getSeconds()
+                return `${day}.${month}.${date.getFullYear()} ${hours}:${minutes}:${seconds}`;
             }
             return ''
         },
