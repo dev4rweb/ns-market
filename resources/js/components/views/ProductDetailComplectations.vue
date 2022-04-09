@@ -5,7 +5,7 @@
     >
         <Breadcrumb />
         <div class="container d-flex align-items-center mb-3">
-            <BackBtn />
+            <BackBtn :pathTo="backPath"/>
             <h1>{{getProductDetail.print_name}}</h1>
         </div>
         <ProductDetailMainInfo />
@@ -37,9 +37,15 @@ import ProductDetailMainInfo from "../ProductDetailMainInfo";
 import ProductCard from "../UI/ProductCard";
 import NavProductData from "../UI/NavProductData";
 import ProductKits from "../page-parts/detail-product/ProductKits";
+import {jumpToPage} from "../../store/utils/jumpToPage";
 export default {
     name: "ProductDetailComplectations",
     props: ['slug'],
+    data() {
+        return {
+            backPath: null
+        }
+    },
     methods: {
         ...mapActions(['getProductDetailData','fetchPhysicalPerson'])
     },
@@ -51,6 +57,7 @@ export default {
             this.fetchPhysicalPerson()
         }
         this.getProductDetailData(this.slug)
+        this.backPath = jumpToPage(window.location.href, 6)
     },
     components: {
         Breadcrumb, BackBtn, ProductDetailMainInfo,

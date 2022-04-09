@@ -7,12 +7,24 @@ export default {
         isWelcomeRegisteredModal: false,
         isShowFoundOldBasket: false,
         removeOrderModal: null,
-        editOrderModal: null
+        editOrderModal: null,
+        modalCanCreateReview: false,
+        modalCannotCreateReview: false,
+        createdReviewModalSuccess: false
     },
     actions: {
 
     },
     mutations: {
+        showCreatedReviewModalSuccess(state, isShow) {
+            state.createdReviewModalSuccess = isShow
+        },
+        showModalCanCreateReview(state, isShow) {
+            state.modalCanCreateReview = isShow
+        },
+        showModalCannotCreateReview(state, isShow) {
+            state.modalCannotCreateReview = isShow
+        },
         setRemoveOrderModal(state, order) {
             state.removeOrderModal = order
         },
@@ -39,6 +51,15 @@ export default {
         }
     },
     getters: {
+        isShowCreatedReviewModalSuccess(state) {
+            return state.createdReviewModalSuccess
+        },
+        isShowModalCanCreateReview(state) {
+            return state.modalCanCreateReview
+        },
+        isShowModalCannotCreateReview(state) {
+            return state.modalCannotCreateReview
+        },
         getEditOrderModal(state) {
             return state.editOrderModal
         },

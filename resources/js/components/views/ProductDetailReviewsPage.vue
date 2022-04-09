@@ -5,7 +5,7 @@
     >
         <Breadcrumb/>
         <div class="container d-flex align-items-center mb-3">
-            <BackBtn/>
+            <BackBtn :pathTo="backPath"/>
             <h1>{{ getProductDetail.print_name }}</h1>
         </div>
         <ProductDetailMainInfo/>
@@ -18,13 +18,14 @@
                     v-if="getCurrentCategory.slug.includes('masterdoktor')"
                     class="notice"
                 >
-                    Опубликованные результаты применения продуктов программы активного долголетия линии Мастер Доктор не
+                    <b>*</b> Опубликованные результаты применения продуктов программы активного долголетия линии Мастер Доктор не
                     являются основанием для отказа от приема назначенных лекарственных препаратов и квалифицированной
                     врачебной помощи.
                 </p>
                 <div class="d-flex justify-content-center">
                     <button
                         class="btn btn-success me-3"
+                        @click="createReview"
                     >
                         Оставить свой отзыв
                     </button>
@@ -35,6 +36,18 @@
                         Смотреть все отзывы
                     </a>
                 </div>
+            </div>
+
+            <div>
+                <transition name="fade">
+                    <CanCreateReviewModal v-if="isShowModalCanCreateReview" />
+                </transition>
+                <transition name="fade">
+                    <CannotCreateReviewModal v-if="isShowModalCannotCreateReview" />
+                </transition>
+                <transition name="fade">
+                    <CreatedReviewModalSuccess v-if="isShowCreatedReviewModalSuccess" />
+                </transition>
             </div>
 
             <ProductReviews
@@ -66,26 +79,43 @@ import ProductDetailMainInfo from "../ProductDetailMainInfo";
 import NavProductData from "../UI/NavProductData";
 import ProductCard from "../UI/ProductCard";
 import ProductReviews from "../page-parts/detail-product/ProductReviews";
+import {jumpToPage} from "../../store/utils/jumpToPage";
+import CanCreateReviewModal from "../Modals/CanCreateReviewModal";
+import CannotCreateReviewModal from "../Modals/CannotCreateReviewModal";
+import CreatedReviewModalSuccess from "../Modals/CreatedReviewModalSuccess";
 
 export default {
     name: "ProductDetailReviewsPage",
     props: ['slug'],
+    data() {
+        return {
+            backPath: null
+        }
+    },
     methods: {
-        ...mapActions(['getProductDetailData', 'fetchPhysicalPerson'])
+        ...mapActions(['getProductDetailData', 'fetchPhysicalPerson',
+        'createReviewAction']),
+        createReview() {
+            this.createReviewAction()
+        }
     },
     computed: {
         ...mapGetters(['getProductDetail', 'isPartner', 'isProfessionalStatus',
-        'getCurrentCategory']),
+        'getCurrentCategory', 'getCurrentUser', 'isShowModalCanCreateReview',
+        'isShowModalCannotCreateReview', 'isShowCreatedReviewModalSuccess']),
     },
     mounted() {
         if (window.User) {
             this.fetchPhysicalPerson()
         }
         this.getProductDetailData(this.slug)
+        this.backPath = jumpToPage(window.location.href, 6)
     },
     components: {
         Breadcrumb, BackBtn, ProductDetailMainInfo,
-        NavProductData, ProductReviews, ProductCard
+        NavProductData, ProductReviews, ProductCard,
+        CanCreateReviewModal, CannotCreateReviewModal,
+        CreatedReviewModalSuccess
     }
 }
 </script>
@@ -96,7 +126,16 @@ export default {
 }
 
 .notice {
-    font-size: 18px;
+    font-size: 16px;
+    line-height: 16px;
+    color: red;
+    font-style: italic;
+
+    b{
+        font-size: 22px;
+        font-weight: bold;
+        margin-right: 20px;
+    }
 }
 
 h1 {
@@ -105,6 +144,24 @@ h1 {
     font-size: 30px;
     line-height: 37px;
     color: #333333;
+}
+
+.fade-enter-active, .fade-leave-active {
+    -webkit-transform: scale(1, 1);
+    -moz-transform: scale(1, 1);
+    -ms-transform: scale(1, 1);
+    -o-transform: scale(1, 1);
+    transform: scale(1, 1);
+    opacity: 1;
+    transition: all .5s;
+}
+.fade-enter, .fade-leave-to {
+    opacity: 0;
+    -webkit-transform: scale(0, 0);
+    -moz-transform: scale(0, 0);
+    -ms-transform: scale(0, 0);
+    -o-transform: scale(0, 0);
+    transform: scale(0, 0);
 }
 </style>
 

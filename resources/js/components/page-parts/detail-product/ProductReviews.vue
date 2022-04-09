@@ -52,7 +52,7 @@ export default {
         ...mapActions(['fetchAllReviewsByQueryAction']),
         ...mapMutations(['setReviewsCurrentPage', 'setReviewKeyword']),
         getReviewTitle(review) {
-            const gender = review.gender === 0 ? 'Женщина' : 'Мужчина'
+            const gender = review.gender === 0 ? 'Мужчина' : 'Женщина'
             const age = declensionRusAge(review.age)
             return `${gender}, ${review.age} ${age}`
         },

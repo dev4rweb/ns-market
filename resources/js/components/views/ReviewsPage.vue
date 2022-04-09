@@ -52,10 +52,24 @@
                 </div>
                 <button
                     class="btn btn-lg btn-info"
+                    @click="createReview"
                 >
                     Оставить свой отзыв
                 </button>
             </div>
+
+            <div>
+                <transition name="fade">
+                    <CanCreateReviewModal v-if="isShowModalCanCreateReview"/>
+                </transition>
+                <transition name="fade">
+                    <CannotCreateReviewModal v-if="isShowModalCannotCreateReview"/>
+                </transition>
+                <transition name="fade">
+                    <CreatedReviewModalSuccess v-if="isShowCreatedReviewModalSuccess"/>
+                </transition>
+            </div>
+
             <ProductReviews :keyword="keyword"/>
         </div>
     </div>
@@ -65,6 +79,10 @@
 import revImg from '../../../assets/img/review-image.jpg'
 import ProductReviews from "../page-parts/detail-product/ProductReviews";
 import {mapActions, mapGetters, mapMutations} from 'vuex'
+import CanCreateReviewModal from "../Modals/CanCreateReviewModal";
+import CannotCreateReviewModal from "../Modals/CannotCreateReviewModal";
+import CreatedReviewModalSuccess from "../Modals/CreatedReviewModalSuccess";
+
 export default {
     name: "ReviewsPage",
     data() {
@@ -75,7 +93,8 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['fetchAllReviewsByQueryAction']),
+        ...mapActions(['fetchAllReviewsByQueryAction', 'fetchPhysicalPerson',
+            'createReviewAction']),
         ...mapMutations(['setReviewKeyword']),
         searchingReviews() {
             console.log('searchingReviews', this.keyword)
@@ -86,10 +105,14 @@ export default {
                 console.log('clearField', this.keyword)
                 this.fetchAllReviewsByQueryAction()
             }
+        },
+        createReview() {
+            this.createReviewAction()
         }
     },
     computed: {
-        ...mapGetters(['getReviewKeyword']),
+        ...mapGetters(['getReviewKeyword', 'isShowModalCanCreateReview',
+            'isShowModalCannotCreateReview', 'isShowCreatedReviewModalSuccess']),
         keywordHandler: {
             get: function () {
                 return this.getReviewKeyword
@@ -100,7 +123,14 @@ export default {
         }
     },
     components: {
-        ProductReviews
+        ProductReviews,
+        CanCreateReviewModal, CannotCreateReviewModal,
+        CreatedReviewModalSuccess
+    },
+    mounted() {
+        if (window.User) {
+            this.fetchPhysicalPerson()
+        }
     }
 }
 </script>
@@ -118,5 +148,24 @@ ol {
     margin-left: -38px;
     font-size: 25px;
     font-weight: bold;
+}
+
+
+.fade-enter-active, .fade-leave-active {
+    -webkit-transform: scale(1, 1);
+    -moz-transform: scale(1, 1);
+    -ms-transform: scale(1, 1);
+    -o-transform: scale(1, 1);
+    transform: scale(1, 1);
+    opacity: 1;
+    transition: all .5s;
+}
+.fade-enter, .fade-leave-to {
+    opacity: 0;
+    -webkit-transform: scale(0, 0);
+    -moz-transform: scale(0, 0);
+    -ms-transform: scale(0, 0);
+    -o-transform: scale(0, 0);
+    transform: scale(0, 0);
 }
 </style>
