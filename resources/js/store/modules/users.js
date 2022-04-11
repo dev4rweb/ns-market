@@ -90,7 +90,7 @@ export default {
                     console.log('localLogin err', err.response.data)
                     if (err.response.data.errors.mobile_phone[0].includes('These credentials do not match our records.'))
                         dispatch('localRegister', password)
-                    else commit('setToastError','Что-то пошло не так, попробуйте позже')
+                    else commit('setToastError', 'Что-то пошло не так, попробуйте позже')
                 }).finally(() => {
                     commit('setLoading', false)
                 });
@@ -282,7 +282,15 @@ export default {
                         commit('setToastError', 'Пароль успешно изменен');
                     }
                 } else {
-                    commit('setToastError', res.data.message)
+                    if (!res.data.model) {
+                        commit('setToastError', 'Временный пароль отправлен на Ваш номер телефона')
+                        dispatch('sendFreeSms', {
+                            mobile_phone: currentUser.mobile_phone,
+                            message: `. \n Ваш временный пароль: \n ${password}`
+                        })
+                        commit('setIsForgot', false)
+                    } else
+                        commit('setToastError', res.data.message);
                 }
             }).catch(err => {
                 console.log('updatePasswordLocal err', err.response.data)

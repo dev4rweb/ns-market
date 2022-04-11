@@ -11,6 +11,7 @@ use App\Http\Controllers\ListPageController;
 use App\Http\Controllers\pages\OrderConfigPageController;
 use App\Http\Controllers\pages\OrderDeliveryPageController;
 use App\Http\Controllers\pages\OrderPaymentPageController;
+use App\Http\Controllers\PagesController;
 use App\Http\Controllers\PartnerCongratulationPage;
 use App\Http\Controllers\ProductCardComplectPage;
 use App\Http\Controllers\ProductCardDetailPage;
@@ -86,3 +87,4 @@ Route::get('/order-config', [OrderConfigPageController::class, 'index'])->name('
 Route::get('/order-delivery', [OrderDeliveryPageController::class, 'index'])->name('order-delivery-page');
 Route::get('/order-payment', [OrderPaymentPageController::class, 'index'])->name('order-payment-page');
 Route::get('/reviews', [ReviewsPageController::class, 'index'])->name('reviews-page');
+Route::get('/user-bank-panel', [PagesController::class, 'user_bank_panel'])->name('user-bank-page');

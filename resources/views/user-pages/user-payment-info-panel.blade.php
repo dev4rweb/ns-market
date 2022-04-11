@@ -4,10 +4,9 @@
     <div class="user-panel data-panel">
         <div class="container">
             @include('parts.user-sidebar')
-
             <div>
                 @include('parts.nab-user-data')
-                <div>Payment</div>
+                <user-payment-page></user-payment-page>
             </div>
         </div>
     </div>

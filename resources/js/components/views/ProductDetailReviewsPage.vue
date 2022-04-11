@@ -39,15 +39,9 @@
             </div>
 
             <div>
-                <transition name="fade">
-                    <CanCreateReviewModal v-if="isShowModalCanCreateReview" />
-                </transition>
-                <transition name="fade">
-                    <CannotCreateReviewModal v-if="isShowModalCannotCreateReview" />
-                </transition>
-                <transition name="fade">
-                    <CreatedReviewModalSuccess v-if="isShowCreatedReviewModalSuccess" />
-                </transition>
+                <CanCreateReviewModal />
+                <CannotCreateReviewModal />
+                <CreatedReviewModalSuccess  />
             </div>
 
             <ProductReviews
@@ -144,24 +138,6 @@ h1 {
     font-size: 30px;
     line-height: 37px;
     color: #333333;
-}
-
-.fade-enter-active, .fade-leave-active {
-    -webkit-transform: scale(1, 1);
-    -moz-transform: scale(1, 1);
-    -ms-transform: scale(1, 1);
-    -o-transform: scale(1, 1);
-    transform: scale(1, 1);
-    opacity: 1;
-    transition: all .5s;
-}
-.fade-enter, .fade-leave-to {
-    opacity: 0;
-    -webkit-transform: scale(0, 0);
-    -moz-transform: scale(0, 0);
-    -ms-transform: scale(0, 0);
-    -o-transform: scale(0, 0);
-    transform: scale(0, 0);
 }
 </style>
 

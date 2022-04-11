@@ -41,6 +41,14 @@
         </li>
         <li>
             <a
+                href="{{route('user-bank-page')}}"
+                class="@if(Request::url() == url('/user-bank-panel')) active @endif"
+            >
+                Мои банк
+            </a>
+        </li>
+        <li>
+            <a
                 href="{{route('user-support-page')}}"
                 class="@if(Request::url() == url('/user-support-panel')) active @endif"
             >
