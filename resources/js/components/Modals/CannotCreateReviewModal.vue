@@ -15,7 +15,7 @@
                 </h3>
                 <div class="d-flex justify-content-end">
                     <button
-                        class="btn btn-outline-info me-3"
+                        class="btn btn-info me-3"
                         @click="openAuthModal"
                     >
                         Авторизоваться
@@ -53,6 +53,11 @@ export default {
             this.showModalCannotCreateReview(false)
             this.setFromBasketPage(window.location.href)
             $(this.$refs.loginBtn).click();
+            setTimeout(() => {
+                const focusedInput = document.getElementById('loginFormInput')
+                focusedInput.focus()
+                // console.log('timeout with btn', focusedInput)
+            }, 1000);
         }
     },
     computed: {
@@ -79,6 +84,21 @@ export default {
     -ms-transform: scale(0, 0);
     -o-transform: scale(0, 0);
     transform: scale(0, 0);
+}
+
+.btn-info{
+    -webkit-transition: all .3s;
+    -moz-transition: all .3s;
+    -ms-transition: all .3s;
+    -o-transition: all .3s;
+    transition: all .3s;
+    &:hover{
+        -webkit-transform: scale(1.2, 1.2);
+        -moz-transform: scale(1.2, 1.2);
+        -ms-transform: scale(1.2, 1.2);
+        -o-transform: scale(1.2, 1.2);
+        transform: scale(1.2, 1.2);
+    }
 }
 
 .btn-outline-info{

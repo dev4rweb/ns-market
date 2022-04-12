@@ -18,9 +18,28 @@ export default {
             street: '',
             building: '',
             city: ''
-        }
+        },
+        daDataBank: null
     },
     actions: {
+        fetchBankDaData({commit, dispatch}, query = 'сбербанк') {
+            const url = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/bank";
+            const token = "90222d690c2ffcb6923cb1fc7f3f67ebc4fddf2c";
+            const queryObj = {query: query}
+            return  axios.post(url, queryObj, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': `Token ${token}`,
+                },
+            }).then(res => {
+                // console.log('fetchBankDaData res', res)
+                return res
+            }).catch(err => {
+                // console.log('fetchBankDaData err', err)
+                return err
+            });
+        },
         fetchDaDataAddress({commit, dispatch}, queryObj) {
             const url = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address";
             const token = "90222d690c2ffcb6923cb1fc7f3f67ebc4fddf2c";
@@ -59,6 +78,9 @@ export default {
         }
     },
     mutations: {
+        setDaDataBank(state, daDataBank) {
+            state.daDataBank = daDataBank
+        },
         setDaDataAddress(state, address) {
             state.daDataAddress = address
         },
@@ -73,6 +95,9 @@ export default {
         }
     },
     getters: {
+        getDaDataBank(state) {
+            return state.daDataBank
+        },
         getDaDataAddress(state) {
             return state.daDataAddress
         },

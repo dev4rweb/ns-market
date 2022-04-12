@@ -79,6 +79,7 @@
             <label class="form-label">Текст отзыва.</label>
             <textarea
                 class="form-control form-control-lg"
+                style="min-height: 200px;"
                 v-model="comment"
                 :class="{borderRed: isCommentInvalid}"
                 @input="isCommentInvalid = false"
@@ -93,7 +94,7 @@
           </div>
           <div class="d-flex justify-content-end">
             <button
-                class="btn btn-outline-info me-3"
+                class="btn btn-info me-3"
                 type="submit"
             >
               Отправить отзыв
@@ -191,6 +192,21 @@ export default {
   -ms-transform: scale(0, 0);
   -o-transform: scale(0, 0);
   transform: scale(0, 0);
+}
+
+.btn-info{
+    -webkit-transition: all .3s;
+    -moz-transition: all .3s;
+    -ms-transition: all .3s;
+    -o-transition: all .3s;
+    transition: all .3s;
+    &:hover{
+        -webkit-transform: scale(1.2, 1.2);
+        -moz-transform: scale(1.2, 1.2);
+        -ms-transform: scale(1.2, 1.2);
+        -o-transform: scale(1.2, 1.2);
+        transform: scale(1.2, 1.2);
+    }
 }
 
 .btn-outline-info {

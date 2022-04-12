@@ -13,15 +13,15 @@
                 <p>
                     <b>{{ getCurrentUser ? getCurrentUser.first_name : 'Пользователь' }}, благодарим Вас</b> за то, что
                     Вы делитесь своим опытом использования товаров и
-                    услуг New Star market! <br>
-                    Ваш отзыв отправлен на проверку. <br>
+                    услуг New Star market! <br><br>
+                    Ваш отзыв отправлен на проверку. <br><br>
                     После публикации этого отзыва на сайте New Star market в знак благодарности мы начислим на Ваш счёт
                     10
                     бонус марок.
                 </p>
                 <div class="d-flex justify-content-end">
                     <button
-                        class="btn btn-outline-info me-3"
+                        class="btn btn-info me-3"
                         @click="closeModal"
                     >
                         Ok
@@ -76,6 +76,20 @@ export default {
     transform: scale(0, 0);
 }
 
+.btn-info{
+    -webkit-transition: all .3s;
+    -moz-transition: all .3s;
+    -ms-transition: all .3s;
+    -o-transition: all .3s;
+    transition: all .3s;
+    &:hover{
+        -webkit-transform: scale(1.2, 1.2);
+        -moz-transform: scale(1.2, 1.2);
+        -ms-transform: scale(1.2, 1.2);
+        -o-transform: scale(1.2, 1.2);
+        transform: scale(1.2, 1.2);
+    }
+}
 
 .btn-outline-info{
     -webkit-transition: all .3s;
@@ -139,6 +153,7 @@ export default {
 
         p {
             font-size: 18px;
+            text-align: center;
         }
     }
 }

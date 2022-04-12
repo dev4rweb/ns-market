@@ -39,8 +39,10 @@ export default {
                         if (window.location.href.includes('/order-delivery')) {
                             dispatch('fetchAllAddresses')
                         }
-
-                        dispatch('getCustomerOrdersByUserId')
+                        if (window.location.href.includes('/user-payment-info-panel')) {
+                            dispatch('fetchPartnerPaymentDetailAction')
+                        }
+                        dispatch('getCustomerOrdersByUserId');
                         // dispatch('createBasketOrderOnServer');
                     }
                 }).catch(err => {
