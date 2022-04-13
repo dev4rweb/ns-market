@@ -275,7 +275,7 @@ export default {
                         commit('setToastError', 'Временный пароль отправлен на Ваш номер телефона')
                         dispatch('sendFreeSms', {
                             mobile_phone: currentUser.mobile_phone,
-                            message: `. \n Ваш временный пароль в New Star mahket: \n ${password} \n Измените его после входа в личный кабинет`
+                            message: `. \n Ваш временный пароль в New Star market: \n ${password} \n Измените его после входа в личный кабинет`
                         })
                         commit('setIsForgot', false)
                     } else {

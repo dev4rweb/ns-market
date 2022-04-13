@@ -47,6 +47,7 @@ export default {
                     console.log('savePartnerPaymentDetailAction ', res)
                     if (res.data.success && res.data.model) {
                         commit('setPartnerPaymentDetail', res.data.model)
+                        commit('setToastError','Данные успешно сохранены')
                     }
                 })
                 .catch(err => console.log('savePartnerPaymentDetailAction err', err))

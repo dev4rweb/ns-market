@@ -159,6 +159,7 @@ Vue.component('can-create-review-modal', require('./components/Modals/CanCreateR
 Vue.component('cannot-create-review-modal', require('./components/Modals/CannotCreateReviewModal').default);
 Vue.component('created-review-modal-success', require('./components/Modals/CreatedReviewModalSuccess').default);
 Vue.component('user-payment-page', require('./components/views/UserPaymentPage').default);
+Vue.component('user-my-bank-panel', require('./components/views/UserMyBankPanel').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

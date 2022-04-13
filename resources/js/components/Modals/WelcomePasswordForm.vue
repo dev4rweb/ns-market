@@ -43,6 +43,18 @@
             </div>
         </div>
 
+        <p
+            v-if="isSmsMessage"
+            style="color: red; font-weight: bold; font-style: italic;"
+        >
+            Мы отправили для Вас СМС
+            с временным паролем.
+            Используйте его для входа,
+            а затем замените на постоянный.
+            Сделать это можно в в разделе
+            Мои данные / Личные данные
+        </p>
+
         <button
             type="submit"
             class="btn btn-lg btn-primary"
@@ -76,7 +88,8 @@ export default {
         return {
             password: '',
             phone: '+7',
-            isPasswordInValid: false
+            isPasswordInValid: false,
+            isSmsMessage: false
         }
     },
     methods: {
@@ -106,6 +119,7 @@ export default {
         forgotPassword() {
             console.log('forgot Password')
             this.setIsForgot(true)
+            this.isSmsMessage = true
             const rndPassword = generateTempPassword(8)
             localStorage.setItem('password', rndPassword)
             console.log('password', rndPassword)

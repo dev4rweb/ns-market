@@ -23,10 +23,10 @@
             <label>Самозанятый или Индивидуальный предприниматель</label>
             <div
                 class="d-flex justify-content-between align-items-center"
-                style="max-width: 250px;"
+                style="max-width: 700px;"
             >
-                <RadioBox label="ИП" value="1" v-model="getPartnerPaymentDetail.isPP"/>
                 <RadioBox label="Самозанятый" value="0" v-model="getPartnerPaymentDetail.isPP"/>
+                <RadioBox label="Индивидуальный предприниматель" value="1" v-model="getPartnerPaymentDetail.isPP"/>
             </div>
         </div>
 
@@ -41,12 +41,7 @@
 
         <div class="form-group form-group-data mb-3">
             <label class="form-label">БИК</label>
-            <div class="input-group mb-3">
-                <span
-                    class="input-group-text"
-                >
-                    <i class="bi bi-search"></i>
-                </span>
+            <div class="input-group mb-3" style="max-width: 300px;">
                 <input
                     type="number"
                     class="form-control form-control-lg"
@@ -55,6 +50,12 @@
                     @blur="searchBank"
                     @input="isBicInvalid = false"
                 >
+
+                <span
+                    class="input-group-text"
+                >
+                    <i class="bi bi-search"></i>
+                </span>
             </div>
             <div
                 class="invalid-feedback"

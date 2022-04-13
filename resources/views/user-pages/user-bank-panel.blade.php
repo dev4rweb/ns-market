@@ -4,13 +4,7 @@
     <div class="user-panel">
         <div class="container">
             @include('parts.user-sidebar')
-            <div class="user-content">
-                <div class="row">
-                    <div class="card news-card">
-                        <h3>My Bank</h3>
-                    </div>
-                </div>
-            </div>
+            <user-my-bank-panel></user-my-bank-panel>
         </div>
     </div>
 @endsection

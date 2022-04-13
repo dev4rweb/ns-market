@@ -23,6 +23,7 @@
                     <button
                         class="btn btn-info me-3"
                         @click="closeModal"
+                        style="width: 120px;"
                     >
                         Ok
                     </button>
