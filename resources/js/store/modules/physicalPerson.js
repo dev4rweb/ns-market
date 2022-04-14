@@ -42,6 +42,9 @@ export default {
                         if (window.location.href.includes('/user-payment-info-panel')) {
                             dispatch('fetchPartnerPaymentDetailAction')
                         }
+                        if (window.location.href.includes('/user-bank-panel')) {
+                            dispatch('fetchBillingCustomerAction')
+                        }
                         dispatch('getCustomerOrdersByUserId');
                         // dispatch('createBasketOrderOnServer');
                     }

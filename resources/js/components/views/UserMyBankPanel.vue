@@ -7,48 +7,54 @@
                     <li
                         class="list-group-item list-group-item-action"
                         aria-current="true">
-                        <div class="d-flex w-100 justify-content-between">
+                        <div class="d-flex w-75 justify-content-between">
                             <h4>Лицевой счет пользователя</h4>
-                            <h4>0</h4>
+                            <h4 v-if="getBillingAccountMain">
+                                {{getBillingAccountMain.balance}}
+                                {{getBillingAccountMain.currency_code}}
+                            </h4>
                         </div>
-
-                        <p>Это счет, пополняемый извне (Яндекс.Деньги, карты, наличные в офисе). С этого счета
-                            оплачиваются заказы 1 и 2 типа.</p>
                     </li>
                     <li
                         class="list-group-item list-group-item-action">
-                        <div class="d-flex w-100 justify-content-between">
+                        <div class="d-flex w-75 justify-content-between">
                             <h4>Накопительный счет пользователя</h4>
-                            <h4>0</h4>
+                            <h4 v-if="getBillingAccountSaving">
+                                {{getBillingAccountSaving.balance}}
+                                {{getBillingAccountSaving.currency_code}}
+                            </h4>
                         </div>
-                        <p>На этот счёт попадают вознаграждения, начисленные Компанией. С этого счета можно оплачивать
-                            заказы 1 и 2 типа. Отличие от лицевого счёта в том, что бонусы клиент может забрать
-                            наличными, а деньги с лицевого счета только использовать в оплате.</p>
                     </li>
                     <li
                         class="list-group-item list-group-item-action">
-                        <div class="d-flex w-100 justify-content-between">
+                        <div class="d-flex w-75 justify-content-between">
                             <h4>Ваучер банка пользователя</h4>
-                            <h4>0</h4>
+                            <h4 v-if="getBillingAccountVoucher">
+                                {{getBillingAccountVoucher.balance}}
+                                {{getBillingAccountVoucher.currency_code}}
+                            </h4>
                         </div>
-                        <p>Счёт с которого можно оплатить только заказы 1 типа.</p>
                     </li>
                     <li
                         class="list-group-item list-group-item-action">
-                        <div class="d-flex w-100 justify-content-between">
+                        <div class="d-flex w-75 justify-content-between">
                             <h4>Счет Бонус марок пользователя</h4>
-                            <h4>0</h4>
+                            <h4 v-if="getBillingAccountMBC">
+                                {{getBillingAccountMBC.balance}}
+                                {{getBillingAccountMBC.currency_code}}
+                            </h4>
                         </div>
-                        <p>Счет для оплаты заказов только 3 типа.</p>
                     </li>
                     <li
                         class="list-group-item list-group-item-action disabled"
                         aria-disabled="true">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h4>Резерв</h4>
-                            <h4>0</h4>
+                        <div class="d-flex w-75 justify-content-between">
+                            <h4>РезервPV пользователя</h4>
+                            <h4 v-if="getBillingAccountPVC">
+                                {{getBillingAccountPVC.balance}}
+                                {{getBillingAccountPVC.currency_code}}
+                            </h4>
                         </div>
-                        <p>PV пользователя</p>
                     </li>
                 </ul>
             </div>
@@ -57,6 +63,7 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 export default {
     name: "UserMyBankPanel",
     data() {
@@ -66,9 +73,13 @@ export default {
                 {id: 2, name: 'Накопительный счет пользователя', description: 'На этот счёт попадают вознаграждения, начисленные Компанией. С этого счета можно оплачивать заказы 1 и 2 типа. Отличие от лицевого счёта в том, что бонусы клиент может забрать наличными, а деньги с лицевого счета только использовать в оплате.'},
                 {id: 3, name: 'Ваучер банка пользователя', description: 'Счёт с которого можно оплатить только заказы 1 типа.'},
                 {id: 4, name: 'Счет Бонус марок пользователя', description: 'Счет для оплаты заказов только 3 типа.'},
-                {id: 5, name: 'Резерв ', description: 'PV пользователя'},
+                {id: 5, name: 'Резерв PV пользователя', description: ''},
             ]
         }
+    },
+    computed: {
+        ...mapGetters(['getBillingAccountMain', 'getBillingAccountSaving',
+        'getBillingAccountVoucher', 'getBillingAccountMBC', 'getBillingAccountPVC'])
     }
 }
 </script>

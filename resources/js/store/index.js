@@ -22,6 +22,7 @@ import aromaDetail from "./modules/aromaDetail";
 import news from "./modules/news";
 import reviews from "./modules/reviews";
 import paymentDetails from "./modules/paymentDetails";
+import billing from "./modules/billing";
 
 Vue.use(Vuex)
 
@@ -30,6 +31,6 @@ export default new Vuex.Store({
         users, modals, errors, physicalPerson, phoneApi, mentor, addresses, daData,
         feedback, catalogGroups, lStorage, basket, orders, inviter, eDost,
         transportCompanies, orderAddress, aromaFilters, aromaDetail, news,
-        reviews, paymentDetails
+        reviews, paymentDetails, billing
     }
 })
