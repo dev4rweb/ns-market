@@ -42,7 +42,11 @@ export default {
                         if (window.location.href.includes('/user-payment-info-panel')) {
                             dispatch('fetchPartnerPaymentDetailAction')
                         }
-                        if (window.location.href.includes('/user-bank-panel')) {
+                        if (
+                            window.location.href.includes('/user-bank-panel')
+                            ||
+                            window.location.href.includes('/user-bank-bonus-mark')
+                        ) {
                             dispatch('fetchBillingCustomerAction')
                         }
                         dispatch('getCustomerOrdersByUserId');

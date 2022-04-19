@@ -10,4 +10,9 @@ class PagesController extends Controller
     {
         return view('user-pages.user-bank-panel');
     }
+
+    public function user_bank_bonus_mark()
+    {
+        return view('user-pages.user-bank-bonus-account');
+    }
 }
