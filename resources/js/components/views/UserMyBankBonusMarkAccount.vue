@@ -10,12 +10,12 @@
                     >
                         На Вашем счету <b>{{ parseInt(getBillingAccountMBC.balance) }}</b> БМ
                     </p>
-                    <button
+                    <a
                         class="btn btn-lg btn-success"
-                        @click="moveToTransactionsHistory"
+                        href="/user-bank-bonus-report"
                     >
                         Показать историю
-                    </button>
+                    </a>
                 </div>
                 <div class="d-flex justify-content-center">
                     <TransferBonusMark
@@ -49,9 +49,6 @@ export default {
     },
     methods: {
         ...mapMutations(['setLoading']),
-        moveToTransactionsHistory() {
-            console.log('moveToTransactionsHistory')
-        },
     },
     components: {
         FindReceiver, TransferBonusMark

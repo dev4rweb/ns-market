@@ -24,7 +24,8 @@ export default {
                 .finally(() => {
                     commit('setLoading', false)
                 });
-        }
+        },
+
     },
     mutations: {
         setReceiverUser(state, receiverUser) {

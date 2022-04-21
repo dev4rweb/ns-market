@@ -81,6 +81,8 @@ Vue.component('delivery-way-table-item', require('./components/UI/tables/Deliver
 Vue.component('category-products-table', require('./components/UI/tables/CategoryProductsTable').default);
 Vue.component('aroma-groups-table', require('./components/UI/tables/AromaGroupsTable').default);
 Vue.component('aroma-groups-table-item', require('./components/UI/tables/AromaGroupsTableItem').default);
+Vue.component('bm_report-table', require('./components/UI/tables/BMReportTable').default);
+Vue.component('bm_report-table-item', require('./components/UI/tables/BMReportTableItem').default);
 Vue.component('user-data-tabs', require('./components/views/UserDataTabs').default);
 Vue.component('catalog-page', require('./components/views/CatalogPage').default);
 Vue.component('category-page', require('./components/views/CategoryPage').default);
@@ -161,6 +163,7 @@ Vue.component('created-review-modal-success', require('./components/Modals/Creat
 Vue.component('user-payment-page', require('./components/views/UserPaymentPage').default);
 Vue.component('user-my-bank-panel', require('./components/views/UserMyBankPanel').default);
 Vue.component('user-my-bank-bonus-mark-account', require('./components/views/UserMyBankBonusMarkAccount').default);
+Vue.component('user-my-bank-bonus-mark-report', require('./components/views/UserMyBankBonusMarkReport').default);
 Vue.component('find-receiver', require('./components/page-parts/user-bank/FindReceiver').default);
 Vue.component('transfer-bonus-mark', require('./components/page-parts/user-bank/TransferBonusMark').default);
 /**

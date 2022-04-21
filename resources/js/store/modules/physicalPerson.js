@@ -46,6 +46,8 @@ export default {
                             window.location.href.includes('/user-bank-panel')
                             ||
                             window.location.href.includes('/user-bank-bonus-mark')
+                            ||
+                            window.location.href.includes('/user-bank-bonus-report')
                         ) {
                             dispatch('fetchBillingCustomerAction')
                         }

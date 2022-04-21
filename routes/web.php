@@ -89,3 +89,4 @@ Route::get('/order-payment', [OrderPaymentPageController::class, 'index'])->name
 Route::get('/reviews', [ReviewsPageController::class, 'index'])->name('reviews-page');
 Route::get('/user-bank-panel', [PagesController::class, 'user_bank_panel'])->name('user-bank-page');
 Route::get('/user-bank-bonus-mark', [PagesController::class, 'user_bank_bonus_mark'])->name('user-bank-bonus-mark-page');
+Route::get('/user-bank-bonus-report', [PagesController::class, 'user_bank_bonus_report'])->name('user-bank-bonus-report-page');

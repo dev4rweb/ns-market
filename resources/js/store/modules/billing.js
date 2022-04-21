@@ -41,6 +41,8 @@ export default {
                                         break;
                                     case 4:
                                         commit('setBillingAccountMBC', res.data.model)
+                                        if(window.location.href.includes('/user-bank-bonus-report'))
+                                            dispatch('getAllTransactionsByBillingAccountAction', res.data.model.id)
                                         break;
                                     case 5:
                                         commit('setBillingAccountPVC', res.data.model)
@@ -126,6 +128,16 @@ export default {
         }
     },
     mutations: {
+        addBMCIncome(state, income) {
+            state.billingAccountMBC.income ?
+                state.billingAccountMBC.income += income:
+                state.billingAccountMBC.income = income
+        },
+        addBMCExpense(state, expense) {
+            state.billingAccountMBC.expnese ?
+                state.billingAccountMBC.expnese += expense :
+                state.billingAccountMBC.expnese = expense
+        },
         setBillingCustomer(state, billingCustomer) {
             state.billingCustomer = billingCustomer
         },
@@ -146,6 +158,9 @@ export default {
         }
     },
     getters: {
+        getMBCIncome(state) {
+            return state.billingAccountMBC.income
+        },
         getBillingCustomer(state) {
             return state.billingCustomer
         },
