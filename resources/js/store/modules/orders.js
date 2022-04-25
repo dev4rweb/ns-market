@@ -85,6 +85,33 @@ export default {
                 });
             }
         },
+        payBasketOrderAction({getters, commit, dispatch}) {
+            const basketOrder = getters['getOrders'].find(i => i.status === 0)
+            console.log('payBasketOrderAction', basketOrder)
+            if (basketOrder) {
+                commit('setLoading', true)
+                basketOrder.status = 2;
+                updateOrCreateBasketOrderApi(basketOrder)
+                    .then(res => {
+                        console.log('payBasketOrderAction res', res)
+                        if (res.data.success) {
+                            dispatch('removeLSOrderAction');
+                            commit('setBasketOrder', null)
+                            commit('setToastError', 'Заказ оплачен и отправлен на сборку')
+                            setTimeout(() => {
+                                window.location.href = '/user-orders-panel'
+                            }, 2000);
+                        }
+                    })
+                    .catch(err => {
+                        console.log('payBasketOrderAction err', err)
+                    })
+                    .finally(() => {
+                        commit('setLoading', false)
+                    });
+            }
+
+        },
         replaceBasketDraftOrderAction({commit, getters, dispatch}, draftOrder) {
             const basketOrder = getters['getOrders'].find(i => i.status === 0)
             console.log('changingPlaceBasketDraftOrderAction draftOrder', draftOrder)

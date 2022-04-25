@@ -48,8 +48,12 @@ export default {
                             window.location.href.includes('/user-bank-bonus-mark')
                             ||
                             window.location.href.includes('/user-bank-bonus-report')
+                            ||
+                            window.location.href.includes('/user-bank-reserve')
+                            ||
+                            window.location.href.includes('/user-bank-reserve-report')
                         ) {
-                            dispatch('fetchBillingCustomerAction')
+                            dispatch('getAllWalletsAction')
                         }
                         dispatch('getCustomerOrdersByUserId');
                         // dispatch('createBasketOrderOnServer');

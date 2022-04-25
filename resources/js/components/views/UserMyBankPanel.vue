@@ -9,30 +9,21 @@
                         aria-current="true">
                         <div class="d-flex w-75 justify-content-between">
                             <h4>Лицевой счет пользователя</h4>
-                            <h4 v-if="getBillingAccountMain">
-                                {{ getBillingAccountMain.balance }}
-                                {{ getBillingAccountMain.currency_code }}
-                            </h4>
+                            <h4 v-if="getWalletMain">{{ getWalletMain.balance }}</h4>
                         </div>
                     </li>
                     <li
                         class="list-group-item list-group-item-action">
                         <div class="d-flex w-75 justify-content-between">
                             <h4>Накопительный счет пользователя</h4>
-                            <h4 v-if="getBillingAccountSaving">
-                                {{ getBillingAccountSaving.balance }}
-                                {{ getBillingAccountSaving.currency_code }}
-                            </h4>
+                            <h4 v-if="getWalletSaving">{{ getWalletSaving.balance }}</h4>
                         </div>
                     </li>
                     <li
                         class="list-group-item list-group-item-action">
                         <div class="d-flex w-75 justify-content-between">
                             <h4>Ваучер банка пользователя</h4>
-                            <h4 v-if="getBillingAccountVoucher">
-                                {{ getBillingAccountVoucher.balance }}
-                                {{ getBillingAccountVoucher.currency_code }}
-                            </h4>
+                            <h4 v-if="getWalletVoucher">{{ getWalletVoucher.balance }}</h4>
                         </div>
                     </li>
                     <li
@@ -42,23 +33,28 @@
                             class="d-flex w-75 justify-content-between"
                         >
                             <h4>Счет Бонус марок пользователя</h4>
-                            <h4 v-if="getBillingAccountMBC">
-                                {{ getBillingAccountMBC.balance }}
-                                {{ getBillingAccountMBC.currency_code }}
-                            </h4>
+                            <h4 v-if="getWalletMBC">{{ getWalletMBC.balance }}</h4>
                         </a>
                     </li>
                     <li
-                        class="list-group-item list-group-item-action disabled"
-                        aria-disabled="true">
-                        <div class="d-flex w-75 justify-content-between">
-                            <h4>РезервPV пользователя</h4>
-                            <h4 v-if="getBillingAccountPVC">
-                                {{ getBillingAccountPVC.balance }}
-                                {{ getBillingAccountPVC.currency_code }}
-                            </h4>
-                        </div>
+                        class="list-group-item list-group-item-action ">
+                        <a
+                            href="/user-bank-reserve"
+                            class="d-flex w-75 justify-content-between"
+                        >
+                            <h4>Резерв пользователя PV</h4>
+                            <h4 v-if="getWalletPVC">{{ getWalletPVC.balance }}</h4>
+                        </a>
                     </li>
+                    <!--                    <li
+                                            v-if="isPartner"
+                                            class="list-group-item list-group-item-action disabled"
+                                            aria-disabled="true">
+                                            <div class="d-flex w-75 justify-content-between">
+                                                <h4>Личный объем PV</h4>
+                                                <h4>{{ isPartner }}</h4>
+                                            </div>
+                                        </li>-->
                 </ul>
             </div>
         </div>
@@ -94,15 +90,9 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['getBillingAccountMain', 'getBillingAccountSaving',
-            'getBillingAccountVoucher', 'getBillingAccountMBC', 'getBillingAccountPVC'])
+        ...mapGetters(['isPartner', 'getWalletMain', 'getWalletSaving', 'getWalletVoucher',
+            'getWalletMBC', 'getWalletPVC'])
     },
-    methods: {
-        ...mapActions(['fetchTransactionTypesAction'])
-    },
-    mounted() {
-        this.fetchTransactionTypesAction()
-    }
 }
 </script>
 

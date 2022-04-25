@@ -83,6 +83,8 @@ Vue.component('aroma-groups-table', require('./components/UI/tables/AromaGroupsT
 Vue.component('aroma-groups-table-item', require('./components/UI/tables/AromaGroupsTableItem').default);
 Vue.component('bm_report-table', require('./components/UI/tables/BMReportTable').default);
 Vue.component('bm_report-table-item', require('./components/UI/tables/BMReportTableItem').default);
+Vue.component('reserve-report-table', require('./components/UI/tables/ReserveReportTable').default);
+Vue.component('reserve-report-table-item', require('./components/UI/tables/ReserveReportTableItem').default);
 Vue.component('user-data-tabs', require('./components/views/UserDataTabs').default);
 Vue.component('catalog-page', require('./components/views/CatalogPage').default);
 Vue.component('category-page', require('./components/views/CategoryPage').default);
@@ -166,6 +168,9 @@ Vue.component('user-my-bank-bonus-mark-account', require('./components/views/Use
 Vue.component('user-my-bank-bonus-mark-report', require('./components/views/UserMyBankBonusMarkReport').default);
 Vue.component('find-receiver', require('./components/page-parts/user-bank/FindReceiver').default);
 Vue.component('transfer-bonus-mark', require('./components/page-parts/user-bank/TransferBonusMark').default);
+Vue.component('transfer-reserve-pvc', require('./components/page-parts/user-bank/TransferReservePVC').default);
+Vue.component('user-my-bank-reserve-account', require('./components/views/UserMyBankReserveAccount').default);
+Vue.component('user-my-bank-reserve-report', require('./components/views/UserMyBankReserveReport').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

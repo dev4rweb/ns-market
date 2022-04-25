@@ -10,9 +10,12 @@ export const makeBonusMarkTransactionApi = transactionObj => {
         .then(res => res).catch(err => err)
 };
 
-export const getAllTransactionByBillingAccountApi= billingAccount => {
-    return axios.post(`${WORK_HOST}market/bonus-mark-report`, {
-        billingAccount
-    })
+export const getAllTransactionByWalletIdApi= query => {
+    return axios.post(`${WORK_HOST}market/bonus-mark-report`, query)
         .then(res => res).catch(err => err)
 }
+
+export const makeReserveTransactionApi = transactionObj => {
+    return axios.post(`${WORK_HOST}market/reserve-transaction`, transactionObj)
+        .then(res => res).catch(err => err)
+};

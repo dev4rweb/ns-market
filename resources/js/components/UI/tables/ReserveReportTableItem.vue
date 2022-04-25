@@ -19,9 +19,8 @@
 
 <script>
 import {mapGetters} from 'vuex'
-
 export default {
-    name: "BMReportTableItem",
+    name: "ReserveReportTableItem",
     props: ['transaction', 'index'],
     methods: {
         getFullName(user) {
@@ -35,7 +34,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['getWalletMBC']),
+        ...mapGetters(['getWalletPVC']),
         getDate() {
             if (this.transaction.created_at) {
                 const date = new Date(this.transaction.created_at)
@@ -49,15 +48,15 @@ export default {
             return ''
         },
         getIncome() {
-            if (this.transaction && this.getWalletMBC) {
-                return this.getWalletMBC.id === this.transaction.to_account_id ?
+            if (this.transaction && this.getWalletPVC) {
+                return this.getWalletPVC.id === this.transaction.to_account_id ?
                     this.transaction.amount : ''
             }
             return ''
         },
         getExpense() {
-            if (this.transaction && this.getWalletMBC) {
-                return this.getWalletMBC.id === this.transaction.from_account_id ?
+            if (this.transaction && this.getWalletPVC) {
+                return this.getWalletPVC.id === this.transaction.from_account_id ?
                     this.transaction.amount : ''
             }
             return ''
@@ -65,10 +64,12 @@ export default {
         getTypeOperation() {
             if (this.transaction) {
                 switch (this.transaction.type_code) {
-                    case 'bonus_mark_movement':
-                        return 'Перевод бонус марок между счетами'
-                    case 'bonus_mark_review':
-                        return `Начисление бонус марок за публикацию ${this.transaction.document}`
+                    case 'reserve_purchase':
+                        return `${this.transaction.document}`
+                    case 'reserve_movement':
+                        return `Перевод баллов в резерв`
+                    case 'lo_movement':
+                        return `Перевод баллов в ЛО`
                     default:
                         return 'Другая операция'
                 }

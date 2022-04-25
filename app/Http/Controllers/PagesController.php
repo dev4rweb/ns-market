@@ -20,4 +20,14 @@ class PagesController extends Controller
     {
         return view('user-pages.user-bank-bonus-report');
     }
+
+    public function user_bank_reserve()
+    {
+        return view('user-pages.user-bank-reserve-account');
+    }
+
+    public function user_bank_reserve_report()
+    {
+        return view('user-pages.user-bank-reserve-report');
+    }
 }

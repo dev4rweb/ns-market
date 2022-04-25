@@ -1,16 +1,17 @@
 <template>
     <form
-        @submit.prevent="transferBonus"
+        @submit.prevent="transferPVC"
         class="needs-validation login-form "
         novalidate
     >
         <h4 class="mb-3 text-center">
-            Укажите количество бонус марок, которое вы хотите перевести
+            Укажите количество баллов, которое вы хотите перевести
         </h4>
         <h5
             v-if="getReceiverUser"
             class="mb-3 text-center"
         >
+            {{getReceiverUser.id}}
             {{ getReceiverUser.full_name }}
         </h5>
         <div class="d-flex justify-content-center align-items-center flex-column mb-3">
@@ -67,10 +68,9 @@
 
 <script>
 import {mapGetters, mapMutations} from 'vuex'
-import {makeBonusMarkTransactionApi} from "../../../store/actions/transactionsApi";
-
+import {makeReserveTransactionApi} from "../../../store/actions/transactionsApi";
 export default {
-    name: "TransferBonusMark",
+    name: "TransferReservePVC",
     data() {
         return {
             transferAmount: '',
@@ -83,7 +83,7 @@ export default {
     },
     methods: {
         ...mapMutations(['setReceiverUser', 'setLoading', 'setToastError']),
-        transferBonus() {
+        transferPVC() {
             if (!this.transferAmount) {
                 this.transferAmountMsg = 'Поле не может быть пустым'
                 this.isAmountInvalid = true
@@ -94,25 +94,25 @@ export default {
                 this.isAmountInvalid = true
                 return;
             }
-            if (this.transferAmount > parseInt(this.getWalletMBC.balance)) {
+            if (this.transferAmount > parseInt(this.getWalletPVC.balance)) {
                 this.transferAmountMsg = 'Сумма превышает баланс на счету'
                 this.isAmountInvalid = true
                 return
             }
-            console.log('transferBonus');
+            console.log('transferPVC');
             const transactionObj= {
                 senderId: this.getPhysicalPerson.user_id,
                 receiverId: this.getReceiverUser.id,
-                bonusAmount: parseInt(this.transferAmount),
+                reserveAmount: parseInt(this.transferAmount),
                 comment: this.comment,
             }
             this.disabled = true
             this.setLoading(true)
-            makeBonusMarkTransactionApi(transactionObj)
+            makeReserveTransactionApi(transactionObj)
                 .then(res => {
-                    console.log('makeBonusMarkTransactionApi', res)
+                    console.log('makeReserveTransactionApi ', res)
                     if (res.data.success) {
-                        this.setToastError('Бонус марки успешно переведены!')
+                        this.setToastError('Баллы успешно переведены!')
                         setTimeout(() => {
                             window.location.reload()
                         }, 2000);
@@ -124,10 +124,10 @@ export default {
                 .finally(() => {
                     this.setLoading(false)
                 });
-        },
+        }
     },
     computed: {
-        ...mapGetters([ 'getReceiverUser', 'getPhysicalPerson', 'getWalletMBC'])
+        ...mapGetters(['getReceiverUser', 'getPhysicalPerson', 'getWalletPVC'])
     },
     mounted() {
         setTimeout(() => {
