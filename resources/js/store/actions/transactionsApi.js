@@ -19,3 +19,8 @@ export const makeReserveTransactionApi = transactionObj => {
     return axios.post(`${WORK_HOST}market/reserve-transaction`, transactionObj)
         .then(res => res).catch(err => err)
 };
+
+export const makePVTransactionApi = transactionObj => {
+    return axios.post(`${WORK_HOST}market/personal-transaction`, transactionObj)
+        .then(res => res).catch(err => err)
+};

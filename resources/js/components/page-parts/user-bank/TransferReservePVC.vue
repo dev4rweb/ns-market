@@ -14,6 +14,13 @@
             {{getReceiverUser.id}}
             {{ getReceiverUser.full_name }}
         </h5>
+        <div
+            class="d-flex justify-content-between align-items-center mb-3"
+            style="max-width: 420px;"
+        >
+            <RadioBox label="В личный объём" value="0" v-model="reserveOrPV"/>
+            <RadioBox label="В резерв" value="1" v-model="reserveOrPV"/>
+        </div>
         <div class="d-flex justify-content-center align-items-center flex-column mb-3">
             <input
                 type="number"
@@ -69,6 +76,7 @@
 <script>
 import {mapGetters, mapMutations} from 'vuex'
 import {makeReserveTransactionApi} from "../../../store/actions/transactionsApi";
+import RadioBox from "../../UI/RadioBox";
 export default {
     name: "TransferReservePVC",
     data() {
@@ -78,7 +86,8 @@ export default {
             isAmountInvalid: false,
             transactionComment: 'Даю в долг до 20 мая с возвратом.',
             comment: '',
-            disabled: false
+            disabled: false,
+            reserveOrPV: '0'
         }
     },
     methods: {
@@ -99,7 +108,10 @@ export default {
                 this.isAmountInvalid = true
                 return
             }
-            console.log('transferPVC');
+            console.log('transferPVC', this.reserveOrPV);
+            if (this.reserveOrPV === '0') {
+                console.log('LO Transaction')
+            }
             const transactionObj= {
                 senderId: this.getPhysicalPerson.user_id,
                 receiverId: this.getReceiverUser.id,
@@ -128,6 +140,9 @@ export default {
     },
     computed: {
         ...mapGetters(['getReceiverUser', 'getPhysicalPerson', 'getWalletPVC'])
+    },
+    components: {
+        RadioBox
     },
     mounted() {
         setTimeout(() => {

@@ -30,6 +30,7 @@
             <button
                 class="btn btn-lg btn-info"
                 style="min-width: 150px;"
+                :disabled="isLoading"
                 type="submit"
             >
                 Искать
@@ -49,7 +50,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['getBillingAccountMBC', 'getPhysicalPerson',
+        ...mapGetters(['getPhysicalPerson', 'isLoading',
         'getReceiverUserMsg'])
     },
     methods: {

@@ -23,6 +23,7 @@ export const getWalletByTypeApi = (user_id, type_id) => {
         .then(res => res).catch(err => err)
 };
 
+// need to chek for type_id === 6
 export const walletUpdateApi = (user_id, balance) => {
     return axios.post(`${WORK_HOST}market/wallet-update`, {user_id, balance})
         .then(res => res).catch(err => err)
