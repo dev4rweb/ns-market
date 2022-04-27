@@ -4,16 +4,17 @@
         class="needs-validation login-form "
         novalidate
     >
-        <h4 class="mb-3 text-center">
-            Укажите количество баллов, которое вы хотите перевести
-        </h4>
+        <h5 class="text-center">Получатель перевода</h5>
         <h5
             v-if="getReceiverUser"
             class="mb-3 text-center"
         >
-            {{getReceiverUser.id}}
+            {{ getReceiverUser.id }}
             {{ getReceiverUser.full_name }}
         </h5>
+        <h4 class="mb-3 text-center">
+            Укажите количество баллов, которое вы хотите перевести
+        </h4>
         <div
             class="d-flex justify-content-between align-items-center mb-3"
             style="max-width: 420px;"
@@ -25,7 +26,7 @@
             <input
                 type="number"
                 min="1"
-                style="max-width: 200px; font-weight: bold; font-size: 40px; text-align: center"
+                style="max-width: 250px; font-weight: bold; font-size: 60px; text-align: center"
                 v-model="transferAmount"
                 @input="isAmountInvalid = false"
                 ref="focusMe"
@@ -53,9 +54,9 @@
                 ></textarea>
             </div>
         </div>
-        <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-center">
             <button
-                class="btn btn-lg btn-info"
+                class="btn btn-lg btn-info me-3"
                 style="min-width: 120px;"
                 type="submit"
                 :disabled="disabled"
@@ -75,8 +76,9 @@
 
 <script>
 import {mapGetters, mapMutations} from 'vuex'
-import {makeReserveTransactionApi} from "../../../store/actions/transactionsApi";
+import {makePVTransactionApi, makeReserveTransactionApi} from "../../../store/actions/transactionsApi";
 import RadioBox from "../../UI/RadioBox";
+
 export default {
     name: "TransferReservePVC",
     data() {
@@ -109,33 +111,57 @@ export default {
                 return
             }
             console.log('transferPVC', this.reserveOrPV);
-            if (this.reserveOrPV === '0') {
-                console.log('LO Transaction')
-            }
-            const transactionObj= {
-                senderId: this.getPhysicalPerson.user_id,
-                receiverId: this.getReceiverUser.id,
-                reserveAmount: parseInt(this.transferAmount),
-                comment: this.comment,
-            }
             this.disabled = true
             this.setLoading(true)
-            makeReserveTransactionApi(transactionObj)
-                .then(res => {
-                    console.log('makeReserveTransactionApi ', res)
-                    if (res.data.success) {
-                        this.setToastError('Баллы успешно переведены!')
-                        setTimeout(() => {
-                            window.location.reload()
-                        }, 2000);
-                    }
-                })
-                .catch(err => {
-                    console.log('makeBonusMarkTransactionApi err', err)
-                })
-                .finally(() => {
-                    this.setLoading(false)
-                });
+            if (this.reserveOrPV === '0') {
+                console.log('LO Transaction');
+                const transactionObj = {
+                    senderId: this.getPhysicalPerson.user_id,
+                    receiverId: this.getReceiverUser.id,
+                    pv_amount: parseInt(this.transferAmount),
+                    comment: this.comment,
+                }
+                makePVTransactionApi(transactionObj)
+                    .then(res => {
+                        console.log('makePVTransactionApi', res)
+                        if (res.data.success) {
+                            this.setToastError('Баллы успешно переведены в личный объем')
+                            setTimeout(() => {
+                                window.location.reload()
+                            }, 2000);
+                        }
+                    })
+                    .catch(err => {
+                        console.log('makePVTransactionApi err', err)
+                    })
+                    .finally(() => {
+                        this.setLoading(false)
+                    });
+            } else {
+                const transactionObj = {
+                    senderId: this.getPhysicalPerson.user_id,
+                    receiverId: this.getReceiverUser.id,
+                    reserveAmount: parseInt(this.transferAmount),
+                    comment: this.comment,
+                };
+
+                makeReserveTransactionApi(transactionObj)
+                    .then(res => {
+                        console.log('makeReserveTransactionApi ', res)
+                        if (res.data.success) {
+                            this.setToastError('Баллы успешно переведены!')
+                            setTimeout(() => {
+                                window.location.reload()
+                            }, 2000);
+                        }
+                    })
+                    .catch(err => {
+                        console.log('makeBonusMarkTransactionApi err', err)
+                    })
+                    .finally(() => {
+                        this.setLoading(false)
+                    });
+            }
         }
     },
     computed: {

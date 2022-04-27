@@ -69,7 +69,11 @@ export default {
             if (
                 this.receiverId == 888
                 ||
-                this.receiverId == this.getPhysicalPerson.user_id
+                (
+                    !window.location.href.includes('/user-bank-reserve')
+                    &&
+                    this.receiverId == this.getPhysicalPerson.user_id
+                )
             ) {
                 this.setReceiverUserMsg('Недопустимая операция')
                 return
@@ -88,8 +92,8 @@ export default {
 
 <style lang="scss" scoped>
 .person{
-    font-size: 30px;
-    max-width: 220px;
+    font-size: 60px;
+    max-width: 420px;
     font-weight: bold;
     text-align: center
 }

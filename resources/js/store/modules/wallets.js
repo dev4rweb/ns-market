@@ -13,7 +13,7 @@ export default {
     actions: {
         getAllWalletsAction({getters, commit, dispatch}) {
             // const walletsAmount = getters['isPartner'] ? 6 : 5
-            const walletsAmount = 5
+            const walletsAmount = 6
             console.log('getAllWalletsAction', walletsAmount)
             const curUser = getters['getPhysicalPerson']
             if (curUser) {

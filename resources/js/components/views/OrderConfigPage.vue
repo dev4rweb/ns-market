@@ -46,35 +46,34 @@
                 class="card shadow blue-header-info-block mb-3"
                 v-if="isPartner"
             >
-                <div class="header-block p-3">
+                <div
+                    ref="focusMe"
+                    class="header-block p-3"
+                >
                     Выберите тип заказа
                 </div>
                 <div
                     class="body-block p-3"
                 >
-                    <div class="form-check">
-                        <input
-                            class="form-check-input"
-                            type="radio"
-                            name="isReserve"
+                    <div class="d-flex">
+                        <RadioBox
+                            label="Личный объем"
                             value="0"
-                            checked>
-                        <label
-                            class="form-check-label">
-                            Личный объём
-                        </label>
+                            v-model="is_reserve"
+                            @change="isReserveInvalid = false"
+                        />
+                        <RadioBox
+                            label="Резерв"
+                            value="1"
+                            v-model="is_reserve"
+                            @change="isReserveInvalid = false"
+                        />
                     </div>
-                    <div class="form-check">
-                        <input
-                            class="form-check-input"
-                            type="radio"
-                            name="isReserve"
-                            value="1">
-                        <label
-                            class="form-check-label"
-                        >
-                            Резерв
-                        </label>
+                    <div
+                        class="invalid-feedback"
+                        :class="{show: isReserveInvalid}"
+                    >
+                        {{ invalidMessage }}
                     </div>
                 </div>
             </div>
@@ -86,7 +85,7 @@
                     <div class="form-group form-group-blue">
                         <textarea
                             class="form-control form-control-lg"
-                            v-model="comment"
+                            v-model="customer_notes"
                         ></textarea>
                     </div>
                 </div>
@@ -112,30 +111,69 @@
 
 <script>
 import NavOrder from "../UI/NavOrder";
-import {mapGetters, mapActions} from 'vuex'
+import {mapGetters, mapActions, mapMutations} from 'vuex'
+import RadioBox from "../UI/RadioBox";
+import {patchCustomerOrderApi} from "../../store/actions/ordersApi";
 
 export default {
     name: "OrderConfigPage",
     data() {
         return {
-            comment: ''
+            customer_notes: '',
+            is_reserve: null,
+            isReserveInvalid: false,
+            invalidMessage: 'Выберите тип заказа'
         }
     },
     methods: {
         ...mapActions(['fetchPhysicalPerson']),
+        ...mapMutations(['setLoading']),
         gotoOrderDelivery() {
-            window.location.href = '/order-delivery'
+            let customerOrder = null;
+            if (this.isPartner) {
+                if (!this.is_reserve) {
+                    this.isReserveInvalid = true
+                    this.$refs.focusMe.scrollIntoView();
+                    return
+                }
+                customerOrder = {
+                    id: this.getBasketOrder.id,
+                    customer_notes: this.customer_notes,
+                    is_reserve: parseInt(this.is_reserve)
+                }
+            } else {
+                customerOrder = {
+                    id: this.getBasketOrder.id,
+                    customer_notes: this.customer_notes,
+                    is_reserve: 0
+                }
+            }
+            if (this.getBasketOrder && customerOrder) {
+                this.setLoading(true)
+                patchCustomerOrderApi(customerOrder)
+                    .then(res => {
+                        console.log('patchCustomerOrderApi', res)
+                        if (res.data.success) window.location.href = '/order-delivery';
+                    })
+                    .catch(err => {
+                        console.log('patchCustomerOrderApi err', err)
+                    })
+                    .finally(() => {
+                        this.setLoading(false)
+                    });
+            }
         },
         goBack() {
             window.location.href = '/basket'
         },
     },
     components: {
-        NavOrder
+        NavOrder, RadioBox
     },
     computed: {
         ...mapGetters(['getLSOrder', 'getAmountProduct', 'getWeightOrder',
-            'getPointsOrder', 'getSumOrder', 'getEconomicSumOrder', 'isPartner'])
+            'getPointsOrder', 'getSumOrder', 'getEconomicSumOrder', 'isPartner',
+            'getBasketOrder'])
     },
     mounted() {
         if (window.User) {
@@ -213,4 +251,16 @@ textarea {
     max-width: 536px;
 }
 
+.invalid-feedback {
+    font-weight: bold;
+    font-style: italic;
+}
+
+.show {
+    display: block;
+}
+
+.borderRed {
+    border-color: red;
+}
 </style>

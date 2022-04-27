@@ -6,6 +6,7 @@
             <th scope="col">Дата</th>
             <th scope="col">Наименований</th>
             <th scope="col">Масса</th>
+            <th scope="col">Тип покупки</th>
             <th scope="col">PV</th>
             <th scope="col">Сумма</th>
             <th scope="col">Статус</th>

@@ -49,10 +49,15 @@ export default {
                     if (res.data.success) {
                         if (res.data.models) {
                             commit('setOrders',
-                                res.data.models.sort((a, b) =>
-                                    (a.status > b.status) ? 1 :
-                                        (b.status > a.status) ? -1 : 0
-                                )
+                                res.data.models
+                                    .sort((a, b) =>
+                                        (a.updated_at > b.updated_at) ? 1 :
+                                            (b.updated_at > a.updated_at) ? -1 : 0
+                                    )
+                                    .sort((a, b) =>
+                                        (a.status > b.status) ? 1 :
+                                            (b.status > a.status) ? -1 : 0
+                                    )
                             );
                             const basketOrder = res.data.models.find(i => i.status === 0);
                             if (basketOrder) {

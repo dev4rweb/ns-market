@@ -2,14 +2,11 @@
     <div class="user-content">
         <div class="row">
             <div class="card data-card mb-5">
-                <h3 class="mb-3">Перевод баллов резерва</h3>
-                <div class="d-flex justify-content-between mb-3">
-                    <p
-                        style="font-size: 18px;"
-                        v-if="getWalletPVC"
-                    >
-                        В Вашем резерве <b>{{ parseInt(getWalletPVC.balance) }}</b> баллов
-                    </p>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="d-flex align-items-center">
+                        <BackBtn path-to="/user-bank-panel" />
+                        <h3 class="mb-0">Перевод баллов резерва</h3>
+                    </div>
                     <a
                         class="btn btn-lg btn-success"
                         href="/user-bank-reserve-report"
@@ -17,6 +14,14 @@
                         Смотреть историю
                     </a>
                 </div>
+
+                <p
+                    style="font-size: 18px;"
+                    v-if="getWalletPVC"
+                >
+                    В Вашем резерве <b>{{ parseInt(getWalletPVC.balance) }}</b> баллов
+                </p>
+
                 <div class="d-flex justify-content-center">
                     <TransferReservePVC v-if="getReceiverUser" />
                     <FindReceiver v-else />
@@ -30,6 +35,7 @@
 import {mapGetters} from 'vuex'
 import FindReceiver from "../page-parts/user-bank/FindReceiver";
 import TransferReservePVC from "../page-parts/user-bank/TransferReservePVC";
+import BackBtn from "../UI/BackBtn";
 export default {
     name: "UserMyBankReserveAccount",
     data() {
@@ -41,11 +47,14 @@ export default {
         ...mapGetters(['getWalletPVC', 'getReceiverUser'])
     },
     components: {
-        FindReceiver, TransferReservePVC
+        FindReceiver, TransferReservePVC, BackBtn
     }
 }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+h3{
+    font-size: 34px;
+    font-weight: bold;
+}
 </style>

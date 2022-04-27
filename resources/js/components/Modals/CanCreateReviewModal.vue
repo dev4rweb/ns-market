@@ -32,8 +32,18 @@
                                     class="d-flex justify-content-between align-items-center"
                                     style="max-width: 300px;"
                                 >
-                                    <RadioBox label="Мужской" value="0" v-model="gender"/>
-                                    <RadioBox label="Женский" value="1" v-model="gender"/>
+                                    <RadioBox
+                                        label="Мужской"
+                                        value="0"
+                                        v-model="gender"
+                                        @change="isGenderInvalid = false"
+                                    />
+                                    <RadioBox
+                                        label="Женский"
+                                        value="1"
+                                        v-model="gender"
+                                        @change="isGenderInvalid = false"
+                                    />
                                 </div>
                                 <div
                                     class="invalid-feedback"

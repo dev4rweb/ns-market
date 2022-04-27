@@ -5,6 +5,7 @@
         <td>{{ getDataOrder }}</td>
         <td> {{ order.products.length }}</td>
         <td>{{ order.amount_weight }}</td>
+        <td>{{ isReserve }}</td>
         <td>{{ order.amount_score }}</td>
         <td>{{ order.order_price }}</td>
         <td>{{ orderStatus }}</td>
@@ -73,6 +74,13 @@ export default {
         },
         orderStatus() {
             return orderStatuses(this.order.status)
+        },
+        isReserve() {
+            if (this.order.is_reserve !== null) {
+                if (this.order.is_reserve === 0) return 'ЛО'
+                else return 'Резерв'
+            }
+            return 'Не определен'
         }
     }
 }

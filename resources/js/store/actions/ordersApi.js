@@ -10,3 +10,10 @@ export const removeCustomerOrderApi = id => {
         _method: 'DELETE'
     }).then(res => res).catch(err => err)
 };
+
+export const patchCustomerOrderApi = customerOrder => {
+    return axios.post(`${WORK_HOST}customer-orders/${customerOrder.id}`, {
+        _method: 'PATCH',
+        ...customerOrder
+    })
+};

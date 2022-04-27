@@ -22,7 +22,10 @@
                     являются основанием для отказа от приема назначенных лекарственных препаратов и квалифицированной
                     врачебной помощи.
                 </p>
-                <div class="d-flex justify-content-center">
+                <div
+                    ref="startPage"
+                    class="d-flex justify-content-center"
+                >
                     <button
                         class="btn btn-success me-3"
                         @click="createReview"

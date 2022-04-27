@@ -18,6 +18,7 @@ export default {
                     console.log('fetchAllReviewsByQueryAction res', res)
                     commit('setReviewsCurrentPage', res.data.models.current_page)
                     commit('setAllReviews', res.data.models)
+                    // this.$refs.startPage.scrollIntoView()startPage
                     window.scrollTo(0, 700)
                 }).catch(err =>
                 console.log('fetchAllReviewsByQueryAction err', err)

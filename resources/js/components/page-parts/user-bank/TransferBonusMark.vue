@@ -4,20 +4,22 @@
         class="needs-validation login-form "
         novalidate
     >
-        <h4 class="mb-3 text-center">
-            Укажите количество бонус марок, которое вы хотите перевести
-        </h4>
+        <h5 class="text-center">Получатель перевода</h5>
         <h5
             v-if="getReceiverUser"
             class="mb-3 text-center"
         >
+            {{ getReceiverUser.id }}
             {{ getReceiverUser.full_name }}
         </h5>
+        <h4 class="mb-3 text-center">
+            Укажите количество бонус марок, которое вы хотите перевести
+        </h4>
         <div class="d-flex justify-content-center align-items-center flex-column mb-3">
             <input
                 type="number"
                 min="1"
-                style="max-width: 200px; font-weight: bold; font-size: 40px; text-align: center"
+                style="max-width: 250px; font-weight: bold; font-size: 60px; text-align: center"
                 v-model="transferAmount"
                 @input="isAmountInvalid = false"
                 ref="focusMe"
@@ -45,9 +47,9 @@
                 ></textarea>
             </div>
         </div>
-        <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-center">
             <button
-                class="btn btn-lg btn-info"
+                class="btn btn-lg btn-info me-3"
                 style="min-width: 120px;"
                 type="submit"
                 :disabled="disabled"
@@ -100,7 +102,7 @@ export default {
                 return
             }
             console.log('transferBonus');
-            const transactionObj= {
+            const transactionObj = {
                 senderId: this.getPhysicalPerson.user_id,
                 receiverId: this.getReceiverUser.id,
                 bonusAmount: parseInt(this.transferAmount),
@@ -127,7 +129,7 @@ export default {
         },
     },
     computed: {
-        ...mapGetters([ 'getReceiverUser', 'getPhysicalPerson', 'getWalletMBC'])
+        ...mapGetters(['getReceiverUser', 'getPhysicalPerson', 'getWalletMBC'])
     },
     mounted() {
         setTimeout(() => {
