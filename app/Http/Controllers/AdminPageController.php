@@ -24,8 +24,8 @@ class AdminPageController extends Controller
      */
     public function index()
     {
-        if (Auth::id() == 25 || Auth::id() == 4294967295)
+//        if (Auth::id() == 25 || Auth::id() == 4294967295)
             return view('admin-panel');
-        else redirect('/');
+//        else redirect('/');
     }
 }
