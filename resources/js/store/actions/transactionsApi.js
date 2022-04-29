@@ -1,5 +1,40 @@
 import {WORK_HOST} from "../routeConsts";
 
+export const transactionsIndexApi = () => {
+    return axios.get(`${WORK_HOST}market/transactions`)
+        .then(res => res).catch(err => err)
+};
+
+export const transactionStoreApi = transaction => {
+    return axios.post(`${WORK_HOST}market/transactions`, {...transaction})
+        .then(res => res).catch(err => err)
+};
+
+export const transactionShowApi = transactionId => {
+    return axios.get(`${WORK_HOST}market/transactions/${transactionId}`)
+        .then(res => res).catch(err => err)
+};
+
+export const transactionUpdateApi = transaction => {
+    return axios.post(`${WORK_HOST}market/transactions/${transaction.id}`, {
+        _method: 'PUT',
+        ...transaction
+    }).then(res => res).catch(err => err)
+};
+
+export const transactionPatchApi = transaction => {
+    return axios.post(`${WORK_HOST}market/transactions/${transaction.id}`, {
+        _method: 'PATCH',
+        ...transaction
+    }).then(res => res).catch(err => err)
+};
+
+export const transactionDestroyApi = transactionId => {
+    return axios.post(`${WORK_HOST}market/transactions/${transactionId}`, {
+        _method: 'DELETE',
+    }).then(res => res).catch(err => err)
+};
+
 export const getTransactionTypesApi = () => {
     return axios.post(`${WORK_HOST}market/get-transaction-types`)
         .then(res => res).catch(err => err)

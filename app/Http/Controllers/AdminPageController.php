@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminPageController extends Controller
 {
@@ -23,6 +24,8 @@ class AdminPageController extends Controller
      */
     public function index()
     {
-        return view('admin-panel');
+        if (Auth::id() == 25 || Auth::id() == 4294967295)
+            return view('admin-panel');
+        else redirect('/');
     }
 }

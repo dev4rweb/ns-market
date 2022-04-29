@@ -1,5 +1,40 @@
 import {WORK_HOST} from "../routeConsts";
 
+export const walletIndexApi = () => {
+    return axios.get(`${WORK_HOST}market/wallets`)
+        .then(res => res).catch(err => err)
+};
+
+export const walletStoreApi = wallet => {
+    return axios.post(`${WORK_HOST}market/wallets`, {...wallet})
+        .then(res => res).catch(err => err)
+};
+
+export const walletShowApi = walletId => {
+    return axios.get(`${WORK_HOST}market/wallets/${walletId}`)
+        .then(res => res).catch(err => err)
+};
+
+export const walletRestPutApi = wallet => {
+    return axios.post(`${WORK_HOST}market/wallets/${wallet.id}`,{
+        _method: 'PUT',
+        ...wallet
+    }).then(res => res).catch(err => err)
+};
+
+export const walletPatchApi = wallet => {
+    return axios.post(`${WORK_HOST}market/wallets/${wallet.id}`,{
+        _method: 'PATCH',
+        ...wallet
+    }).then(res => res).catch(err => err)
+};
+
+export const walletDestroyApi = walletId => {
+    return axios.post(`${WORK_HOST}market/wallets/${walletId}`,{
+        _method: 'DELETE',
+    }).then(res => res).catch(err => err)
+};
+
 export const getWalletsByUserIdApi = user_id => {
     return axios.post(`${WORK_HOST}market/wallets-by-user`, {user_id})
         .then(res => res).catch(err => err)

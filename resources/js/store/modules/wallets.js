@@ -1,8 +1,23 @@
-import {createWalletApi, getWalletByTypeApi, getWalletsByUserIdApi} from "../actions/walletApi";
+import {
+    createWalletApi,
+    getWalletByTypeApi,
+    getWalletsByUserIdApi,
+    walletDestroyApi,
+    walletIndexApi, walletRestPutApi, walletStoreApi
+} from "../actions/walletApi";
 import {getCurrency} from "../utils/currency";
 
 export default {
     state: {
+        adminWalletCreate: {
+            user_id: '',
+            type_id: '',
+            currency_code: '',
+            balance: '',
+            is_default: ''
+        },
+        adminWalletEdit: null,
+        adminWallets: null,
         walletMain: null,
         walletSaving: null,
         walletVoucher: null,
@@ -11,6 +26,86 @@ export default {
         walletPartnerPV: null
     },
     actions: {
+        createAdminWalletAction({commit, getters}) {
+            console.log('createAdminWalletAction', getters['getAdminWalletCreate'])
+            commit('setLoading', true)
+            walletStoreApi(getters['getAdminWalletCreate'])
+                .then(res => {
+                    console.log('createAdminWalletAction res', res)
+                    if (res.data.success) {
+                        commit('setToastError', res.data.message)
+                        commit('setAdminWalletCreate', {
+                            user_id: '',
+                            type_id: '',
+                            currency_code: '',
+                            balance: '',
+                            is_default: ''
+                        })
+                        return walletIndexApi()
+                    } else commit('setToastError', res.data.message)
+
+                })
+                .then(res => {
+                    console.log('walletIndexApi', res)
+                    if (res.data.success) {
+                        commit('setAdminWallets', res.data.models)
+                    }
+                })
+                .catch(err => {
+                    console.log('createAdminWalletAction err', err)
+                })
+                .finally(() => {
+                    commit('setLoading', false)
+                });
+        },
+        updateWalletAction({commit, getters}) {
+            console.log('updateWalletAction', getters['getAdminWalletEdit'])
+            commit('setLoading', true)
+            walletRestPutApi(getters['getAdminWalletEdit'])
+                .then(res => {
+                    console.log('updateWalletAction res', res)
+                    if (res.data.success) {
+                        commit('setToastError', res.data.message)
+                        commit('setAdminWalletEdit', null)
+                        return walletIndexApi()
+                    } else commit('setToastError', res.data.message)
+
+                })
+                .then(res => {
+                    console.log('walletIndexApi', res)
+                    if (res.data.success) {
+                        commit('setAdminWallets', res.data.models)
+                    }
+                })
+                .catch(err => {
+                    console.log('updateWalletAction err', err)
+                })
+                .finally(() => {
+                    commit('setLoading', false)
+                });
+        },
+        removeWalletAction({commit}, id) {
+            console.log('removeWalletAction', id)
+            commit('setLoading', true)
+            walletDestroyApi(id)
+                .then(res => {
+                    console.log('removeWalletAction res', res)
+                    if (res.data.success) {
+                        commit('setToastError', res.data.message)
+                        return walletIndexApi()
+                    } else commit('setToastError', 'Something wrong')
+                })
+                .then(res => {
+                    // console.log('walletIndexApi', res)
+                    if (res.data.success) commit('setAdminWallets', res.data.models)
+                })
+                .catch(err => {
+                    console.log('removeWalletAction err', err)
+                })
+                .finally(() => {
+                    commit('setLoading', false)
+                });
+        },
         getAllWalletsAction({getters, commit, dispatch}) {
             // const walletsAmount = getters['isPartner'] ? 6 : 5
             const walletsAmount = 6
@@ -156,6 +251,15 @@ export default {
         }
     },
     mutations: {
+        setAdminWalletEdit(state, wallet) {
+            state.adminWalletEdit = wallet
+        },
+        setAdminWalletCreate(state, wallet) {
+            state.adminWalletCreate = wallet
+        },
+        setAdminWallets(state, wallets) {
+            state.adminWallets = wallets
+        },
         setWalletMain(state, walletMain) {
             state.walletMain = walletMain
         },
@@ -176,6 +280,15 @@ export default {
         },
     },
     getters: {
+        getAdminWalletCreate(state) {
+            return state.adminWalletCreate
+        },
+        getAdminWalletEdit(state) {
+            return state.adminWalletEdit
+        },
+        getAdminWallets(state) {
+            return state.adminWallets
+        },
         getWalletMain(state) {
             return state.walletMain
         },

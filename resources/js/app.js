@@ -171,6 +171,28 @@ Vue.component('transfer-bonus-mark', require('./components/page-parts/user-bank/
 Vue.component('transfer-reserve-pvc', require('./components/page-parts/user-bank/TransferReservePVC').default);
 Vue.component('user-my-bank-reserve-account', require('./components/views/UserMyBankReserveAccount').default);
 Vue.component('user-my-bank-reserve-report', require('./components/views/UserMyBankReserveReport').default);
+Vue.component('admin-page', require('./components/admin/AdminPage').default);
+Vue.component('admin-navbar', require('./components/admin/AdminNavbar').default);
+Vue.component('transaction-types', require('./components/admin/trasaction-type/TransactionTypes').default);
+Vue.component('transaction-type-index', require('./components/admin/trasaction-type/TransactionsTypeIndex').default);
+Vue.component('transaction-type-index-item', require('./components/admin/trasaction-type/TransactionTypeIndexItem').default);
+Vue.component('transaction-type-create', require('./components/admin/trasaction-type/TransactionTypeCreate').default);
+Vue.component('transaction-type-update', require('./components/admin/trasaction-type/TransactionTypeUpdate').default);
+Vue.component('wallet-page', require('./components/admin/wallet/WalletPage').default);
+Vue.component('wallet-index', require('./components/admin/wallet/WalletIndex').default);
+Vue.component('wallet-index-item', require('./components/admin/wallet/WalletIndexItem').default);
+Vue.component('wallet-create', require('./components/admin/wallet/WalletCreate').default);
+Vue.component('wallet-update', require('./components/admin/wallet/WalletUpdate').default);
+Vue.component('transaction-page', require('./components/admin/transaction/TransactionPage').default);
+Vue.component('transaction-index', require('./components/admin/transaction/TransactionIndex').default);
+Vue.component('transaction-index-item', require('./components/admin/transaction/TransactionIndexItem').default);
+Vue.component('transaction-create', require('./components/admin/transaction/TransactionCreate').default);
+Vue.component('transaction-update', require('./components/admin/transaction/TransactionUpdate').default);
+Vue.component('pv-account-page', require('./components/admin/pv-account/PVAccountPage').default);
+Vue.component('pv-account-index', require('./components/admin/pv-account/PVAccountIndex').default);
+Vue.component('pv-account-index-item', require('./components/admin/pv-account/PVAccountIndexItem').default);
+Vue.component('pv-account-create', require('./components/admin/pv-account/PVAccountCreate').default);
+Vue.component('pv-account-update', require('./components/admin/pv-account/PVAccountUpdate').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
