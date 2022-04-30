@@ -34,7 +34,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['getWalletPVC']),
+        ...mapGetters(['getWalletPVC', 'getAdminTransactionTypes']),
         getDate() {
             if (this.transaction.created_at) {
                 const date = new Date(this.transaction.created_at)
@@ -62,17 +62,11 @@ export default {
             return ''
         },
         getTypeOperation() {
-            if (this.transaction) {
-                switch (this.transaction.type_code) {
-                    case 'reserve_purchase':
-                        return `${this.transaction.document}`
-                    case 'reserve_movement':
-                        return `Перевод баллов в резерв`
-                    case 'lo_movement':
-                        return `Перевод баллов в ЛО`
-                    default:
-                        return 'Другая операция'
-                }
+            if (this.transaction && this.getAdminTransactionTypes.length) {
+                const type = this.getAdminTransactionTypes
+                    .find(i => i.code == this.transaction.type_code)
+                if (type) return type.name
+                else return this.transaction.type_code
             }
             return ''
         },

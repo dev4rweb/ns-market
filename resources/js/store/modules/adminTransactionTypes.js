@@ -5,10 +5,25 @@ import {
 
 export default {
     state: {
-        adminTransactionTypes: null,
+        adminTransactionTypes: [],
         adminTransactionTypeEdit: null
     },
     actions: {
+        getAllTransactionTypesAction({commit}) {
+            commit('setLoading', true)
+            getAllTransactionTypesApi()
+                .then(res => {
+                    console.log('getAllTransactionTypesAction', res)
+                    if (res.data.success)
+                        commit('setAdminTransactionTypes', res.data.models)
+                })
+                .catch(err => {
+                    console.log('getAllTransactionTypesAction err', err)
+                })
+                .finally(() => {
+                    commit('setLoading', false)
+                });
+        },
         updateTransactionTypeAction({commit, getters}) {
             // console.log('updateTransactionTypeAction', getters['getAdminTransactionTypeEdit'])
             commit('setLoading', true)

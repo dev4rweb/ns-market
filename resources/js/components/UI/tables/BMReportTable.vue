@@ -107,7 +107,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['getAllTransactionsByWalletIdAction']),
+        ...mapActions(['getAllTransactionsByWalletIdAction', 'getAllTransactionTypesAction']),
         getData() {
             console.log('getData')
             if (this.getWalletMBC) {
@@ -128,7 +128,7 @@ export default {
             }
 
             return isValid;
-        }
+        },
     },
     computed: {
         ...mapGetters(['getTransactionsBMC', 'getWalletMBC'])
@@ -137,6 +137,7 @@ export default {
         BMReportTableItem
     },
     mounted() {
+        this.getAllTransactionTypesAction()
         setTimeout(() => {
             this.$refs.focusMe.focus();
         }, 500);

@@ -98,7 +98,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['getAllTransactionsByWalletIdAction']),
+        ...mapActions(['getAllTransactionsByWalletIdAction', 'getAllTransactionTypesAction']),
         getReserveReportData() {
             console.log('getReserveReportData')
             if (this.getWalletPVC) {
@@ -117,6 +117,7 @@ export default {
         ReserveReportTableItem
     },
     mounted() {
+        this.getAllTransactionTypesAction()
         setTimeout(() => {
             this.$refs.focusMe.focus();
         }, 500);

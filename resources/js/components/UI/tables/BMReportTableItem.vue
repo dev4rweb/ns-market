@@ -35,7 +35,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['getWalletMBC']),
+        ...mapGetters(['getWalletMBC', 'getAdminTransactionTypes']),
         getDate() {
             if (this.transaction.created_at) {
                 const date = new Date(this.transaction.created_at)
@@ -63,15 +63,11 @@ export default {
             return ''
         },
         getTypeOperation() {
-            if (this.transaction) {
-                switch (this.transaction.type_code) {
-                    case 'bonus_mark_movement':
-                        return 'Перевод бонус марок между счетами'
-                    case 'bonus_mark_review':
-                        return `Начисление бонус марок за публикацию ${this.transaction.document}`
-                    default:
-                        return 'Другая операция'
-                }
+            if (this.transaction && this.getAdminTransactionTypes.length) {
+                const type = this.getAdminTransactionTypes
+                    .find(i => i.code == this.transaction.type_code)
+                if (type) return type.name
+                else return this.transaction.type_code
             }
             return ''
         },
