@@ -172,7 +172,12 @@ export default {
                 console.log('createReviewApi err', err)
                 this.showModalCanCreateReview(false)
                 this.setToastError('Что-то пошло не так')
-            }).finally(() => this.setLoading(false));
+            }).finally(() => {
+                this.setLoading(false)
+                this.gender = null
+                this.age = ''
+                this.comment = ''
+            });
         }
     },
     computed: {

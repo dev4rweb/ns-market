@@ -12,7 +12,7 @@
         </td>
         <td>{{ getIncome }}</td>
         <td>{{ getExpense }}</td>
-        <td>{{ getTypeOperation }}</td>
+        <td v-html="getTypeOperation"></td>
         <td>{{ transaction.comment }}</td>
     </tr>
 </template>
@@ -64,9 +64,10 @@ export default {
         },
         getTypeOperation() {
             if (this.transaction && this.getAdminTransactionTypes.length) {
+                const document = this.transaction.document ?? ''
                 const type = this.getAdminTransactionTypes
                     .find(i => i.code == this.transaction.type_code)
-                if (type) return type.name
+                if (type) return `${type.name} <br/> ${document}`
                 else return this.transaction.type_code
             }
             return ''
