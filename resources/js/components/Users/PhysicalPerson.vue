@@ -3,7 +3,7 @@
 <!--        <Loader v-if="isLoading"/>-->
         <p v-if="getPhysicalPerson" class="position-relative">
             ID: {{ getPhysicalPerson.user_id }}
-            <br>Статус: {{ tradeStatus }}
+            <br>{{ tradeStatus }}
             <sup
                 class="question-status"
                 @click="becomePartnerHandler"
@@ -39,11 +39,13 @@ export default {
                 switch (status) {
                     case 'K':
                     case 'D':
-                        return 'Партнер'
+                        return 'Статус: Партнер'
                     case 'N':
                     case 'B':
                     case 'T':
-                        return 'Клиент'
+                        return 'Статус: Клиент'
+                    case 'S':
+                        return 'Сервис центр'
                 }
             }
         }

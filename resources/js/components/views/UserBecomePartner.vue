@@ -2,10 +2,21 @@
     <div class="user-content become-partner">
         <div class="row">
             <div class="card data-card mb-5">
-                <ChangeStatusBtn
-                    :btnName="{name: 'Сменить статус'}"
-                    :redirectUrl="{url: null}"
-                />
+                <div class="d-flex mb-3">
+                    <ChangeStatusBtn
+                        :btnName="{name: 'Сменить статус'}"
+                        :redirectUrl="{url: null}"
+                    />
+
+                    <button
+                        v-if="getPhysicalPerson && getPhysicalPerson.trade_status !== 'S'"
+                        class="btn btn-outline-success ms-3"
+                        @click="createServiceCenter"
+                    >
+                        Статус Сервис Центра
+                    </button>
+                </div>
+
                 <h3>Что означает Ваш статус ?</h3>
                 <p>
                     Любой участник New Star market может иметь один из двух статусов:
@@ -112,10 +123,36 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import {mapGetters, mapMutations} from 'vuex'
 import ChangeStatusBtn from "../UI/ChangeStatusBtn";
+import {createServiceCenterStatusApi} from "../../store/actions/serviceCenter";
 export default {
     name: "UserBecomePartner",
+    methods: {
+        ...mapMutations(['setLoading', 'setToastError']),
+        createServiceCenter() {
+            if (this.getPhysicalPerson) {
+                this.setLoading(true)
+                createServiceCenterStatusApi(this.getPhysicalPerson.user_id)
+                    .then(res => {
+                        console.log('createServiceCenter', res)
+                        if (res.data.success) {
+                            this.setToastError('Статус успешно изменен')
+                            setTimeout(() => {
+                                window.location.reload()
+                            }, 1500);
+                        }
+                    })
+                    .catch(err => {
+                        console.log('createServiceCenter err', err)
+                    })
+                    .finally(() => {
+                        this.setLoading(false)
+                    });
+            } else this.setToastError('Something wrong')
+
+        }
+    },
     computed: {
         ...mapGetters(['getPhysicalPerson']),
         isShowBtn() {
@@ -124,6 +161,7 @@ export default {
                 switch (status) {
                     case 'K':
                     case 'D':
+                    case 'S':
                         return false
                     case 'N':
                     case 'B':
