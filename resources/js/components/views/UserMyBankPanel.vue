@@ -7,10 +7,13 @@
                     <li
                         class="list-group-item list-group-item-action"
                         aria-current="true">
-                        <div class="d-flex w-75 justify-content-between">
+                        <a
+                            href="/user-bank-main"
+                            class="d-flex w-75 justify-content-between"
+                        >
                             <h4>Лицевой счет пользователя</h4>
                             <h4 v-if="getWalletMain">{{ getWalletMain.balance }}</h4>
-                        </div>
+                        </a>
                     </li>
                     <li
                         class="list-group-item list-group-item-action">

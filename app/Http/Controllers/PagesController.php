@@ -30,4 +30,14 @@ class PagesController extends Controller
     {
         return view('user-pages.user-bank-reserve-report');
     }
+
+    public function user_bank_main()
+    {
+        return view('user-pages.user-bank-main-account');
+    }
+
+    public function user_bank_main_report()
+    {
+        return view('user-pages.user-bank-main-report');
+    }
 }

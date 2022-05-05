@@ -20,7 +20,7 @@
 <script>
 import {mapGetters} from 'vuex'
 export default {
-    name: "ReserveReportTableItem",
+    name: "MainAccountReportTableItem",
     props: ['transaction', 'index'],
     methods: {
         getFullName(user) {
@@ -34,7 +34,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['getWalletPVC', 'getAdminTransactionTypes']),
+        ...mapGetters(['getWalletMain', 'getAdminTransactionTypes']),
         getDate() {
             if (this.transaction.created_at) {
                 const date = new Date(this.transaction.created_at)
@@ -48,15 +48,15 @@ export default {
             return ''
         },
         getIncome() {
-            if (this.transaction && this.getWalletPVC) {
-                return this.getWalletPVC.id === this.transaction.to_account_id ?
+            if (this.transaction && this.getWalletMain) {
+                return this.getWalletMain.id === this.transaction.to_account_id ?
                     this.transaction.amount : ''
             }
             return ''
         },
         getExpense() {
-            if (this.transaction && this.getWalletPVC) {
-                return this.getWalletPVC.id === this.transaction.from_account_id ?
+            if (this.transaction && this.getWalletMain) {
+                return this.getWalletMain.id === this.transaction.from_account_id ?
                     this.transaction.amount : ''
             }
             return ''

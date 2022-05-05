@@ -23,7 +23,8 @@ export default {
         walletVoucher: null,
         walletMBC: null,
         walletPVC: null,
-        walletPartnerPV: null
+        walletPartnerPV: null,
+        walletCash: null
     },
     actions: {
         createAdminWalletAction({commit, getters}) {
@@ -108,7 +109,7 @@ export default {
         },
         getAllWalletsAction({getters, commit, dispatch}) {
             // const walletsAmount = getters['isPartner'] ? 6 : 5
-            const walletsAmount = 6
+            const walletsAmount = 7
             console.log('getAllWalletsAction', walletsAmount)
             const curUser = getters['getPhysicalPerson']
             if (curUser) {
@@ -127,23 +128,26 @@ export default {
                                 console.log('Need to add everything to state');
                                 res.data.models.forEach(i => {
                                     switch (i.type_id) {
-                                        case 1:
+                                        case 1: // Лицевой счет пользователя
                                             commit('setWalletMain', i)
                                             break;
-                                        case 2:
+                                        case 2: // Счет Бонусов
                                             commit('setWalletSaving', i)
                                             break;
-                                        case 3:
+                                        case 3: // Ваучер банка пользователя
                                             commit('setWalletVoucher', i)
                                             break;
-                                        case 4:
+                                        case 4: // Счет Бонус марок пользователя
                                             commit('setWalletMBC', i)
                                             break;
-                                        case 5:
+                                        case 5: // Резерв пользователя PV
                                             commit('setWalletPVC', i)
                                             break;
-                                        case 6:
+                                        case 6: // Личный объем
                                             commit('setWalletPartnerPV', i)
+                                            break;
+                                        case 7: // Счет наличных
+                                            commit('setWalletCash', i)
                                             break;
                                     }
                                 });
@@ -174,6 +178,9 @@ export default {
                                                 break;
                                             case 6:
                                                 commit('setWalletPartnerPV', wallet)
+                                                break;
+                                            case 7:
+                                                commit('setWalletCash', wallet)
                                                 break;
                                         }
                                     } else dispatch('getWalletByTypeAction', i);
@@ -219,6 +226,9 @@ export default {
                                         break;
                                     case 6:
                                         commit('setWalletPartnerPV', res.data.model)
+                                        break;
+                                    case 7:
+                                        commit('setWalletCash', res.data.model)
                                         break;
                                 }
                             }
@@ -278,6 +288,9 @@ export default {
         setWalletPartnerPV(state, walletPartnerPV) {
             state.walletPartnerPV = walletPartnerPV
         },
+        setWalletCash(state, walletCash) {
+            state.walletCash = walletCash
+        }
     },
     getters: {
         getAdminWalletCreate(state) {
@@ -306,6 +319,9 @@ export default {
         },
         getWalletPartnerPV(state) {
             return state.walletPartnerPV
+        },
+        getWalletCash(state) {
+            return state.walletCash
         },
     }
 }

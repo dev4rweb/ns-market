@@ -52,6 +52,10 @@ export default {
                             window.location.href.includes('/user-bank-reserve')
                             ||
                             window.location.href.includes('/user-bank-reserve-report')
+                            ||
+                            window.location.href.includes('/user-bank-main')
+                            ||
+                            window.location.href.includes('/user-bank-main-report')
                         ) {
                             dispatch('getAllWalletsAction')
                         }

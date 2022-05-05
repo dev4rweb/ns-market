@@ -4,8 +4,8 @@
             <h3>Мои заказы</h3>
         </div>
         <div class="row">
-            <MyOrdersTable v-if="getOrders" />
-            <h1 v-else>История заказов отсутствует</h1>
+            <MyOrdersTable v-if="getOrders && getOrders.length" />
+            <h3 v-else>История заказов отсутствует</h3>
         </div>
         <div>
             <transition name="fade">

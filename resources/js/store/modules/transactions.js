@@ -1,7 +1,12 @@
 import {
     getAllTransactionByWalletIdApi,
     getTransactionTypesApi,
-    makeBonusMarkTransactionApi, transactionDestroyApi, transactionsIndexApi, transactionStoreApi, transactionUpdateApi
+    makeBonusMarkTransactionApi,
+    makeCashTransactionApi, makeMainAccountTransactionApi,
+    transactionDestroyApi,
+    transactionsIndexApi,
+    transactionStoreApi,
+    transactionUpdateApi
 } from "../actions/transactionsApi";
 
 export default {
@@ -22,8 +27,41 @@ export default {
         transactionTypes: null,
         transactionsBMC: null,
         transactionsReserve: null,
+        transactionsMainAccount: null,
     },
     actions: {
+        makeMainTransactionAction({getters, commit}, transferAmount) {
+            console.log('makeMainTransactionAction transferAmount', transferAmount)
+            const senderWallet = getters['getWalletCash']
+            const receiverWallet = getters['getWalletMain']
+            if (senderWallet && receiverWallet) {
+                commit('setLoading', true)
+                makeCashTransactionApi({
+                    senderId: senderWallet.user_id,
+                    cashAmount: transferAmount
+                }).then(res => {
+                    console.log('makeCashTransactionApi', res)
+                    if (res.data.success) {
+                        return makeMainAccountTransactionApi({
+                            receiverId: receiverWallet.user_id,
+                            transferAmount: transferAmount
+                        })
+                    } else commit('setToastError', 'Something wrong in makeCashTransactionApi')
+                }).then(res => {
+                    console.log('makeMainAccountTransactionApi', res)
+                    if (res.data.success) {
+                        commit('setToastError', 'Транзакция успешно проведена!')
+                        setTimeout(() => {
+                            window.location.reload()
+                        }, 1500);
+                    } else commit('setToastError', 'Something wrong in makeMainAccountTransactionApi')
+                }).catch(err => {
+                    console.log('makeMainTransactionAction', err)
+                }).finally(() => {
+                    commit('setLoading', false)
+                });
+            } else commit('setToastError', 'Some of wallets not found')
+        },
         fetchTransactionTypesAction({commit}) {
             commit('setLoading', true)
             getTransactionTypesApi()
@@ -75,6 +113,8 @@ export default {
                             commit('setTransactionsBMC', res.data.model);
                         if (window.location.href.includes('/user-bank-reserve-report'))
                             commit('setTransactionsReserve', res.data.model)
+                        if (window.location.href.includes('/user-bank-main-report'))
+                            commit('setTransactionsMainAccount', res.data.model)
                     } else {
                         commit('setToastError', 'Не удалось загрузить историю транзакций')
                     }
@@ -167,6 +207,9 @@ export default {
         }
     },
     mutations: {
+        setTransactionsMainAccount(state, transactions) {
+            state.transactionsMainAccount = transactions
+        },
         setAdminTransactionCreate(state, transaction) {
             state.adminTransactionCreate = transaction
         },
@@ -184,6 +227,9 @@ export default {
         }
     },
     getters: {
+        getTransactionsMainAccount(state) {
+            return state.transactionsMainAccount
+        },
         getAdminTransactionCreate(state) {
             return state.adminTransactionCreate
         },

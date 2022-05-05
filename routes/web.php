@@ -92,3 +92,5 @@ Route::get('/user-bank-bonus-mark', [PagesController::class, 'user_bank_bonus_ma
 Route::get('/user-bank-bonus-report', [PagesController::class, 'user_bank_bonus_report'])->name('user-bank-bonus-report-page');
 Route::get('/user-bank-reserve', [PagesController::class, 'user_bank_reserve'])->name('user-bank-reserve-page');
 Route::get('/user-bank-reserve-report', [PagesController::class, 'user_bank_reserve_report'])->name('user-bank-reserve-report-page');
+Route::get('/user-bank-main', [PagesController::class, 'user_bank_main'])->name('user-bank-main-page');
+Route::get('/user-bank-main-report', [PagesController::class, 'user_bank_main_report'])->name('user-bank-main-report-page');
