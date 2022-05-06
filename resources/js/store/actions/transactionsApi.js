@@ -67,3 +67,7 @@ export const makeMainAccountTransactionApi = transactionObj => {
     return axios.post(`${WORK_HOST}market/main-account-transaction`, transactionObj)
         .then(res => res).catch(err => err)
 };
+export const makeBonusRubTransactionApi = transactionObj => {
+    return axios.post(`${WORK_HOST}market/bonus-rub-transaction`, transactionObj)
+        .then(res => res).catch(err => err)
+};

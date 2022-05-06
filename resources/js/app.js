@@ -170,6 +170,7 @@ Vue.component('user-my-bank-main-account', require('./components/views/UserMyBan
 Vue.component('user-my-bank-main-report', require('./components/views/UserMyBankMainReport').default);
 Vue.component('find-receiver', require('./components/page-parts/user-bank/FindReceiver').default);
 Vue.component('transfer-bonus-mark', require('./components/page-parts/user-bank/TransferBonusMark').default);
+Vue.component('transfer-bonus-rub', require('./components/page-parts/user-bank/TransferBonusRub').default);
 Vue.component('transfer-reserve-pvc', require('./components/page-parts/user-bank/TransferReservePVC').default);
 Vue.component('user-my-bank-reserve-account', require('./components/views/UserMyBankReserveAccount').default);
 Vue.component('user-my-bank-reserve-report', require('./components/views/UserMyBankReserveReport').default);
@@ -197,6 +198,10 @@ Vue.component('pv-account-create', require('./components/admin/pv-account/PVAcco
 Vue.component('pv-account-update', require('./components/admin/pv-account/PVAccountUpdate').default);
 Vue.component('main-account-report-table', require('./components/UI/tables/MainAccountReportTable').default);
 Vue.component('main-account-report-table-item', require('./components/UI/tables/MainAccountReportTableItem').default);
+Vue.component('user-my-bank-bonus-rub-account', require('./components/views/UserMyBankBonusRubAccount').default);
+Vue.component('user-my-bank-bonus-rub-report', require('./components/views/UserMyBankBonusRubReport').default);
+Vue.component('bonus-report-table', require('./components/UI/tables/BonusReportTable').default);
+Vue.component('bonus-report-table-item', require('./components/UI/tables/BonusReportTableItem').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

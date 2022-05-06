@@ -40,4 +40,14 @@ class PagesController extends Controller
     {
         return view('user-pages.user-bank-main-report');
     }
+
+    public function user_bank_bonus_rub()
+    {
+        return view('user-pages.user-bank-bonus-rub-account');
+    }
+
+    public function user_bank_bonus_rub_report()
+    {
+        return view('user-pages.user-bank-bonus-rub-report');
+    }
 }

@@ -43,19 +43,7 @@ export default {
                             dispatch('fetchPartnerPaymentDetailAction')
                         }
                         if (
-                            window.location.href.includes('/user-bank-panel')
-                            ||
-                            window.location.href.includes('/user-bank-bonus-mark')
-                            ||
-                            window.location.href.includes('/user-bank-bonus-report')
-                            ||
-                            window.location.href.includes('/user-bank-reserve')
-                            ||
-                            window.location.href.includes('/user-bank-reserve-report')
-                            ||
-                            window.location.href.includes('/user-bank-main')
-                            ||
-                            window.location.href.includes('/user-bank-main-report')
+                            window.location.href.includes('/user-bank-')
                         ) {
                             dispatch('getAllWalletsAction')
                         }

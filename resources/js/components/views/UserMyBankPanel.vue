@@ -17,18 +17,20 @@
                     </li>
                     <li
                         class="list-group-item list-group-item-action">
-                        <div class="d-flex w-75 justify-content-between">
+                        <a
+                            href="/user-bank-bonus-rub"
+                            class="d-flex w-75 justify-content-between">
                             <h4>Счет Бонусов</h4>
                             <h4 v-if="getWalletSaving">{{ getWalletSaving.balance }}</h4>
-                        </div>
+                        </a>
                     </li>
-                    <li
+<!--                    <li
                         class="list-group-item list-group-item-action">
                         <div class="d-flex w-75 justify-content-between">
                             <h4>Ваучер банка пользователя</h4>
                             <h4 v-if="getWalletVoucher">{{ getWalletVoucher.balance }}</h4>
                         </div>
-                    </li>
+                    </li>-->
                     <li
                         class="list-group-item list-group-item-action">
                         <a

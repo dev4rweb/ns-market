@@ -28,6 +28,7 @@ export default {
         transactionsBMC: null,
         transactionsReserve: null,
         transactionsMainAccount: null,
+        transactionsSavingAccount: null
     },
     actions: {
         makeMainTransactionAction({getters, commit}, transferAmount) {
@@ -115,6 +116,8 @@ export default {
                             commit('setTransactionsReserve', res.data.model)
                         if (window.location.href.includes('/user-bank-main-report'))
                             commit('setTransactionsMainAccount', res.data.model)
+                        if (window.location.href.includes('/user-bank-bonus-rub-report'))
+                            commit('setTransactionSavingAccount', res.data.model)
                     } else {
                         commit('setToastError', 'Не удалось загрузить историю транзакций')
                     }
@@ -224,6 +227,9 @@ export default {
         },
         setTransactionsBMC(state, transactions) {
             state.transactionsBMC = transactions
+        },
+        setTransactionSavingAccount(state, transactions) {
+            state.transactionsSavingAccount = transactions
         }
     },
     getters: {
@@ -244,6 +250,9 @@ export default {
         },
         getTransactionsBMC(state) {
             return state.transactionsBMC
+        },
+        getTransactionsSavingAccount(state) {
+            return state.transactionsSavingAccount
         }
     }
 }
