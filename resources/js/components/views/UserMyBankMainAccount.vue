@@ -25,66 +25,16 @@
                     </b> руб.
                 </p>
 
-                <h4
-                    class="mb-3 text-center"
-                    v-if="getWalletMain && getWalletCash"
-                >
-                    Укажите сумму пополнения
-                </h4>
+                <TransferCashToMainAccount
+                    v-if="isShow"
+                />
 
                 <div
-                    v-if="getWalletMain && getWalletCash"
                     class="d-flex justify-content-center"
+                    v-if="isShowSCBlock"
                 >
-                    <form
-                        @submit.prevent="transferCash"
-                        class="needs-validation login-form "
-                    >
-                        <div class="d-flex justify-content-center align-items-center flex-column mb-3">
-                            <input
-                                type="number"
-                                min="1"
-                                style="max-width: 250px; font-weight: bold; font-size: 60px; text-align: center"
-                                v-model="transferAmount"
-                                @input="isAmountInvalid = false"
-                                ref="focusMe"
-                                class="form-control form-control-lg"
-                                required
-                            >
-<!--                            <div
-                                class="invalid-feedback text-center"
-                                :class="{show: isAmountInvalid}"
-                            >
-                                {{ transferAmountMsg }}
-                            </div>-->
-                        </div>
-                        <h5
-                            class="text-center"
-                            :class="{'color-red': isAmountInvalid}"
-                        >
-                            Выберите способ пополнения.
-                        </h5>
-                        <div
-                            class="d-flex justify-content-center"
-                        >
-                            <button
-                                class="btn btn-lg btn-success me-3"
-                                :class="{borderRed: isAmountInvalid}"
-                                type="button"
-                                @click="payWithQR"
-                            >
-                                QR код
-                            </button>
-                            <button
-                                class="btn btn-lg btn-info me-3"
-                                :class="{borderRed: isAmountInvalid}"
-                                type="button"
-                                @click="payWithCreditCard"
-                            >
-                                Банковской картой
-                            </button>
-                        </div>
-                    </form>
+                    <TransferMainAccountSC v-if="getReceiverUser"/>
+                    <FindReceiver v-else/>
                 </div>
             </div>
         </div>
@@ -92,43 +42,34 @@
 </template>
 
 <script>
-import {mapGetters, mapActions} from 'vuex'
+import {mapGetters} from 'vuex'
 import BackBtn from "../UI/BackBtn";
-
+import FindReceiver from "../page-parts/user-bank/FindReceiver";
+import TransferCashToMainAccount from "../page-parts/user-bank/TransferCashToMainAccount";
+import TransferMainAccountSC from "../page-parts/user-bank/TransferMainAccountSC";
 export default {
     name: "UserMyBankMainAccount",
-    data() {
-        return {
-            transferAmount: '',
-            transferAmountMsg: 'Выберите способ пополнения.',
-            isAmountInvalid: false,
-            paymentWay: null
+
+    computed: {
+        ...mapGetters(['getWalletMain', 'getWalletCash', 'getPhysicalPerson',
+        'getReceiverUser']),
+        isShow() {
+            return !!(
+                this.getPhysicalPerson &&
+                this.getPhysicalPerson.trade_status !== 'S'
+                &&
+                this.getWalletMain && this.getWalletCash);
+        },
+        isShowSCBlock() {
+            return !!(
+                this.getPhysicalPerson &&
+                this.getPhysicalPerson.trade_status === 'S'
+                &&
+                this.getWalletMain && this.getWalletCash);
         }
     },
-    methods: {
-        ...mapActions(['makeMainTransactionAction']),
-        transferCash() {
-            if (!this.paymentWay) {
-                this.isAmountInvalid = true
-                return
-            }
-        },
-        payWithQR() {
-            this.isAmountInvalid = false
-            // console.log('payWithQR', this.transferAmount)
-            this.makeMainTransactionAction(parseInt(this.transferAmount))
-        },
-        payWithCreditCard() {
-            this.isAmountInvalid = false
-            // console.log('payWithCreditCard', this.transferAmount)
-            this.makeMainTransactionAction(parseInt(this.transferAmount))
-        },
-    },
-    computed: {
-        ...mapGetters(['getWalletMain', 'getWalletCash'])
-    },
     components: {
-        BackBtn
+        BackBtn, TransferCashToMainAccount, FindReceiver, TransferMainAccountSC
     }
 }
 </script>
@@ -139,24 +80,4 @@ h3 {
     font-weight: bold;
 }
 
-form {
-    max-width: 430px;
-
-    h5 {
-        font-size: 30px;
-        font-weight: bold;
-    }
-}
-
-.color-red{
-    color: red;
-}
-
-.show {
-    display: block;
-}
-
-.borderRed {
-    border-color: red;
-}
 </style>

@@ -6,12 +6,13 @@
         </h2>
         {{--                    <p>ID: {{Auth::user()->user_id}} <br>Статус: {{Auth::user()->type}}</p>--}}
         <physical-person></physical-person>
-        <a
+<!--        <a
             href="{{route('user-invite-page')}}"
             class="btn btn-secondary"
         >
             Пригласить в New Star
-        </a>
+        </a>-->
+        <btn-invite></btn-invite>
         <hr>
     </div>
 

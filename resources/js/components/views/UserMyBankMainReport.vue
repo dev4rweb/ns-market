@@ -4,7 +4,7 @@
             <div class="card data-card mb-5">
                 <div class="d-flex align-items-center mb-3">
                     <BackBtn path-to="/user-bank-main"/>
-                    <h3 class="mb-0">История баллов резерва</h3>
+                    <h3 class="mb-0">Карточка лицевого счёта</h3>
                 </div>
                 <MainAccountReportTable />
             </div>

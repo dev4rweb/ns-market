@@ -16,6 +16,7 @@
                         </a>
                     </li>
                     <li
+                        v-if="isServiceCenter === false"
                         class="list-group-item list-group-item-action">
                         <a
                             href="/user-bank-bonus-rub"
@@ -42,12 +43,14 @@
                         </a>
                     </li>
                     <li
-                        class="list-group-item list-group-item-action ">
+                        class="list-group-item list-group-item-action "
+                        v-if="isPartner === true"
+                    >
                         <a
                             href="/user-bank-reserve"
                             class="d-flex w-75 justify-content-between"
                         >
-                            <h4>Резерв пользователя PV</h4>
+                            <h4>Резерв баллов</h4>
                             <h4 v-if="getWalletPVC">{{ getWalletPVC.balance }}</h4>
                         </a>
                     </li>
@@ -64,7 +67,8 @@ export default {
     name: "UserMyBankPanel",
     computed: {
         ...mapGetters(['isPartner', 'getWalletMain', 'getWalletSaving', 'getWalletVoucher',
-            'getWalletMBC', 'getWalletPVC'])
+            'getWalletMBC', 'getWalletPVC', 'isServiceCenter']),
+
     },
 }
 </script>

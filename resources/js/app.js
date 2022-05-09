@@ -203,6 +203,9 @@ Vue.component('user-my-bank-bonus-rub-report', require('./components/views/UserM
 Vue.component('bonus-report-table', require('./components/UI/tables/BonusReportTable').default);
 Vue.component('bonus-report-table-item', require('./components/UI/tables/BonusReportTableItem').default);
 Vue.component('user-sidebar', require('./components/UI/UserSidebar').default);
+Vue.component('transfer-cash-to-main-account', require('./components/page-parts/user-bank/TransferCashToMainAccount').default);
+Vue.component('transfer-main-account-sc', require('./components/page-parts/user-bank/TransferMainAccountSC').default);
+Vue.component('btn-invite', require('./components/UI/buttons/BtnInvite').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

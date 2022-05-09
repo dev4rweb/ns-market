@@ -71,3 +71,11 @@ export const makeBonusRubTransactionApi = transactionObj => {
     return axios.post(`${WORK_HOST}market/bonus-rub-transaction`, transactionObj)
         .then(res => res).catch(err => err)
 };
+export const makeCashTransferTransactionApi = transactionObj => {
+    return axios.post(`${WORK_HOST}market/cash-transfer-transaction`, transactionObj)
+        .then(res => res).catch(err => err)
+};
+export const makeMainTransferTransactionApi = transactionObj => {
+    return axios.post(`${WORK_HOST}market/main-transfer-transaction`, transactionObj)
+        .then(res => res).catch(err => err)
+};

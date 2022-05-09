@@ -396,6 +396,10 @@ export default {
             } else {
                 return false
             }
+        },
+        isServiceCenter(state) {
+            return !!(state.physicalPerson && state.physicalPerson.trade_status === 'S');
+
         }
     }
 }

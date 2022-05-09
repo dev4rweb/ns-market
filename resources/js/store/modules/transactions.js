@@ -2,7 +2,10 @@ import {
     getAllTransactionByWalletIdApi,
     getTransactionTypesApi,
     makeBonusMarkTransactionApi,
-    makeCashTransactionApi, makeMainAccountTransactionApi,
+    makeCashTransactionApi,
+    makeCashTransferTransactionApi,
+    makeMainAccountTransactionApi,
+    makeMainTransferTransactionApi,
     transactionDestroyApi,
     transactionsIndexApi,
     transactionStoreApi,
@@ -31,6 +34,42 @@ export default {
         transactionsSavingAccount: null
     },
     actions: {
+        makeMainTransferTransactionSC({getters, commit}, transferAmount) {
+            const cashTransaction = {
+                receiverId: getters['getWalletCash'].user_id,
+                senderId: getters['getReceiverUser'].id,
+                cashAmount: transferAmount
+            }
+            console.log('makeMainTransferTransactionSC', cashTransaction)
+            commit('setLoading', true)
+            makeCashTransferTransactionApi(cashTransaction)
+                .then(res => {
+                    console.log('makeCashTransferTransactionApi', res)
+                    if (res.data.success) {
+                        const mainTransaction = {
+                            senderId: getters['getWalletMain'].user_id,
+                            receiverId: getters['getReceiverUser'].id,
+                            cashAmount: transferAmount
+                        }
+                        return makeMainTransferTransactionApi(mainTransaction)
+                    } else commit('setToastError', 'Something wrong in cash transaction')
+                })
+                .then(res => {
+                    console.log('makeMainTransferTransactionApi res', res)
+                    if (res.data.success) {
+                        commit('setToastError', 'Транзакция прошла успешно!')
+                        setTimeout(() => {
+                            // window.location.reload()
+                        }, 1500);
+                    } else commit('setToastError', 'Something wrong in main transaction')
+                })
+                .catch(err => {
+                    console.log('makeCashTransferTransactionApi err', err)
+                })
+                .finally(() => {
+                    commit('setLoading', false)
+                });
+        },
         makeMainTransactionAction({getters, commit}, transferAmount) {
             console.log('makeMainTransactionAction transferAmount', transferAmount)
             const senderWallet = getters['getWalletCash']
