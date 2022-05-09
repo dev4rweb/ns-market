@@ -14,47 +14,57 @@
         </a>
         <hr>
     </div>
+
     <ul class="user-sidebar">
-        <li>
-            <a
-                href="{{route('user-page')}}"
-                class="@if(Request::url() == url('/user-panel')) active @endif"
-            >
-                Новости
-            </a>
-        </li>
-        <li>
-            <a
-                href="{{route('user-data-page')}}"
-                class="@if(Request::url() == url('/user-data-panel')) active @endif"
-            >
-                Мои данные
-            </a>
-        </li>
-        <li>
-            <a
-                href="{{route('user-orders-page')}}"
-                class="@if(Request::url() == url('/user-orders-panel') || Request::url() == url('/user-orders-panel/save')) active @endif"
-            >
-                Мои заказы
-            </a>
-        </li>
-        <li>
-            <a
-                href="{{route('user-bank-page')}}"
-                class="@if(Request::url() == url('/user-bank-panel')) active @endif"
-            >
-                Мои банк
-            </a>
-        </li>
-        <li>
-            <a
-                href="{{route('user-support-page')}}"
-                class="@if(Request::url() == url('/user-support-panel')) active @endif"
-            >
-                Техподдержка
-            </a>
-        </li>
+        <user-sidebar></user-sidebar>
+{{--        <li>--}}
+{{--            <a--}}
+{{--                href="{{route('user-page')}}"--}}
+{{--                class="@if(Request::url() == url('/user-panel')) active @endif"--}}
+{{--            >--}}
+{{--                Новости--}}
+{{--            </a>--}}
+{{--        </li>--}}
+{{--        <li>--}}
+{{--            <a--}}
+{{--                href="{{route('user-data-page')}}"--}}
+{{--                class="@if(Request::url() == url('/user-data-panel')) active @endif"--}}
+{{--            >--}}
+{{--                Мои данные--}}
+{{--            </a>--}}
+{{--        </li>--}}
+{{--        <li>--}}
+{{--            <a--}}
+{{--                href="{{route('user-orders-page')}}"--}}
+{{--                class="@if(Request::url() == url('/user-orders-panel') || Request::url() == url('/user-orders-panel/save')) active @endif"--}}
+{{--            >--}}
+{{--                Мои заказы--}}
+{{--            </a>--}}
+{{--        </li>--}}
+{{--        <li>--}}
+{{--            <a--}}
+{{--                href="{{route('user-service-center-page')}}"--}}
+{{--                class="@if(Request::url() == url('/user-service-center')) active @endif"--}}
+{{--            >--}}
+{{--                Работа СЦ--}}
+{{--            </a>--}}
+{{--        </li>--}}
+{{--        <li>--}}
+{{--            <a--}}
+{{--                href="{{route('user-bank-page')}}"--}}
+{{--                class="@if(Request::url() == url('/user-bank-panel')) active @endif"--}}
+{{--            >--}}
+{{--                Мои банк--}}
+{{--            </a>--}}
+{{--        </li>--}}
+{{--        <li>--}}
+{{--            <a--}}
+{{--                href="{{route('user-support-page')}}"--}}
+{{--                class="@if(Request::url() == url('/user-support-panel')) active @endif"--}}
+{{--            >--}}
+{{--                Техподдержка--}}
+{{--            </a>--}}
+{{--        </li>--}}
         <li
             style="display: none"
         >

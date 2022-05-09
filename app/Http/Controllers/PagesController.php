@@ -50,4 +50,9 @@ class PagesController extends Controller
     {
         return view('user-pages.user-bank-bonus-rub-report');
     }
+
+    public function user_service_center()
+    {
+        return view('user-pages.user-service-center');
+    }
 }

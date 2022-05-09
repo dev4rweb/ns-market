@@ -96,3 +96,4 @@ Route::get('/user-bank-main', [PagesController::class, 'user_bank_main'])->name(
 Route::get('/user-bank-main-report', [PagesController::class, 'user_bank_main_report'])->name('user-bank-main-report-page');
 Route::get('/user-bank-bonus-rub', [PagesController::class, 'user_bank_bonus_rub'])->name('user-bank-bonus-rub-page');
 Route::get('/user-bank-bonus-rub-report', [PagesController::class, 'user_bank_bonus_rub_report'])->name('user-bank-bonus-rub-report-page');
+Route::get('/user-service-center', [PagesController::class, 'user_service_center'])->name('user-service-center-page');
