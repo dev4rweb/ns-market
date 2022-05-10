@@ -10,9 +10,12 @@
                 <span>Тип заказа</span>
                 <span class="value">{{ getPointsOrder }} PV</span>
             </div>
-            <div class="d-flex justify-content-between content-wrapper">
+            <div
+                v-if="isPartner"
+                class="d-flex justify-content-between content-wrapper"
+            >
                 <span>Наполнение в баллах</span>
-                <span class="value">В личный объём</span>
+                <span class="value">{{ getBasketOrder.is_reserve ? 'В резерв' : 'В личный объём' }} </span>
             </div>
             <div class="d-flex justify-content-between content-wrapper">
                 <span>Масса заказа</span>
@@ -59,7 +62,7 @@ export default {
     computed: {
         ...mapGetters(['getBasketOrder', 'getPointsOrder', 'getWeightOrder',
             'getEconomicSumOrder', 'getSumOrder', 'getOrderAddress', 'getTransportCompanies',
-            'getEDostDelivery'
+            'getEDostDelivery', 'isPartner'
         ]),
         deliveryCost() {
             let cost = null

@@ -145,7 +145,7 @@ export default {
                 customerOrder = {
                     id: this.getBasketOrder.id,
                     customer_notes: this.customer_notes,
-                    is_reserve: 0
+                    is_reserve: this.isServiceCenter ? 1 : 0
                 }
             }
             if (this.getBasketOrder && customerOrder) {
@@ -173,7 +173,7 @@ export default {
     computed: {
         ...mapGetters(['getLSOrder', 'getAmountProduct', 'getWeightOrder',
             'getPointsOrder', 'getSumOrder', 'getEconomicSumOrder', 'isPartner',
-            'getBasketOrder'])
+            'getBasketOrder', 'isServiceCenter'])
     },
     mounted() {
         if (window.User) {

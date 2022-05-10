@@ -5,39 +5,108 @@
                 class=" d-flex justify-content-between own-payment-list"
             >
                 <span>Тип счёта</span>
-                <span>Тип счёта</span>
+                <span>Состояние счёта</span>
                 <span>Оплата со счёта (р.)</span>
             </div>
         </div>
         <div class="body-block p-3">
-            <div class="d-flex justify-content-between content-wrapper own-payment-list">
+            <div
+                v-if="getWalletVoucher"
+                class="d-flex justify-content-between content-wrapper own-payment-list"
+            >
                 <span>Ваучер банк</span>
-                <span>123</span>
-                <span>123</span>
+                <span>{{ getWalletVoucher.balance }}</span>
+                <span>{{ difVoucher }}</span>
             </div>
-            <div class="d-flex justify-content-between content-wrapper own-payment-list">
+            <div
+                v-if="getWalletMain"
+                class="d-flex justify-content-between content-wrapper own-payment-list"
+            >
                 <span>Лицевой счёт</span>
-                <span>1234</span>
-                <span>112345</span>
+                <span>{{ getWalletMain.balance }}</span>
+                <span>{{ difMain }}</span>
             </div>
-            <div class="d-flex justify-content-between content-wrapper own-payment-list">
+            <div
+                v-if="getWalletSaving"
+                class="d-flex justify-content-between content-wrapper own-payment-list"
+            >
                 <span>Счёт бонусов</span>
-                <span>99999</span>
-                <span>99999</span>
+                <span>{{ getWalletSaving.balance }}</span>
+                <span>{{ difSaving }}</span>
             </div>
+            <hr>
             <div class="d-flex justify-content-between content-wrapper mt-3 own-payment-list">
                 <span class="value">Итого</span>
-                <span class="value">12 345,6 р.</span>
-                <span class="value">34 869,6 р.</span>
+                <span class="value">{{ accountSum }} р.</span>
+                <span class="value">{{ difSum }} р.</span>
             </div>
-            <h2>Итого к оплате: 34 567 р.</h2>
+            <h2 v-if="getRestCost > 0">К оплате: {{ getRestCost }} р.</h2>
         </div>
     </div>
 </template>
 
 <script>
+import {mapGetters, mapMutations} from 'vuex'
+
 export default {
-    name: "AccountPaymentType"
+    name: "AccountPaymentType",
+    data() {
+        return {
+            voucher: 0,
+            main: 0,
+            saving: 0,
+        }
+    },
+    methods: {
+        ...mapMutations(['setRestCost'])
+    },
+    computed: {
+        ...mapGetters(['getWalletVoucher', 'getWalletMain', 'getWalletSaving', 'getBasketOrder', 'getRestCost']),
+        accountSum() {
+            if (this.getWalletSaving && this.getWalletMain && this.getWalletVoucher) {
+                return `${this.getWalletVoucher.balance + this.getWalletMain.balance + this.getWalletSaving.balance}`
+            }
+            return ''
+        },
+        difVoucher() {
+            if (this.getWalletVoucher && this.getBasketOrder) {
+                if (this.getWalletVoucher.balance > 0) {
+                    this.getBasketOrder.order_price >= this.getWalletVoucher.balance ?
+                        this.voucher = this.getWalletVoucher.balance :
+                        this.voucher = this.getBasketOrder.order_price
+                }
+            }
+            return this.voucher
+        },
+        difMain() {
+            if (this.getWalletMain && this.getBasketOrder) {
+                if (this.getWalletMain.balance > 0) {
+                    this.main = (this.getBasketOrder.order_price - this.voucher) >= this.getWalletMain.balance ?
+                        this.getWalletMain.balance :
+                        this.getBasketOrder.order_price - this.voucher
+                }
+            }
+            return this.main
+        },
+        difSaving() {
+            if (this.getWalletSaving && this.getBasketOrder) {
+                if (this.getWalletSaving.balance > 0) {
+                    this.saving = (this.getBasketOrder.order_price - this.voucher - this.main) >= this.getWalletSaving.balance ?
+                        this.getWalletSaving.balance :
+                        this.getBasketOrder.order_price - this.voucher - this.main
+                }
+            }
+            return this.saving
+        },
+        difSum() {
+            if (this.getBasketOrder) {
+                const sum = this.voucher + this.main + this.saving;
+                this.setRestCost(this.getBasketOrder.order_price - sum)
+                return sum
+            }
+            return 0
+        }
+    }
 }
 </script>
 
@@ -121,7 +190,7 @@ export default {
     }
 }
 
-.blue-header-info-block{
+.blue-header-info-block {
     .own-payment-list {
         width: 100%;
         max-width: 655px;
@@ -144,7 +213,6 @@ export default {
         }
     }
 }
-
 
 
 </style>

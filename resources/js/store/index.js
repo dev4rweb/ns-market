@@ -28,6 +28,7 @@ import wallets from "./modules/wallets";
 import adminPages from "./modules/adminPages";
 import adminTransactionTypes from "./modules/adminTransactionTypes";
 import pvAccounts from "./modules/pvAccounts";
+import orderPaymentPage from "./modules/pages/orderPaymentPage";
 
 Vue.use(Vuex)
 
@@ -37,6 +38,6 @@ export default new Vuex.Store({
         feedback, catalogGroups, lStorage, basket, orders, inviter, eDost,
         transportCompanies, orderAddress, aromaFilters, aromaDetail, news,
         reviews, paymentDetails, transactions, userBankBonusMark,
-        wallets, adminPages, adminTransactionTypes, pvAccounts
+        wallets, adminPages, adminTransactionTypes, pvAccounts, orderPaymentPage
     }
 })

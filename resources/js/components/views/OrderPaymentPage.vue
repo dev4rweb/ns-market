@@ -9,7 +9,7 @@
 
             <h3 class="mt-3">Ваши счета</h3>
             <AccountPaymentType/>
-            <PaymentWay />
+            <PaymentWay v-if="getRestCost > 0" />
         </div>
     </div>
 </template>
@@ -19,9 +19,12 @@ import NavOrder from "../UI/NavOrder";
 import GeneralOrderInfo from "../page-parts/order-payment/GeneralOrderInfo";
 import AccountPaymentType from "../page-parts/order-payment/AccountPaymentType";
 import PaymentWay from "../page-parts/order-payment/PaymentWay";
-
+import {mapGetters} from 'vuex'
 export default {
     name: "OrderPaymentPage",
+    computed: {
+      ...mapGetters(['getRestCost'])
+    },
     components: {
         NavOrder, GeneralOrderInfo, AccountPaymentType, PaymentWay
     },
