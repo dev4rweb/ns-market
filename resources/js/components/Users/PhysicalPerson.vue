@@ -45,7 +45,7 @@ export default {
                     case 'T':
                         return 'Статус: Клиент'
                     case 'S':
-                        return 'Сервис центр'
+                        return 'Сервисный центр'
                 }
             }
         }

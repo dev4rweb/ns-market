@@ -5,7 +5,7 @@ import {
     makeCashTransactionApi,
     makeCashTransferTransactionApi,
     makeMainAccountTransactionApi,
-    makeMainTransferTransactionApi,
+    makeMainTransferTransactionApi, makePaymentSystemTransactionApi,
     transactionDestroyApi,
     transactionsIndexApi,
     transactionStoreApi,
@@ -79,14 +79,22 @@ export default {
                 makeCashTransactionApi({
                     senderId: senderWallet.user_id,
                     cashAmount: transferAmount
-                }).then(res => {
+                }).then(res =>{
                     console.log('makeCashTransactionApi', res)
+                    if (res.data.success) {
+                        return makePaymentSystemTransactionApi({
+                            authorId: senderWallet.user_id,
+                            cashAmount: transferAmount
+                        })
+                    } else commit('setToastError', 'Something wrong in makeCashTransactionApi')
+                }).then(res => {
+                    console.log('makePaymentSystemTransactionApi', res)
                     if (res.data.success) {
                         return makeMainAccountTransactionApi({
                             receiverId: receiverWallet.user_id,
                             transferAmount: transferAmount
                         })
-                    } else commit('setToastError', 'Something wrong in makeCashTransactionApi')
+                    } else commit('setToastError', 'Something wrong in makePaymentSystemTransactionApi')
                 }).then(res => {
                     console.log('makeMainAccountTransactionApi', res)
                     if (res.data.success) {

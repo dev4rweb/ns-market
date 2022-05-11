@@ -23,7 +23,7 @@
                 >
                 <p class="pay-way">Банковской картой</p>
             </div>
-            <div class="d-flex align-items-center mb-3 pay-way-item"
+<!--            <div class="d-flex align-items-center mb-3 pay-way-item"
             @click="payBasketOrder">
                 <img
                     :src="icYouMoney"
@@ -40,7 +40,7 @@
                     class="me-3"
                 >
                 <p class="pay-way">По коду через терминал (+1%)</p>
-            </div>
+            </div>-->
             <div class="d-flex align-items-center pay-way-item"
             @click="payBasketOrder">
                 <img

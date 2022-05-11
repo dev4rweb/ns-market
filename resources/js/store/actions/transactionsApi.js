@@ -63,6 +63,10 @@ export const makeCashTransactionApi = transactionObj => {
     return axios.post(`${WORK_HOST}market/cash-transaction`, transactionObj)
         .then(res => res).catch(err => err)
 };
+export const makePaymentSystemTransactionApi = transactionObj => {
+    return axios.post(`${WORK_HOST}market/payment-system-transaction`, transactionObj)
+        .then(res => res).catch(err => err)
+};
 export const makeMainAccountTransactionApi = transactionObj => {
     return axios.post(`${WORK_HOST}market/main-account-transaction`, transactionObj)
         .then(res => res).catch(err => err)

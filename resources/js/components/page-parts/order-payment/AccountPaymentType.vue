@@ -42,6 +42,9 @@
             </div>
             <h2 v-if="getRestCost > 0">К оплате: {{ getRestCost }} р.</h2>
         </div>
+        <div>
+            <button class="btn btn-lg btn-info"></button>
+        </div>
     </div>
 </template>
 
