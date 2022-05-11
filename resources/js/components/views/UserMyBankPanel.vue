@@ -94,11 +94,16 @@ export default {
         }
 
         &.active, &:hover {
-            background-color: #038ED7;
-            color: white;
+            //background-color: #038ED7;
+            -webkit-transform: scale(1.05, 1.05);
+            -moz-transform: scale(1.05, 1.05);
+            -ms-transform: scale(1.05, 1.05);
+            -o-transform: scale(1.05, 1.05);
+            transform: scale(1.05, 1.05);
 
             h4 {
-                color: white;
+                //color: white;
+                color: #038ED7;
             }
         }
     }

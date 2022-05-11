@@ -96,4 +96,13 @@ Route::get('/user-bank-main', [PagesController::class, 'user_bank_main'])->name(
 Route::get('/user-bank-main-report', [PagesController::class, 'user_bank_main_report'])->name('user-bank-main-report-page');
 Route::get('/user-bank-bonus-rub', [PagesController::class, 'user_bank_bonus_rub'])->name('user-bank-bonus-rub-page');
 Route::get('/user-bank-bonus-rub-report', [PagesController::class, 'user_bank_bonus_rub_report'])->name('user-bank-bonus-rub-report-page');
+
 Route::get('/user-service-center', [PagesController::class, 'user_service_center'])->name('user-service-center-page');
+Route::view('/user-service-bonus-work', 'user-pages.user-sc.user-sc-bonus-work')->name('user-sc-bonus-mark');
+Route::view('/user-service-fill-main-account', 'user-pages.user-sc.user-sc-fill-main-account')->name('user-sc-fill-main-account');
+Route::view('/user-service-order-history', 'user-pages.user-sc.user-sc-order-history')->name('user-sc-order-history');
+Route::view('/user-service-sell-buyer-report', 'user-pages.user-sc.user-sc-sell-buyer-report')->name('user-sc-sell-buyer-report');
+Route::view('/user-service-sell-product-report', 'user-pages.user-sc.user-sc-sell-product-report')->name('user-sc-sell-product-report');
+Route::view('/user-service-selling-history', 'user-pages.user-sc.user-sc-selling-history')->name('user-sc-selling-history');
+Route::view('/user-service-selling-products', 'user-pages.user-sc.user-sc-selling-products')->name('user-sc-selling-products');
+Route::view('/user-service-buy-product-report', 'user-pages.user-sc.user-sc-buy-product-report')->name('user-sc-buy-product-report');

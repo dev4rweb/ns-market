@@ -10731,4 +10731,25 @@ footer h3, footer .h3 {
       display: flex;
       color: #333333; }
 
+.list-group {
+  font-size: 18px; }
+  .list-group .list-group-item {
+    cursor: pointer; }
+    .list-group .list-group-item a {
+      text-decoration: none; }
+    .list-group .list-group-item h4, .list-group .list-group-item .h4 {
+      font-size: 22px;
+      -webkit-transition: all .2s;
+      -moz-transition: all .2s;
+      -ms-transition: all .2s;
+      -o-transition: all .2s;
+      transition: all .2s; }
+    .list-group .list-group-item.active a h4, .list-group .list-group-item.active a .h4, .list-group .list-group-item:hover a h4, .list-group .list-group-item:hover a .h4 {
+      -webkit-transform: scale(1.05, 1.05);
+      -moz-transform: scale(1.05, 1.05);
+      -ms-transform: scale(1.05, 1.05);
+      -o-transform: scale(1.05, 1.05);
+      transform: scale(1.05, 1.05);
+      color: #038ED7; }
+
 /*# sourceMappingURL=app.css.map */

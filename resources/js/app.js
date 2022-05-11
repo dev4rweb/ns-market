@@ -207,6 +207,7 @@ Vue.component('transfer-cash-to-main-account', require('./components/page-parts/
 Vue.component('transfer-main-account-sc', require('./components/page-parts/user-bank/TransferMainAccountSC').default);
 Vue.component('btn-invite', require('./components/UI/buttons/BtnInvite').default);
 Vue.component('user-work-sc-page', require('./components/views/UserWorkSCPage').default);
+Vue.component('user-sc-fill-main-account', require('./components/views/user-sc/UserSCFillMainAccount').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
