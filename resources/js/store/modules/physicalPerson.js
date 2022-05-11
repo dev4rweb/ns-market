@@ -46,6 +46,8 @@ export default {
                             window.location.href.includes('/user-bank-')
                             ||
                             window.location.href.includes('/order-payment')
+                            ||
+                            window.location.href.includes('/user-service-center')
                         ) {
                             dispatch('getAllWalletsAction')
                         }

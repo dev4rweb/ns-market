@@ -59,7 +59,7 @@ export default {
                     if (res.data.success) {
                         commit('setToastError', 'Транзакция прошла успешно!')
                         setTimeout(() => {
-                            // window.location.reload()
+                            window.location.reload()
                         }, 1500);
                     } else commit('setToastError', 'Something wrong in main transaction')
                 })

@@ -2,6 +2,7 @@
     <div class="user-content">
         <div class="row">
             <div class="card data-card mb-5">
+                <h3>Работа СЦ</h3>
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <div class="d-flex align-items-center">
                         <BackBtn path-to="/user-bank-panel"/>
@@ -25,15 +26,10 @@
                     </b> руб.
                 </p>
 
-                <TransferCashToMainAccount />
-
-<!--                <div
-                    class="d-flex justify-content-center"
-                    v-if="isShowSCBlock"
-                >
+                <div class="d-flex justify-content-center">
                     <TransferMainAccountSC v-if="getReceiverUser"/>
                     <FindReceiver v-else/>
-                </div>-->
+                </div>
             </div>
         </div>
     </div>
@@ -41,41 +37,20 @@
 
 <script>
 import {mapGetters} from 'vuex'
-import BackBtn from "../UI/BackBtn";
 import FindReceiver from "../page-parts/user-bank/FindReceiver";
-import TransferCashToMainAccount from "../page-parts/user-bank/TransferCashToMainAccount";
 import TransferMainAccountSC from "../page-parts/user-bank/TransferMainAccountSC";
 export default {
-    name: "UserMyBankMainAccount",
-
+    name: "UserWorkSCPage",
     computed: {
         ...mapGetters(['getWalletMain', 'getWalletCash', 'getPhysicalPerson',
-        'getReceiverUser']),
-        isShow() {
-            return !!(
-                this.getPhysicalPerson &&
-                this.getPhysicalPerson.trade_status !== 'S'
-                &&
-                this.getWalletMain && this.getWalletCash);
-        },
-        isShowSCBlock() {
-            return !!(
-                this.getPhysicalPerson &&
-                this.getPhysicalPerson.trade_status === 'S'
-                &&
-                this.getWalletMain && this.getWalletCash);
-        }
+        'getReceiverUser'])
     },
     components: {
-        BackBtn, TransferCashToMainAccount, FindReceiver, TransferMainAccountSC
-    }
+        FindReceiver, TransferMainAccountSC
+    },
 }
 </script>
 
-<style lang="scss" scoped>
-h3 {
-    font-size: 34px;
-    font-weight: bold;
-}
+<style scoped>
 
 </style>
