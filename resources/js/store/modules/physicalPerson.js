@@ -1,5 +1,6 @@
 import {WORK_HOST} from "../routeConsts";
 import axios from "axios";
+import {USER_CLIENT, USER_EMPLOYEE, USER_PARTNER, USER_SERVICE_CENTER} from "../utils/userStatuses";
 
 export default {
     state: {
@@ -399,6 +400,23 @@ export default {
                 }
             } else {
                 return false
+            }
+        },
+        getUserStatus(state) {
+            if (state.physicalPerson && state.physicalPerson.trade_status) {
+                switch (state.physicalPerson.trade_status) {
+                    case 'D':
+                    case 'K':
+                        return USER_PARTNER
+                    case 'S':
+                        return USER_SERVICE_CENTER
+                    case 'W':
+                        return USER_EMPLOYEE
+                    default:
+                        return USER_CLIENT
+                }
+            } else {
+                return null
             }
         },
         isServiceCenter(state) {

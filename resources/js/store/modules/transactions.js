@@ -5,7 +5,7 @@ import {
     makeCashTransactionApi,
     makeCashTransferTransactionApi,
     makeMainAccountTransactionApi,
-    makeMainTransferTransactionApi, makePaymentSystemTransactionApi,
+    makeMainTransferTransactionApi, makePaymentSystemTransactionApi, paymentOrderTransactionApi,
     transactionDestroyApi,
     transactionsIndexApi,
     transactionStoreApi,
@@ -31,9 +31,263 @@ export default {
         transactionsBMC: null,
         transactionsReserve: null,
         transactionsMainAccount: null,
-        transactionsSavingAccount: null
+        transactionsSavingAccount: null,
+
+        mainAccount: 0,
+        savingAccount: 0,
+        voucherAccount: 0
     },
     actions: {
+        paymentOrderWithOwnResourceAction({dispatch, getters}) {
+            const mainAccount = getters['getMainAccount']
+            const savingAccount = getters['getSavingAccount']
+            const voucherAccount = getters['getVoucherAccount']
+            console.log('paymentOrderWithOwnResourceAction', mainAccount, savingAccount, voucherAccount)
+
+            if (mainAccount > 0 && savingAccount > 0 && voucherAccount > 0) {
+                dispatch('payWithWholeOwnerResourceAction', {mainAccount, savingAccount, voucherAccount})
+                return
+            }
+            if (voucherAccount > 0 && mainAccount > 0) {
+                dispatch('payWithVoucherMainAccountsAction', {voucherAccount, mainAccount})
+                return;
+            }
+            if (voucherAccount > 0 && savingAccount > 0) {
+                dispatch('payWithVoucherSavingAccountsAction', {voucherAccount, savingAccount})
+                return;
+            }
+            if (mainAccount > 0 && savingAccount > 0) {
+                dispatch('payWithMainSavingAccountsAction', {mainAccount, savingAccount})
+                return;
+            }
+            if (voucherAccount > 0) {
+                dispatch('payWithVoucherAccountAction', voucherAccount)
+                return;
+            }
+            if (mainAccount > 0) {
+                dispatch('payWithMainAccountAction', mainAccount)
+                return;
+            }
+            if (savingAccount > 0) {
+                dispatch('payWithSavingAccount', savingAccount)
+                return;
+            }
+            console.log('unknown payment method')
+            // paymentOrderTransactionApi()
+        },
+        payWithWholeOwnerResourceAction({getters, commit, dispatch}, {mainAccount, savingAccount, voucherAccount}) {
+            console.log('full payment with own resource', mainAccount, savingAccount, voucherAccount)
+            let basketOrder = getters['getOrders']
+                .find(i => i.status === 130)
+            if (!basketOrder) {
+                console.log('FOUND PENDING ORDER')
+                basketOrder = getters['getOrders']
+                    .find(i => i.status === 0);
+            }
+            const mainWallet = getters['getWalletMain']
+            const voucherWallet = getters['getWalletVoucher']
+            const savingWallet = getters['getWalletSaving']
+            if (basketOrder && mainWallet && voucherWallet && savingWallet) {
+                commit('setLoading', true);
+                paymentOrderTransactionApi({
+                    is_reserve: basketOrder.is_reserve,
+                    senderId: voucherWallet.user_id,
+                    walletType: voucherWallet.type_id,
+                    order_id: basketOrder.id,
+                    transferAmount: voucherAccount
+                }).then(res => {
+                    console.log('first transaction ', res)
+                    if (res.data.success)
+                        return paymentOrderTransactionApi({
+                            is_reserve: basketOrder.is_reserve,
+                            senderId: mainWallet.user_id,
+                            walletType: mainWallet.type_id,
+                            order_id: basketOrder.id,
+                            transferAmount: mainAccount
+                        })
+                    else commit('setToastError', 'first transaction problem')
+                }).then(res => {
+                    console.log('second transaction ', res)
+                    if (res.data.success)
+                        return paymentOrderTransactionApi({
+                            is_reserve: basketOrder.is_reserve,
+                            senderId: savingWallet.user_id,
+                            walletType: savingWallet.type_id,
+                            order_id: basketOrder.id,
+                            transferAmount: savingAccount
+                        })
+                    else commit('setToastError', 'second transaction problem')
+                }).then(res => {
+                    console.log('third transaction ', res)
+                    if (res.data.success) dispatch('payBasketOrderAction')
+                    else commit('setToastError', 'third transaction problem')
+                }).finally(() => {
+                    commit('setLoading', false)
+                });
+            } else commit('setToastError', 'Что-то пошло не так!')
+        },
+        payWithVoucherMainAccountsAction({getters, commit, dispatch}, {voucherAccount, mainAccount}) {
+            console.log('pay with voucher and main', voucherAccount, mainAccount)
+            const basketOrder = getters['getBasketOrder'];
+            const mainWallet = getters['getWalletMain']
+            const voucherWallet = getters['getWalletVoucher']
+            if (basketOrder && mainWallet && voucherWallet) {
+                commit('setLoading', true);
+                paymentOrderTransactionApi({
+                    is_reserve: basketOrder.is_reserve,
+                    senderId: voucherWallet.user_id,
+                    walletType: voucherWallet.type_id,
+                    order_id: basketOrder.id,
+                    transferAmount: voucherAccount
+                }).then(res => {
+                    console.log('first transaction ', res)
+                    if (res.data.success)
+                        return paymentOrderTransactionApi({
+                            is_reserve: basketOrder.is_reserve,
+                            senderId: mainWallet.user_id,
+                            walletType: mainWallet.type_id,
+                            order_id: basketOrder.id,
+                            transferAmount: mainAccount
+                        })
+                    else commit('setToastError', 'first transaction problem')
+                }).then(res => {
+                    console.log('second transaction ', res)
+                    if (res.data.success) dispatch('payBasketOrderAction')
+                    else commit('setToastError', 'second transaction problem')
+                }).finally(() => {
+                    commit('setLoading', false)
+                });
+            } else commit('setToastError', 'Что-то пошло не так!')
+        },
+        payWithVoucherSavingAccountsAction({getters, commit, dispatch}, {voucherAccount, savingAccount}) {
+            console.log('pay with voucher and saving', voucherAccount, savingAccount)
+            const basketOrder = getters['getBasketOrder'];
+            const voucherWallet = getters['getWalletVoucher']
+            const savingWallet = getters['getWalletSaving']
+            if (basketOrder && voucherWallet && savingWallet) {
+                commit('setLoading', true);
+                paymentOrderTransactionApi({
+                    is_reserve: basketOrder.is_reserve,
+                    senderId: voucherWallet.user_id,
+                    walletType: voucherWallet.type_id,
+                    order_id: basketOrder.id,
+                    transferAmount: voucherAccount
+                }).then(res => {
+                    console.log('first transaction ', res)
+                    if (res.data.success)
+                        return paymentOrderTransactionApi({
+                            is_reserve: basketOrder.is_reserve,
+                            senderId: savingWallet.user_id,
+                            walletType: savingWallet.type_id,
+                            order_id: basketOrder.id,
+                            transferAmount: savingAccount
+                        })
+                    else commit('setToastError', 'first transaction problem')
+                }).then(res => {
+                    console.log('second transaction ', res)
+                    if (res.data.success) dispatch('payBasketOrderAction')
+                    else commit('setToastError', 'second transaction problem')
+                }).finally(() => {
+                    commit('setLoading', false)
+                });
+            } else commit('setToastError', 'Что-то пошло не так!')
+        },
+        payWithMainSavingAccountsAction({getters, commit, dispatch}, {mainAccount, savingAccount}) {
+            console.log('pay with main and saving', mainAccount, savingAccount);
+            const basketOrder = getters['getBasketOrder'];
+            const mainWallet = getters['getWalletMain']
+            const savingWallet = getters['getWalletSaving']
+            if (basketOrder && mainWallet && savingWallet) {
+                commit('setLoading', true);
+                paymentOrderTransactionApi({
+                    is_reserve: basketOrder.is_reserve,
+                    senderId: mainWallet.user_id,
+                    walletType: mainWallet.type_id,
+                    order_id: basketOrder.id,
+                    transferAmount: mainAccount
+                }).then(res => {
+                    console.log('first transaction ', res)
+                    if (res.data.success)
+                        return paymentOrderTransactionApi({
+                            is_reserve: basketOrder.is_reserve,
+                            senderId: savingWallet.user_id,
+                            walletType: savingWallet.type_id,
+                            order_id: basketOrder.id,
+                            transferAmount: savingAccount
+                        })
+                    else commit('setToastError', 'first transaction problem')
+                }).then(res => {
+                    console.log('second transaction ', res)
+                    if (res.data.success) dispatch('payBasketOrderAction')
+                    else commit('setToastError', 'second transaction problem')
+                }).finally(() => {
+                    commit('setLoading', false)
+                });
+            } else commit('setToastError', 'Что-то пошло не так!')
+        },
+        payWithVoucherAccountAction({getters, commit, dispatch}, voucherAccount) {
+            console.log('pay with voucher', voucherAccount)
+            const basketOrder = getters['getBasketOrder'];
+            const voucherWallet = getters['getWalletVoucher']
+            if (basketOrder && voucherWallet) {
+                commit('setLoading', true);
+                paymentOrderTransactionApi({
+                    is_reserve: basketOrder.is_reserve,
+                    senderId: voucherWallet.user_id,
+                    walletType: voucherWallet.type_id,
+                    order_id: basketOrder.id,
+                    transferAmount: voucherAccount
+                }).then(res => {
+                    console.log('first transaction ', res)
+                    if (res.data.success) dispatch('payBasketOrderAction')
+                    else commit('setToastError', 'first transaction problem')
+                }).finally(() => {
+                    commit('setLoading', false)
+                });
+            } else commit('setToastError', 'Что-то пошло не так!')
+        },
+        payWithMainAccountAction({getters, commit, dispatch}, mainAccount) {
+            console.log('pay wit main account', mainAccount)
+            const basketOrder = getters['getBasketOrder'];
+            const mainWallet = getters['getWalletMain']
+            if (basketOrder && mainWallet) {
+                commit('setLoading', true);
+                paymentOrderTransactionApi({
+                    is_reserve: basketOrder.is_reserve,
+                    senderId: mainWallet.user_id,
+                    walletType: mainWallet.type_id,
+                    order_id: basketOrder.id,
+                    transferAmount: mainAccount
+                }).then(res => {
+                    console.log('first transaction ', res)
+                    if (res.data.success) dispatch('payBasketOrderAction')
+                    else commit('setToastError', 'first transaction problem')
+                }).finally(() => {
+                    commit('setLoading', false)
+                });
+            } else commit('setToastError', 'Что-то пошло не так!')
+        },
+        payWithSavingAccount({getters, commit, dispatch}, savingAccount) {
+            console.log('pay with saving account', savingAccount)
+            const basketOrder = getters['getBasketOrder'];
+            const savingWallet = getters['getWalletSaving']
+            if (basketOrder && savingWallet) {
+                commit('setLoading', true);
+                paymentOrderTransactionApi({
+                    is_reserve: basketOrder.is_reserve,
+                    senderId: savingWallet.user_id,
+                    walletType: savingWallet.type_id,
+                    order_id: basketOrder.id,
+                    transferAmount: savingAccount
+                }).then(res => {
+                    console.log('first transaction ', res)
+                    if (res.data.success) dispatch('payBasketOrderAction')
+                    else commit('setToastError', 'first transaction problem')
+                }).finally(() => {
+                    commit('setLoading', false)
+                });
+            } else commit('setToastError', 'Что-то пошло не так!')
+        },
         makeMainTransferTransactionSC({getters, commit}, transferAmount) {
             const cashTransaction = {
                 receiverId: getters['getWalletCash'].user_id,
@@ -79,7 +333,7 @@ export default {
                 makeCashTransactionApi({
                     senderId: senderWallet.user_id,
                     cashAmount: transferAmount
-                }).then(res =>{
+                }).then(res => {
                     console.log('makeCashTransactionApi', res)
                     if (res.data.success) {
                         return makePaymentSystemTransactionApi({
@@ -257,6 +511,15 @@ export default {
         }
     },
     mutations: {
+        setMainAccount(state, amount) {
+            state.mainAccount = amount
+        },
+        setVoucherAccount(state, amount) {
+            state.voucherAccount = amount
+        },
+        setSavingAccount(state, amount) {
+            state.savingAccount = amount
+        },
         setTransactionsMainAccount(state, transactions) {
             state.transactionsMainAccount = transactions
         },
@@ -280,6 +543,15 @@ export default {
         }
     },
     getters: {
+        getMainAccount(state) {
+            return state.mainAccount
+        },
+        getVoucherAccount(state) {
+            return state.voucherAccount
+        },
+        getSavingAccount(state) {
+            return state.savingAccount
+        },
         getTransactionsMainAccount(state) {
             return state.transactionsMainAccount
         },

@@ -1,5 +1,5 @@
 <template>
-    <div class="card shadow blue-header-info-block mb-3">
+    <div class="card shadow blue-header-info-block mb-5">
         <div class="header-block p-3">
             <div
                 class=" d-flex justify-content-between own-payment-list"
@@ -11,7 +11,7 @@
         </div>
         <div class="body-block p-3">
             <div
-                v-if="getWalletVoucher"
+                v-if="this.getUserStatus && this.getUserStatus === 2 && getWalletVoucher"
                 class="d-flex justify-content-between content-wrapper own-payment-list"
             >
                 <span>Ваучер банк</span>
@@ -27,7 +27,7 @@
                 <span>{{ difMain }}</span>
             </div>
             <div
-                v-if="getWalletSaving"
+                v-if="this.getUserStatus && this.getUserStatus !== 3 && getWalletSaving"
                 class="d-flex justify-content-between content-wrapper own-payment-list"
             >
                 <span>Счёт бонусов</span>
@@ -42,68 +42,88 @@
             </div>
             <h2 v-if="getRestCost > 0">К оплате: {{ getRestCost }} р.</h2>
         </div>
-        <div>
-            <button class="btn btn-lg btn-info"></button>
+        <div v-if="getRestCost <= 0" class="d-flex justify-content-center position-relative">
+            <button
+                class="btn btn-lg btn-info"
+                style="margin-bottom: -25px; width: 200px;"
+                @click="payWithOwnResource"
+            >
+                Оплатить
+            </button>
         </div>
     </div>
 </template>
 
 <script>
-import {mapGetters, mapMutations} from 'vuex'
+import {mapGetters, mapMutations, mapActions} from 'vuex'
+import {USER_CLIENT, USER_EMPLOYEE, USER_PARTNER, USER_SERVICE_CENTER} from "../../../store/utils/userStatuses";
 
 export default {
     name: "AccountPaymentType",
-    data() {
-        return {
-            voucher: 0,
-            main: 0,
-            saving: 0,
+    methods: {
+        ...mapMutations(['setRestCost', 'setMainAccount', 'setVoucherAccount', 'setSavingAccount']),
+        ...mapActions(['paymentOrderWithOwnResourceAction']),
+        payWithOwnResource() {
+            // console.log('payWithOwnResource', this.voucher, this.main, this.saving)
+
+            this.paymentOrderWithOwnResourceAction();
         }
     },
-    methods: {
-        ...mapMutations(['setRestCost'])
-    },
     computed: {
-        ...mapGetters(['getWalletVoucher', 'getWalletMain', 'getWalletSaving', 'getBasketOrder', 'getRestCost']),
+        ...mapGetters(['getWalletVoucher', 'getWalletMain', 'getWalletSaving', 'getBasketOrder', 'getRestCost',
+            'getUserStatus', 'getMainAccount', 'getVoucherAccount', 'getSavingAccount']),
         accountSum() {
-            if (this.getWalletSaving && this.getWalletMain && this.getWalletVoucher) {
-                return `${this.getWalletVoucher.balance + this.getWalletMain.balance + this.getWalletSaving.balance}`
-            }
-            return ''
-        },
-        difVoucher() {
-            if (this.getWalletVoucher && this.getBasketOrder) {
-                if (this.getWalletVoucher.balance > 0) {
-                    this.getBasketOrder.order_price >= this.getWalletVoucher.balance ?
-                        this.voucher = this.getWalletVoucher.balance :
-                        this.voucher = this.getBasketOrder.order_price
+            if (this.getWalletSaving && this.getWalletMain && this.getWalletVoucher && this.getUserStatus) {
+                switch (this.getUserStatus) {
+                    case USER_CLIENT:
+                        return `${this.getWalletMain.balance + this.getWalletSaving.balance}`
+                    case USER_PARTNER:
+                        return `${this.getWalletVoucher.balance + this.getWalletMain.balance + this.getWalletSaving.balance}`
+                    case USER_SERVICE_CENTER:
+                        return `${this.getWalletMain.balance}`
+                    case USER_EMPLOYEE:
+                        return `${this.getWalletVoucher.balance + this.getWalletMain.balance + this.getWalletSaving.balance}`
                 }
             }
-            return this.voucher
+            return this.getVoucherAccount + this.getMainAccount + this.getSavingAccount
+        },
+        difVoucher() {
+            if (this.getUserStatus && this.getUserStatus === USER_PARTNER) {
+                if (this.getWalletVoucher && this.getBasketOrder) {
+                    if (this.getWalletVoucher.balance > 0) {
+                        if (this.getBasketOrder.order_price >= this.getWalletVoucher.balance)
+                            this.setVoucherAccount(this.getWalletVoucher.balance)
+                        else this.setVoucherAccount(this.getBasketOrder.order_price);
+                    }
+                }
+            }
+            return this.getVoucherAccount
         },
         difMain() {
             if (this.getWalletMain && this.getBasketOrder) {
                 if (this.getWalletMain.balance > 0) {
-                    this.main = (this.getBasketOrder.order_price - this.voucher) >= this.getWalletMain.balance ?
-                        this.getWalletMain.balance :
-                        this.getBasketOrder.order_price - this.voucher
+                    (this.getBasketOrder.order_price - this.getVoucherAccount) >= this.getWalletMain.balance ?
+                        this.setMainAccount(this.getWalletMain.balance) :
+                        this.setMainAccount(this.getBasketOrder.order_price - this.getVoucherAccount)
                 }
             }
-            return this.main
+            return this.getMainAccount
         },
         difSaving() {
-            if (this.getWalletSaving && this.getBasketOrder) {
-                if (this.getWalletSaving.balance > 0) {
-                    this.saving = (this.getBasketOrder.order_price - this.voucher - this.main) >= this.getWalletSaving.balance ?
-                        this.getWalletSaving.balance :
-                        this.getBasketOrder.order_price - this.voucher - this.main
+            if (this.getUserStatus && (this.getUserStatus === USER_PARTNER || this.getUserStatus === USER_CLIENT)) {
+                if (this.getWalletSaving && this.getBasketOrder) {
+                    if (this.getWalletSaving.balance > 0) {
+                        (this.getBasketOrder.order_price - this.getVoucherAccount - this.getMainAccount) >= this.getWalletSaving.balance ?
+                            this.setSavingAccount(this.getWalletSaving.balance) :
+                            this.setSavingAccount(this.getBasketOrder.order_price - this.getVoucherAccount - this.getMainAccount)
+                    }
                 }
             }
-            return this.saving
+            return this.getSavingAccount
         },
         difSum() {
             if (this.getBasketOrder) {
-                const sum = this.voucher + this.main + this.saving;
+                const sum = this.getVoucherAccount + this.getMainAccount + this.getSavingAccount;
                 this.setRestCost(this.getBasketOrder.order_price - sum)
                 return sum
             }

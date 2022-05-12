@@ -26,6 +26,8 @@ export const orderStatuses = orderStatusNum => {
             return 'STATUS_RETURN_TO_PACK'
         case 120:
             return 'STATUS_RETURN_FROM_PACK'
+        case 130:
+            return 'В ожидании оплаты'
         default:
             return 'Unknown'
     }

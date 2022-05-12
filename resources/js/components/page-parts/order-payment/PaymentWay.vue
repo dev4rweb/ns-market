@@ -71,10 +71,11 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['payBasketOrderAction']),
+        ...mapActions(['payBasketOrderAction', 'orderPayWithCreditCardAction']),
         payBasketOrder() {
-            // console.log('payBasketOrder')
-            this.payBasketOrderAction()
+            console.log('payBasketOrder')
+            this.orderPayWithCreditCardAction()
+            // this.payBasketOrderAction()
         }
     }
 }

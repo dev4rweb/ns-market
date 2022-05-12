@@ -90,8 +90,16 @@ export default {
                 });
             }
         },
+
         payBasketOrderAction({getters, commit, dispatch}) {
-            const basketOrder = getters['getOrders'].find(i => i.status === 0)
+            let basketOrder = getters['getOrders']
+                .find(i => i.status === 130)
+            if (!basketOrder) {
+                console.log('FOUND PENDING ORDER')
+                basketOrder = getters['getOrders']
+                    .find(i => i.status === 0);
+            }
+
             console.log('payBasketOrderAction', basketOrder)
             if (basketOrder) {
                 commit('setLoading', true)

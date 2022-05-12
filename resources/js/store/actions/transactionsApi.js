@@ -83,3 +83,7 @@ export const makeMainTransferTransactionApi = transactionObj => {
     return axios.post(`${WORK_HOST}market/main-transfer-transaction`, transactionObj)
         .then(res => res).catch(err => err)
 };
+export const paymentOrderTransactionApi = transactionObj => {
+    return axios.post(`${WORK_HOST}market/payment-order-transaction`, transactionObj)
+        .then(res => res).catch(err => err)
+};
