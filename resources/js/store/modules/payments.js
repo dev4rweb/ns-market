@@ -19,8 +19,8 @@ export default {
             commit('setLoading', true)
             patchCustomerOrderApi(basketOrder)
                 .then(res => {
-                    dispatch('removeLSOrderAction');
-                    commit('setBasketOrder', null)
+                    // dispatch('removeLSOrderAction');
+                    // commit('setBasketOrder', null)
                     console.log('patchCustomerOrderApi', res)
                     if (res.data.success)
                         return payWithCreditCardApi({
@@ -59,13 +59,20 @@ export default {
                     console.log('makeMainAccountTransactionApi', res)
                     if (res.data.success) {
                         commit('setMainAccount', getters['getMainAccount'] + getters['getRestCost'])
-                        dispatch('paymentOrderWithOwnResourceAction')
+                        basketOrder.status = 0
+                        return patchCustomerOrderApi(basketOrder)
                     } else commit('setToastError', 'Something wrong in makeMainAccountTransactionApi')
+                })
+                .then(res => {
+                    console.log('changing basket order status', res)
+                    if (res.data.success) {
+                        dispatch('paymentOrderWithOwnResourceAction')
+                    } else commit('setToastError', 'Something wrong in changing status')
                 })
                 .catch(err => {
                     console.log('orderPayWithCreditCardAction err', err)
                     commit('setLoading', false)
-                })
+                });
         }
     },
     mutations: {},

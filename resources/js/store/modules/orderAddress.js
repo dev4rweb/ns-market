@@ -31,8 +31,12 @@ export default {
                         console.log('updateOrderAddressOrderId', res)
                         if (res.data.success) {
                             commit('setOrderAddress', res.data.model)
+                            if (res.data.model) {
+                                const addr = res.data.model
+                                // commit('setFastSearchAddress', address)
+                            }
                             if (window.location.href.includes('/order-payment')) {
-                                dispatch('fetchTransportCompanies')
+                                dispatch('fetchTransportCompanies');
                             }
                         }
                     }).catch(err => {

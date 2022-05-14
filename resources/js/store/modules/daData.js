@@ -67,7 +67,7 @@ export default {
                     'Authorization': `Token ${token}`,
                 },
             }).then(res => {
-                // console.log('fetchDaDataAddress', res)
+                console.log('fetchDaDataAddress', res)
                 if (res.status === 200) {
                     commit('setDaDataAddress', res.data.suggestions);
                 }

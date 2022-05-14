@@ -55,17 +55,20 @@
                 <div
                     class="body-block p-3"
                 >
-                    <div class="d-flex">
+                    <div
+                        v-if="getBasketOrder"
+                        class="d-flex"
+                    >
                         <RadioBox
                             label="Личный объем"
                             value="0"
-                            v-model="is_reserve"
+                            v-model="getBasketOrder.is_reserve"
                             @change="isReserveInvalid = false"
                         />
                         <RadioBox
                             label="Резерв"
                             value="1"
-                            v-model="is_reserve"
+                            v-model="getBasketOrder.is_reserve"
                             @change="isReserveInvalid = false"
                         />
                     </div>
@@ -77,15 +80,20 @@
                     </div>
                 </div>
             </div>
-            <div class="card shadow blue-header-info-block mb-4">
+            <div
+                v-if="getBasketOrder"
+                class="card shadow blue-header-info-block mb-4"
+            >
                 <div class="header-block p-3">
                     При необходимости добавьте комментарий к заказ
                 </div>
-                <div class="body-block p-3">
+                <div
+                    class="body-block p-3"
+                >
                     <div class="form-group form-group-blue">
                         <textarea
                             class="form-control form-control-lg"
-                            v-model="customer_notes"
+                            v-model="getBasketOrder.customer_notes"
                         ></textarea>
                     </div>
                 </div>
@@ -131,20 +139,20 @@ export default {
         gotoOrderDelivery() {
             let customerOrder = null;
             if (this.isPartner) {
-                if (!this.is_reserve) {
+                if (!this.getBasketOrder.is_reserve) {
                     this.isReserveInvalid = true
                     this.$refs.focusMe.scrollIntoView();
                     return
                 }
                 customerOrder = {
                     id: this.getBasketOrder.id,
-                    customer_notes: this.customer_notes,
-                    is_reserve: parseInt(this.is_reserve)
+                    customer_notes: this.getBasketOrder.customer_notes,
+                    is_reserve: parseInt(this.getBasketOrder.is_reserve)
                 }
             } else {
                 customerOrder = {
                     id: this.getBasketOrder.id,
-                    customer_notes: this.customer_notes,
+                    customer_notes: this.getBasketOrder.customer_notes,
                     is_reserve: this.isServiceCenter ? 1 : 0
                 }
             }

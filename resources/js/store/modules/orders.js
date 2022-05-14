@@ -63,9 +63,17 @@ export default {
                             if (basketOrder) {
                                 commit('setBasketOrder', basketOrder);
                                 dispatch('createLSOrderIdAction', basketOrder.id)
+                                const addr = basketOrder.order_address
+                                if (addr) {
+                                    commit('setFastSearchAddress', `${addr.city}`)
+                                    dispatch('fetchDaDataAddress', {
+                                        query: this.getFastSearchAddress,
+                                        fromOrderDelivery: true
+                                    })
+                                }
                                 // console.log('BASKET ORDER', basketOrder)
                                 if (!getters['getLSOrder'].length) {
-                                    console.log('creating new basket order')
+                                    console.log('creating new basket order');
                                     basketOrder.products.forEach(i => {
                                         const orderObj = {
                                             prodId: i.product.vendor_code,
@@ -92,13 +100,8 @@ export default {
         },
 
         payBasketOrderAction({getters, commit, dispatch}) {
-            let basketOrder = getters['getOrders']
-                .find(i => i.status === 130)
-            if (!basketOrder) {
-                console.log('FOUND PENDING ORDER')
-                basketOrder = getters['getOrders']
-                    .find(i => i.status === 0);
-            }
+
+            const basketOrder = getters['getBasketOrder']
 
             console.log('payBasketOrderAction', basketOrder)
             if (basketOrder) {
@@ -215,10 +218,10 @@ export default {
                         if (res.data.success) {
                             dispatch('createLSOrderIdAction', res.data.model.id)
                             // localStorage.setItem('orderId', res.data.model.id)
-                            dispatch('updateOrderAddressOrderId', {
+                            /*dispatch('updateOrderAddressOrderId', {
                                 user_id: res.data.model.customer_id,
                                 order_id: res.data.model.id
-                            })
+                            })*/
                         }
                     })
                     .catch(err => {

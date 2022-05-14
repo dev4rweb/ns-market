@@ -77,13 +77,14 @@ export default {
         },
         payWithWholeOwnerResourceAction({getters, commit, dispatch}, {mainAccount, savingAccount, voucherAccount}) {
             console.log('full payment with own resource', mainAccount, savingAccount, voucherAccount)
-            let basketOrder = getters['getOrders']
+            /*let basketOrder = getters['getOrders']
                 .find(i => i.status === 130)
             if (!basketOrder) {
-                console.log('FOUND PENDING ORDER')
+                console.log('NOT FOUND PENDING ORDER')
                 basketOrder = getters['getOrders']
                     .find(i => i.status === 0);
-            }
+            }*/
+            const basketOrder = getters['getBasketOrder'];
             const mainWallet = getters['getWalletMain']
             const voucherWallet = getters['getWalletVoucher']
             const savingWallet = getters['getWalletSaving']
